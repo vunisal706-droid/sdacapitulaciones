@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e40af">
+    <title>SDA Capitulaciones - Formato Inspector</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#1e40af;--primary-dark:#1e3a8a;--secondary:#3b82f6;
+            --accent:#f59e0b;--success:#10b981;--purple:#7c3aed;
+            --bg:#f8fafc;--card:#fff;--text:#1e293b;
+            --text-light:#64748b;--border:#e2e8f0;--selected-bg:#dbeafe;
+        }
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+        /* ── HEADER ── */
+        .header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:1.1rem 1.5rem;box-shadow:0 4px 6px -1px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}
+        .hc{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+        .hl{display:flex;align-items:center;gap:1rem}
+        .logo{font-size:1.8rem;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+        .header h1{font-size:1.3rem;font-weight:700}
+        .header p{opacity:.9;font-size:.8rem}
+        .btn-foto{background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.6);color:white;padding:.5rem .95rem;border-radius:50px;font-weight:700;font-size:.8rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .2s;white-space:nowrap}
+        .btn-foto:hover{background:rgba(255,255,255,.3);transform:translateY(-1px)}
+
+        /* ── PROGRESS ── */
+        .prog-wrap{background:var(--card);padding:.9rem 1.5rem;border-bottom:1px solid var(--border)}
+        .prog-steps{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;position:relative}
+        .prog-steps::before{content:'';position:absolute;top:15px;left:0;right:0;height:3px;background:var(--border);z-index:0}
+        .prog-line{position:absolute;top:15px;left:0;height:3px;background:var(--accent);transition:width .3s;z-index:0}
+        .step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.28rem}
+        .sn{width:32px;height:32px;border-radius:50%;background:var(--card);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;transition:all .3s;font-size:.76rem}
+        .step.active .sn{border-color:var(--accent);background:var(--accent);color:white;transform:scale(1.15)}
+        .step.completed .sn{border-color:var(--success);background:var(--success);color:white}
+        .sl{font-size:.6rem;color:var(--text-light);font-weight:600;text-align:center;max-width:62px}
+
+        /* ── CARDS ── */
+        .container{max-width:840px;margin:1.5rem auto;padding:0 1rem}
+        .card{background:var(--card);border-radius:14px;padding:1.5rem 1.75rem;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:1.2rem;display:none;animation:slideIn .3s ease}
+        .card.active{display:block}
+        @keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        .card h2{color:var(--primary);margin-bottom:.35rem;display:flex;align-items:center;gap:.45rem;font-size:1.12rem}
+        .card-sub{color:var(--text-light);margin-bottom:1.3rem;font-size:.88rem}
+
+        /* ── FORMS ── */
+        .fg{margin-bottom:1.2rem}
+        label{display:block;font-weight:600;margin-bottom:.38rem;color:var(--text);font-size:.86rem}
+        input,select,textarea{width:100%;padding:.62rem .88rem;border:2px solid var(--border);border-radius:8px;font-size:.94rem;transition:all .2s;font-family:inherit;background:white}
+        input:focus,select:focus,textarea:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+        textarea{resize:vertical;min-height:75px}
+        .row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+        .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem}
+        small{color:var(--text-light);font-size:.76rem;display:block;margin-top:.28rem}
+
+        /* ── TIPO SdA ── */
+        .types-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.9rem;margin-top:.45rem}
+        .type-card{background:white;border:2px solid var(--border);border-radius:11px;padding:.95rem 1.05rem .85rem;cursor:pointer;transition:all .2s;position:relative}
+        .type-card:hover{border-color:var(--secondary);transform:translateY(-2px);box-shadow:0 5px 14px rgba(0,0,0,.07)}
+        .type-card.selected{border-color:var(--primary);background:var(--selected-bg);box-shadow:0 0 0 3px rgba(30,64,175,.1)}
+        .type-card input[type=radio]{position:absolute;top:.8rem;right:.8rem}
+        .te{font-size:1.55rem;margin-bottom:.28rem;display:block}
+        .tn{font-weight:700;color:var(--primary);font-size:.9rem;margin-bottom:.16rem}
+        .tr{font-size:.72rem;font-weight:600;color:var(--accent);margin-bottom:.28rem}
+        .td{font-size:.77rem;color:var(--text-light);line-height:1.44;margin-bottom:.38rem}
+        .tex{font-size:.71rem;color:var(--text);background:#f1f5f9;border-radius:5px;padding:.26rem .48rem;font-style:italic}
+
+        /* ── ÁREAS ── */
+        .area-adv{background:#fffbeb;border:2px solid #f59e0b;border-radius:9px;padding:.75rem .9rem;margin-bottom:.75rem;font-size:.83rem;color:#78350f;display:flex;gap:.5rem;align-items:flex-start}
+        .multi-adv{background:#f0fdf4;border:2px solid #10b981;border-radius:9px;padding:.75rem .9rem;margin-top:.6rem;font-size:.83rem;color:#065f46;display:none;gap:.5rem;align-items:flex-start}
+        .multi-adv.show{display:flex}
+        .areas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:.55rem;margin-top:.42rem;max-height:370px;overflow-y:auto;padding:.42rem;background:var(--bg);border-radius:8px;border:2px solid var(--border)}
+        .area-item{display:flex;align-items:flex-start;gap:.62rem;padding:.75rem;background:white;border-radius:8px;cursor:pointer;transition:all .2s;border:2px solid transparent}
+        .area-item:hover{border-color:var(--secondary);transform:translateY(-1px);box-shadow:0 3px 7px rgba(0,0,0,.07)}
+        .area-item.selected{background:var(--selected-bg);border-color:var(--primary)}
+        .area-item input[type=checkbox]{width:auto;margin-top:.28rem;min-width:16px;min-height:16px;cursor:pointer;flex-shrink:0}
+        .ac{flex:1}
+        .at{font-weight:600;color:var(--text);margin-bottom:.17rem;font-size:.88rem}
+        .ad{font-size:.74rem;color:var(--text-light);line-height:1.38}
+        .atag{display:inline-block;font-size:.65rem;font-weight:700;padding:.11rem .42rem;border-radius:10px;margin-bottom:.22rem}
+        .tag-obligatoria{background:#dbeafe;color:#1e40af}
+        .tag-optativa{background:#fef3c7;color:#92400e}
+        .tag-alternativa{background:#f3e8ff;color:#6b21a8}
+        .areas-sum{background:var(--selected-bg);border-left:4px solid var(--primary);padding:.65rem .95rem;margin-top:.65rem;border-radius:0 8px 8px 0;font-size:.85rem}
+
+        /* ── APPS DEL CENTRO ── */
+        .apps-section{margin-bottom:1.2rem}
+        .apps-area-label{font-size:.78rem;font-weight:700;color:var(--purple);background:#f5f3ff;padding:.22rem .65rem;border-radius:20px;margin-bottom:.45rem;display:inline-block}
+        .apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.5rem;margin-bottom:.8rem}
+        .app-chip{display:flex;align-items:flex-start;gap:.55rem;padding:.65rem .8rem;background:white;border:2px solid var(--border);border-radius:9px;cursor:pointer;transition:all .2s}
+        .app-chip:hover{border-color:var(--secondary);background:#f0f9ff}
+        .app-chip.selected{background:var(--selected-bg);border-color:var(--primary)}
+        .app-chip input[type=checkbox]{width:auto;margin-top:.22rem;min-width:15px;cursor:pointer;flex-shrink:0}
+        .app-emoji{font-size:1.3rem;flex-shrink:0}
+        .app-info{flex:1}
+        .app-name{font-weight:600;font-size:.84rem;color:var(--text)}
+        .app-desc{font-size:.72rem;color:var(--text-light);line-height:1.35}
+        .app-area-tag{font-size:.65rem;font-weight:700;padding:.1rem .38rem;border-radius:8px;display:inline-block;margin-top:.18rem}
+        .at-mat{background:#dbeafe;color:#1e40af}
+        .at-len{background:#dcfce7;color:#166534}
+        .at-cie{background:#fef3c7;color:#92400e}
+        .at-gen{background:#f3e8ff;color:#6b21a8}
+        .at-log{background:#fce7f3;color:#9d174d}
+        .at-cog{background:#e0f2fe;color:#0369a1}
+        .at-rob{background:#f1f5f9;color:#475569}
+        .at-lec{background:#d1fae5;color:#065f46}
+
+        /* ── SABERES ── */
+        .sab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.45rem;margin-top:.45rem;max-height:340px;overflow-y:auto;padding:.45rem;background:var(--bg);border-radius:8px;border:2px solid var(--border)}
+        .sab-item{display:flex;align-items:flex-start;gap:.45rem;padding:.55rem .7rem;background:white;border-radius:7px;cursor:pointer;transition:all .2s;border:1px solid transparent}
+        .sab-item:hover{border-color:var(--secondary);background:#f0f9ff}
+        .sab-item.selected{background:#eff6ff;border-color:var(--primary)}
+        .sab-item input[type=checkbox]{width:auto;margin-top:.22rem;min-width:14px;cursor:pointer;flex-shrink:0}
+        .sab-item label{margin:0;font-size:.77rem;color:var(--text);cursor:pointer;line-height:1.38}
+        .sab-bloque{font-size:.7rem;font-weight:700;color:var(--purple);background:#f5f3ff;padding:.12rem .45rem;border-radius:8px;margin-bottom:.28rem;display:inline-block}
+
+        /* ── CRITERIOS ── */
+        .crit-section{margin-bottom:1.3rem;padding:.9rem;background:var(--bg);border-radius:9px;border-left:4px solid var(--primary)}
+        .crit-section h3{color:var(--primary);margin-bottom:.7rem;font-size:.97rem;padding-bottom:.38rem;border-bottom:1px solid var(--border)}
+        .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.6rem;margin-top:.42rem}
+        .ci{display:flex;align-items:flex-start;gap:.42rem;padding:.62rem;background:var(--bg);border-radius:8px;cursor:pointer;transition:all .2s}
+        .ci:hover{background:#e0f2fe}
+        .ci input[type=checkbox]{width:auto;margin-top:.18rem;flex-shrink:0}
+        .ci label{margin:0;font-weight:500;cursor:pointer;font-size:.82rem}
+
+        /* ── CHIPS ── */
+        .chips{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:.42rem}
+        .chip{padding:.42rem .85rem;background:var(--bg);border:2px solid var(--border);border-radius:20px;cursor:pointer;font-size:.8rem;transition:all .2s;user-select:none}
+        .chip:hover{border-color:var(--secondary)}
+        .chip.selected{background:var(--primary);color:white;border-color:var(--primary)}
+
+        /* ── CHECKBOXES ── */
+        .cbg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.6rem;margin-top:.42rem}
+        .cbi{display:flex;align-items:flex-start;gap:.42rem;padding:.6rem;background:var(--bg);border-radius:8px;cursor:pointer;transition:all .2s}
+        .cbi:hover{background:#e0f2fe}
+        .cbi input[type=checkbox]{width:auto;margin-top:.18rem;flex-shrink:0}
+        .cbi label{margin:0;font-weight:500;cursor:pointer;font-size:.82rem}
+
+        /* ── IA CHIPS ── */
+        .ia-chips{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:.45rem}
+        .ia-chip{padding:.58rem 1.05rem;border:2px solid var(--border);border-radius:9px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .2s;user-select:none;display:flex;align-items:center;gap:.42rem;background:white}
+        .ia-chip:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,0,0,.09)}
+        .ia-chip[data-ia=gemini]{border-color:#1a73e8;color:#1a73e8} .ia-chip[data-ia=gemini].selected{background:#1a73e8;color:white}
+        .ia-chip[data-ia=chatgpt]{border-color:#10a37f;color:#10a37f} .ia-chip[data-ia=chatgpt].selected{background:#10a37f;color:white}
+        .ia-chip[data-ia=claude]{border-color:#d97706;color:#d97706} .ia-chip[data-ia=claude].selected{background:#d97706;color:white}
+        .ia-chip[data-ia=copilot]{border-color:#6366f1;color:#6366f1} .ia-chip[data-ia=copilot].selected{background:#6366f1;color:white}
+        .ia-status{font-size:.81rem;color:var(--text-light);font-style:italic;margin-top:.42rem;display:block}
+
+        /* ── BADGES ── */
+        .badge{display:inline-flex;padding:.18rem .65rem;border-radius:20px;font-size:.7rem;font-weight:600;margin-left:.42rem}
+        .badge-blue{background:#dbeafe;color:var(--primary)}
+        .badge-yellow{background:#fef3c7;color:#92400e}
+        .badge-green{background:#dcfce7;color:#166534}
+
+        /* ── PREVIEW BOX ── */
+        .prev-box{background:#1e293b;color:#e2e8f0;padding:1.3rem;border-radius:11px;font-family:'Courier New',monospace;font-size:.84rem;line-height:1.8;white-space:pre-wrap;overflow-x:auto;max-height:500px;overflow-y:auto}
+        .prev-actions{position:sticky;top:0;background:#1e293b;padding-bottom:.85rem;margin-bottom:.85rem;border-bottom:1px solid #334155;display:flex;gap:.42rem;flex-wrap:wrap}
+
+        /* ── BUTTONS ── */
+        .btn-container{display:flex;gap:.85rem;justify-content:space-between;margin-top:1.6rem}
+        .btn{padding:.75rem 1.3rem;border:none;border-radius:8px;font-size:.93rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.42rem}
+        .btn-primary{background:var(--primary);color:white} .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,64,175,.28)}
+        .btn-secondary{background:white;color:var(--text);border:2px solid var(--border)} .btn-secondary:hover{background:var(--bg);border-color:var(--text-light)}
+        .btn-success{background:var(--success);color:white} .btn-success:hover{background:#059669}
+        .btn-purple{background:var(--purple);color:white} .btn-purple:hover{background:#6d28d9;transform:translateY(-1px)}
+        .btn-sm{padding:.42rem .85rem;font-size:.8rem}
+        .btn-launch{background:linear-gradient(135deg,#f59e0b,#ef4444);color:white;padding:.9rem 1.55rem;border-radius:9px;border:none;font-weight:700;font-size:.93rem;cursor:pointer;display:inline-flex;align-items:center;gap:.52rem;transition:all .2s;box-shadow:0 4px 14px rgba(239,68,68,.28)}
+        .btn-launch:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(239,68,68,.38)}
+        .btn-rlaunce{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;padding:.9rem 1.55rem;border-radius:9px;border:none;font-weight:700;font-size:.93rem;cursor:pointer;display:inline-flex;align-items:center;gap:.52rem;transition:all .2s;box-shadow:0 4px 14px rgba(124,58,237,.28)}
+        .btn-rlaunce:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(124,58,237,.38)}
+
+        /* ── RUBRIC INTRO ── */
+        .rub-intro{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:2px solid #c4b5fd;border-radius:11px;padding:1.1rem;margin-bottom:1.3rem}
+        .rub-intro h3{color:var(--purple);margin-bottom:.42rem;font-size:.95rem}
+        .rub-intro ol{margin-left:1.1rem;font-size:.84rem;color:#4c1d95;line-height:1.9}
+        .sda-paste{border:2px dashed #c4b5fd;border-radius:9px;background:#faf5ff;min-height:180px}
+
+        /* ── INSPECTOR BADGE ── */
+        .inspector-note{background:linear-gradient(135deg,#fef3c7,#fffbeb);border:2px solid #f59e0b;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.2rem;font-size:.83rem;color:#78350f;display:flex;gap:.6rem;align-items:flex-start}
+
+        /* ── FINAL ACTIONS ── */
+        .final-actions{margin-top:1.6rem;display:flex;flex-direction:column;gap:.85rem}
+        .far{display:flex;gap:.85rem;justify-content:space-between;align-items:center;flex-wrap:wrap}
+
+        /* ── TOAST ── */
+        .toast{position:fixed;bottom:2rem;right:2rem;background:var(--text);color:white;padding:.85rem 1.3rem;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,.15);display:none;animation:slideUp .3s ease;z-index:1000;max-width:310px;font-size:.9rem}
+        @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+        .toast.show{display:block}
+
+        .install-btn{position:fixed;bottom:2rem;left:2rem;background:var(--accent);color:white;padding:.65rem 1.3rem;border-radius:50px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,.4);display:none;align-items:center;gap:.42rem;z-index:999;border:none;font-size:.9rem}
+        .install-btn.show{display:flex}
+
+        @media(max-width:640px){
+            .header h1{font-size:1.05rem} .sl{display:none} .card{padding:1.15rem}
+            .areas-grid,.types-grid,.apps-grid{grid-template-columns:1fr}
+            .row,.row3{grid-template-columns:1fr}
+            .far{flex-direction:column;align-items:stretch}
+            .btn-launch,.btn-rlaunce{justify-content:center}
+            .sn{width:28px;height:28px;font-size:.7rem}
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="hc">
+        <div class="hl">
+            <div class="logo">📜</div>
+            <div>
+                <h1>SDA Capitulaciones</h1>
+                <p>Formato Inspector · Orden 30/05/2023 Andalucía · LOMLOE</p>
+            </div>
+        </div>
+        <button class="btn-foto" onclick="abrirFotoLibro()">📸 Generar SdA con foto del libro</button>
+    </div>
+</header>
+
+<div class="prog-wrap">
+    <div class="prog-steps">
+        <div class="prog-line" id="progLine" style="width:0%"></div>
+        <div class="step active" data-step="1"><div class="sn">1</div><span class="sl">Contexto</span></div>
+        <div class="step" data-step="2"><div class="sn">2</div><span class="sl">Tipo SdA</span></div>
+        <div class="step" data-step="3"><div class="sn">3</div><span class="sl">Centro</span></div>
+        <div class="step" data-step="4"><div class="sn">4</div><span class="sl">Contenidos</span></div>
+        <div class="step" data-step="5"><div class="sn">5</div><span class="sl">Saberes</span></div>
+        <div class="step" data-step="6"><div class="sn">6</div><span class="sl">Criterios</span></div>
+        <div class="step" data-step="7"><div class="sn">7</div><span class="sl">Diversidad</span></div>
+        <div class="step" data-step="8"><div class="sn">8</div><span class="sl">Prompt SdA</span></div>
+        <div class="step" data-step="9"><div class="sn">9</div><span class="sl">Rúbricas</span></div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- ══ PASO 1 — CONTEXTO ══════════════════════════════════════════════ -->
+<div class="card active" id="step1">
+    <h2>📋 Contexto Educativo</h2>
+    <p class="card-sub">Datos básicos de la SdA según el formato del inspector</p>
+
+    <div class="inspector-note">
+        <span style="font-size:1.1rem;flex-shrink:0">📄</span>
+        <span>Esta app genera prompts ajustados al <strong>formato oficial del inspector</strong> con los 7 bloques requeridos: Identificación, Justificación, Producto final, Concreción curricular, Secuencia didáctica, Atención a la diversidad y Valoración.</span>
+    </div>
+
+    <div class="row">
+        <div class="fg">
+            <label for="etapa">Etapa *</label>
+            <select id="etapa" required onchange="cambiarEtapa()">
+                <option value="">Selecciona etapa</option>
+                <option value="infantil">Educación Infantil (3-6 años)</option>
+                <option value="primaria" selected>Educación Primaria</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label for="curso">Curso *</label>
+            <select id="curso" required>
+                <option value="">Selecciona</option>
+                <option value="1º" selected>1º Primaria</option>
+                <option value="2º">2º Primaria</option>
+                <option value="3º">3º Primaria</option>
+                <option value="4º">4º Primaria</option>
+                <option value="5º">5º Primaria</option>
+                <option value="6º">6º Primaria</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row3">
+        <div class="fg">
+            <label for="trimestre">Trimestre *</label>
+            <select id="trimestre" required>
+                <option value="1º Trimestre" selected>1º Trimestre</option>
+                <option value="2º Trimestre">2º Trimestre</option>
+                <option value="3º Trimestre">3º Trimestre</option>
+            </select>
+        </div>
+        <div class="fg">
+            <label for="sdaNum">Nº SdA</label>
+            <input type="number" id="sdaNum" min="1" max="30" value="1">
+        </div>
+        <div class="fg">
+            <label for="semanas">Semanas de duración</label>
+            <input type="number" id="semanas" min="1" max="12" value="4">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="fg">
+            <label for="sesiones">Nº de sesiones * <span class="badge badge-blue">= nº actividades</span></label>
+            <input type="number" id="sesiones" min="1" max="20" value="4" required onchange="updateSesInfo()">
+            <small id="sesInfo">Se generarán <strong>4 actividades evaluables</strong>, una por sesión.</small>
+        </div>
+        <div class="fg">
+            <label for="duracion">Duración por sesión (min) *</label>
+            <input type="number" id="duracion" min="10" max="300" value="60" step="10" required>
+        </div>
+    </div>
+
+    <div class="fg">
+        <label>Áreas/Ámbitos * <span class="badge badge-yellow">💡 Recomendado: una sola área</span></label>
+        <div class="area-adv">
+            <span style="font-size:1rem;flex-shrink:0">💡</span>
+            <span><strong>Recomendación:</strong> Selecciona <strong>una sola área</strong> para una SdA más precisa. Puedes elegir varias para SdA interdisciplinares, pero el diseño y la evaluación serán más complejos.</span>
+        </div>
+        <div class="areas-grid" id="areasContainer"></div>
+        <div class="multi-adv" id="multiAdv">
+            <span style="font-size:1rem;flex-shrink:0">🔗</span>
+            <span><strong>Modo interdisciplinar activado.</strong> La SdA integrará las áreas de forma globalizada. Selecciona criterios y saberes de cada área en los pasos siguientes.</span>
+        </div>
+        <div class="areas-sum" id="areasSummary" style="display:none">
+            <strong>Áreas:</strong> <span id="areasList"></span>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <div></div>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 2 — TIPO DE SdA ══════════════════════════════════════════ -->
+<div class="card" id="step2">
+    <h2>🗂️ Tipo de Situación de Aprendizaje</h2>
+    <p class="card-sub">El tipo determina el resultado final y condiciona toda la estructura según el formato del inspector.</p>
+
+    <div class="types-grid">
+        <div class="type-card" onclick="selTipo('producto',this)">
+            <input type="radio" name="tipo" value="producto">
+            <span class="te">🎨</span>
+            <div class="tn">SdA de Producto</div>
+            <div class="tr">📦 Objeto tangible físico o digital</div>
+            <div class="td">El alumnado crea un artefacto concreto: maqueta, dossier, blog, vídeo, guía ilustrada, libro digital…</div>
+            <div class="tex">💡 "Crear una guía ilustrada del sistema solar"</div>
+        </div>
+        <div class="type-card" onclick="selTipo('desempeno',this)">
+            <input type="radio" name="tipo" value="desempeno">
+            <span class="te">🎭</span>
+            <div class="tn">SdA de Desempeño</div>
+            <div class="tr">🎤 Actuación / Práctica social</div>
+            <div class="td">El alumnado demuestra competencias mediante una performance: debate, exposición oral, teatro, simulación…</div>
+            <div class="tex">💡 "Debate científico sobre el cambio climático"</div>
+        </div>
+        <div class="type-card" onclick="selTipo('indagacion',this)">
+            <input type="radio" name="tipo" value="indagacion">
+            <span class="te">🔍</span>
+            <div class="tn">SdA de Indagación</div>
+            <div class="tr">🧠 Respuesta a pregunta compleja</div>
+            <div class="td">Proceso de investigación que culmina en una conclusión o resolución de un misterio intelectual.</div>
+            <div class="tex">💡 "¿Por qué se mueven los planetas?"</div>
+        </div>
+        <div class="type-card" onclick="selTipo('resolucion',this)">
+            <input type="radio" name="tipo" value="resolucion">
+            <span class="te">🧩</span>
+            <div class="tn">SdA de Resolución</div>
+            <div class="tr">⚙️ Solución a problema real</div>
+            <div class="td">Resolver un problema auténtico del entorno, mejorando situaciones o dando respuesta a una necesidad concreta.</div>
+            <div class="tex">💡 "Diseñar un sistema de reciclaje para el centro"</div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 3 — DATOS DEL CENTRO ═════════════════════════════════════ -->
+<div class="card" id="step3">
+    <h2>🏫 Datos del Centro (Formato Inspector)</h2>
+    <p class="card-sub">Información requerida en el apartado 1 del formato oficial</p>
+
+    <div class="fg">
+        <label for="titSda">Título de la SdA *</label>
+        <input type="text" id="titSda" placeholder="Ej: El Universo y sus secretos, La ciudad que queremos…" required>
+    </div>
+
+    <div class="fg">
+        <label for="planesProyectos">Planes y proyectos del centro asociados</label>
+        <textarea id="planesProyectos" placeholder="Ej: Plan de Igualdad, Proyecto Erasmus+, Plan de Biblioteca, Semana Cultura Andaluza, Eco-Escuela…"></textarea>
+        <small>Indica los planes o proyectos del CEIP Capitulaciones con los que se relaciona esta SdA</small>
+    </div>
+
+    <div class="fg">
+        <label for="efemérides">Saberes eventuales / Efemérides</label>
+        <textarea id="efemérides" placeholder="Ej: Día de la Paz (30 enero), Día del Libro (23 abril), Semana de la Ciencia, Carnaval, Día de Andalucía (28 febrero)…"></textarea>
+        <small>Fechas señaladas o eventos que se integrarán en la SdA</small>
+    </div>
+
+    <div class="fg">
+        <label for="transversalidad">Transversalidad</label>
+        <textarea id="transversalidad" placeholder="Ej: Educación para la paz, Educación ambiental, Educación para la salud, Igualdad de género, Educación del consumidor…"></textarea>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 4 — CONTENIDOS Y APPS ════════════════════════════════════ -->
+<div class="card" id="step4">
+    <h2>📚 Contenidos, Metodología y Recursos</h2>
+    <p class="card-sub">Define la temática, la pregunta motriz y selecciona las herramientas del CEIP Capitulaciones</p>
+
+    <div class="fg">
+        <label for="tematica">Temática / Descripción breve de la SdA *</label>
+        <input type="text" id="tematica" placeholder="Ej: El Universo, Las plantas, Las emociones, La ciudad sostenible…" required>
+    </div>
+
+    <div class="fg">
+        <label for="preguntaMotriz">Pregunta motriz / Situación-problema <span class="badge badge-blue">Recomendado</span></label>
+        <input type="text" id="preguntaMotriz" placeholder="Ej: ¿Podríamos vivir en otro planeta? ¿Cómo podemos mejorar nuestro cole?">
+        <small>La pregunta que da sentido y motivación a toda la SdA</small>
+    </div>
+
+    <div class="fg">
+        <label>Metodologías Activas</label>
+        <div class="chips" id="metodologias">
+            <div class="chip" onclick="toggleChip(this)">ABP</div>
+            <div class="chip" onclick="toggleChip(this)">Gamificación</div>
+            <div class="chip" onclick="toggleChip(this)">Flipped Classroom</div>
+            <div class="chip selected" onclick="toggleChip(this)">Aprendizaje Cooperativo</div>
+            <div class="chip" onclick="toggleChip(this)">Design Thinking</div>
+            <div class="chip" onclick="toggleChip(this)">Aprendizaje Servicio</div>
+            <div class="chip" onclick="toggleChip(this)">Rincón de interés</div>
+            <div class="chip" onclick="toggleChip(this)">Proyecto de trabajo</div>
+        </div>
+    </div>
+
+    <!-- APPS DEL CEIP CAPITULACIONES -->
+    <div class="fg">
+        <label>🎮 Apps del CEIP Capitulaciones <span class="badge badge-green">Juegos propios del centro</span></label>
+        <small style="margin-bottom:.7rem">Selecciona las apps de vuestro portal que se usarán en esta SdA</small>
+
+        <div class="apps-section">
+            <div class="apps-area-label">📐 Matemáticas</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Capitulín Multiplicaciones">
+                    <span class="app-emoji">👑</span>
+                    <div class="app-info">
+                        <div class="app-name">Capitulín Multiplicaciones</div>
+                        <div class="app-desc">Tablas de multiplicar con aventura educativa y motivación</div>
+                        <span class="app-area-tag at-mat">Multiplicación · 2º-4º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Capitulín Sumas y Restas">
+                    <span class="app-emoji">➕</span>
+                    <div class="app-info">
+                        <div class="app-name">Capitulín Sumas y Restas</div>
+                        <div class="app-desc">Operaciones básicas con ejercicios interactivos progresivos</div>
+                        <span class="app-area-tag at-mat">Operaciones · 1º-3º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Capitulín y las Ranas (sumas y restas con llevada)">
+                    <span class="app-emoji">🐸</span>
+                    <div class="app-info">
+                        <div class="app-name">Capitulín y las Ranas</div>
+                        <div class="app-desc">Sumas y restas con llevada de forma visual y divertida</div>
+                        <span class="app-area-tag at-mat">Llevadas · 2º-3º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Matemagia (conceptos matemáticos variados)">
+                    <span class="app-emoji">🔢</span>
+                    <div class="app-info">
+                        <div class="app-name">Matemagia</div>
+                        <div class="app-desc">Práctica de conceptos matemáticos adaptados al currículo</div>
+                        <span class="app-area-tag at-mat">General · 1º-6º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Resolución de Problemas Matemáticos">
+                    <span class="app-emoji">💡</span>
+                    <div class="app-info">
+                        <div class="app-name">Resolución de Problemas</div>
+                        <div class="app-desc">Estrategias estructuradas para resolver problemas matemáticos</div>
+                        <span class="app-area-tag at-mat">Problemas · 2º-6º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Quest de Divisiones en Egipto">
+                    <span class="app-emoji">➗</span>
+                    <div class="app-info">
+                        <div class="app-name">Quest de Divisiones en Egipto</div>
+                        <div class="app-desc">Aventura por el antiguo Egipto resolviendo divisiones</div>
+                        <span class="app-area-tag at-mat">División · 3º-5º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Caballero Multiplicaciones">
+                    <span class="app-emoji">🛡️</span>
+                    <div class="app-info">
+                        <div class="app-name">Caballero Multiplicaciones</div>
+                        <div class="app-desc">Aventura medieval defendiendo el reino con las tablas</div>
+                        <span class="app-area-tag at-mat">Multiplicación · 2º-4º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Cavernícola Sumas y Restas">
+                    <span class="app-emoji">🧔‍♂️</span>
+                    <div class="app-info">
+                        <div class="app-name">Cavernícola Sumas y Restas</div>
+                        <div class="app-desc">Viaje prehistórico resolviendo operaciones en cuevas</div>
+                        <span class="app-area-tag at-mat">Operaciones · 1º-2º</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="apps-section">
+            <div class="apps-area-label">📚 Lengua y Lectura</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="LecturApp (comprensión lectora interactiva)">
+                    <span class="app-emoji">📖</span>
+                    <div class="app-info">
+                        <div class="app-name">LecturApp</div>
+                        <div class="app-desc">Comprensión lectora con textos interactivos por niveles</div>
+                        <span class="app-area-tag at-len">Comprensión · 2º-6º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Superlector Adventures (lectura Infantil y 1er ciclo)">
+                    <span class="app-emoji">📚</span>
+                    <div class="app-info">
+                        <div class="app-name">Superlector Adventures</div>
+                        <div class="app-desc">Lectura para Infantil y 1er ciclo con actividades adaptadas</div>
+                        <span class="app-area-tag at-len">Lectura · Inf-2º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="La Aventura de las Tildes (ortografía y acentuación)">
+                    <span class="app-emoji">✏️</span>
+                    <div class="app-info">
+                        <div class="app-name">La Aventura de las Tildes</div>
+                        <div class="app-desc">Juego de plataformas para dominar la acentuación</div>
+                        <span class="app-area-tag at-len">Ortografía · 3º-6º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Lecturas y Comprensión (textos de Primaria)">
+                    <span class="app-emoji">🔎</span>
+                    <div class="app-info">
+                        <div class="app-name">Lecturas y Comprensión</div>
+                        <div class="app-desc">Textos adaptados a Primaria con preguntas de comprensión</div>
+                        <span class="app-area-tag at-lec">Comprensión · 1º-6º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="El Tesoro de Capitulín (progresión fonética lectora)">
+                    <span class="app-emoji">💎</span>
+                    <div class="app-info">
+                        <div class="app-name">El Tesoro de Capitulín</div>
+                        <div class="app-desc">Aventura lectora con progresión fonética para aprender a leer</div>
+                        <span class="app-area-tag at-lec">Fonética · Inf-1º</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="apps-section">
+            <div class="apps-area-label">🔬 Ciencias</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Animales (mundo animal interactivo)">
+                    <span class="app-emoji">🦁</span>
+                    <div class="app-info">
+                        <div class="app-name">Animales</div>
+                        <div class="app-desc">Exploración del mundo animal: especies y características</div>
+                        <span class="app-area-tag at-cie">Ciencias Nat. · 2º-5º</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="apps-section">
+            <div class="apps-area-label">🌍 Cultura General y Transversal</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Capitrivial (juego de conocimientos generales)">
+                    <span class="app-emoji">🎯</span>
+                    <div class="app-info">
+                        <div class="app-name">Capitrivial</div>
+                        <div class="app-desc">Preguntas de diferentes áreas del conocimiento al estilo trivial</div>
+                        <span class="app-area-tag at-gen">General · 3º-6º</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="apps-section">
+            <div class="apps-area-label">🧩 Lógica y Resolución</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Misterio en el Cole (aventura de pistas en el CEIP)">
+                    <span class="app-emoji">🔍</span>
+                    <div class="app-info">
+                        <div class="app-name">Misterio en el Cole</div>
+                        <div class="app-desc">Resolución de misterios en el propio CEIP Capitulaciones</div>
+                        <span class="app-area-tag at-log">Lógica · 3º-6º</span>
+                    </div>
+                </div>
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Escape Room Educativo (acertijos y lógica)">
+                    <span class="app-emoji">🔐</span>
+                    <div class="app-info">
+                        <div class="app-name">Escape Room Educativo</div>
+                        <div class="app-desc">Acertijos y enigmas para escapar poniendo a prueba la lógica</div>
+                        <span class="app-area-tag at-log">Lógica · 4º-6º</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="apps-section">
+            <div class="apps-area-label">🧠 Atención y Cognitivo</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="Entrenamiento Cognitivo (atención, memoria y control inhibitorio)">
+                    <span class="app-emoji">🧠</span>
+                    <div class="app-info">
+                        <div class="app-name">Entrenamiento Cognitivo</div>
+                        <div class="app-desc">Mejora atención, memoria de trabajo y control inhibitorio</div>
+                        <span class="app-area-tag at-cog">PT · Todos los cursos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="apps-section">
+            <div class="apps-area-label">🤖 Robótica y Programación</div>
+            <div class="apps-grid">
+                <div class="app-chip" onclick="toggleApp(this)">
+                    <input type="checkbox" value="CapiRobots (robótica educativa y programación básica)">
+                    <span class="app-emoji">🤖</span>
+                    <div class="app-info">
+                        <div class="app-name">CapiRobots - Robótica</div>
+                        <div class="app-desc">Fundamentos de robótica educativa y programación básica</div>
+                        <span class="app-area-tag at-rob">Robótica · 3º-6º</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fg" style="margin-top:.5rem">
+            <label>Otras herramientas digitales externas</label>
+            <div class="chips" id="herramientas">
+                <div class="chip" onclick="toggleChip(this)">Genially</div>
+                <div class="chip" onclick="toggleChip(this)">Canva</div>
+                <div class="chip selected" onclick="toggleChip(this)">Wordwall</div>
+                <div class="chip" onclick="toggleChip(this)">Kahoot</div>
+                <div class="chip" onclick="toggleChip(this)">Educaplay</div>
+                <div class="chip" onclick="toggleChip(this)">Quizizz</div>
+                <div class="chip" onclick="toggleChip(this)">Book Creator</div>
+                <div class="chip" onclick="toggleChip(this)">Padlet</div>
+                <div class="chip" onclick="toggleChip(this)">Flipgrid</div>
+                <div class="chip" onclick="toggleChip(this)">Scratch</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 5 — SABERES BÁSICOS ══════════════════════════════════════ -->
+<div class="card" id="step5">
+    <h2>📖 Saberes Básicos</h2>
+    <p class="card-sub">Selecciona los saberes básicos según la Orden de 30 de mayo de 2023 (Junta de Andalucía)</p>
+
+    <div id="saberesContainer">
+        <p style="color:var(--text-light);padding:1rem;background:var(--bg);border-radius:8px">Selecciona la etapa y el área en el paso 1 para ver los saberes disponibles.</p>
+    </div>
+
+    <div class="fg" style="margin-top:1rem">
+        <label for="saberesManual">Añadir saberes manualmente (opcional):</label>
+        <textarea id="saberesManual" placeholder="Pega aquí códigos o descripciones adicionales de saberes básicos…"></textarea>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 6 — CRITERIOS DE EVALUACIÓN ═════════════════════════════ -->
+<div class="card" id="step6">
+    <h2>✅ Criterios de Evaluación</h2>
+    <p class="card-sub">Orden de 30 de mayo de 2023 · <span id="numSesLbl">4</span> actividades evaluables (una por sesión)</p>
+
+    <div id="criteriosPorArea">
+        <p style="color:var(--text-light);padding:1rem;background:var(--bg);border-radius:8px">Selecciona al menos un área en el paso 1.</p>
+    </div>
+
+    <div class="fg" style="margin-top:1rem">
+        <label for="criteriosManual">Añadir criterios manualmente (opcional):</label>
+        <textarea id="criteriosManual" placeholder="Criterios adicionales con su nomenclatura exacta de la Orden 30/05/2023…"></textarea>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 7 — ATENCIÓN A LA DIVERSIDAD ════════════════════════════ -->
+<div class="card" id="step7">
+    <h2>♿ Atención a la Diversidad</h2>
+    <p class="card-sub">Medidas ordinarias según el formato del inspector (apartado 6) — sin ACS</p>
+
+    <div class="fg">
+        <label for="acneae">ACNEAE en el aula</label>
+        <select id="acneae" multiple size="4">
+            <option value="Ninguna" selected>Ninguna específica</option>
+            <option value="TDAH">TDAH</option>
+            <option value="Dislexia">Dislexia</option>
+            <option value="Discapacidad intelectual">Discapacidad intelectual</option>
+            <option value="Altas capacidades">Altas capacidades</option>
+            <option value="TEA">TEA (Autismo)</option>
+            <option value="Discapacidad motora">Discapacidad motora</option>
+            <option value="Discapacidad visual">Discapacidad visual</option>
+            <option value="Discapacidad auditiva">Discapacidad auditiva</option>
+            <option value="Trastorno del lenguaje">Trastorno del lenguaje</option>
+        </select>
+        <small>Ctrl/Cmd para seleccionar varias</small>
+    </div>
+
+    <div class="fg">
+        <label>Medidas generales a aplicar (art. Decreto 101/2023)</label>
+        <div class="cbg">
+            <div class="cbi"><input type="checkbox" id="mg_a" value="a) Agrupación de áreas en ámbitos de conocimiento"><label for="mg_a">a) Agrupación de áreas en ámbitos</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_b" value="b) Apoyo en grupos ordinarios mediante segundo/a profesor/a" checked><label for="mg_b">b) Apoyo segundo/a docente en aula</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_c" value="c) Desdoblamientos de grupos en áreas instrumentales"><label for="mg_c">c) Desdoblamientos en instrumentales</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_d" value="d) Agrupamientos flexibles para atención específica" checked><label for="mg_d">d) Agrupamientos flexibles</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_e" value="e) Acción tutorial como seguimiento individualizado" checked><label for="mg_e">e) Acción tutorial individualizada</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_f" value="f) Metodologías colaborativas en grupos heterogéneos" checked><label for="mg_f">f) Metodologías colaborativas</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_g" value="g) Coordinación en transición entre etapas"><label for="mg_g">g) Coordinación transición etapas</label></div>
+            <div class="cbi"><input type="checkbox" id="mg_h" value="h) Prevención y control del absentismo"><label for="mg_h">h) Prevención absentismo</label></div>
+        </div>
+    </div>
+
+    <div class="fg">
+        <label>Principios DUA <span class="badge badge-blue">Diseño Universal</span></label>
+        <div class="cbg">
+            <div class="cbi"><input type="checkbox" id="dua1" value="7.2 Optimizar relevancia y autenticidad" checked><label for="dua1">7.2 Optimizar relevancia y autenticidad</label></div>
+            <div class="cbi"><input type="checkbox" id="dua2" value="4.1 Alternativas para la percepción"><label for="dua2">4.1 Alternativas para la percepción</label></div>
+            <div class="cbi"><input type="checkbox" id="dua3" value="6.1 Guiar planificación y estrategia"><label for="dua3">6.1 Guiar planificación y estrategia</label></div>
+            <div class="cbi"><input type="checkbox" id="dua4" value="8.2 Optimizar acceso a herramientas"><label for="dua4">8.2 Optimizar acceso a herramientas</label></div>
+            <div class="cbi"><input type="checkbox" id="dua5" value="9.1 Aumentar interés y esfuerzo"><label for="dua5">9.1 Aumentar interés y esfuerzo</label></div>
+            <div class="cbi"><input type="checkbox" id="dua6" value="3.3 Guiar el procesamiento de la información"><label for="dua6">3.3 Guiar procesamiento de la información</label></div>
+        </div>
+    </div>
+
+    <div class="fg">
+        <label>Programas de atención a la diversidad</label>
+        <div class="cbg">
+            <div class="cbi"><input type="checkbox" id="prf1" value="Programa de refuerzo: alumnado que no ha promocionado"><label for="prf1">Refuerzo: alumnado no promocionado</label></div>
+            <div class="cbi"><input type="checkbox" id="prf2" value="Programa de refuerzo: áreas no superadas del curso anterior"><label for="prf2">Refuerzo: áreas no superadas</label></div>
+            <div class="cbi"><input type="checkbox" id="prf3" value="Programa de refuerzo: dificultades de aprendizaje"><label for="prf3">Refuerzo: dificultades de aprendizaje</label></div>
+            <div class="cbi"><input type="checkbox" id="prf4" value="Programa de refuerzo: dificultades en comunicación lingüística"><label for="prf4">Refuerzo: comunicación lingüística</label></div>
+            <div class="cbi"><input type="checkbox" id="pro1" value="Programa de profundización: alumnado altamente motivado"><label for="pro1">Profundización: altamente motivado</label></div>
+            <div class="cbi"><input type="checkbox" id="pro2" value="Programa de profundización: altas capacidades intelectuales"><label for="pro2">Profundización: altas capacidades</label></div>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
+    </div>
+</div>
+
+<!-- ══ PASO 8 — GENERAR PROMPT SdA ═══════════════════════════════════ -->
+<div class="card" id="step8">
+    <h2>🚀 Generar SdA Completa (Formato Inspector)</h2>
+    <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> del inspector + <strong id="promptSesLbl">4</strong> actividades evaluables con escala numérica</p>
+
+    <div class="fg">
+        <label>¿Con qué IA vas a trabajar?</label>
+        <div class="ia-chips">
+            <div class="ia-chip selected" data-ia="gemini" data-url="https://gemini.google.com" onclick="selIA(this)">🔵 Gemini</div>
+            <div class="ia-chip" data-ia="chatgpt" data-url="https://chat.openai.com" onclick="selIA(this)">🟢 ChatGPT</div>
+            <div class="ia-chip" data-ia="claude" data-url="https://claude.ai" onclick="selIA(this)">🟠 Claude</div>
+            <div class="ia-chip" data-ia="copilot" data-url="https://copilot.microsoft.com" onclick="selIA(this)">🟣 Copilot</div>
+        </div>
+        <span class="ia-status" id="iaStatus">✅ Se abrirá <strong>Gemini</strong> — el prompt se copiará al portapapeles.</span>
+    </div>
+
+    <div class="prev-box">
+        <div class="prev-actions">
+            <button class="btn btn-success btn-sm" onclick="copiarPrompt()">📋 Copiar</button>
+            <button class="btn btn-primary btn-sm" onclick="descargarTXT()">💾 Descargar</button>
+            <button class="btn btn-secondary btn-sm" onclick="compartirPrompt()">📤 Compartir</button>
+        </div>
+        <div id="promptContent">Pulsa "Generar Prompt" para ver el resultado aquí…</div>
+    </div>
+
+    <div class="final-actions">
+        <div class="far">
+            <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
+            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
+                <button class="btn btn-success" onclick="generarPrompt()">✨ Generar Prompt</button>
+                <button class="btn-launch" onclick="generarYAbrir()">🚀 Generar y Abrir IA</button>
+            </div>
+        </div>
+        <div style="text-align:right">
+            <button class="btn btn-purple" onclick="irARubricas()">📐 Ya tengo la SdA → Crear Rúbricas</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══ PASO 9 — RÚBRICAS ══════════════════════════════════════════════ -->
+<div class="card" id="step9">
+    <h2>📐 Rúbricas (Formato Inspector)</h2>
+    <p class="card-sub">Genera las rúbricas con la escala numérica oficial: Insuficiente·Suficiente·Bien·Notable·Sobresaliente</p>
+
+    <div class="rub-intro">
+        <h3>📋 Flujo de trabajo</h3>
+        <ol>
+            <li>Lleva el prompt del paso 8 a tu IA y obtén la SdA completa</li>
+            <li>Copia el texto completo que te devolvió la IA</li>
+            <li>Pégalo en el cuadro de abajo</li>
+            <li>Pulsa <strong>"Generar y Abrir IA"</strong> para obtener las rúbricas en formato inspector</li>
+        </ol>
+    </div>
+
+    <div class="fg">
+        <label for="sdaPegada">📄 Pega aquí tu SdA completa generada por la IA *</label>
+        <textarea id="sdaPegada" class="sda-paste" style="min-height:180px" placeholder="Pega aquí el texto completo de la SdA que generó la IA…"></textarea>
+    </div>
+
+    <div class="fg">
+        <label>Tipo de rúbricas adicionales:</label>
+        <div class="chips" id="tipoRubrica">
+            <div class="chip selected" onclick="toggleChip(this)">Analítica (por criterios)</div>
+            <div class="chip selected" onclick="toggleChip(this)">Con descriptores detallados</div>
+            <div class="chip" onclick="toggleChip(this)">Formato tabla Word</div>
+            <div class="chip" onclick="toggleChip(this)">Co-evaluación alumnado</div>
+            <div class="chip" onclick="toggleChip(this)">Autoevaluación del alumno</div>
+        </div>
+    </div>
+
+    <div class="prev-box" style="margin-top:1rem">
+        <div class="prev-actions">
+            <button class="btn btn-success btn-sm" onclick="copiarRubrica()">📋 Copiar prompt rúbrica</button>
+            <button class="btn btn-primary btn-sm" onclick="descargarRubrica()">💾 Descargar</button>
+        </div>
+        <div id="rubricContent">El prompt de rúbricas aparecerá aquí…</div>
+    </div>
+
+    <div class="final-actions">
+        <div class="far">
+            <button class="btn btn-secondary" onclick="prevStep()">← Volver</button>
+            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
+                <button class="btn btn-purple" onclick="generarPromptRubricas()">📐 Generar Prompt Rúbricas</button>
+                <button class="btn-rlaunce" onclick="generarYAbrirRubricas()">🚀 Generar y Abrir IA</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="toast" id="toast"></div>
+<button class="install-btn" id="installBtn" onclick="instalarPWA()">📲 Instalar App</button>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// ESTADO GLOBAL
+// ═══════════════════════════════════════════════════════════════════
+let currentStep=1, totalSteps=9, deferredPrompt;
+let areasSeleccionadas=[], sdaTipo=null;
+
+const sdaTipos={
+    producto:{nombre:'SdA de Producto',emoji:'🎨',resultado:'Objeto tangible físico o digital'},
+    desempeno:{nombre:'SdA de Desempeño',emoji:'🎭',resultado:'Actuación / Práctica social'},
+    indagacion:{nombre:'SdA de Indagación',emoji:'🔍',resultado:'Respuesta a pregunta compleja'},
+    resolucion:{nombre:'SdA de Resolución',emoji:'🧩',resultado:'Solución a problema real'}
+};
+const iaUrls={gemini:'https://gemini.google.com',chatgpt:'https://chat.openai.com',claude:'https://claude.ai',copilot:'https://copilot.microsoft.com'};
+const iaNames={gemini:'Gemini',chatgpt:'ChatGPT',claude:'Claude',copilot:'Copilot'};
+
+// ═══════════════════════════════════════════════════════════════════
+// CURRÍCULO COMPLETO (Saberes + Criterios)
+// ═══════════════════════════════════════════════════════════════════
+const curriculo={
+  infantil:{nombre:'Educación Infantil',cursos:['3 años','4 años','5 años'],areas:{
+    'Crecimiento en armonía':{tag:'obligatoria',desc:'Identidad, autonomía, emociones, salud y movimiento',
+      saberes:[
+        {bloque:'A. Identidad y dignidad propia',items:[
+          {c:'CA-A.1',t:'El conocimiento de uno mismo: imagen corporal, características y emociones.'},
+          {c:'CA-A.2',t:'La regulación emocional: estrategias para identificar, expresar y gestionar emociones.'},
+          {c:'CA-A.3',t:'La autoestima y el autoconcepto: valoración ajustada de las propias capacidades.'}
+        ]},
+        {bloque:'B. Autonomía personal',items:[
+          {c:'CA-B.1',t:'Hábitos de autonomía en rutinas: alimentación, higiene y vestido.'},
+          {c:'CA-B.2',t:'Hábitos de salud, higiene y seguridad básica.'},
+          {c:'CA-B.3',t:'Iniciativa personal y toma de decisiones sencillas.'}
+        ]},
+        {bloque:'C. Vida en convivencia',items:[
+          {c:'CA-C.1',t:'Normas básicas de convivencia: respeto, turnos, compartir y cooperar.'},
+          {c:'CA-C.2',t:'Resolución pacífica de pequeños conflictos cotidianos.'},
+          {c:'CA-C.3',t:'El movimiento y la coordinación corporal en el espacio.'}
+        ]}
+      ],
+      criterios:[
+        {c:'CA.1.1',t:'Reconocer y expresar emociones identificando situaciones que las provocan.'},
+        {c:'CA.1.2',t:'Desarrollar hábitos de autonomía en actividades cotidianas.'},
+        {c:'CA.1.3',t:'Participar en juegos respetando normas básicas de convivencia.'},
+        {c:'CA.1.4',t:'Explorar posibilidades del movimiento coordinando el esquema corporal.'},
+        {c:'CA.1.5',t:'Adquirir hábitos de salud e higiene identificando conductas de riesgo.'}
+      ]
+    },
+    'Descubrimiento y exploración del entorno':{tag:'obligatoria',desc:'Entorno natural, social, pensamiento matemático y científico',
+      saberes:[
+        {bloque:'A. Curiosidad e indagación',items:[
+          {c:'DE-A.1',t:'Actitud de curiosidad y formulación de preguntas sobre el entorno.'},
+          {c:'DE-A.2',t:'Observación sistemática y registro de información sencilla.'}
+        ]},
+        {bloque:'B. Pensamiento matemático',items:[
+          {c:'DE-B.1',t:'Recuento, clasificación y seriación de objetos según atributos.'},
+          {c:'DE-B.2',t:'Formas geométricas básicas y referencias espaciales.'},
+          {c:'DE-B.3',t:'Nociones temporales básicas: antes, después, ahora.'}
+        ]},
+        {bloque:'C. Entorno natural y social',items:[
+          {c:'DE-C.1',t:'Seres vivos del entorno: características, ciclo vital y cuidados.'},
+          {c:'DE-C.2',t:'El entorno social próximo: familia, escuela, barrio.'},
+          {c:'DE-C.3',t:'Sostenibilidad: respeto y cuidado del entorno natural.'}
+        ]}
+      ],
+      criterios:[
+        {c:'DE.2.1',t:'Explorar objetos mostrando curiosidad por sus propiedades.'},
+        {c:'DE.2.2',t:'Identificar elementos del entorno natural y su transformación.'},
+        {c:'DE.2.3',t:'Utilizar estrategias de recuento, clasificación y seriación.'},
+        {c:'DE.2.4',t:'Reconocer formas geométricas básicas y referencias espaciales.'},
+        {c:'DE.2.5',t:'Mostrar respeto y cuidado hacia el entorno natural.'}
+      ]
+    },
+    'Comunicación y representación de la realidad':{tag:'obligatoria',desc:'Lenguajes verbal, corporal, plástico, musical y digital',
+      saberes:[
+        {bloque:'A. Comunicación verbal',items:[
+          {c:'CR-A.1',t:'Vocabulario básico adecuado a situaciones comunicativas.'},
+          {c:'CR-A.2',t:'Escucha activa y comprensión de mensajes orales.'},
+          {c:'CR-A.3',t:'Lectoescritura emergente: nombre propio y letras del entorno.'}
+        ]},
+        {bloque:'B. Lenguajes artísticos',items:[
+          {c:'CR-B.1',t:'Técnicas plásticas: dibujo, pintura, modelado y collage.'},
+          {c:'CR-B.2',t:'Expresión corporal, dramatización y juego simbólico.'},
+          {c:'CR-B.3',t:'Música y ritmo: canciones, instrumentos y audición.'}
+        ]},
+        {bloque:'C. Lenguaje digital',items:[
+          {c:'CR-C.1',t:'Uso básico y seguro de dispositivos digitales para comunicar y crear.'}
+        ]}
+      ],
+      criterios:[
+        {c:'CR.3.1',t:'Comprender y expresar mensajes oralmente respetando turnos.'},
+        {c:'CR.3.2',t:'Manifestar interés por la lectoescritura emergente.'},
+        {c:'CR.3.3',t:'Expresar ideas mediante lenguaje corporal y dramatización.'},
+        {c:'CR.3.4',t:'Explorar técnicas plásticas representando experiencias.'},
+        {c:'CR.3.5',t:'Experimentar con sonido, ritmo y voz en actividades musicales.'},
+        {c:'CR.3.6',t:'Utilizar herramientas digitales básicas de forma segura.'}
+      ]
+    }
+  }},
+  primaria:{nombre:'Educación Primaria',cursos:['1º','2º','3º','4º','5º','6º'],areas:{
+    'Matemáticas':{tag:'obligatoria',desc:'Números, operaciones, geometría, medida y estadística',
+      saberes:[
+        {bloque:'A. Sentido numérico',items:[
+          {c:'MAT-A.1',t:'Números naturales, fracciones y decimales: lectura, escritura y ordenación.'},
+          {c:'MAT-A.2',t:'Operaciones básicas: algoritmos y propiedades.'},
+          {c:'MAT-A.3',t:'Cálculo mental: estrategias de cálculo aproximado y exacto.'},
+          {c:'MAT-A.4',t:'Resolución de problemas aritméticos de una y varias operaciones.'}
+        ]},
+        {bloque:'B. Sentido de la medida',items:[
+          {c:'MAT-B.1',t:'Magnitudes y unidades: longitud, masa, capacidad y tiempo.'},
+          {c:'MAT-B.2',t:'Estimación y medición con instrumentos convencionales.'},
+          {c:'MAT-B.3',t:'Sistema monetario euro: equivalencias y problemas cotidianos.'}
+        ]},
+        {bloque:'C. Sentido espacial',items:[
+          {c:'MAT-C.1',t:'Figuras geométricas planas: nombre, propiedades y clasificación.'},
+          {c:'MAT-C.2',t:'Cuerpos geométricos: identificación y características.'},
+          {c:'MAT-C.3',t:'Orientación espacial: coordenadas, planos y mapas sencillos.'}
+        ]},
+        {bloque:'D. Sentido algebraico',items:[
+          {c:'MAT-D.1',t:'Patrones, regularidades y relaciones numéricas.'},
+          {c:'MAT-D.2',t:'Uso de letras y símbolos para cantidades desconocidas.'}
+        ]},
+        {bloque:'E. Sentido estocástico',items:[
+          {c:'MAT-E.1',t:'Recogida y representación de datos en tablas y gráficos.'},
+          {c:'MAT-E.2',t:'Nociones básicas de probabilidad: posible, imposible, seguro.'}
+        ]}
+      ],
+      criterios:[
+        {c:'MAT.1.1',t:'Resolver problemas usando operaciones básicas justificando la estrategia.'},
+        {c:'MAT.1.2',t:'Reconocer y describir formas geométricas planas y espaciales.'},
+        {c:'MAT.1.3',t:'Interpretar y representar datos en tablas y gráficos.'},
+        {c:'MAT.1.4',t:'Realizar estimaciones y cálculos mentales con números naturales.'},
+        {c:'MAT.1.5',t:'Identificar situaciones cotidianas con fracciones y decimales sencillos.'}
+      ]
+    },
+    'Lengua Castellana y Literatura':{tag:'obligatoria',desc:'Comunicación oral, lectura, escritura y literatura',
+      saberes:[
+        {bloque:'A. Comunicación oral',items:[
+          {c:'LCL-A.1',t:'Comprensión de textos orales: escucha activa e idea principal.'},
+          {c:'LCL-A.2',t:'Producción oral: claridad, coherencia y adecuación al contexto.'},
+          {c:'LCL-A.3',t:'Normas de interacción: turnos, respeto y escucha.'}
+        ]},
+        {bloque:'B. Leer',items:[
+          {c:'LCL-B.1',t:'Lectura fluida y comprensiva de textos de diferente tipología.'},
+          {c:'LCL-B.2',t:'Estrategias de comprensión: predicción, inferencia y síntesis.'},
+          {c:'LCL-B.3',t:'Hábito lector y valoración de la lectura como fuente de placer.'}
+        ]},
+        {bloque:'C. Escribir',items:[
+          {c:'LCL-C.1',t:'Producción escrita: planificación, redacción y revisión.'},
+          {c:'LCL-C.2',t:'Ortografía: acentuación, puntuación y uso de mayúsculas.'},
+          {c:'LCL-C.3',t:'Caligrafía: legibilidad y presentación adecuada.'}
+        ]},
+        {bloque:'D. Conocimiento de la lengua',items:[
+          {c:'LCL-D.1',t:'Categorías gramaticales: nombre, adjetivo, verbo, artículo.'},
+          {c:'LCL-D.2',t:'La oración: sujeto y predicado. Tipos de oraciones.'},
+          {c:'LCL-D.3',t:'El léxico: familias de palabras, sinónimos y antónimos.'}
+        ]},
+        {bloque:'E. Educación literaria',items:[
+          {c:'LCL-E.1',t:'Géneros literarios: narrativa, poesía y teatro.'},
+          {c:'LCL-E.2',t:'Recursos literarios: rima, comparación y personificación.'},
+          {c:'LCL-E.3',t:'Literatura oral: refranes, trabalenguas y adivinanzas.'}
+        ]}
+      ],
+      criterios:[
+        {c:'LCL.2.1',t:'Comprender textos orales y escritos identificando idea principal.'},
+        {c:'LCL.2.2',t:'Expresarse oralmente de forma coherente respetando turnos y tono.'},
+        {c:'LCL.2.3',t:'Leer en voz alta con fluidez, entonación y comprensión.'},
+        {c:'LCL.2.4',t:'Producir textos escritos coherentes con ortografía básica correcta.'},
+        {c:'LCL.2.5',t:'Identificar y disfrutar textos literarios reconociendo características.'}
+      ]
+    },
+    'Ciencias de la Naturaleza':{tag:'obligatoria',desc:'Seres vivos, materia, energía, ecología y tecnología',
+      saberes:[
+        {bloque:'A. Cultura científica',items:[
+          {c:'CNat-A.1',t:'El método científico: observar, hipótesis, experimentar, concluir.'},
+          {c:'CNat-A.2',t:'Instrumentos de observación y medida: lupa, termómetro, balanza.'}
+        ]},
+        {bloque:'B. Seres vivos',items:[
+          {c:'CNat-B.1',t:'Clasificación de seres vivos: animales, plantas, fungi, microorganismos.'},
+          {c:'CNat-B.2',t:'Los ecosistemas: componentes, relaciones y cadenas tróficas.'},
+          {c:'CNat-B.3',t:'El cuerpo humano: aparatos y sistemas. La salud y la enfermedad.'}
+        ]},
+        {bloque:'C. Materia y energía',items:[
+          {c:'CNat-C.1',t:'Propiedades de la materia: estados y cambios de estado.'},
+          {c:'CNat-C.2',t:'Fuentes de energía: renovables y no renovables.'},
+          {c:'CNat-C.3',t:'Mezclas y disoluciones: técnicas de separación básicas.'}
+        ]},
+        {bloque:'D. Tecnología',items:[
+          {c:'CNat-D.1',t:'Máquinas simples: palanca, polea, plano inclinado.'},
+          {c:'CNat-D.2',t:'Uso responsable de la tecnología y el entorno digital.'}
+        ]},
+        {bloque:'E. Sostenibilidad',items:[
+          {c:'CNat-E.1',t:'Problemas medioambientales: contaminación y cambio climático.'},
+          {c:'CNat-E.2',t:'Hábitos sostenibles: reducir, reutilizar y reciclar.'}
+        ]}
+      ],
+      criterios:[
+        {c:'CNat.3.1',t:'Identificar y describir seres vivos y fenómenos naturales estableciendo relaciones.'},
+        {c:'CNat.3.2',t:'Utilizar el método científico básico para explorar el entorno.'},
+        {c:'CNat.3.3',t:'Valorar la conservación del medio ambiente y adoptar hábitos sostenibles.'},
+        {c:'CNat.3.4',t:'Explicar fenómenos naturales cotidianos con conceptos de materia y energía.'}
+      ]
+    },
+    'Ciencias Sociales':{tag:'obligatoria',desc:'Geografía, historia, convivencia, instituciones y constitución',
+      saberes:[
+        {bloque:'A. Cultura e identidad',items:[
+          {c:'CSOC-A.1',t:'Identidad personal y colectiva: costumbres y patrimonio cultural andaluz.'},
+          {c:'CSOC-A.2',t:'Diversidad cultural: respeto e interculturalidad.'}
+        ]},
+        {bloque:'B. El mundo en que vivimos',items:[
+          {c:'CSOC-B.1',t:'El planeta Tierra: forma, movimientos y consecuencias.'},
+          {c:'CSOC-B.2',t:'Representaciones espaciales: mapas, planos y escala.'},
+          {c:'CSOC-B.3',t:'Paisajes de España y Andalucía: elementos naturales y humanizados.'},
+          {c:'CSOC-B.4',t:'Organización política: municipio, provincia, comunidad, Estado.'}
+        ]},
+        {bloque:'C. Sostenibilidad',items:[
+          {c:'CSOC-C.1',t:'Recursos naturales y su uso sostenible.'},
+          {c:'CSOC-C.2',t:'Problemas medioambientales globales y locales: acciones de mejora.'}
+        ]},
+        {bloque:'D. Ciudadanía',items:[
+          {c:'CSOC-D.1',t:'La Constitución Española: derechos, deberes y valores democráticos.'},
+          {c:'CSOC-D.2',t:'Las instituciones democráticas: municipio, Junta, Cortes, UE.'},
+          {c:'CSOC-D.3',t:'Historia de España y Andalucía: hechos y personajes. Líneas del tiempo.'}
+        ]}
+      ],
+      criterios:[
+        {c:'CSOC.4.1',t:'Identificar elementos del entorno natural y social y sus interrelaciones.'},
+        {c:'CSOC.4.2',t:'Reconocer la diversidad cultural y valorar el respeto a las diferencias.'},
+        {c:'CSOC.4.3',t:'Utilizar representaciones espaciales y temporales para interpretar la realidad.'},
+        {c:'CSOC.4.4',t:'Conocer derechos y deberes ciudadanos y los principios de la Constitución.'}
+      ]
+    },
+    'Inglés (1ª Lengua Extranjera)':{tag:'obligatoria',desc:'Comprensión y expresión oral y escrita en inglés',
+      saberes:[
+        {bloque:'A. Comunicación',items:[
+          {c:'ING-A.1',t:'Comprensión oral: instrucciones, descripciones e información básica en inglés.'},
+          {c:'ING-A.2',t:'Producción oral: presentaciones y conversaciones cotidianas en inglés.'},
+          {c:'ING-A.3',t:'Comprensión escrita: textos breves con apoyo visual.'},
+          {c:'ING-A.4',t:'Producción escrita: textos breves y sencillos en inglés.'}
+        ]},
+        {bloque:'B. Plurilingüismo',items:[
+          {c:'ING-B.1',t:'Estrategias de comunicación: gestión de comprensión y producción.'},
+          {c:'ING-B.2',t:'Comparación entre lenguas: semejanzas y diferencias.'}
+        ]},
+        {bloque:'C. Interculturalidad',items:[
+          {c:'ING-C.1',t:'Aspectos culturales de países anglófonos: festividades y costumbres.'}
+        ]}
+      ],
+      criterios:[
+        {c:'ING.5.1',t:'Comprender mensajes orales en inglés en situaciones cotidianas.'},
+        {c:'ING.5.2',t:'Producir mensajes orales en inglés con estructuras básicas.'},
+        {c:'ING.5.3',t:'Leer textos breves en inglés extrayendo información específica.'},
+        {c:'ING.5.4',t:'Escribir textos breves en inglés con corrección básica.'}
+      ]
+    },
+    'Educación Artística':{tag:'obligatoria',desc:'Música, artes visuales, plástica y expresión corporal',
+      saberes:[
+        {bloque:'A. Recepción y análisis',items:[
+          {c:'EART-A.1',t:'Observación de obras artísticas del patrimonio cultural.'},
+          {c:'EART-A.2',t:'Elementos del lenguaje visual: línea, color, forma, textura.'},
+          {c:'EART-A.3',t:'Elementos del lenguaje musical: ritmo, melodía, timbre y dinámica.'}
+        ]},
+        {bloque:'B. Creación',items:[
+          {c:'EART-B.1',t:'Técnicas plásticas: dibujo, pintura, escultura y diseño digital.'},
+          {c:'EART-B.2',t:'Interpretación musical: voz, instrumentos de percusión y corporales.'},
+          {c:'EART-B.3',t:'Expresión corporal y danza: movimiento, espacio y ritmo.'}
+        ]},
+        {bloque:'C. Contexto cultural',items:[
+          {c:'EART-C.1',t:'Patrimonio artístico de Andalucía y España: reconocimiento y valoración.'}
+        ]}
+      ],
+      criterios:[
+        {c:'EART.6.1',t:'Expresar ideas usando diferentes técnicas y lenguajes artísticos.'},
+        {c:'EART.6.2',t:'Valorar el patrimonio artístico cercano con respeto y aprecio.'},
+        {c:'EART.6.3',t:'Explorar materiales, sonidos e instrumentos para crear producciones propias.'}
+      ]
+    },
+    'Educación Física':{tag:'obligatoria',desc:'Actividad física, motricidad, deporte y salud',
+      saberes:[
+        {bloque:'A. Salud y actividad física',items:[
+          {c:'EF-A.1',t:'Beneficios de la actividad física para la salud física y mental.'},
+          {c:'EF-A.2',t:'Hábitos posturales, alimentación equilibrada y descanso.'},
+          {c:'EF-A.3',t:'Calentamiento y vuelta a la calma: importancia y ejecución.'}
+        ]},
+        {bloque:'B. Movimiento y juego',items:[
+          {c:'EF-B.1',t:'Habilidades motrices básicas: desplazamientos, saltos, giros y lanzamientos.'},
+          {c:'EF-B.2',t:'Juegos populares, tradicionales y deportes adaptados.'},
+          {c:'EF-B.3',t:'Juegos cooperativos: trabajo en equipo y respeto.'}
+        ]},
+        {bloque:'C. Expresión corporal',items:[
+          {c:'EF-C.1',t:'Expresión corporal: mimo, danza y actividades rítmicas.'}
+        ]}
+      ],
+      criterios:[
+        {c:'EF.7.1',t:'Ejecutar movimientos coordinados adaptándose al espacio y compañeros.'},
+        {c:'EF.7.2',t:'Adoptar hábitos saludables relacionados con actividad física y alimentación.'},
+        {c:'EF.7.3',t:'Participar activa y respetuosamente en juegos cooperativos y competitivos.'}
+      ]
+    },
+    'Francés (2ª Lengua Extranjera)':{tag:'optativa',desc:'Comprensión y expresión oral y escrita en francés',
+      saberes:[
+        {bloque:'A. Comunicación en francés',items:[
+          {c:'FRA-A.1',t:'Comprensión oral básica en francés: saludos, presentaciones, colores, números.'},
+          {c:'FRA-A.2',t:'Producción oral básica: diálogos sencillos sobre temas cotidianos.'},
+          {c:'FRA-A.3',t:'Lectura de textos muy breves con apoyo visual.'}
+        ]},
+        {bloque:'B. Cultura francófona',items:[
+          {c:'FRA-B.1',t:'Aspectos culturales básicos de Francia y países francófonos.'}
+        ]}
+      ],
+      criterios:[
+        {c:'FRA.8.1',t:'Comprender mensajes orales sencillos en francés sobre situaciones cotidianas.'},
+        {c:'FRA.8.2',t:'Producir expresiones orales básicas en francés con vocabulario elemental.'},
+        {c:'FRA.8.3',t:'Leer y comprender textos muy breves en francés con apoyo visual.'},
+        {c:'FRA.8.4',t:'Mostrar interés por la lengua y cultura francófona.'}
+      ]
+    },
+    'Religión Católica':{tag:'alternativa',desc:'Área de oferta obligatoria (alternativa a Valores Cívicos)',
+      saberes:[
+        {bloque:'A. La fe cristiana',items:[
+          {c:'REL-A.1',t:'La Biblia: estructura, libros principales y textos significativos.'},
+          {c:'REL-A.2',t:'La vida de Jesús de Nazaret: nacimiento, ministerio y resurrección.'},
+          {c:'REL-A.3',t:'La Iglesia Católica: origen, sacramentos y comunidad cristiana.'}
+        ]},
+        {bloque:'B. Arte y liturgia',items:[
+          {c:'REL-B.1',t:'Manifestaciones artísticas de inspiración cristiana.'},
+          {c:'REL-B.2',t:'El año litúrgico: Adviento, Navidad, Cuaresma, Pascua y Pentecostés.'}
+        ]},
+        {bloque:'C. Diálogo interreligioso',items:[
+          {c:'REL-C.1',t:'Grandes religiones del mundo: rasgos básicos de judaísmo, islam, hinduismo y budismo.'},
+          {c:'REL-C.2',t:'Valores comunes de las religiones: respeto, paz y solidaridad.'}
+        ]}
+      ],
+      criterios:[
+        {c:'REL.9.1',t:'Conocer elementos fundamentales de la fe cristiana y su expresión comunitaria.'},
+        {c:'REL.9.2',t:'Identificar textos bíblicos significativos comprendiendo su mensaje.'},
+        {c:'REL.9.3',t:'Reconocer manifestaciones artísticas de inspiración cristiana en el entorno.'},
+        {c:'REL.9.4',t:'Valorar el diálogo interreligioso como fuente de convivencia.'}
+      ]
+    },
+    'Valores Cívicos y Éticos':{tag:'alternativa',desc:'Alternativa a Religión — ciudadanía, ética y democracia',
+      saberes:[
+        {bloque:'A. Identidad y valores',items:[
+          {c:'VCE-A.1',t:'Los valores éticos: libertad, justicia, igualdad, solidaridad y respeto.'},
+          {c:'VCE-A.2',t:'La dignidad humana y los derechos humanos universales.'},
+          {c:'VCE-A.3',t:'Los derechos del niño: conocimiento y aplicación práctica.'}
+        ]},
+        {bloque:'B. Convivencia democrática',items:[
+          {c:'VCE-B.1',t:'La democracia: principios, valores y funcionamiento básico.'},
+          {c:'VCE-B.2',t:'Resolución pacífica de conflictos: mediación, diálogo y empatía.'},
+          {c:'VCE-B.3',t:'La Constitución Española: valores y derechos fundamentales.'}
+        ]},
+        {bloque:'C. Ciudadanía global',items:[
+          {c:'VCE-C.1',t:'Los ODS (Agenda 2030) y el desarrollo sostenible.'},
+          {c:'VCE-C.2',t:'Situaciones de injusticia: análisis crítico y propuestas de acción.'}
+        ]}
+      ],
+      criterios:[
+        {c:'VCE.10.1',t:'Identificar y aplicar valores democráticos en situaciones cotidianas.'},
+        {c:'VCE.10.2',t:'Reconocer los derechos humanos y los derechos del niño.'},
+        {c:'VCE.10.3',t:'Resolver conflictos de forma pacífica usando mediación y empatía.'},
+        {c:'VCE.10.4',t:'Analizar situaciones de injusticia y proponer acciones de mejora colectiva.'}
+      ]
+    }
+  }}
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+    cambiarEtapa();
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').classList.add('show');});
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// FOTO DEL LIBRO
+// ═══════════════════════════════════════════════════════════════════
+function abrirFotoLibro(){
+    const p=`Actúas como experto en currículo educativo de la Junta de Andalucía para Primaria e Infantil.
+
+Analiza la imagen adjunta (página de libro de texto o programación didáctica) y extrae TODA la información curricular para elaborar una Situación de Aprendizaje según:
+- LOMLOE (Ley Orgánica 3/2022)
+- Orden de 30 de mayo de 2023 (Consejería de Desarrollo Educativo y FP, Junta de Andalucía)
+- Decreto 101/2023 de ordenación de la Educación Primaria en Andalucía
+
+Devuelve la información en este JSON exacto:
+{
+  "etapa": "Educación Primaria / Educación Infantil",
+  "curso": "Xº",
+  "area": "nombre exacto del área",
+  "trimestre": "Xº Trimestre",
+  "tematica": "título del tema o unidad",
+  "pregunta_motriz": "pregunta adecuada al tipo de SdA o extraída del libro",
+  "criterios_evaluacion": [{"codigo": "XXX.X.X","texto": "descripción completa"}],
+  "saberes_basicos": [{"bloque": "nombre del bloque","codigo": "XXX-X.X","texto": "descripción"}],
+  "competencias_clave": ["CCL","STEM",...],
+  "objetivos_aprendizaje": ["verbo + contenido observable",...],
+  "metodologias_sugeridas": ["ABP","Cooperativo",...],
+  "contenidos_principales": ["contenido 1","contenido 2",...],
+  "efemérides": "fechas o eventos relacionados si aparecen",
+  "transversalidad": "ejes transversales detectados"
+}
+
+Si algún campo no aparece, déjalo vacío o propón el valor más adecuado según la normativa andaluza para el nivel detectado.
+
+Después del JSON, añade OBSERVACIONES sobre qué has extraído directamente y qué has inferido.`;
+    navigator.clipboard.writeText(p).then(()=>showToast('📸 Prompt copiado. Abriendo Gemini… adjunta la foto del libro')).catch(()=>showToast('📸 Abriendo Gemini con el prompt preparado'));
+    setTimeout(()=>window.open('https://gemini.google.com','_blank'),700);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ETAPA Y ÁREAS
+// ═══════════════════════════════════════════════════════════════════
+function cambiarEtapa(){
+    const etapa=document.getElementById('etapa').value;
+    const cs=document.getElementById('curso');
+    cs.innerHTML='<option value="">Selecciona</option>';
+    if(curriculo[etapa]) curriculo[etapa].cursos.forEach(c=>cs.innerHTML+=`<option value="${c}">${etapa==='infantil'?c+' (Segundo Ciclo)':c+' Primaria'}</option>`);
+    const ac=document.getElementById('areasContainer');
+    ac.innerHTML=''; areasSeleccionadas=[];
+    actualizarResumenAreas();
+    document.getElementById('multiAdv').classList.remove('show');
+    if(curriculo[etapa]){
+        Object.entries(curriculo[etapa].areas).forEach(([area,info],i)=>{
+            const tl=info.tag==='optativa'?'🟡 Optativa':info.tag==='alternativa'?'🟣 Alternativa':'🔵 Obligatoria';
+            const d=document.createElement('div');
+            d.className='area-item'; d.onclick=()=>toggleArea(area,d);
+            d.innerHTML=`<input type="checkbox" id="ar_${i}" onclick="event.stopPropagation();toggleArea('${area.replace(/'/g,"\\'")}',this.parentElement)">
+            <div class="ac"><span class="atag tag-${info.tag}">${tl}</span><div class="at">${area}</div><div class="ad">${info.desc}</div></div>`;
+            ac.appendChild(d);
+        });
+    }
+    actualizarSaberes(); actualizarCriterios();
+}
+
+function toggleArea(nombre,el){
+    const cb=el.querySelector('input[type=checkbox]');
+    cb.checked=!cb.checked;
+    if(cb.checked){el.classList.add('selected');if(!areasSeleccionadas.includes(nombre))areasSeleccionadas.push(nombre);}
+    else{el.classList.remove('selected');areasSeleccionadas=areasSeleccionadas.filter(a=>a!==nombre);}
+    actualizarResumenAreas(); actualizarSaberes(); actualizarCriterios();
+    document.getElementById('multiAdv').classList.toggle('show',areasSeleccionadas.length>=2);
+}
+
+function actualizarResumenAreas(){
+    const s=document.getElementById('areasSummary');
+    if(areasSeleccionadas.length>0){s.style.display='block';document.getElementById('areasList').textContent=areasSeleccionadas.join(', ');}
+    else s.style.display='none';
+}
+
+function updateSesInfo(){
+    const n=document.getElementById('sesiones').value||4;
+    document.getElementById('sesInfo').innerHTML=`Se generarán <strong>${n} actividades evaluables</strong>, una por sesión.`;
+    document.getElementById('numSesLbl').textContent=n;
+    document.getElementById('promptSesLbl').textContent=n;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// SABERES
+// ═══════════════════════════════════════════════════════════════════
+function actualizarSaberes(){
+    const etapa=document.getElementById('etapa').value;
+    const c=document.getElementById('saberesContainer');
+    c.innerHTML='';
+    if(!etapa||areasSeleccionadas.length===0){c.innerHTML='<p style="color:var(--text-light);padding:1rem;background:var(--bg);border-radius:8px">Selecciona etapa y área en el paso 1.</p>';return;}
+    areasSeleccionadas.forEach(area=>{
+        const d=curriculo[etapa]?.areas[area]; if(!d||!d.saberes) return;
+        const sec=document.createElement('div');
+        sec.className='crit-section';
+        let h=`<h3>${area}</h3>`;
+        d.saberes.forEach(bl=>{
+            h+=`<div style="margin-bottom:.75rem"><div class="sab-bloque">${bl.bloque}</div><div class="sab-grid">`;
+            bl.items.forEach((it,idx)=>{
+                const uid=`sab_${area.replace(/\W/g,'_')}_${bl.bloque.replace(/\W/g,'_')}_${idx}`;
+                h+=`<div class="sab-item" onclick="togSaber(this)"><input type="checkbox" id="${uid}" value="${it.c}" data-area="${area}" data-texto="${it.t.replace(/"/g,'&quot;')}" onclick="event.stopPropagation()"><label for="${uid}"><strong>${it.c}</strong> — ${it.t}</label></div>`;
+            });
+            h+=`</div></div>`;
+        });
+        sec.innerHTML=h; c.appendChild(sec);
+    });
+}
+function togSaber(el){const cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('selected',cb.checked);}
+
+// ═══════════════════════════════════════════════════════════════════
+// CRITERIOS
+// ═══════════════════════════════════════════════════════════════════
+function actualizarCriterios(){
+    const etapa=document.getElementById('etapa').value;
+    const c=document.getElementById('criteriosPorArea');
+    c.innerHTML='';
+    if(!etapa||areasSeleccionadas.length===0){c.innerHTML='<p style="color:var(--text-light);padding:1rem;background:var(--bg);border-radius:8px">Selecciona al menos un área en el paso 1.</p>';return;}
+    areasSeleccionadas.forEach(area=>{
+        const d=curriculo[etapa]?.areas[area]; if(!d) return;
+        const sec=document.createElement('div');
+        sec.className='crit-section';
+        let h=`<h3>${area}</h3><div class="cg">`;
+        d.criterios.forEach((cr,i)=>{
+            const uid=`cr_${area.replace(/\W/g,'_')}_${i}`;
+            h+=`<div class="ci"><input type="checkbox" id="${uid}" value="${cr.c}" data-area="${area}"><label for="${uid}">${cr.c}. ${cr.t}</label></div>`;
+        });
+        h+='</div>'; sec.innerHTML=h; c.appendChild(sec);
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NAVEGACIÓN
+// ═══════════════════════════════════════════════════════════════════
+function nextStep(){if(!validar(currentStep))return;if(currentStep<totalSteps){document.getElementById(`step${currentStep}`).classList.remove('active');currentStep++;document.getElementById(`step${currentStep}`).classList.add('active');updProg();}}
+function prevStep(){if(currentStep>1){document.getElementById(`step${currentStep}`).classList.remove('active');currentStep--;document.getElementById(`step${currentStep}`).classList.add('active');updProg();}}
+function irARubricas(){document.getElementById(`step${currentStep}`).classList.remove('active');currentStep=9;document.getElementById('step9').classList.add('active');updProg();}
+function updProg(){
+    document.getElementById('progLine').style.width=`${((currentStep-1)/(totalSteps-1))*100}%`;
+    document.querySelectorAll('.step').forEach((s,i)=>{const n=i+1;s.classList.remove('active','completed');if(n===currentStep)s.classList.add('active');else if(n<currentStep)s.classList.add('completed');});
+}
+function validar(step){
+    if(step===1&&areasSeleccionadas.length===0){showToast('⚠️ Selecciona al menos un área');return false;}
+    if(step===2&&!sdaTipo){showToast('⚠️ Selecciona el tipo de SdA');return false;}
+    let ok=true;
+    document.getElementById(`step${step}`).querySelectorAll('[required]').forEach(f=>{if(!f.value){f.style.borderColor='#ef4444';ok=false;}else f.style.borderColor='';});
+    if(!ok)showToast('⚠️ Completa todos los campos obligatorios');
+    return ok;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UI
+// ═══════════════════════════════════════════════════════════════════
+function toggleChip(el){el.classList.toggle('selected');}
+function toggleApp(el){const cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('selected',cb.checked);}
+function selTipo(tipo,el){document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');el.querySelector('input[type=radio]').checked=true;sdaTipo=tipo;}
+function selIA(el){document.querySelectorAll('.ia-chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');const k=el.getAttribute('data-ia');document.getElementById('iaStatus').innerHTML=`✅ Se abrirá <strong>${iaNames[k]}</strong> — el prompt se copiará al portapapeles.`;}
+function getIA(){const c=document.querySelector('.ia-chip.selected');return c?c.getAttribute('data-ia'):'gemini';}
+
+// ═══════════════════════════════════════════════════════════════════
+// RECOPILAR DATOS
+// ═══════════════════════════════════════════════════════════════════
+function recopilarDatos(){
+    const etapa=document.getElementById('etapa').value;
+    const crits={}, sabers={};
+    document.getElementById('criteriosPorArea').querySelectorAll('input[type=checkbox]:checked').forEach(cb=>{
+        const a=cb.getAttribute('data-area');
+        const txt=document.querySelector(`label[for="${cb.id}"]`).textContent;
+        if(!crits[a])crits[a]=[];crits[a].push({codigo:cb.value,texto:txt});
+    });
+    document.getElementById('saberesContainer').querySelectorAll('input[type=checkbox]:checked').forEach(cb=>{
+        const a=cb.getAttribute('data-area');
+        if(!sabers[a])sabers[a]=[];sabers[a].push({codigo:cb.value,texto:cb.getAttribute('data-texto')});
+    });
+    const apps=Array.from(document.querySelectorAll('.app-chip.selected input[type=checkbox]')).map(c=>c.value);
+    return {
+        etapa, nombreEtapa:curriculo[etapa]?.nombre||etapa,
+        curso:document.getElementById('curso').value,
+        trimestre:document.getElementById('trimestre').value,
+        sdaNum:document.getElementById('sdaNum').value,
+        semanas:document.getElementById('semanas').value,
+        sesiones:parseInt(document.getElementById('sesiones').value)||4,
+        duracion:parseInt(document.getElementById('duracion').value)||60,
+        areas:areasSeleccionadas,
+        sdaTipo,
+        titSda:document.getElementById('titSda').value,
+        planesProyectos:document.getElementById('planesProyectos').value,
+        efemérides:document.getElementById('efemérides').value,
+        transversalidad:document.getElementById('transversalidad').value,
+        tematica:document.getElementById('tematica').value,
+        preguntaMotriz:document.getElementById('preguntaMotriz').value,
+        metodologias:Array.from(document.querySelectorAll('#metodologias .chip.selected')).map(c=>c.textContent),
+        appsCapitulaciones:apps,
+        herramientas:Array.from(document.querySelectorAll('#herramientas .chip.selected')).map(c=>c.textContent),
+        sabersPorArea:sabers, saberesManual:document.getElementById('saberesManual').value,
+        critsPorArea:crits, criteriosManual:document.getElementById('criteriosManual').value,
+        acneae:Array.from(document.getElementById('acneae').selectedOptions).map(o=>o.value),
+        medidasGenerales:Array.from(document.querySelectorAll('#step7 input[id^=mg_]:checked')).map(c=>c.value),
+        dua:Array.from(document.querySelectorAll('#step7 input[id^=dua]:checked')).map(c=>c.value),
+        programas:Array.from(document.querySelectorAll('#step7 input[id^=prf],[id^=pro]:checked')).map(c=>c.value)
+    };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONSTRUIR PROMPT SdA (FORMATO INSPECTOR)
+// ═══════════════════════════════════════════════════════════════════
+function construirPrompt(d){
+    const esInf=d.etapa==='infantil', esMulti=d.areas.length>1;
+    const areasT=d.areas.join(', ');
+    const tipo=sdaTipos[d.sdaTipo]||sdaTipos.producto;
+    const nivel=esInf?`Segundo Ciclo de Educación Infantil (${d.curso})`:`${d.curso} de Educación Primaria`;
+
+    let critsT='';
+    Object.entries(d.critsPorArea).forEach(([area,crs])=>{critsT+=`  · ${area}:\n`;crs.forEach(c=>{critsT+=`    - [${c.codigo}] ${c.texto.replace(/^\w+\.\d[\d.]*\s*/,'')}\n`;});});
+    if(!critsT&&d.criteriosManual)critsT=`  ${d.criteriosManual}\n`;
+    if(!critsT)critsT='  (No seleccionados — elige los más pertinentes para el área y curso)\n';
+
+    let saberT='';
+    Object.entries(d.sabersPorArea).forEach(([area,sbs])=>{saberT+=`  · ${area}:\n`;sbs.forEach(s=>{saberT+=`    - [${s.codigo}] ${s.texto}\n`;});});
+    if(!saberT&&d.saberesManual)saberT=`  ${d.saberesManual}\n`;
+    if(!saberT)saberT='  (Identifica los más pertinentes según la Orden 30/05/2023)\n';
+
+    const allApps=[...d.appsCapitulaciones,...d.herramientas];
+    const appsT=allApps.length>0?allApps.join(', '):'A criterio del experto';
+
+    let actsT='';
+    for(let i=1;i<=d.sesiones;i++){
+        const nivel_act=i===1?'Accesible (máximo apoyo)':i===d.sesiones?'Avanzado / Transferencia':i<=Math.ceil(d.sesiones/2)?'Intermedio-bajo':'Intermedio-alto';
+        actsT+=`
+▸ ACTIVIDAD ${i} — SESIÓN ${i}: [TÍTULO CREATIVO]
+  Nivel: ${nivel_act}
+  Áreas implicadas: ${areasT}${esMulti?' (indica cuáles protagonizan esta sesión)':''}
+
+  a) Descripción breve en una línea (formato inspector):
+     "[Nombre de la actividad]: [descripción en una línea]"
+     "Nos ayudan los saberes básicos: [códigos de saberes que se trabajan]"
+
+  b) Desarrollo paso a paso:
+     • Inicio/enganche (${Math.round(d.duracion*.15)} min): activación conocimientos previos
+     • Desarrollo (${Math.round(d.duracion*.65)} min): tarea principal
+     • Cierre/reflexión (${Math.round(d.duracion*.20)} min): síntesis y conexión con siguiente sesión
+     ${i===d.sesiones?'• Presentación del resultado final ('+tipo.emoji+' '+tipo.nombre+')':''}
+
+  c) Contexto de aplicación (marca el principal):
+     ☐ Escolar  ☐ Social  ☐ Familiar  ☐ Personal
+
+  d) Vinculación con el criterio de evaluación:
+     Criterio: [código exacto Orden 30/05/2023] — [descripción completa]
+     Cómo se evidencia: [explicación de la conexión criterio-actividad]
+
+  e) Vinculación con ODS / Desafíos del Siglo XXI:
+     ODS: [nº y nombre del ODS relacionado]
+     Desafío: [competencia del siglo XXI que se trabaja]
+
+  f) Instrumentos de evaluación y escala numérica:
+
+     TABLA DE EVALUACIÓN:
+     Criterio de evaluación: [código + descripción]
+     Instrumento de observación: [rúbrica / lista de cotejo / registro / prueba escrita]
+     Descriptor del criterio trabajado en esta actividad:
+
+     | Insuficiente (1-4) | Suficiente (5-6) | Bien (6-7) | Notable (7-8) | Sobresaliente (9-10) |
+     |---|---|---|---|---|
+     | [descriptor mínimo] | [descriptor básico] | [descriptor medio] | [descriptor bueno] | [descriptor excelente] |
+
+  g) Pauta/Punto de verificación DUA (formato inspector):
+     DUA ${d.dua[0]||'7.2'}: [descripción de la medida aplicada en esta sesión]
+
+  h) Recursos durante la sesión:
+     • Apps del CEIP Capitulaciones: ${d.appsCapitulaciones.length>0?d.appsCapitulaciones.slice(0,2).join(', '):'(selecciona la más adecuada)'}
+     • Otras herramientas: ${d.herramientas.join(', ')||'a criterio'}
+     • Materiales físicos: [descripción]
+
+  i) 📝 OBSERVACIONES:
+     [Espacio para que el docente anote reflexiones, incidencias, ritmo del grupo y ajustes]
+`;
+    }
+
+    return `# SDA CAPITULACIONES — FORMATO OFICIAL INSPECTOR
+# Orden de 30 de mayo de 2023 · LOMLOE · Decreto 101/2023 Andalucía
+
+═══════════════════════════════════════════════════════════
+ROL Y MARCO NORMATIVO
+═══════════════════════════════════════════════════════════
+
+Actúas como docente experto en ${d.nombreEtapa}, especialista en ${esMulti?'las áreas: '+areasT:'el área de '+areasT}.
+
+Normativa de referencia:
+• LOMLOE (Ley Orgánica 3/2022, 29 diciembre)
+• Orden de 30 de mayo de 2023 — currículo ${d.nombreEtapa} en Andalucía
+• Decreto 101/2023 — ordenación de la Educación Primaria en Andalucía
+• RD 157/2022 — ordenación básica de la Educación Primaria (art. 6 principios pedagógicos)
+
+⚠️ CRÍTICO: Genera la SdA con EXACTAMENTE los 7 bloques del formato oficial del inspector. No omitas ninguno.
+
+═══════════════════════════════════════════════════════════
+DATOS DE LA SdA
+═══════════════════════════════════════════════════════════
+
+  Tipo: ${tipo.emoji} ${tipo.nombre} — Resultado: ${tipo.resultado}
+  Etapa / Nivel: ${d.nombreEtapa} — ${nivel}
+  Área(s): ${areasT}${esMulti?' [INTERDISCIPLINAR]':''}
+  Título: "${d.titSda||d.tematica}"
+  SdA Nº: ${d.sdaNum} | Trimestre: ${d.trimestre} | Duración: ${d.semanas} semanas
+  Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
+  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
+  Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
+  Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
+  Otras herramientas: ${d.herramientas.join(', ')||'a criterio'}
+
+═══════════════════════════════════════════════════════════
+SABERES BÁSICOS (Orden 30/05/2023)
+═══════════════════════════════════════════════════════════
+${saberT}
+═══════════════════════════════════════════════════════════
+CRITERIOS DE EVALUACIÓN (Orden 30/05/2023)
+═══════════════════════════════════════════════════════════
+${critsT}${d.criteriosManual?'  · Adicionales:\n    '+d.criteriosManual+'\n':''}
+═══════════════════════════════════════════════════════════
+ATENCIÓN A LA DIVERSIDAD
+═══════════════════════════════════════════════════════════
+  ACNEAE: ${d.acneae.join(', ')}
+  Principios DUA: ${d.dua.join(', ')}
+  ⚠️ Medidas ORDINARIAS — NO son ACS
+
+═══════════════════════════════════════════════════════════
+INSTRUCCIONES: 7 BLOQUES OFICIALES DEL INSPECTOR
+═══════════════════════════════════════════════════════════
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 1 — IDENTIFICACIÓN Y LOCALIZACIÓN DE UN CENTRO DE INTERÉS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Curso: ${d.curso} | SdA Nº: ${d.sdaNum}
+• Temporalización: ${d.trimestre} (${d.semanas} semanas): [indica fechas aproximadas]
+• Título (Centro de interés): "${d.titSda||d.tematica}"
+• Planes y proyectos del centro asociados: ${d.planesProyectos||'(indica los planes del CEIP con los que conecta esta SdA)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 2 — JUSTIFICACIÓN Y CONTEXTO DE APLICACIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2.1 Objetivos de etapa (artículo 5 del Decreto 101/2023):
+    [Cita los objetivos de etapa de Educación Primaria que se trabajan con esta SdA]
+
+2.2 Principios pedagógicos (art. 6 del RD 157/2022 y art. 6 del Decreto 101/2023):
+    [Explica cómo los principios pedagógicos andaluces se aplican en esta SdA]
+
+2.3 Justificación de la relevancia y conexión con el entorno del alumnado de ${nivel}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (${tipo.emoji} ${tipo.nombre})
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Genera ${Math.min(d.sesiones,4)} productos vinculados a las sesiones/fases:
+
+• Producto 1: [descripción del resultado parcial de la fase inicial]
+• Producto 2: [descripción del resultado de la fase de desarrollo]
+• Producto 3: [descripción del resultado de la fase de consolidación]
+${d.sesiones>3?'• Producto 4: [descripción del resultado final / presentación pública]':''}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 4 — CONCRECIÓN CURRICULAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4.1 Objetivos de enseñanza-aprendizaje o didácticos:
+    [Formula ${d.sesiones} objetivos didácticos, uno orientativo por sesión, con verbos observables]
+
+4.2 Vinculación del problema-reto-contexto con los desafíos del Siglo XXI (17 ODS):
+    [Indica qué ODS se trabaja y cómo se vincula con la SdA]
+
+4.3 Transversalidad: ${d.transversalidad||'[Indica los ejes transversales: igualdad, sostenibilidad, salud, paz…]'}
+
+4.4 Saberes eventuales o efemérides: ${d.efemérides||'[Indica fechas señaladas o eventos integrados en la SdA]'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 5 — SECUENCIA DIDÁCTICA (${d.sesiones} SESIONES)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Organiza las ${d.sesiones} sesiones en las FASES del modelo inspector:
+• MOTIVACIÓN (sesión 1): Enganche, activación conocimientos previos, presentación del reto
+• ACTIVACIÓN (sesión 2): Exploración inicial y estructuración de saberes previos  
+• DESARROLLO Y CONSOLIDACIÓN (sesiones 3 a ${Math.max(3,d.sesiones-1)}): Construcción del conocimiento
+• FINALIZAR Y APLICAR (sesión ${d.sesiones}): Presentación del producto final y evaluación
+
+Para cada sesión usa el formato de TABLA con columnas:
+| Fase/Tipo | Sesión/Jornada N: [título] (Metodología) | Áreas implicadas | Pauta DUA |
+
+GENERA EXACTAMENTE ${d.sesiones} ACTIVIDADES EVALUABLES (una por sesión):
+${actsT}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 6 — MEDIDAS DE ATENCIÓN A LA DIVERSIDAD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.1 Medidas generales aplicadas: ${d.medidasGenerales.join(' | ')||'(b) Apoyo segundo docente | (d) Agrupamientos flexibles | (e) Acción tutorial | (f) Metodologías colaborativas'}
+
+6.2 DUA en cada sesión: ${d.dua.join(', ')}
+
+6.3 ACNEAE: ${d.acneae.join(', ')} — medidas ordinarias concretas para esta SdA
+
+6.4 Programas: ${d.programas.join(' | ')||'(indica si aplica refuerzo o profundización)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BLOQUE 7 — VALORACIÓN DE LO APRENDIDO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7.1 Instrumentos de calificación y evaluación:
+    Para CADA criterio de evaluación trabajado, genera una tabla con esta estructura EXACTA:
+
+    Instrumento: [Prueba escrita + Rúbrica / Registro anecdótico + Rúbrica]
+    Criterio de evaluación: [código + descriptor completo]
+    Instrumento de observación: [tipo específico]
+
+    | Criterio | Instrumento | Insuficiente (1-4) | Suficiente (5-6) | Bien (6-7) | Notable (7-8) | Sobresaliente (9-10) |
+    |---|---|---|---|---|---|---|
+    | [código] | [instrumento] | [descriptor] | [descriptor] | [descriptor] | [descriptor] | [descriptor] |
+    Descriptor: [descripción del desempeño evaluado]
+
+7.2 Escalas de dominio (desempeños):
+    Redacta qué SABRÁ HACER el alumnado al terminar la SdA (en términos de competencia)
+
+7.3 Nivel de desempeño competencial (calcular media del grupo en cada competencia):
+    | CCL | CP | CMCTI | CD | CPSAA | CC | CE | CCEC |
+    | ___ | __ | _____ | __ | _____ | __ | __ | ____ |
+
+7.4 Procedimientos de evaluación de la práctica docente:
+    | Indicador | Instrumento |
+    |---|---|
+    | Proceso de enseñanza: idoneidad de elementos curriculares | Cuestionario de Autoevaluación |
+    | Proceso de aprendizaje: motivación y transferencia | Cuestionario al alumnado (Google Forms) |
+
+═══════════════════════════════════════════════════════════
+FORMATO DE ENTREGA
+═══════════════════════════════════════════════════════════
+✅ Los 7 bloques del formato inspector, numerados y diferenciados
+✅ ${d.sesiones} actividades evaluables (una por sesión) con todos los apartados a-i
+✅ Tabla de evaluación con escala numérica en cada actividad (Insuf./Suf./Bien/Notable/Sobres.)
+✅ Vinculación explícita criterio ↔ actividad en cada una
+✅ Apps del CEIP Capitulaciones integradas donde corresponda
+✅ Apartado Observaciones en cada actividad
+✅ Referencias exactas: Orden 30/05/2023, Decreto 101/2023, RD 157/2022
+✅ Lenguaje profesional docente aplicable directamente en ${nivel}
+✅ Coherencia total entre todos los bloques`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CONSTRUIR PROMPT RÚBRICAS (ESCALA INSPECTOR)
+// ═══════════════════════════════════════════════════════════════════
+function construirPromptRubricas(){
+    const d=recopilarDatos();
+    const sda=document.getElementById('sdaPegada').value.trim();
+    const tipos=Array.from(document.querySelectorAll('#tipoRubrica .chip.selected')).map(c=>c.textContent);
+    const tipo=sdaTipos[d.sdaTipo]||sdaTipos.producto;
+    let critsT='';
+    Object.entries(d.critsPorArea).forEach(([a,cs])=>{critsT+=`· ${a}: `+cs.map(c=>`[${c.codigo}]`).join(', ')+'\n';});
+
+    return `# SDA CAPITULACIONES — RÚBRICAS FORMATO INSPECTOR
+# Escala numérica oficial: Insuficiente(1-4) / Suficiente(5-6) / Bien(6-7) / Notable(7-8) / Sobresaliente(9-10)
+
+═══════════════════════════════════════════════════════════
+ROL
+═══════════════════════════════════════════════════════════
+Eres experto en evaluación educativa en ${d.nombreEtapa}.
+Diseña rúbricas según la Orden de 30 de mayo de 2023 (Andalucía), con la escala numérica del formato oficial del inspector de educación.
+
+═══════════════════════════════════════════════════════════
+DATOS
+═══════════════════════════════════════════════════════════
+• Tipo SdA: ${tipo.emoji} ${tipo.nombre}
+• Nivel: ${d.nombreEtapa} — ${d.curso}
+• Áreas: ${d.areas.join(', ')}
+• Temática: ${d.titSda||d.tematica}
+• Nº actividades: ${d.sesiones}
+• ACNEAE: ${d.acneae.join(', ')}
+• DUA: ${d.dua.join(', ')}
+Criterios: ${critsT||'(Ver SdA adjunta)'}
+
+═══════════════════════════════════════════════════════════
+SdA GENERADA (BASE PARA LAS RÚBRICAS)
+═══════════════════════════════════════════════════════════
+${sda?`"""\n${sda}\n"""`:'⚠️ SdA no pegada — usa los criterios y temática indicados'}
+
+═══════════════════════════════════════════════════════════
+INSTRUCCIONES: GENERA UNA RÚBRICA POR CADA ACTIVIDAD
+═══════════════════════════════════════════════════════════
+
+TIPOS SOLICITADOS: ${tipos.join(' + ')||'Analítica con descriptores detallados'}
+
+⚠️ USA OBLIGATORIAMENTE LA ESCALA NUMÉRICA DEL FORMATO INSPECTOR:
+Insuficiente (1-4) | Suficiente (5-6) | Bien (6-7) | Notable (7-8) | Sobresaliente (9-10)
+
+Para cada actividad, genera esta estructura EXACTA:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RÚBRICA — ACTIVIDAD [N] / SESIÓN [N]: [Título]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Instrumento de calificación y evaluación: [Prueba escrita y Rúbrica / Registro anecdótico y Rúbrica]
+
+| Criterios de evaluación | Instrumento de observación | Insuficiente (1-4) | Suficiente (5-6) | Bien (6-7) | Notable (7-8) | Sobresaliente (9-10) |
+|---|---|---|---|---|---|---|
+| [código + descripción] | [instrumento] | [descriptor] | [descriptor] | [descriptor] | [descriptor] | [descriptor] |
+Descriptor: [descripción del desempeño evaluado en esta actividad]
+
+Escalas de dominio (desempeños):
+"Al terminar esta actividad, el alumnado sabrá/será capaz de…"
+
+Adaptación ACNEAE — ${d.acneae.join(', ')} (medida ordinaria, sin modificar el criterio):
+[Ajuste en descriptores o en la forma de obtener la evidencia]
+
+${tipos.includes('Co-evaluación alumnado')?`
+VERSIÓN COEVALUACIÓN: lenguaje simplificado para ${d.curso}, 2ª persona, emojis/iconos
+`:''}${tipos.includes('Autoevaluación del alumno')?`
+VERSIÓN AUTOEVALUACIÓN: 1ª persona "Yo soy capaz de…", nivel ${d.curso}
+`:''}${tipos.includes('Formato tabla Word')?`
+FORMATO WORD: indica cómo copiar la tabla manteniendo el formato
+`:''}
+NOTA FINAL — Hecho observado (registro anecdótico):
+"Se debe indicar el alumno/a, la sesión y la tarea en la que se localiza el hecho observado, además del criterio de evaluación al que afecta."
+
+REQUISITOS:
+✅ ${d.sesiones} rúbricas completas con escala numérica del inspector
+✅ Descriptores observables y diferenciados entre niveles
+✅ "Suficiente (5-6)" = mínimo exigible al alumnado de ${d.curso}
+✅ "Notable (7-8)" = estándar esperado para alumnado que trabaja correctamente
+✅ Adaptación ACNEAE visible en cada rúbrica
+✅ Formato tabla Markdown listo para copiar`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ACCIONES
+// ═══════════════════════════════════════════════════════════════════
+function generarPrompt(){const d=recopilarDatos();document.getElementById('promptContent').textContent=construirPrompt(d);document.getElementById('promptSesLbl').textContent=d.sesiones;showToast('✅ Prompt generado');}
+async function generarYAbrir(){
+    const d=recopilarDatos(),p=construirPrompt(d);
+    document.getElementById('promptContent').textContent=p;
+    document.getElementById('promptSesLbl').textContent=d.sesiones;
+    try{await navigator.clipboard.writeText(p);showToast('📋 Copiado. Abriendo IA… pégalo con Ctrl+V');}
+    catch(e){showToast('⚠️ Copia el prompt manualmente');}
+    setTimeout(()=>window.open(iaUrls[getIA()],'_blank'),600);
+}
+async function copiarPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera el prompt');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Prompt copiado');}catch(e){showToast('⚠️ Selecciona el texto manualmente');}}
+function descargarTXT(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera');return;}const d=recopilarDatos();descargar(c,`SDA_Capitulaciones_${d.areas.map(a=>a.substring(0,3)).join('_')}_${(d.titSda||d.tematica).replace(/\s+/g,'_')}.txt`);}
+async function compartirPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera');return;}if(navigator.share){try{await navigator.share({title:'SDA Capitulaciones',text:c.substring(0,200)+'...',url:window.location.href});}catch(e){}}else showToast('⚠️ Compartir no disponible');}
+function generarPromptRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}document.getElementById('rubricContent').textContent=construirPromptRubricas();showToast('📐 Prompt de rúbricas generado');}
+async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;try{await navigator.clipboard.writeText(p);showToast('📐 Copiado. Abriendo IA…');}catch(e){showToast('⚠️ Copia el prompt manualmente');}setTimeout(()=>window.open(iaUrls[getIA()],'_blank'),600);}
+async function copiarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Copiado');}catch(e){showToast('⚠️ Selecciona manualmente');}}
+function descargarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}descargar(c,`SDA_Rubricas_${recopilarDatos().tematica.replace(/\s+/g,'_')}.txt`);}
+function descargar(cont,nom){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([cont],{type:'text/plain;charset=utf-8'}));a.download=nom;a.click();showToast('💾 Descargado');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+function instalarPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast('✅ App instalada');document.getElementById('installBtn').classList.remove('show');}deferredPrompt=null;});}}
+setInterval(()=>{try{localStorage.setItem('sda_v6',JSON.stringify({sdaTipo,etapa:document.getElementById('etapa').value,areas:areasSeleccionadas,tematica:document.getElementById('tematica').value}));}catch(e){}},5000);
+</script>
+</body>
+</html>
