@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1e40af">
-    <title>SDA Capitulaciones - Formato Inspector</title>
+    <meta name="application-name" content="SDA Capitulaciones">
+    <meta name="apple-mobile-web-app-title" content="SDA Capi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#1e40af">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlNEQSBDYXBpdHVsYWNpb25lcyIsICJzaG9ydF9uYW1lIjogIlNEQSBDYXBpIiwgImRlc2NyaXB0aW9uIjogIkdlbmVyYWRvciBkZSBTZEEgcGFyYSBDRUlQIENhcGl0dWxhY2lvbmVzIGRlIFNhbnRhIEZlIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNmOGZhZmMiLCAidGhlbWVfY29sb3IiOiAiIzFlNDBhZiIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpwWlhkQ2IzZzlJakFnTUNBeE9USWdNVGt5SWo0OGNtVmpkQ0IzYVdSMGFEMGlNVGt5SWlCb1pXbG5hSFE5SWpFNU1pSWdjbmc5SWpReUlpQm1hV3hzUFNJak1XVTBNR0ZtSWk4K1BIUmxlSFFnZUQwaU9UWWlJSGs5SWpFME1DSWdkR1Y0ZEMxaGJtTm9iM0k5SW0xcFpHUnNaU0lnWm05dWRDMXphWHBsUFNJeE1qQWlJR1p2Ym5RdFptRnRhV3g1UFNKQmNIQnNaU0JEYjJ4dmNpQkZiVzlxYVN4VFpXZHZaU0JWU1NCRmJXOXFhU3h6WVc1ekxYTmxjbWxtSWo0bUkzZ3hSalJFUXpzOEwzUmxlSFErUEM5emRtYysiLCAic2l6ZXMiOiAiYW55IiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSJ9XX0=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQyIiBmaWxsPSIjMWU0MGFmIi8+PHRleHQgeD0iOTYiIHk9IjE0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMjAiIGZvbnQtZmFtaWx5PSJBcHBsZSBDb2xvciBFbW9qaSxTZWdvZSBVSSBFbW9qaSxzYW5zLXNlcmlmIj4mI3gxRjREQzs8L3RleHQ+PC9zdmc+">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjQyIiBmaWxsPSIjMWU0MGFmIi8+PHRleHQgeD0iOTYiIHk9IjE0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMjAiIGZvbnQtZmFtaWx5PSJBcHBsZSBDb2xvciBFbW9qaSxTZWdvZSBVSSBFbW9qaSxzYW5zLXNlcmlmIj4mI3gxRjREQzs8L3RleHQ+PC9zdmc+">
+    <title>SDA Capitulaciones - CEIP Capitulaciones de Santa Fe</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root{
@@ -146,7 +155,25 @@
         .ia-chip[data-ia=chatgpt]{border-color:#10a37f;color:#10a37f} .ia-chip[data-ia=chatgpt].selected{background:#10a37f;color:white}
         .ia-chip[data-ia=claude]{border-color:#d97706;color:#d97706} .ia-chip[data-ia=claude].selected{background:#d97706;color:white}
         .ia-chip[data-ia=copilot]{border-color:#6366f1;color:#6366f1} .ia-chip[data-ia=copilot].selected{background:#6366f1;color:white}
+        .ia-chip[data-ia=kimi]{border-color:#0ea5e9;color:#0ea5e9} .ia-chip[data-ia=kimi].selected{background:#0ea5e9;color:white}
         .ia-status{font-size:.81rem;color:var(--text-light);font-style:italic;margin-top:.42rem;display:block}
+
+        /* ── PASTE MODAL ── */
+        .paste-overlay{position:fixed;inset:0;background:rgba(15,23,42,.85);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(6px)}
+        .paste-overlay.show{display:flex}
+        .paste-panel{background:white;border-radius:20px;padding:2rem;max-width:480px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.35);animation:panelIn .3s ease;text-align:center}
+        .paste-icon{font-size:3rem;margin-bottom:.5rem}
+        .paste-panel h3{color:var(--success);font-size:1.3rem;margin-bottom:.3rem}
+        .paste-panel .paste-sub{color:var(--text-light);font-size:.87rem;margin-bottom:1.4rem}
+        .paste-shortcut{background:var(--text);color:white;border-radius:12px;padding:1rem 1.5rem;margin:0 auto 1.3rem;display:inline-block;font-family:'Courier New',monospace;font-size:1.7rem;font-weight:700;letter-spacing:.15em;box-shadow:0 6px 0 #0f172a;border-bottom:6px solid #0f172a}
+        .paste-instruccion{background:#f0fdf4;border:2px solid var(--success);border-radius:10px;padding:.85rem 1rem;font-size:.9rem;color:#065f46;margin-bottom:1.4rem;line-height:1.6}
+        .paste-preview{background:#1e293b;color:#94a3b8;border-radius:8px;padding:.75rem 1rem;font-family:'Courier New',monospace;font-size:.72rem;text-align:left;max-height:80px;overflow:hidden;margin-bottom:1.4rem;line-height:1.5;position:relative}
+        .paste-preview::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,#1e293b)}
+        .btn-paste-open{width:100%;padding:1rem;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:10px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:.65rem;display:flex;align-items:center;justify-content:center;gap:.55rem}
+        .btn-paste-open:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(16,185,129,.35)}
+        .btn-paste-cancel{background:none;border:none;color:var(--text-light);font-size:.85rem;cursor:pointer;text-decoration:underline}
+
+        
 
         /* ── BADGES ── */
         .badge{display:inline-flex;padding:.18rem .65rem;border-radius:20px;font-size:.7rem;font-weight:600;margin-left:.42rem}
@@ -177,9 +204,6 @@
         .rub-intro ol{margin-left:1.1rem;font-size:.84rem;color:#4c1d95;line-height:1.9}
         .sda-paste{border:2px dashed #c4b5fd;border-radius:9px;background:#faf5ff;min-height:180px}
 
-        /* ── INSPECTOR BADGE ── */
-        .inspector-note{background:linear-gradient(135deg,#fef3c7,#fffbeb);border:2px solid #f59e0b;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.2rem;font-size:.83rem;color:#78350f;display:flex;gap:.6rem;align-items:flex-start}
-
         /* ── FINAL ACTIONS ── */
         .final-actions{margin-top:1.6rem;display:flex;flex-direction:column;gap:.85rem}
         .far{display:flex;gap:.85rem;justify-content:space-between;align-items:center;flex-wrap:wrap}
@@ -192,6 +216,35 @@
         .install-btn{position:fixed;bottom:2rem;left:2rem;background:var(--accent);color:white;padding:.65rem 1.3rem;border-radius:50px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(245,158,11,.4);display:none;align-items:center;gap:.42rem;z-index:999;border:none;font-size:.9rem}
         .install-btn.show{display:flex}
 
+        /* ── PANEL JSON ── */
+        .json-overlay{position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+        .json-overlay.show{display:flex}
+        .json-panel{background:white;border-radius:16px;padding:1.75rem;max-width:580px;width:100%;box-shadow:0 25px 50px rgba(0,0,0,.25);animation:panelIn .3s ease}
+        @keyframes panelIn{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .json-panel h3{color:var(--primary);margin-bottom:.35rem;font-size:1.1rem;display:flex;align-items:center;gap:.5rem}
+        .json-panel .sub{color:var(--text-light);font-size:.84rem;margin-bottom:1.2rem;line-height:1.5}
+        .json-steps{background:var(--bg);border-radius:10px;padding:.9rem 1rem;margin-bottom:1.2rem}
+        .json-steps ol{margin-left:1.1rem;font-size:.82rem;color:var(--text);line-height:2}
+        .json-steps li strong{color:var(--primary)}
+        .json-textarea{width:100%;min-height:140px;padding:.75rem;border:2px solid var(--border);border-radius:8px;font-family:'Courier New',monospace;font-size:.8rem;resize:vertical;transition:all .2s}
+        .json-textarea:focus{outline:none;border-color:var(--secondary);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+        .json-textarea.ok{border-color:var(--success);background:#f0fdf4}
+        .json-textarea.err{border-color:#ef4444;background:#fef2f2}
+        .json-feedback{font-size:.8rem;margin-top:.45rem;padding:.5rem .75rem;border-radius:7px;display:none}
+        .json-feedback.show{display:block}
+        .json-feedback.ok{background:#dcfce7;color:#166534}
+        .json-feedback.err{background:#fee2e2;color:#991b1b}
+        .json-actions{display:flex;gap:.75rem;margin-top:1.2rem;justify-content:flex-end;flex-wrap:wrap}
+        .btn-json-fill{background:var(--success);color:white;padding:.75rem 1.4rem;border:none;border-radius:8px;font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:all .2s}
+        .btn-json-fill:hover{background:#059669;transform:translateY(-1px)}
+        .btn-json-close{background:white;color:var(--text);border:2px solid var(--border);padding:.75rem 1.2rem;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s}
+        .btn-json-close:hover{background:var(--bg)}
+        .import-success-banner{background:linear-gradient(135deg,#d1fae5,#a7f3d0);border:2px solid var(--success);border-radius:10px;padding:.85rem 1.1rem;margin-bottom:1.2rem;font-size:.84rem;color:#065f46;display:none;align-items:flex-start;gap:.55rem}
+        .import-success-banner.show{display:flex}
+        .btn-foto-step2{background:rgba(255,255,255,.95);color:var(--primary);border:2px solid rgba(255,255,255,.8);padding:.5rem .95rem;border-radius:50px;font-weight:700;font-size:.8rem;cursor:pointer;display:none;align-items:center;gap:.4rem;transition:all .2s;white-space:nowrap}
+        .btn-foto-step2.show{display:flex}
+        .btn-foto-step2:hover{background:white;transform:translateY(-1px)}
+
         @media(max-width:640px){
             .header h1{font-size:1.05rem} .sl{display:none} .card{padding:1.15rem}
             .areas-grid,.types-grid,.apps-grid{grid-template-columns:1fr}
@@ -199,6 +252,7 @@
             .far{flex-direction:column;align-items:stretch}
             .btn-launch,.btn-rlaunce{justify-content:center}
             .sn{width:28px;height:28px;font-size:.7rem}
+            .json-panel{padding:1.2rem}
         }
     </style>
 </head>
@@ -210,12 +264,66 @@
             <div class="logo">📜</div>
             <div>
                 <h1>SDA Capitulaciones</h1>
-                <p>Formato Inspector · Orden 30/05/2023 Andalucía · LOMLOE</p>
+                <p>CEIP Capitulaciones de Santa Fe · Orden 30/05/2023 · LOMLOE</p>
             </div>
         </div>
-        <button class="btn-foto" onclick="abrirFotoLibro()">📸 Generar SdA con foto del libro</button>
+        <button class="btn-foto" id="btnFotoStep1" onclick="abrirFotoLibro()">📸 Generar SdA con foto del libro</button>
+        <button class="btn-foto-step2" id="btnFotoStep2" onclick="abrirPanelJSON()">📋 Pegar resultado de Gemini</button>
     </div>
 </header>
+
+<!-- ══ PANEL JSON ══════════════════════════════════════════════════ -->
+<!-- ══ MODAL PEGAR EN IA ══════════════════════════════════════════════ -->
+<div class="paste-overlay" id="pasteOverlay">
+    <div class="paste-panel">
+        <div class="paste-icon">📋</div>
+        <h3>¡Prompt copiado!</h3>
+        <p class="paste-sub">Cuando se abra la IA, haz esto:</p>
+        <div class="paste-shortcut">Ctrl + V</div>
+        <div class="paste-instruccion">
+            🖱️ Haz clic en la caja de texto de la IA<br>
+            ⌨️ Pulsa <strong>Ctrl&nbsp;+&nbsp;V</strong> para pegar el prompt<br>
+            ↵ Pulsa <strong>Enter</strong> o el botón de enviar
+        </div>
+        <div class="paste-preview" id="pastePreview"></div>
+        <button class="btn-paste-open" id="btnPasteOpen">
+            🚀 Abrir <span id="pasteIAName">Gemini</span> — ya tengo el prompt copiado
+        </button>
+        <button class="btn-paste-cancel" onclick="cerrarPasteModal()">Cancelar</button>
+    </div>
+</div>
+
+<div class="json-overlay" id="jsonOverlay" onclick="cerrarPanelJSON(event)">
+    <div class="json-panel" onclick="event.stopPropagation()">
+        <h3>📋 Pegar resultado de Gemini</h3>
+        <p class="sub">Copia el JSON que te devolvió Gemini al analizar la foto del libro y pégalo aquí. La app rellenará automáticamente todos los campos del formulario.</p>
+
+        <div class="json-steps">
+            <ol>
+                <li>En Gemini, copia <strong>todo el texto</strong> de la respuesta (incluido el JSON)</li>
+                <li>Pégalo en el cuadro de abajo</li>
+                <li>Pulsa <strong>"Rellenar formulario"</strong></li>
+                <li>La app marcará áreas, criterios, saberes y campos automáticamente</li>
+            </ol>
+        </div>
+
+        <textarea class="json-textarea" id="jsonInput" placeholder='Pega aquí el JSON de Gemini…
+Ejemplo:
+{
+  "etapa": "Educación Primaria",
+  "curso": "3º",
+  "area": "Ciencias de la Naturaleza",
+  "tematica": "El Sistema Solar",
+  ...
+}'></textarea>
+        <div class="json-feedback" id="jsonFeedback"></div>
+
+        <div class="json-actions">
+            <button class="btn-json-close" onclick="cerrarPanelJSON()">Cancelar</button>
+            <button class="btn-json-fill" onclick="rellenarDesdeJSON()">✅ Rellenar formulario</button>
+        </div>
+    </div>
+</div>
 
 <div class="prog-wrap">
     <div class="prog-steps">
@@ -237,11 +345,11 @@
 <!-- ══ PASO 1 — CONTEXTO ══════════════════════════════════════════════ -->
 <div class="card active" id="step1">
     <h2>📋 Contexto Educativo</h2>
-    <p class="card-sub">Datos básicos de la SdA según el formato del inspector</p>
+    <p class="card-sub">Datos básicos de la SdA del CEIP Capitulaciones de Santa Fe</p>
 
-    <div class="inspector-note">
-        <span style="font-size:1.1rem;flex-shrink:0">📄</span>
-        <span>Esta app genera prompts ajustados al <strong>formato oficial del inspector</strong> con los 7 bloques requeridos: Identificación, Justificación, Producto final, Concreción curricular, Secuencia didáctica, Atención a la diversidad y Valoración.</span>
+    <div class="import-success-banner" id="importBanner">
+        <span style="font-size:1.1rem;flex-shrink:0">✅</span>
+        <span id="importBannerText">Formulario rellenado desde la foto del libro. Revisa los campos y ajusta lo que necesites.</span>
     </div>
 
     <div class="row">
@@ -288,6 +396,19 @@
 
     <div class="row">
         <div class="fg">
+            <label for="fechaInicio">📅 Fecha inicio SdA *</label>
+            <input type="date" id="fechaInicio" required onchange="calcularSemanas()">
+            <small>Inicio de la SdA en el aula</small>
+        </div>
+        <div class="fg">
+            <label for="fechaFin">📅 Fecha fin SdA *</label>
+            <input type="date" id="fechaFin" required onchange="calcularSemanas()">
+            <small>Fin de la SdA en el aula</small>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="fg">
             <label for="sesiones">Nº de sesiones * <span class="badge badge-blue">= nº actividades</span></label>
             <input type="number" id="sesiones" min="1" max="20" value="4" required onchange="updateSesInfo()">
             <small id="sesInfo">Se generarán <strong>4 actividades evaluables</strong>, una por sesión.</small>
@@ -295,6 +416,18 @@
         <div class="fg">
             <label for="duracion">Duración por sesión (min) *</label>
             <input type="number" id="duracion" min="10" max="300" value="60" step="10" required>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="fg">
+            <label for="semanas">Semanas de duración <span class="badge badge-green">Auto</span></label>
+            <input type="number" id="semanas" min="1" max="12" value="4" readonly style="background:#f1f5f9;cursor:default">
+            <small id="semanasInfo">⚡ Calculado automáticamente según las fechas</small>
+        </div>
+        <div class="fg">
+            <label for="sdaNum">Nº SdA</label>
+            <input type="number" id="sdaNum" min="1" max="30" value="1">
         </div>
     </div>
 
@@ -323,7 +456,7 @@
 <!-- ══ PASO 2 — TIPO DE SdA ══════════════════════════════════════════ -->
 <div class="card" id="step2">
     <h2>🗂️ Tipo de Situación de Aprendizaje</h2>
-    <p class="card-sub">El tipo determina el resultado final y condiciona toda la estructura según el formato del inspector.</p>
+    <p class="card-sub">El tipo determina el resultado final y condiciona toda la estructura de la SdA.</p>
 
     <div class="types-grid">
         <div class="type-card" onclick="selTipo('producto',this)">
@@ -368,8 +501,8 @@
 
 <!-- ══ PASO 3 — DATOS DEL CENTRO ═════════════════════════════════════ -->
 <div class="card" id="step3">
-    <h2>🏫 Datos del Centro (Formato Inspector)</h2>
-    <p class="card-sub">Información requerida en el apartado 1 del formato oficial</p>
+    <h2>🏫 Datos del Centro</h2>
+    <p class="card-sub">CEIP Capitulaciones de Santa Fe — Información del apartado 1</p>
 
     <div class="fg">
         <label for="titSda">Título de la SdA *</label>
@@ -432,7 +565,7 @@
     <!-- APPS DEL CEIP CAPITULACIONES -->
     <div class="fg">
         <label>🎮 Apps del CEIP Capitulaciones <span class="badge badge-green">Juegos propios del centro</span></label>
-        <small style="margin-bottom:.7rem">Selecciona las apps de vuestro portal que se usarán en esta SdA</small>
+        <small style="margin-bottom:.7rem">Principalmente para actividades de <strong>refuerzo o ampliación</strong>. Selecciona las apps de vuestro portal que se usarán en esta SdA.</small>
 
         <div class="apps-section">
             <div class="apps-area-label">📐 Matemáticas</div>
@@ -660,6 +793,7 @@
                 <div class="chip" onclick="toggleChip(this)">Padlet</div>
                 <div class="chip" onclick="toggleChip(this)">Flipgrid</div>
                 <div class="chip" onclick="toggleChip(this)">Scratch</div>
+                <div class="chip" onclick="toggleChip(this)">Pixton</div>
             </div>
         </div>
     </div>
@@ -713,7 +847,7 @@
 <!-- ══ PASO 7 — ATENCIÓN A LA DIVERSIDAD ════════════════════════════ -->
 <div class="card" id="step7">
     <h2>♿ Atención a la Diversidad</h2>
-    <p class="card-sub">Medidas ordinarias según el formato del inspector (apartado 6) — sin ACS</p>
+    <p class="card-sub">Medidas ordinarias de atención a la diversidad — sin ACS</p>
 
     <div class="fg">
         <label for="acneae">ACNEAE en el aula</label>
@@ -778,18 +912,19 @@
 
 <!-- ══ PASO 8 — GENERAR PROMPT SdA ═══════════════════════════════════ -->
 <div class="card" id="step8">
-    <h2>🚀 Generar SdA Completa (Formato Inspector)</h2>
-    <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> del inspector + <strong id="promptSesLbl">4</strong> actividades evaluables con escala numérica</p>
+    <h2>🚀 Generar SdA Completa</h2>
+    <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> + <strong id="promptSesLbl">4</strong> actividades evaluables con escala numérica</p>
 
     <div class="fg">
         <label>¿Con qué IA vas a trabajar?</label>
         <div class="ia-chips">
-            <div class="ia-chip selected" data-ia="gemini" data-url="https://gemini.google.com" onclick="selIA(this)">🔵 Gemini</div>
+            <div class="ia-chip selected" data-ia="claude" data-url="https://claude.ai" onclick="selIA(this)">🟠 Claude <span style="font-size:.65rem;background:#fef3c7;color:#92400e;border-radius:8px;padding:.1rem .4rem;margin-left:.2rem;font-weight:700">⭐ Recomendada</span></div>
+            <div class="ia-chip" data-ia="gemini" data-url="https://gemini.google.com" onclick="selIA(this)">🔵 Gemini <span style="font-size:.65rem;background:#dbeafe;color:#1e40af;border-radius:8px;padding:.1rem .4rem;margin-left:.2rem;font-weight:700">2ª opción</span></div>
             <div class="ia-chip" data-ia="chatgpt" data-url="https://chat.openai.com" onclick="selIA(this)">🟢 ChatGPT</div>
-            <div class="ia-chip" data-ia="claude" data-url="https://claude.ai" onclick="selIA(this)">🟠 Claude</div>
             <div class="ia-chip" data-ia="copilot" data-url="https://copilot.microsoft.com" onclick="selIA(this)">🟣 Copilot</div>
+            <div class="ia-chip" data-ia="kimi" data-url="https://kimi.ai" onclick="selIA(this)">🔷 Kimi 2.5</div>
         </div>
-        <span class="ia-status" id="iaStatus">✅ Se abrirá <strong>Gemini</strong> — el prompt se copiará al portapapeles.</span>
+        <span class="ia-status" id="iaStatus">⭐ Se abrirá <strong>Claude</strong> — el prompt se copiará al portapapeles.</span>
     </div>
 
     <div class="prev-box">
@@ -817,7 +952,7 @@
 
 <!-- ══ PASO 9 — RÚBRICAS ══════════════════════════════════════════════ -->
 <div class="card" id="step9">
-    <h2>📐 Rúbricas (Formato Inspector)</h2>
+    <h2>📐 Rúbricas de Evaluación</h2>
     <p class="card-sub">Genera las rúbricas con la escala numérica oficial: Insuficiente·Suficiente·Bien·Notable·Sobresaliente</p>
 
     <div class="rub-intro">
@@ -826,7 +961,7 @@
             <li>Lleva el prompt del paso 8 a tu IA y obtén la SdA completa</li>
             <li>Copia el texto completo que te devolvió la IA</li>
             <li>Pégalo en el cuadro de abajo</li>
-            <li>Pulsa <strong>"Generar y Abrir IA"</strong> para obtener las rúbricas en formato inspector</li>
+            <li>Pulsa <strong>"Generar y Abrir IA"</strong> para obtener las rúbricas con escala numérica</li>
         </ol>
     </div>
 
@@ -883,8 +1018,8 @@ const sdaTipos={
     indagacion:{nombre:'SdA de Indagación',emoji:'🔍',resultado:'Respuesta a pregunta compleja'},
     resolucion:{nombre:'SdA de Resolución',emoji:'🧩',resultado:'Solución a problema real'}
 };
-const iaUrls={gemini:'https://gemini.google.com',chatgpt:'https://chat.openai.com',claude:'https://claude.ai',copilot:'https://copilot.microsoft.com'};
-const iaNames={gemini:'Gemini',chatgpt:'ChatGPT',claude:'Claude',copilot:'Copilot'};
+const iaUrls={gemini:'https://gemini.google.com',chatgpt:'https://chat.openai.com',claude:'https://claude.ai',copilot:'https://copilot.microsoft.com',kimi:'https://kimi.ai'};
+const iaNames={gemini:'Gemini',chatgpt:'ChatGPT',claude:'Claude',copilot:'Copilot',kimi:'Kimi 2.5'};
 
 // ═══════════════════════════════════════════════════════════════════
 // CURRÍCULO COMPLETO (Saberes + Criterios)
@@ -1247,6 +1382,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 // ═══════════════════════════════════════════════════════════════════
 // FOTO DEL LIBRO
 // ═══════════════════════════════════════════════════════════════════
+// Estado foto
+let fotoPromptEnviado = false;
+
 function abrirFotoLibro(){
     const p=`Actúas como experto en currículo educativo de la Junta de Andalucía para Primaria e Infantil.
 
@@ -1255,29 +1393,205 @@ Analiza la imagen adjunta (página de libro de texto o programación didáctica)
 - Orden de 30 de mayo de 2023 (Consejería de Desarrollo Educativo y FP, Junta de Andalucía)
 - Decreto 101/2023 de ordenación de la Educación Primaria en Andalucía
 
-Devuelve la información en este JSON exacto:
+Devuelve la información en este JSON exacto (sin texto antes ni después del JSON, solo el bloque JSON):
 {
-  "etapa": "Educación Primaria / Educación Infantil",
-  "curso": "Xº",
-  "area": "nombre exacto del área",
-  "trimestre": "Xº Trimestre",
+  "etapa": "Educación Primaria",
+  "curso": "3º",
+  "area": "nombre exacto del área según la Orden 30/05/2023",
+  "trimestre": "1º Trimestre",
   "tematica": "título del tema o unidad",
-  "pregunta_motriz": "pregunta adecuada al tipo de SdA o extraída del libro",
-  "criterios_evaluacion": [{"codigo": "XXX.X.X","texto": "descripción completa"}],
-  "saberes_basicos": [{"bloque": "nombre del bloque","codigo": "XXX-X.X","texto": "descripción"}],
-  "competencias_clave": ["CCL","STEM",...],
-  "objetivos_aprendizaje": ["verbo + contenido observable",...],
-  "metodologias_sugeridas": ["ABP","Cooperativo",...],
-  "contenidos_principales": ["contenido 1","contenido 2",...],
-  "efemérides": "fechas o eventos relacionados si aparecen",
+  "pregunta_motriz": "pregunta motivadora adecuada al tipo de SdA",
+  "criterios_evaluacion": [{"codigo": "XXX.X.X","texto": "descripción completa del criterio"}],
+  "saberes_basicos": [{"bloque": "nombre del bloque","codigo": "XXX-X.X","texto": "descripción del saber"}],
+  "competencias_clave": ["CCL","STEM"],
+  "objetivos_aprendizaje": ["verbo observable + contenido"],
+  "metodologias_sugeridas": ["ABP","Aprendizaje Cooperativo"],
+  "contenidos_principales": ["contenido 1","contenido 2"],
+  "efemérides": "fechas o eventos relacionados si aparecen en el libro",
   "transversalidad": "ejes transversales detectados"
 }
 
-Si algún campo no aparece, déjalo vacío o propón el valor más adecuado según la normativa andaluza para el nivel detectado.
+Si algún campo no aparece en la imagen, déjalo vacío ("") o propón el valor más adecuado según la normativa andaluza para el nivel detectado.
+Después del JSON añade una línea: OBSERVACIONES: [qué has extraído directamente y qué has inferido]`;
 
-Después del JSON, añade OBSERVACIONES sobre qué has extraído directamente y qué has inferido.`;
-    navigator.clipboard.writeText(p).then(()=>showToast('📸 Prompt copiado. Abriendo Gemini… adjunta la foto del libro')).catch(()=>showToast('📸 Abriendo Gemini con el prompt preparado'));
+    navigator.clipboard.writeText(p)
+        .then(()=>showToast('📸 Prompt copiado. Abriendo Gemini… adjunta la foto del libro y vuelve aquí'))
+        .catch(()=>showToast('📸 Abriendo Gemini. Copia el prompt si no se copió solo'));
+
+    // Cambiar botón a paso 2
+    fotoPromptEnviado = true;
+    document.getElementById('btnFotoStep1').style.display = 'none';
+    document.getElementById('btnFotoStep2').classList.add('show');
+
     setTimeout(()=>window.open('https://gemini.google.com','_blank'),700);
+}
+
+function abrirPanelJSON(){
+    document.getElementById('jsonOverlay').classList.add('show');
+    document.getElementById('jsonInput').focus();
+}
+
+function cerrarPanelJSON(e){
+    if(e && e.target !== document.getElementById('jsonOverlay')) return;
+    document.getElementById('jsonOverlay').classList.remove('show');
+}
+
+function rellenarDesdeJSON(){
+    const raw = document.getElementById('jsonInput').value.trim();
+    const feedback = document.getElementById('jsonFeedback');
+    const textarea = document.getElementById('jsonInput');
+
+    if(!raw){ showFeedback('⚠️ El cuadro está vacío. Pega el texto de Gemini.','err'); return; }
+
+    // Extraer el JSON del texto (Gemini puede añadir texto antes/después)
+    let jsonStr = raw;
+    const match = raw.match(/\{[\s\S]*\}/);
+    if(match) jsonStr = match[0];
+
+    let data;
+    try {
+        data = JSON.parse(jsonStr);
+    } catch(e) {
+        showFeedback('❌ No se encontró un JSON válido. Asegúrate de copiar toda la respuesta de Gemini, incluyendo las llaves { }.','err');
+        textarea.classList.add('err'); textarea.classList.remove('ok');
+        return;
+    }
+
+    textarea.classList.add('ok'); textarea.classList.remove('err');
+
+    // ── Rellenar etapa ──
+    if(data.etapa){
+        const etapaVal = data.etapa.toLowerCase().includes('infantil') ? 'infantil' : 'primaria';
+        document.getElementById('etapa').value = etapaVal;
+        cambiarEtapa();
+    }
+
+    // ── Rellenar curso ──
+    if(data.curso){
+        const cursoSelect = document.getElementById('curso');
+        const cursoNorm = data.curso.trim();
+        Array.from(cursoSelect.options).forEach(opt => {
+            if(opt.value === cursoNorm || opt.text.startsWith(cursoNorm)) cursoSelect.value = opt.value;
+        });
+    }
+
+    // ── Seleccionar área ──
+    if(data.area){
+        const etapaVal = document.getElementById('etapa').value;
+        if(curriculo[etapaVal]){
+            // Buscar área por nombre exacto o aproximado
+            const areaEncontrada = Object.keys(curriculo[etapaVal].areas).find(a =>
+                a.toLowerCase().includes(data.area.toLowerCase().substring(0,8)) ||
+                data.area.toLowerCase().includes(a.toLowerCase().substring(0,8))
+            );
+            if(areaEncontrada){
+                // Marcar el checkbox del área
+                const items = document.querySelectorAll('.area-item');
+                items.forEach(item => {
+                    const title = item.querySelector('.at')?.textContent;
+                    if(title && title.toLowerCase().includes(areaEncontrada.toLowerCase().substring(0,8))){
+                        if(!areasSeleccionadas.includes(areaEncontrada)){
+                            toggleArea(areaEncontrada, item);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    // ── Rellenar trimestre ──
+    if(data.trimestre){
+        const trimSel = document.getElementById('trimestre');
+        Array.from(trimSel.options).forEach(opt => {
+            if(opt.value.includes(data.trimestre.charAt(0))) trimSel.value = opt.value;
+        });
+    }
+
+    // ── Rellenar campos de texto ──
+    if(data.tematica) document.getElementById('tematica').value = data.tematica;
+    if(data.pregunta_motriz) document.getElementById('preguntaMotriz').value = data.pregunta_motriz;
+    if(data.efemérides) document.getElementById('efemérides').value = data.efemérides;
+    if(data.transversalidad) document.getElementById('transversalidad').value = data.transversalidad;
+    if(data.fecha_inicio) document.getElementById('fechaInicio').value = data.fecha_inicio;
+    if(data.fecha_fin) document.getElementById('fechaFin').value = data.fecha_fin;
+
+    // ── Título de la SdA ──
+    if(data.tematica && !document.getElementById('titSda').value){
+        document.getElementById('titSda').value = data.tematica;
+    }
+
+    // ── Metodologías: marcar las sugeridas ──
+    if(data.metodologias_sugeridas && data.metodologias_sugeridas.length > 0){
+        document.querySelectorAll('#metodologias .chip').forEach(chip => {
+            const chipText = chip.textContent.toLowerCase();
+            data.metodologias_sugeridas.forEach(met => {
+                if(chipText.includes(met.toLowerCase().substring(0,4))){
+                    chip.classList.add('selected');
+                }
+            });
+        });
+    }
+
+    // ── Actualizar saberes y criterios tras seleccionar área ──
+    actualizarSaberes();
+    actualizarCriterios();
+
+    // ── Marcar criterios que coincidan con los del JSON ──
+    setTimeout(() => {
+        if(data.criterios_evaluacion && data.criterios_evaluacion.length > 0){
+            data.criterios_evaluacion.forEach(cr => {
+                document.querySelectorAll('#criteriosPorArea input[type=checkbox]').forEach(cb => {
+                    if(cb.value === cr.codigo || cb.value.includes(cr.codigo)){
+                        cb.checked = true;
+                    }
+                });
+            });
+        }
+
+        // ── Marcar saberes que coincidan ──
+        if(data.saberes_basicos && data.saberes_basicos.length > 0){
+            data.saberes_basicos.forEach(sb => {
+                document.querySelectorAll('#saberesContainer input[type=checkbox]').forEach(cb => {
+                    if(cb.value === sb.codigo || cb.value.includes(sb.codigo)){
+                        cb.checked = true;
+                        cb.closest('.sab-item')?.classList.add('selected');
+                    }
+                });
+            });
+        }
+    }, 200);
+
+    // ── Contar qué se importó ──
+    const critsImportados = data.criterios_evaluacion?.length || 0;
+    const saberesImportados = data.saberes_basicos?.length || 0;
+    const camposTexto = [data.tematica, data.pregunta_motriz, data.efemérides, data.transversalidad].filter(Boolean).length;
+
+    showFeedback(`✅ Importado correctamente: área "${data.area||'detectada'}", ${critsImportados} criterios, ${saberesImportados} saberes, ${camposTexto} campos de texto.`, 'ok');
+
+    // Mostrar banner en paso 1 y cerrar panel tras 1.5s
+    setTimeout(()=>{
+        document.getElementById('jsonOverlay').classList.remove('show');
+        // Mostrar banner de éxito
+        const banner = document.getElementById('importBanner');
+        const bannerText = document.getElementById('importBannerText');
+        bannerText.textContent = `✅ Formulario rellenado desde la foto del libro: "${data.tematica||data.area||'tema detectado'}" · ${critsImportados} criterios · ${saberesImportados} saberes importados. Revisa y ajusta lo que necesites.`;
+        banner.classList.add('show');
+        // Ir al paso 1 si no estamos ya
+        if(currentStep !== 1){
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep = 1;
+            document.getElementById('step1').classList.add('active');
+            updProg();
+        }
+        window.scrollTo({top:0, behavior:'smooth'});
+        showToast('🎉 Formulario rellenado automáticamente');
+    }, 1500);
+}
+
+function showFeedback(msg, tipo){
+    const f = document.getElementById('jsonFeedback');
+    f.textContent = msg;
+    f.className = `json-feedback show ${tipo}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -1325,6 +1639,19 @@ function updateSesInfo(){
     document.getElementById('sesInfo').innerHTML=`Se generarán <strong>${n} actividades evaluables</strong>, una por sesión.`;
     document.getElementById('numSesLbl').textContent=n;
     document.getElementById('promptSesLbl').textContent=n;
+}
+
+function calcularSemanas(){
+    const ini=document.getElementById('fechaInicio').value;
+    const fin=document.getElementById('fechaFin').value;
+    if(ini&&fin){
+        const ms=new Date(fin)-new Date(ini);
+        if(ms>0){
+            const semanas=Math.max(1,Math.ceil(ms/(1000*60*60*24*7)));
+            document.getElementById('semanas').value=semanas;
+            document.getElementById('semanasInfo').textContent=`⚡ ${semanas} semana${semanas!==1?'s':''} calculada${semanas!==1?'s':''} automáticamente`;
+        }
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -1399,8 +1726,14 @@ function validar(step){
 function toggleChip(el){el.classList.toggle('selected');}
 function toggleApp(el){const cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('selected',cb.checked);}
 function selTipo(tipo,el){document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');el.querySelector('input[type=radio]').checked=true;sdaTipo=tipo;}
-function selIA(el){document.querySelectorAll('.ia-chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');const k=el.getAttribute('data-ia');document.getElementById('iaStatus').innerHTML=`✅ Se abrirá <strong>${iaNames[k]}</strong> — el prompt se copiará al portapapeles.`;}
-function getIA(){const c=document.querySelector('.ia-chip.selected');return c?c.getAttribute('data-ia'):'gemini';}
+function selIA(el){
+    document.querySelectorAll('.ia-chip').forEach(c=>c.classList.remove('selected'));
+    el.classList.add('selected');
+    const k=el.getAttribute('data-ia');
+    const star=k==='claude'?'⭐ ':k==='gemini'?'🔵 ':'✅ ';
+    document.getElementById('iaStatus').innerHTML=`${star}Se abrirá <strong>${iaNames[k]}</strong> — el prompt se copiará al portapapeles.`;
+}
+function getIA(){const c=document.querySelector('.ia-chip.selected');return c?c.getAttribute('data-ia'):'claude';}
 
 // ═══════════════════════════════════════════════════════════════════
 // RECOPILAR DATOS
@@ -1426,6 +1759,8 @@ function recopilarDatos(){
         semanas:document.getElementById('semanas').value,
         sesiones:parseInt(document.getElementById('sesiones').value)||4,
         duracion:parseInt(document.getElementById('duracion').value)||60,
+        fechaInicio:document.getElementById('fechaInicio').value,
+        fechaFin:document.getElementById('fechaFin').value,
         areas:areasSeleccionadas,
         sdaTipo,
         titSda:document.getElementById('titSda').value,
@@ -1447,7 +1782,7 @@ function recopilarDatos(){
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// CONSTRUIR PROMPT SdA (FORMATO INSPECTOR)
+// CONSTRUIR PROMPT SdA
 // ═══════════════════════════════════════════════════════════════════
 function construirPrompt(d){
     const esInf=d.etapa==='infantil', esMulti=d.areas.length>1;
@@ -1476,7 +1811,7 @@ function construirPrompt(d){
   Nivel: ${nivel_act}
   Áreas implicadas: ${areasT}${esMulti?' (indica cuáles protagonizan esta sesión)':''}
 
-  a) Descripción breve en una línea (formato inspector):
+  a) Descripción breve en una línea:
      "[Nombre de la actividad]: [descripción en una línea]"
      "Nos ayudan los saberes básicos: [códigos de saberes que se trabajan]"
 
@@ -1508,7 +1843,7 @@ function construirPrompt(d){
      |---|---|---|---|---|
      | [descriptor mínimo] | [descriptor básico] | [descriptor medio] | [descriptor bueno] | [descriptor excelente] |
 
-  g) Pauta/Punto de verificación DUA (formato inspector):
+  g) Pauta/Punto de verificación DUA:
      DUA ${d.dua[0]||'7.2'}: [descripción de la medida aplicada en esta sesión]
 
   h) Recursos durante la sesión:
@@ -1521,7 +1856,7 @@ function construirPrompt(d){
 `;
     }
 
-    return `# SDA CAPITULACIONES — FORMATO OFICIAL INSPECTOR
+    return `# SDA CAPITULACIONES — CEIP CAPITULACIONES DE SANTA FE
 # Orden de 30 de mayo de 2023 · LOMLOE · Decreto 101/2023 Andalucía
 
 ═══════════════════════════════════════════════════════════
@@ -1536,7 +1871,7 @@ Normativa de referencia:
 • Decreto 101/2023 — ordenación de la Educación Primaria en Andalucía
 • RD 157/2022 — ordenación básica de la Educación Primaria (art. 6 principios pedagógicos)
 
-⚠️ CRÍTICO: Genera la SdA con EXACTAMENTE los 7 bloques del formato oficial del inspector. No omitas ninguno.
+⚠️ CRÍTICO: Genera la SdA con EXACTAMENTE los 7 bloques de la estructura oficial. No omitas ninguno.
 
 ═══════════════════════════════════════════════════════════
 DATOS DE LA SdA
@@ -1569,14 +1904,14 @@ ATENCIÓN A LA DIVERSIDAD
   ⚠️ Medidas ORDINARIAS — NO son ACS
 
 ═══════════════════════════════════════════════════════════
-INSTRUCCIONES: 7 BLOQUES OFICIALES DEL INSPECTOR
+INSTRUCCIONES: 7 BLOQUES OFICIALES DE LA SdA
 ═══════════════════════════════════════════════════════════
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 BLOQUE 1 — IDENTIFICACIÓN Y LOCALIZACIÓN DE UN CENTRO DE INTERÉS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • Curso: ${d.curso} | SdA Nº: ${d.sdaNum}
-• Temporalización: ${d.trimestre} (${d.semanas} semanas): [indica fechas aproximadas]
+• Temporalización: ${d.trimestre} — Del ${d.fechaInicio?new Date(d.fechaInicio+'T12:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'}):'(sin fecha)'} al ${d.fechaFin?new Date(d.fechaFin+'T12:00:00').toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'}):'(sin fecha)'} (${d.semanas} semanas)
 • Título (Centro de interés): "${d.titSda||d.tematica}"
 • Planes y proyectos del centro asociados: ${d.planesProyectos||'(indica los planes del CEIP con los que conecta esta SdA)'}
 
@@ -1618,7 +1953,7 @@ BLOQUE 4 — CONCRECIÓN CURRICULAR
 BLOQUE 5 — SECUENCIA DIDÁCTICA (${d.sesiones} SESIONES)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Organiza las ${d.sesiones} sesiones en las FASES del modelo inspector:
+Organiza las ${d.sesiones} sesiones en las FASES del modelo de SdA:
 • MOTIVACIÓN (sesión 1): Enganche, activación conocimientos previos, presentación del reto
 • ACTIVACIÓN (sesión 2): Exploración inicial y estructuración de saberes previos  
 • DESARROLLO Y CONSOLIDACIÓN (sesiones 3 a ${Math.max(3,d.sesiones-1)}): Construcción del conocimiento
@@ -1672,7 +2007,7 @@ BLOQUE 7 — VALORACIÓN DE LO APRENDIDO
 ═══════════════════════════════════════════════════════════
 FORMATO DE ENTREGA
 ═══════════════════════════════════════════════════════════
-✅ Los 7 bloques del formato inspector, numerados y diferenciados
+✅ Los 7 bloques de la estructura oficial, numerados y diferenciados
 ✅ ${d.sesiones} actividades evaluables (una por sesión) con todos los apartados a-i
 ✅ Tabla de evaluación con escala numérica en cada actividad (Insuf./Suf./Bien/Notable/Sobres.)
 ✅ Vinculación explícita criterio ↔ actividad en cada una
@@ -1684,7 +2019,7 @@ FORMATO DE ENTREGA
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// CONSTRUIR PROMPT RÚBRICAS (ESCALA INSPECTOR)
+// CONSTRUIR PROMPT RÚBRICAS
 // ═══════════════════════════════════════════════════════════════════
 function construirPromptRubricas(){
     const d=recopilarDatos();
@@ -1694,14 +2029,14 @@ function construirPromptRubricas(){
     let critsT='';
     Object.entries(d.critsPorArea).forEach(([a,cs])=>{critsT+=`· ${a}: `+cs.map(c=>`[${c.codigo}]`).join(', ')+'\n';});
 
-    return `# SDA CAPITULACIONES — RÚBRICAS FORMATO INSPECTOR
-# Escala numérica oficial: Insuficiente(1-4) / Suficiente(5-6) / Bien(6-7) / Notable(7-8) / Sobresaliente(9-10)
+    return `# SDA CAPITULACIONES — RÚBRICAS DE EVALUACIÓN
+# CEIP Capitulaciones de Santa Fe · Escala numérica oficial: Insuficiente(1-4) / Suficiente(5-6) / Bien(6-7) / Notable(7-8) / Sobresaliente(9-10)
 
 ═══════════════════════════════════════════════════════════
 ROL
 ═══════════════════════════════════════════════════════════
 Eres experto en evaluación educativa en ${d.nombreEtapa}.
-Diseña rúbricas según la Orden de 30 de mayo de 2023 (Andalucía), con la escala numérica del formato oficial del inspector de educación.
+Diseña rúbricas según la Orden de 30 de mayo de 2023 (Andalucía), con la escala numérica oficial del CEIP Capitulaciones de Santa Fe.
 
 ═══════════════════════════════════════════════════════════
 DATOS
@@ -1726,7 +2061,7 @@ INSTRUCCIONES: GENERA UNA RÚBRICA POR CADA ACTIVIDAD
 
 TIPOS SOLICITADOS: ${tipos.join(' + ')||'Analítica con descriptores detallados'}
 
-⚠️ USA OBLIGATORIAMENTE LA ESCALA NUMÉRICA DEL FORMATO INSPECTOR:
+⚠️ USA OBLIGATORIAMENTE LA ESCALA NUMÉRICA OFICIAL:
 Insuficiente (1-4) | Suficiente (5-6) | Bien (6-7) | Notable (7-8) | Sobresaliente (9-10)
 
 Para cada actividad, genera esta estructura EXACTA:
@@ -1758,7 +2093,7 @@ NOTA FINAL — Hecho observado (registro anecdótico):
 "Se debe indicar el alumno/a, la sesión y la tarea en la que se localiza el hecho observado, además del criterio de evaluación al que afecta."
 
 REQUISITOS:
-✅ ${d.sesiones} rúbricas completas con escala numérica del inspector
+✅ ${d.sesiones} rúbricas completas con escala numérica oficial
 ✅ Descriptores observables y diferenciados entre niveles
 ✅ "Suficiente (5-6)" = mínimo exigible al alumnado de ${d.curso}
 ✅ "Notable (7-8)" = estándar esperado para alumnado que trabaja correctamente
@@ -1774,15 +2109,20 @@ async function generarYAbrir(){
     const d=recopilarDatos(),p=construirPrompt(d);
     document.getElementById('promptContent').textContent=p;
     document.getElementById('promptSesLbl').textContent=d.sesiones;
-    try{await navigator.clipboard.writeText(p);showToast('📋 Copiado. Abriendo IA… pégalo con Ctrl+V');}
-    catch(e){showToast('⚠️ Copia el prompt manualmente');}
-    setTimeout(()=>window.open(iaUrls[getIA()],'_blank'),600);
+    const ia=getIA();
+    try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}
+    // Mostrar modal de recordatorio antes de abrir la IA
+    document.getElementById('pasteIAName').textContent=iaNames[ia];
+    document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';
+    document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};
+    document.getElementById('pasteOverlay').classList.add('show');
 }
+function cerrarPasteModal(){document.getElementById('pasteOverlay').classList.remove('show');}
 async function copiarPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera el prompt');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Prompt copiado');}catch(e){showToast('⚠️ Selecciona el texto manualmente');}}
 function descargarTXT(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera');return;}const d=recopilarDatos();descargar(c,`SDA_Capitulaciones_${d.areas.map(a=>a.substring(0,3)).join('_')}_${(d.titSda||d.tematica).replace(/\s+/g,'_')}.txt`);}
 async function compartirPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera');return;}if(navigator.share){try{await navigator.share({title:'SDA Capitulaciones',text:c.substring(0,200)+'...',url:window.location.href});}catch(e){}}else showToast('⚠️ Compartir no disponible');}
 function generarPromptRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}document.getElementById('rubricContent').textContent=construirPromptRubricas();showToast('📐 Prompt de rúbricas generado');}
-async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;try{await navigator.clipboard.writeText(p);showToast('📐 Copiado. Abriendo IA…');}catch(e){showToast('⚠️ Copia el prompt manualmente');}setTimeout(()=>window.open(iaUrls[getIA()],'_blank'),600);}
+async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;const ia=getIA();try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}document.getElementById('pasteIAName').textContent=iaNames[ia];document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};document.getElementById('pasteOverlay').classList.add('show');}
 async function copiarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Copiado');}catch(e){showToast('⚠️ Selecciona manualmente');}}
 function descargarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}descargar(c,`SDA_Rubricas_${recopilarDatos().tematica.replace(/\s+/g,'_')}.txt`);}
 function descargar(cont,nom){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([cont],{type:'text/plain;charset=utf-8'}));a.download=nom;a.click();showToast('💾 Descargado');}
