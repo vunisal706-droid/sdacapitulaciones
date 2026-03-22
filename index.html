@@ -352,7 +352,16 @@
             .sn{width:28px;height:28px;font-size:.7rem}
             .json-panel{padding:1.2rem}
         }
-    </style>
+    
+        /* ── Tooltip herramientas ─────────────────────────── */
+        .chip-wrap{position:relative;display:inline-flex;align-items:center;gap:3px}
+        .chip-info{width:16px;height:16px;border-radius:50%;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:#4f46e5;font-size:.65rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;line-height:1;padding:0;user-select:none}
+        .chip-info:hover{background:rgba(99,102,241,.35)}
+        .chip-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1e1b4b;color:#fff;font-size:.75rem;padding:.5rem .75rem;border-radius:10px;white-space:nowrap;max-width:260px;white-space:normal;line-height:1.4;z-index:9999;pointer-events:none;opacity:0;transition:opacity .18s;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+        .chip-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e1b4b}
+        .chip-tooltip.tip-visible{opacity:1}
+        .chip-tooltip .tip-emoji{font-size:.95rem;margin-right:.3rem}
+</style>
 </head>
 <body>
 
@@ -362,7 +371,7 @@
             <div class="logo">📜</div>
             <div>
                 <h1>SDA Capitulaciones</h1>
-                <p>CEIP Capitulaciones de Santa Fe · Orden 30/05/2023 · LOMLOE</p>
+                <p>CEIP Capitulaciones de Santa Fe</p>
             </div>
         </div>
         <button class="btn-foto" id="btnFotoStep1" onclick="abrirFotoLibro()">📸 Generar SdA con foto del libro</button>
@@ -892,17 +901,24 @@
         <div class="fg" style="margin-top:.5rem">
             <label>Otras herramientas digitales externas</label>
             <div class="chips" id="herramientas">
-                <div class="chip" onclick="toggleChip(this)">Genially</div>
-                <div class="chip" onclick="toggleChip(this)">Canva</div>
-                <div class="chip selected" onclick="toggleChip(this)">Wordwall</div>
-                <div class="chip" onclick="toggleChip(this)">Kahoot</div>
-                <div class="chip" onclick="toggleChip(this)">Educaplay</div>
-                <div class="chip" onclick="toggleChip(this)">Quizizz</div>
-                <div class="chip" onclick="toggleChip(this)">Book Creator</div>
-                <div class="chip" onclick="toggleChip(this)">Padlet</div>
-                <div class="chip" onclick="toggleChip(this)">Flipgrid</div>
-                <div class="chip" onclick="toggleChip(this)">Scratch</div>
-                <div class="chip" onclick="toggleChip(this)">Pixton</div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Genially</div><button class="chip-info" onclick="showTip(this,'🎨','Presentaciones interactivas y gamificadas. Ideal para productos finales visuales y animados.')" onblur="hideTip(this)" aria-label="Info Genially">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Canva</div><button class="chip-info" onclick="showTip(this,'✏️','Diseño gráfico sencillo. Infografías, carteles, presentaciones y contenido visual para el alumnado.')" onblur="hideTip(this)" aria-label="Info Canva">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip selected" onclick="toggleChip(this)">Wordwall</div><button class="chip-info" onclick="showTip(this,'🎮','Actividades interactivas (quiz, ruleta, crucigrama…). Muy útil para práctica y repaso.')" onblur="hideTip(this)" aria-label="Info Wordwall">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Kahoot</div><button class="chip-info" onclick="showTip(this,'🏆','Quiz competitivo en tiempo real. Motivador para activación de conocimientos y evaluación formativa.')" onblur="hideTip(this)" aria-label="Info Kahoot">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Educaplay</div><button class="chip-info" onclick="showTip(this,'📝','Actividades educativas (sopa de letras, dictado, video quiz…). En español, con muchos recursos hechos.')" onblur="hideTip(this)" aria-label="Info Educaplay">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Quizizz</div><button class="chip-info" onclick="showTip(this,'⚡','Quiz autoevaluable con memes y feedback inmediato. Funciona en casa a ritmo propio.')" onblur="hideTip(this)" aria-label="Info Quizizz">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Book Creator</div><button class="chip-info" onclick="showTip(this,'📖','Creación de libros digitales multimedia. Ideal como producto final: texto, voz, imagen y vídeo.')" onblur="hideTip(this)" aria-label="Info Book Creator">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Padlet</div><button class="chip-info" onclick="showTip(this,'📌','Mural digital colaborativo. Para brainstorming, exposición de trabajos o recopilación de evidencias.')" onblur="hideTip(this)" aria-label="Info Padlet">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Flip</div><button class="chip-info" onclick="showTip(this,'📹','Grabación de vídeos cortos por el alumnado. Evidencia oral auténtica de aprendizaje.')" onblur="hideTip(this)" aria-label="Info Flip">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Scratch</div><button class="chip-info" onclick="showTip(this,'🐱','Programación visual por bloques. Para proyectos de animación, juegos o simulaciones.')" onblur="hideTip(this)" aria-label="Info Scratch">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Pixton</div><button class="chip-info" onclick="showTip(this,'🦸','Creación de cómics y avatares digitales. Excelente para narrativa, comprensión lectora y expresión.')" onblur="hideTip(this)" aria-label="Info Pixton">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Seesaw</div><button class="chip-info" onclick="showTip(this,'🎒','Portfolio digital del alumnado. Muy apropiado para Infantil y 1er ciclo, con acceso familiar.')" onblur="hideTip(this)" aria-label="Info Seesaw">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Mentimeter</div><button class="chip-info" onclick="showTip(this,'🖐️','Respuestas en tiempo real: nubes de palabras, encuestas, preguntas abiertas. Activa a todo el grupo.')" onblur="hideTip(this)" aria-label="Info Mentimeter">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Edpuzzle</div><button class="chip-info" onclick="showTip(this,'🎬','Vídeos con preguntas intercaladas. El docente ve quién ha respondido y los resultados al instante.')" onblur="hideTip(this)" aria-label="Info Edpuzzle">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Wakelet</div><button class="chip-info" onclick="showTip(this,'🗂️','Colecciones de recursos organizadas en formato visual. Útil para WebQuests o banco de fuentes.')" onblur="hideTip(this)" aria-label="Info Wakelet">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">LearningApps</div><button class="chip-info" onclick="showTip(this,'🧩','Actividades interactivas gratuitas y en español. Muy usadas en PT y apoyo educativo.')" onblur="hideTip(this)" aria-label="Info LearningApps">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Loom</div><button class="chip-info" onclick="showTip(this,'🎥','Grabación de pantalla con cámara. Para explicaciones del docente o producciones del alumnado.')" onblur="hideTip(this)" aria-label="Info Loom">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Nearpod</div><button class="chip-info" onclick="showTip(this,'📡','Presentaciones sincrónicas con actividades integradas. Todos los dispositivos conectados en tiempo real.')" onblur="hideTip(this)" aria-label="Info Nearpod">?</button><div class="chip-tooltip"></div></div>
             </div>
         </div>
     </div>
@@ -971,6 +987,7 @@
             <option value="Discapacidad visual">Discapacidad visual</option>
             <option value="Discapacidad auditiva">Discapacidad auditiva</option>
             <option value="Trastorno del lenguaje">Trastorno del lenguaje</option>
+            <option value="Síndrome de Down">Síndrome de Down</option>
         </select>
         <small>Ctrl/Cmd para seleccionar varias</small>
     </div>
@@ -1202,6 +1219,15 @@
     <h2>🚀 Generar SdA Completa</h2>
     <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> + <strong id="promptSesLbl">4</strong> actividades evaluables con escala numérica</p>
 
+    <!-- PANEL RESUMEN -->
+    <div id="resumenSda" style="background:linear-gradient(135deg,rgba(99,102,241,.07),rgba(124,58,237,.05));border:1.5px solid rgba(99,102,241,.2);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem;display:none">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
+            <span style="font-size:1.1rem">📋</span>
+            <strong style="color:#4f46e5;font-size:.92rem">Resumen de tu SdA</strong>
+        </div>
+        <div id="resumenContenido" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.45rem .9rem;font-size:.83rem"></div>
+    </div>
+
     <div class="fg">
         <label>¿Con qué IA vas a trabajar?</label>
         <div class="ia-chips">
@@ -1324,6 +1350,7 @@
             <option value="Discapacidad visual">Discapacidad visual</option>
             <option value="Discapacidad auditiva">Discapacidad auditiva</option>
             <option value="Trastorno del lenguaje">Trastorno del lenguaje</option>
+            <option value="Síndrome de Down">Síndrome de Down</option>
         </select>
         <small>Ctrl/Cmd para seleccionar varias</small>
     </div>
@@ -1405,6 +1432,15 @@
 <div class="card" id="step8">
     <h2>🚀 Generar SdA Completa</h2>
     <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> + <strong id="promptSesLbl">4</strong> actividades evaluables con escala numérica</p>
+
+    <!-- PANEL RESUMEN -->
+    <div id="resumenSda" style="background:linear-gradient(135deg,rgba(99,102,241,.07),rgba(124,58,237,.05));border:1.5px solid rgba(99,102,241,.2);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem;display:none">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
+            <span style="font-size:1.1rem">📋</span>
+            <strong style="color:#4f46e5;font-size:.92rem">Resumen de tu SdA</strong>
+        </div>
+        <div id="resumenContenido" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.45rem .9rem;font-size:.83rem"></div>
+    </div>
 
     <div class="fg">
         <label>¿Con qué IA vas a trabajar?</label>
@@ -2629,6 +2665,7 @@ function irAPaso(n){
     // Refresh saberes when entering step 6 — small delay so JSON-imported
     // criteria checkboxes are already in the DOM and checked before reading them
     if(n===6) setTimeout(actualizarSaberes, 350);
+    if(n===8) setTimeout(mostrarResumenSda, 50);
 }
 function nextStep(){if(!validar(currentStep))return;if(currentStep<totalSteps){irAPaso(currentStep+1);}}
 function prevStep(){if(currentStep>1){irAPaso(currentStep-1);}}
@@ -3233,6 +3270,42 @@ REQUISITOS:
 // ═══════════════════════════════════════════════════════════════════
 // ACCIONES
 // ═══════════════════════════════════════════════════════════════════
+
+
+function showTip(btn, emoji, desc){
+    const tt=btn.nextElementSibling;
+    tt.innerHTML=`<span class="tip-emoji">${emoji}</span>${desc}`;
+    tt.classList.add('tip-visible');
+    // Position fix if near right edge
+    setTimeout(()=>{
+        const r=tt.getBoundingClientRect();
+        if(r.left<8){tt.style.left='0';tt.style.transform='none';}
+        else if(r.right>window.innerWidth-8){tt.style.left='auto';tt.style.right='0';tt.style.transform='none';}
+    },10);
+}
+function hideTip(btn){btn.nextElementSibling.classList.remove('tip-visible');}
+
+function mostrarResumenSda(){
+    const d=recopilarDatos();
+    const panel=document.querySelectorAll('#resumenSda');
+    const cont=document.querySelectorAll('#resumenContenido');
+    const tipoLabel={investigacion:'Investigación',proyecto:'Proyecto',servicio:'Servicio comunidad',reto:'Reto/Desafío',creacion:'Creación',problema:'Resolución de problema'};
+    const items=[
+        {label:'📚 Área',val:d.areas.join(', ')||'—'},
+        {label:'🎓 Etapa · Curso',val:(d.etapa==='infantil'?'Ed. Infantil':'Ed. Primaria')+' · '+(d.curso||'—')},
+        {label:'🗓️ Trimestre',val:d.trimestre||'—'},
+        {label:'🎯 Tipo SdA',val:tipoLabel[sdaTipo]||sdaTipo||'—'},
+        {label:'📅 Sesiones · Duración',val:(d.sesiones||'—')+' ses. · '+(d.duracion||'—')+'min'},
+        {label:'🌍 Temática / Título',val:(d.titSda||d.tematica||'—').substring(0,55)+(((d.titSda||d.tematica||'').length>55)?'…':'')},
+        {label:'🤝 Metodologías',val:(d.metodologias&&d.metodologias.length?d.metodologias.slice(0,3).join(', ')+(d.metodologias.length>3?' +'+(d.metodologias.length-3):''):'—')},
+        {label:'♿ ACNEAE',val:(d.acneae&&d.acneae.filter(a=>a!=='Ninguna').length?d.acneae.filter(a=>a!=='Ninguna').join(', '):'Ninguna específica')},
+        {label:'🛠️ Herramientas',val:(d.herramientas&&d.herramientas.length?d.herramientas.slice(0,4).join(', ')+(d.herramientas.length>4?' +más':''):'A criterio IA')},
+    ];
+    const html=items.map(i=>`<div style="display:flex;flex-direction:column;gap:.1rem"><span style="font-size:.7rem;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.03em">${i.label}</span><span style="color:#1e1b4b;font-weight:600">${i.val}</span></div>`).join('');
+    panel.forEach(p=>{p.style.display='block';});
+    cont.forEach(c=>{c.innerHTML=html;});
+}
+
 function generarPrompt(){const d=recopilarDatos();document.getElementById('promptContent').textContent=construirPrompt(d);document.getElementById('promptSesLbl').textContent=d.sesiones;showToast('✅ Prompt generado');}
 async function generarYAbrir(){
     const d=recopilarDatos(),p=construirPrompt(d);
