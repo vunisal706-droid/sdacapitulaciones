@@ -361,6 +361,38 @@
         .chip-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e1b4b}
         .chip-tooltip.tip-visible{opacity:1}
         .chip-tooltip .tip-emoji{font-size:.95rem;margin-right:.3rem}
+
+        /* ── Selectores de días ──────────────────────────── */
+        .dias-row{display:flex;gap:.45rem;margin-top:.5rem;flex-wrap:wrap}
+        .dia-btn{width:38px;height:38px;border-radius:50%;border:2px solid rgba(99,102,241,.25);background:white;
+            font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;color:#6b7280;display:flex;align-items:center;justify-content:center}
+        .dia-btn:hover{border-color:var(--primary);color:var(--primary)}
+        .dia-btn.active{background:var(--primary);border-color:var(--primary);color:white;box-shadow:0 0 10px var(--glow-blue)}
+        .dia-btn.rp-active{background:#059669;border-color:#059669;color:white;box-shadow:0 0 10px var(--glow-green)}
+        .dia-btn:disabled{opacity:.3;cursor:not-allowed;transform:none!important}
+        .dia-btn.mates-active{background:#34d399;border-color:#059669;color:#065f46;box-shadow:0 0 8px rgba(5,150,105,.3)}
+        .dias-wrap{background:rgba(238,242,255,.5);border-radius:12px;padding:.8rem 1rem;border:1px solid rgba(99,102,241,.15);margin-top:.8rem}
+        .dias-wrap.mates-wrap{background:rgba(240,253,244,.5);border:1px solid rgba(5,150,105,.15)}
+        .dias-label{font-weight:700;font-size:.85rem;color:var(--primary);display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem}
+        .dias-label.mates-label{color:#059669}
+        /* ── Tabla de sesiones preview ───────────────────── */
+        .ses-table-wrap{margin-top:1rem;border-radius:12px;overflow:hidden;border:1px solid rgba(99,102,241,.2)}
+        .ses-table-head{background:linear-gradient(135deg,var(--primary),var(--purple));padding:.6rem 1rem;display:flex;justify-content:space-between;align-items:center}
+        .ses-table-head h4{color:white;font-size:.88rem;margin:0}
+        .ses-table-head small{color:rgba(255,255,255,.8);font-size:.72rem}
+        .ses-table{width:100%;border-collapse:collapse;background:white;font-size:.8rem}
+        .ses-table th{background:#f8f9ff;padding:.45rem .6rem;text-align:left;font-weight:700;color:#4f46e5;border-bottom:2px solid rgba(99,102,241,.15);font-size:.75rem;white-space:nowrap}
+        .ses-table td{padding:.38rem .6rem;border-bottom:1px solid rgba(99,102,241,.07);vertical-align:middle}
+        .ses-table tr:last-child td{border-bottom:none}
+        .ses-table tr:hover td{background:rgba(238,242,255,.4)}
+        .ses-tag{display:inline-block;padding:.12rem .45rem;border-radius:6px;font-size:.7rem;font-weight:700}
+        .ses-tag.normal{background:#f1f5f9;color:#475569}
+        .ses-tag.lectura{background:#fef3c7;color:#92400e}
+        .ses-tag.rp{background:#d1fae5;color:#065f46}
+        .ses-tag.lectura-rp{background:linear-gradient(90deg,#fef3c7,#d1fae5);color:#374151}
+        .ses-nota{border:none;background:rgba(238,242,255,.5);border-radius:6px;padding:.2rem .4rem;width:100%;font-size:.75rem;font-family:inherit;color:#374151}
+        .ses-nota:focus{outline:1px solid rgba(99,102,241,.4)}
+        .ses-total{background:#f8f9ff;padding:.5rem .8rem;font-size:.8rem;color:#4f46e5;font-weight:600;border-top:2px solid rgba(99,102,241,.1)}
 </style>
 </head>
 <body>
@@ -527,27 +559,20 @@
 
     <div class="row">
         <div class="fg">
-            <label for="sesiones">Nº de sesiones * <span class="badge badge-blue">= nº actividades</span></label>
-            <input type="number" id="sesiones" min="1" max="20" value="4" required onchange="updateSesInfo()">
-            <small id="sesInfo">Se generarán <strong>4 actividades evaluables</strong>, una por sesión.</small>
-        </div>
-        <div class="fg">
             <label for="duracion">Duración por sesión (min) *</label>
             <input type="number" id="duracion" min="10" max="300" value="60" step="10" required>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="fg">
-            <label for="semanas">Semanas de duración <span class="badge badge-green">Auto</span></label>
-            <input type="number" id="semanas" min="1" max="12" value="4" readonly style="background:#f1f5f9;cursor:default">
-            <small id="semanasInfo">⚡ Calculado automáticamente según las fechas</small>
         </div>
         <div class="fg">
             <label for="sdaNum">Nº SdA</label>
             <input type="number" id="sdaNum" min="1" max="30" value="1">
         </div>
+        <div class="fg">
+            <label for="semanas">Semanas <span class="badge badge-green">Auto</span></label>
+            <input type="number" id="semanas" min="1" max="12" value="4" readonly style="background:#f1f5f9;cursor:default">
+        </div>
     </div>
+
+
 
     <div class="fg">
         <label>Áreas/Ámbitos * <span class="badge badge-yellow">💡 Recomendado: una sola área</span></label>
@@ -562,6 +587,50 @@
         </div>
         <div class="areas-sum" id="areasSummary" style="display:none">
             <strong>Áreas:</strong> <span id="areasList"></span>
+        </div>
+    </div>
+
+    <!-- Sesiones ocultas (calculadas) -->
+    <input type="hidden" id="sesiones" value="4">
+
+    <!-- ── Selectores de días por área (dinámico) ───────── -->
+    <div id="diasAreasContainer"></div>
+
+    <!-- ── Tabla de sesiones (preview) ──────────────────── -->
+    <div id="tablaSesionesWrap" style="display:none;margin-top:.8rem">
+        <div class="ses-table-wrap">
+            <div class="ses-table-head">
+                <h4>📅 Planificación de sesiones</h4>
+                <small id="sesionesTotal">0 sesiones calculadas</small>
+            </div>
+            <div style="overflow-x:auto;max-height:320px;overflow-y:auto">
+                <table class="ses-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Día</th>
+                            <th>Tipo</th>
+                            <th style="position:relative">
+                                Evaluación en esta sesión
+                                <button class="chip-info" style="margin-left:4px;vertical-align:middle"
+                                    onclick="showTip(this,'📊','Marca si en esta sesión hay evaluación. La evaluación NO es por sesión sino al terminar una actividad o el producto final. Instrumento: rúbrica (para producto final), lista de cotejo (actividades intermedias), registro de observación.')"
+                                    onblur="hideTip(this)" aria-label="Ayuda evaluación">?</button>
+                                <div class="chip-tooltip" style="min-width:280px;white-space:normal"></div>
+                            </th>
+                            <th style="position:relative">
+                                Nota del tutor (opcional)
+                                <button class="chip-info" style="margin-left:4px;vertical-align:middle" 
+                                    onclick="showTip(this,'📝','Excursión o actividad fuera del aula · sala de informática · evaluación trimestral · sesión más corta · agrupamiento especial · materiales a traer · cualquier condicionante del centro. La IA lo tendrá en cuenta al diseñar esa sesión.')"
+                                    onblur="hideTip(this)" aria-label="Ayuda notas">?</button>
+                                <div class="chip-tooltip" style="min-width:280px;white-space:normal"></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="sesionesBody"></tbody>
+                </table>
+            </div>
+            <div class="ses-total" id="sesTotalInfo"></div>
         </div>
     </div>
 
@@ -1331,8 +1400,7 @@
 <button class="install-btn" id="installBtn" onclick="instalarPWA()">📲 Instalar App</button>
 
 
-</body>
-</html><!-- ══ PASO 7 — ATENCIÓN A LA DIVERSIDAD ════════════════════════════ -->
+<!-- ══ PASO 7 — ATENCIÓN A LA DIVERSIDAD ════════════════════════════ -->
 <div class="card" id="step7">
     <h2>♿ Atención a la Diversidad</h2>
     <p class="card-sub">Medidas ordinarias de atención a la diversidad — sin ACS</p>
@@ -2514,8 +2582,11 @@ function cambiarEtapa(){
     cs.innerHTML='<option value="">Selecciona</option>';
     if(curriculo[etapa]) curriculo[etapa].cursos.forEach(c=>cs.innerHTML+=`<option value="${c}">${etapa==='infantil'?c+' (Segundo Ciclo)':c+' Primaria'}</option>`);
     const ac=document.getElementById('areasContainer');
-    ac.innerHTML=''; areasSeleccionadas=[];
+    ac.innerHTML=''; areasSeleccionadas=[]; diasPorArea={};
     actualizarResumenAreas();
+    document.getElementById('tablaSesionesWrap').style.display='none';
+    const dac=document.getElementById('diasAreasContainer');
+    if(dac) dac.innerHTML='';
     document.getElementById('multiAdv').classList.remove('show');
     if(curriculo[etapa]){
         Object.entries(curriculo[etapa].areas).forEach(([area,info],i)=>{
@@ -2533,10 +2604,19 @@ function cambiarEtapa(){
 function toggleArea(nombre,el){
     const cb=el.querySelector('input[type=checkbox]');
     cb.checked=!cb.checked;
-    if(cb.checked){el.classList.add('selected');if(!areasSeleccionadas.includes(nombre))areasSeleccionadas.push(nombre);}
-    else{el.classList.remove('selected');areasSeleccionadas=areasSeleccionadas.filter(a=>a!==nombre);}
+    if(cb.checked){
+        el.classList.add('selected');
+        if(!areasSeleccionadas.includes(nombre)) areasSeleccionadas.push(nombre);
+    } else {
+        el.classList.remove('selected');
+        areasSeleccionadas=areasSeleccionadas.filter(a=>a!==nombre);
+        // Remove days data for deselected area
+        delete diasPorArea[_areaKey(nombre)];
+    }
     actualizarResumenAreas(); actualizarSaberes(); actualizarCriterios();
     document.getElementById('multiAdv').classList.toggle('show',areasSeleccionadas.length>=2);
+    renderDiaSelectors();
+    generarTablaSesiones();
 }
 
 function actualizarResumenAreas(){
@@ -2546,23 +2626,22 @@ function actualizarResumenAreas(){
 }
 
 function updateSesInfo(){
-    const n=document.getElementById('sesiones').value||4;
-    document.getElementById('sesInfo').innerHTML=`Se generarán <strong>${n} actividades evaluables</strong>, una por sesión.`;
-    document.getElementById('numSesLbl').textContent=n;
-    document.getElementById('promptSesLbl').textContent=n;
+    const n=parseInt(document.getElementById('sesiones').value)||0;
+    if(document.getElementById('numSesLbl'))document.getElementById('numSesLbl').textContent=n;
+    if(document.getElementById('promptSesLbl'))document.getElementById('promptSesLbl').textContent=n;
 }
 
 function calcularSemanas(){
     const ini=document.getElementById('fechaInicio').value;
     const fin=document.getElementById('fechaFin').value;
     if(ini&&fin){
-        const ms=new Date(fin)-new Date(ini);
+        const ms=new Date(fin+'T12:00:00')-new Date(ini+'T12:00:00');
         if(ms>0){
             const semanas=Math.max(1,Math.ceil(ms/(1000*60*60*24*7)));
             document.getElementById('semanas').value=semanas;
-            document.getElementById('semanasInfo').textContent=`⚡ ${semanas} semana${semanas!==1?'s':''} calculada${semanas!==1?'s':''} automáticamente`;
         }
     }
+    generarTablaSesiones();
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -2746,10 +2825,36 @@ function recopilarDatos(){
         sabersPorArea:sabers, saberesManual:document.getElementById('saberesManual').value,
         critsPorArea:crits, criteriosManual:document.getElementById('criteriosManual').value,
         acneae:Array.from(document.getElementById('acneae').selectedOptions).map(o=>o.value),
+        sesionesData:[...sesionesData],
         medidasGenerales:Array.from(document.querySelectorAll('#step7 input[id^=mg_]:checked')).map(c=>c.value),
         dua:Array.from(document.querySelectorAll('#step7 input[id^=dua]:checked')).map(c=>c.value),
         programas:Array.from(document.querySelectorAll('#step7 input[id^=prf],[id^=pro]:checked')).map(c=>c.value)
     };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPER: bloque de tiempo por tipo de sesión
+// ═══════════════════════════════════════════════════════════════════
+function _tiempoBloque(tiempoT, esLengua, esMat){
+    const tiempoAN = Math.max(10, tiempoT - (esLengua ? 30 : 0));
+    let out = 'Si sesión NORMAL (sin RP ni Lectura especial):\n' +
+        '         Inicio (' + Math.round(tiempoT*.15) + "') → Desarrollo (" + Math.round(tiempoT*.65) + "') → Cierre (" + Math.round(tiempoT*.20) + "')";
+    if(esLengua){
+        out += '\n       Si sesión con LECTURA (' + tiempoT + "' totales):\n" +
+            '         [📖 LECTURA 30\' AL INICIO — 3 momentos: antes/durante/después]\n' +
+            '         Desarrollo actividad (' + Math.round(tiempoAN*.70) + "') → Cierre (" + Math.round(tiempoAN*.30) + "')";
+    }
+    if(esMat){
+        out += '\n       Si sesión con RP (' + tiempoT + "' totales):\n" +
+            '         Inicio (' + Math.round((tiempoT-30)*.20) + "') → Desarrollo actividad (" + Math.round((tiempoT-30)*.60) + "') → Cierre (" + Math.round((tiempoT-30)*.20) + "')\n" +
+            '         [🔢 RESOLUCIÓN PROBLEMAS 30\': Tipo A/B/C rotando semanas — problema vinculado a la SdA]';
+    }
+    if(esLengua && esMat){
+        out += '\n       Si sesión LECTURA+RP (' + tiempoT + "' totales — solo lectura y RP):\n" +
+            '         [📖 LECTURA 30\'] + [🔢 RP 30\'] = ' + tiempoT + "' completos. Sin bloque de actividad independiente.";
+    }
+    out += '\n       ⚠️ SUMA EXACTA: la suma de todos los bloques DEBE ser igual a ' + tiempoT + ' minutos en CADA sesión.';
+    return out;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -2758,7 +2863,7 @@ function recopilarDatos(){
 function construirPrompt(d){
     const esInf=d.etapa==='infantil', esMulti=d.areas.length>1;
     const areasT=d.areas.join(', ');
-    const esLengua=d.areas.some(a=>a.toLowerCase().includes('lengua')||a.toLowerCase().includes('lcl'));
+    const esLengua=d.areas.some(a=>a.toLowerCase().includes('castellana')||a.toLowerCase().includes('lcl'));
     const esMat=d.areas.some(a=>a.toLowerCase().includes('matem')||a.toLowerCase().includes('mat'));
     const tipo=sdaTipos[d.sdaTipo]||sdaTipos.producto;
     const nivel=esInf?`Segundo Ciclo de Educación Infantil (${d.curso})`:`${d.curso} de Educación Primaria`;
@@ -2776,67 +2881,94 @@ function construirPrompt(d){
     const allApps=[...d.appsCapitulaciones,...d.herramientas];
     const appsT=allApps.length>0?allApps.join(', '):'A criterio del experto';
 
+    // Build session table string for the prompt
+    const fmtDate=d=>new Date(d).toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});
+    let tablaT='';
+    if(d.sesionesData&&d.sesionesData.length>0){
+        tablaT='TABLA DE SESIONES PLANIFICADAS (respeta estas fechas en toda la secuencia didáctica):\n';
+        tablaT+='| Nº | Fecha | Día | Tipo | Evaluación (criterio + instrumento) | Nota del tutor |\n';
+        tablaT+='|---|---|---|---|---|---|\n';
+        d.sesionesData.forEach(s=>{
+            const f=fmtDate(s.fecha);
+            const tp=s.tipo==='lectura'?'📖 Lectura planificada (30 min)':s.tipo==='rp'?'🔢 Resolución de Problemas (30 min)':s.tipo==='lectura-rp'?'📖🔢 Lectura + RP':'📚 Sesión normal';
+            const evalLabel=s.eval==='producto'?'⭐ Evaluación PRODUCTO FINAL':s.eval==='intermedia'?'📋 Evaluación de actividad':'—';
+            const instrLabel=s.instr||'';
+            tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | ${evalLabel}${instrLabel?' — '+instrLabel:''} | ${s.nota||''} |\n`;
+        });
+        tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración por sesión: ${d.duracion} min\n`;
+    }
+
+    // Activities: IA decides how many sessions each activity takes
+    const numActs=Math.max(2,Math.min(d.sesiones,Math.round(d.sesiones*0.6)));
     let actsT='';
-    for(let i=1;i<=d.sesiones;i++){
-        const nivel_act=i===1?'Accesible (máximo apoyo)':i===d.sesiones?'Avanzado / Transferencia':i<=Math.ceil(d.sesiones/2)?'Intermedio-bajo':'Intermedio-alto';
+    for(let i=1;i<=numActs;i++){
+        const isFirst=i===1, isLast=i===numActs;
+        const fase=isFirst?'MOTIVACIÓN / INICIO':isLast?'FINALIZAR Y APLICAR':i===2?'ACTIVACIÓN':'DESARROLLO Y CONSOLIDACIÓN';
+        const evalBlock=isLast?
+`  g) ⭐ EVALUACIÓN DEL PRODUCTO FINAL (${tipo.emoji} ${tipo.nombre}):
+     La evaluación tiene lugar al COMPLETAR el producto final — ver tabla de sesiones para la fecha exacta.
+     
+     DESARROLLA LA RÚBRICA COMPLETA con el siguiente formato:
+     
+     RÚBRICA DE EVALUACIÓN — ${tipo.nombre.toUpperCase()}
+     Área: ${areasT} | Curso: ${nivel} | Trimestre: ${d.trimestre}
+     Instrumento: Rúbrica analítica | Escala: Insuficiente(1-4) · Suficiente(5-6) · Bien(6-7) · Notable(7-8) · Sobresaliente(9-10)
+     
+     Para CADA criterio de evaluación trabajado en la SdA, genera una tabla completa:
+     
+${Object.entries(d.critsPorArea).flatMap(([area,cs])=>cs.map(c=>`     ─────────────────────────────────────────────────────
+     CRITERIO [${c.codigo}]: ${c.texto.substring(0,80)}…
+     Área: ${area}
+     
+     | Dimensión | Insuf. (1-4) | Sufic. (5-6) | Bien (6-7) | Notable (7-8) | Sobres. (9-10) |
+     |---|---|---|---|---|---|
+     | [Dimensión 1 del criterio] | [descriptor] | [descriptor] | [descriptor] | [descriptor] | [descriptor] |
+     | [Dimensión 2 del criterio] | [descriptor] | [descriptor] | [descriptor] | [descriptor] | [descriptor] |
+     | [Dimensión 3 del criterio] | [descriptor] | [descriptor] | [descriptor] | [descriptor] | [descriptor] |
+     
+     Instrumento complementario: [lista de cotejo / registro de observación / autoevaluación del alumnado]`)).join('\n')||`     ─────────────────────────────────────────────────────
+     CRITERIO [código]: [descripción del criterio]
+     
+     | Dimensión | Insuf. (1-4) | Sufic. (5-6) | Bien (6-7) | Notable (7-8) | Sobres. (9-10) |
+     |---|---|---|---|---|---|
+     | [Dimensión 1] | [mínimo] | [básico] | [adecuado] | [bueno] | [excelente] |
+     | [Dimensión 2] | [mínimo] | [básico] | [adecuado] | [bueno] | [excelente] |`}`:
+`  g) EVALUACIÓN INTERMEDIA al terminar actividad ${i}:
+     ⚠️ La evaluación ocurre al COMPLETAR la actividad (no en cada sesión).
+     Criterio(s) a evaluar: [código] — [descripción]
+     Evidencia: [tarea/artefacto concreto del alumnado al cerrar la actividad]
+     Instrumento: [lista de cotejo / registro observación]`;
+
         actsT+=`
-▸ ACTIVIDAD ${i} — SESIÓN ${i}: [TÍTULO CREATIVO]
-  Nivel: ${nivel_act}
-  Áreas implicadas: ${areasT}${esMulti?' (indica cuáles protagonizan esta sesión)':''}
+▸ ACTIVIDAD ${i} — FASE: ${fase}
+  a) Título creativo: [TÍTULO DE LA ACTIVIDAD]
+  b) Sesiones que ocupa esta actividad: [decide cuántas según complejidad: 1, 2 o 3 sesiones]
+     Sesión inicio: [nº y fecha de la tabla] | Sesión fin: [nº y fecha de la tabla]
+  c) Descripción en una línea: "[qué hace el alumnado y qué produce]"
+     Saberes básicos trabajados: [códigos de la Orden 30/05/2023]
 
-  a) Descripción breve en una línea:
-     "[Nombre de la actividad]: [descripción en una línea]"
-     "Nos ayudan los saberes básicos: [códigos de saberes que se trabajan]"
+  d) Desarrollo por sesiones — para CADA sesión de esta actividad:
+     • Sesión [N] — [fecha de la tabla] — [tipo: 📚/📖/🔢]:
+       ${_tiempoBloque(d.duracion,esLengua,esMat)}
+  e) Contexto de aplicación: ☐ Escolar  ☐ Social  ☐ Familiar  ☐ Personal
 
-  b) Desarrollo paso a paso:
-     • Inicio/enganche (${Math.round(d.duracion*.15)} min): activación conocimientos previos
-     • Desarrollo (${Math.round(d.duracion*.65)} min): tarea principal
-     • Cierre/reflexión (${Math.round(d.duracion*.20)} min): síntesis y conexión con siguiente sesión
-     ${i===d.sesiones?'• Presentación del resultado final ('+tipo.emoji+' '+tipo.nombre+')':''}
+  f) Vinculación curricular:
+     Criterio(s): [código] — [descripción]
+     Cómo se evidencia: [conexión criterio-actividad]
+     ODS: [nº y nombre] | Competencia siglo XXI: [cuál]
 
-  c) Contexto de aplicación (marca el principal):
-     ☐ Escolar  ☐ Social  ☐ Familiar  ☐ Personal
+${evalBlock}
 
-  d) Vinculación con el criterio de evaluación:
-     Criterio: [código exacto Orden 30/05/2023] — [descripción completa]
-     Cómo se evidencia: [explicación de la conexión criterio-actividad]
+  h) Atención a la diversidad (DUA v3.0):
+     • Pauta DUA: [elige una de: ${d.dua.length>0?d.dua.join(' / '):'las más adecuadas para esta fase'}]
+     • Estrategia concreta en ESTA actividad: [describe acción específica del docente o alumnado]
+     • Herramienta digital: [${d.herramientas.join(', ')||'Canva / Book Creator / Genially'}]
+     ${d.acneae.filter(a=>a!=='Ninguna').length>0?`• ACNEAE [${d.acneae.filter(a=>a!=='Ninguna').join(', ')}]: [medida ordinaria concreta diferente a otras actividades]`:''}
+     ${d.programas.some(p=>p.includes('refuerzo'))?'• Refuerzo: [andamiaje concreto para esta actividad]':''}
+     ${d.programas.some(p=>p.includes('profundizaci'))?'• Profundización: [reto adicional o ampliación]':''}
 
-  e) Vinculación con ODS / Desafíos del Siglo XXI:
-     ODS: [nº y nombre del ODS relacionado]
-     Desafío: [competencia del siglo XXI que se trabaja]
-
-  f) Instrumentos de evaluación y escala numérica:
-
-     TABLA DE EVALUACIÓN:
-     Criterio de evaluación: [código + descripción]
-     Instrumento de observación: [rúbrica / lista de cotejo / registro / prueba escrita]
-     Descriptor del criterio trabajado en esta actividad:
-
-     | Insuficiente (1-4) | Suficiente (5-6) | Bien (6-7) | Notable (7-8) | Sobresaliente (9-10) |
-     |---|---|---|---|---|
-     | [descriptor mínimo] | [descriptor básico] | [descriptor medio] | [descriptor bueno] | [descriptor excelente] |
-
-  g) Atención a la diversidad en esta sesión (DUA v3.0):
-     Elige UNA pauta DUA de las marcadas para esta sesión y desarrolla las 3 capas:
-     • Pauta DUA aplicada: [elige una de: ${d.dua.length>0?d.dua.join(' / '):'las más adecuadas para esta sesión'}]
-       Indica el número y nombre exacto de la pauta (ej: «7.2 Optimizar la relevancia, el valor y la autenticidad»).
-     • Estrategia concreta: describe QUÉ hace el docente o el alumnado en ESTA actividad para aplicar esa pauta.
-       (ej: el alumnado elige entre 3 formatos de entrega; se usa un esquema visual antes de leer; se propone un reto real del entorno).
-     • Herramienta digital o IA asociada: indica la herramienta específica que materializa la estrategia.
-       (ej: Canva para crear infografía, Genially para presentación interactiva, Google Forms para autoevaluación,
-       Book Creator para producción multimodal, Padlet para compartir, IA generativa para andamiaje personalizado).
-     ${d.acneae.filter(a=>a!=='Ninguna').length>0?`• Adaptación ACNEAE [${d.acneae.filter(a=>a!=='Ninguna').join(', ')}]: medida ordinaria concreta en ESTA actividad (sin modificar el criterio). Ej: mayor tiempo, apoyo visual, instrucciones paso a paso, material manipulativo.`:''}
-     ${d.programas.some(p=>p.includes('refuerzo'))?'• Alumnado de refuerzo: simplificación o andamiaje concreto para esta actividad.':''}
-     ${d.programas.some(p=>p.includes('profundizaci'))?'• Alumnado de profundización: ampliación o reto adicional en esta actividad.':''}
-     ${d.medidasGenerales.length>0?'• Medidas generales activas: '+d.medidasGenerales.join(' | '):''}
-
-  h) Recursos durante la sesión:
-     • Apps del CEIP Capitulaciones: ${d.appsCapitulaciones.length>0?d.appsCapitulaciones.slice(0,2).join(', '):'(selecciona la más adecuada)'}
-     • Otras herramientas: ${d.herramientas.join(', ')||'a criterio'}
-     • Materiales físicos: [descripción]
-
-  i) 📝 OBSERVACIONES:
-     [Espacio para que el docente anote reflexiones, incidencias, ritmo del grupo y ajustes]
+  i) 📝 OBSERVACIONES DEL TUTOR:
+     [Espacio para anotar reflexiones, incidencias y ajustes tras completar la actividad]
 `;
     }
 
@@ -2856,6 +2988,7 @@ Normativa de referencia:
 • RD 157/2022 — ordenación básica de la Educación Primaria (art. 6 principios pedagógicos)
 
 ⚠️ CRÍTICO: Genera la SdA con EXACTAMENTE los 7 apartados de la estructura oficial. No omitas ninguno.
+⚠️ FORMATO COMPACTO: Los apartados 1 (IDENTIFICACIÓN) y 2 (JUSTIFICACIÓN) deben caber juntos en UNA SOLA página A4. Sé conciso: sin listas extensas, sin párrafos largos. Usa frases cortas y directas.
 ⚠️ FORMATO TÍTULOS: Usa SIEMPRE el formato "1 — IDENTIFICACIÓN", "2 — JUSTIFICACIÓN"... NUNCA escribas "BLOQUE 1", "BLOQUE 2" ni similar. Los títulos van sin la palabra BLOQUE.
 
 ═══════════════════════════════════════════════════════════
@@ -2868,6 +3001,8 @@ DATOS DE LA SdA
   Título: "${d.titSda||d.tematica}"
   SdA Nº: ${d.sdaNum} | Trimestre: ${d.trimestre} | Duración: ${d.semanas} semanas
   Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
+${tablaT?'\n'+tablaT:''}
+${tablaT?'\n'+tablaT:''}
   Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
   Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
   Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
@@ -2997,21 +3132,27 @@ ${(()=>{
 `:''}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-5 — SECUENCIA DIDÁCTICA (${d.sesiones} SESIONES)
+5 — SECUENCIA DIDÁCTICA (${d.sesiones} SESIONES → ${numActs} ACTIVIDADES)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Organiza las ${d.sesiones} sesiones en las FASES del modelo de SdA:
-• MOTIVACIÓN (sesión 1): Enganche, activación conocimientos previos, presentación del reto
-• ACTIVACIÓN (sesión 2): Exploración inicial y estructuración de saberes previos  
-• DESARROLLO Y CONSOLIDACIÓN (sesiones 3 a ${Math.max(3,d.sesiones-1)}): Construcción del conocimiento
-• FINALIZAR Y APLICAR (sesión ${d.sesiones}): Presentación del producto final y evaluación
+⚠️ ACTIVIDADES ≠ SESIONES:
+• Hay ${d.sesiones} sesiones en total (ver tabla de fechas en el apartado de datos).
+• Genera ${numActs} ACTIVIDADES que agrupen esas sesiones según complejidad.
+• Una actividad sencilla puede ocupar 1 sesión; una compleja, 2-3 sesiones.
+• El producto final ocupa siempre la última actividad (la más extensa).
 
-Para cada sesión usa el formato de TABLA con columnas:
-| Fase/Tipo | Sesión/Jornada N: [título] (Metodología) | Áreas implicadas | Pauta DUA |
+⚠️ CUÁNDO SE EVALÚA:
+• Evaluación intermedia: al TERMINAR cada actividad si ha cerrado un criterio.
+• Evaluación sumativa: al presentar el producto final (${tipo.emoji} ${tipo.nombre}).
+• NO hay tabla de evaluación en cada sesión — solo al cerrar actividades/productos.
 
-GENERA EXACTAMENTE ${d.sesiones} ACTIVIDADES EVALUABLES (una por sesión):
+Fases del modelo SdA:
+• MOTIVACIÓN (act. 1, 1-2 ses.): Enganche, conocimientos previos, presentación del reto
+• ACTIVACIÓN (act. 2, 1-2 ses.): Exploración, estructuración de saberes
+• DESARROLLO Y CONSOLIDACIÓN (acts. intermedias, 2-3 ses. c/u): Construcción del conocimiento
+• FINALIZAR Y APLICAR (act. final, 2-3 ses.): Producto final + evaluación sumativa
+
 ${actsT}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 6 — MEDIDAS DE ATENCIÓN A LA DIVERSIDAD
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 6.1 Medidas generales (Decreto 101/2023):
@@ -3270,6 +3411,235 @@ REQUISITOS:
 // ═══════════════════════════════════════════════════════════════════
 // ACCIONES
 // ═══════════════════════════════════════════════════════════════════
+
+
+
+// ─── Días por área (dinámico) ───────────────────────
+// diasPorArea[areaKey] = {dias:[1..5], esLectura:bool, esRP:bool, rpDias:[]}
+let diasPorArea = {};
+
+// Helpers
+const AREA_ICONS = {
+    'Lengua Castellana y Literatura':'📖',
+    'Matemáticas':'📐',
+    'Inglés (1ª Lengua Extranjera)':'🌍',
+    'Francés (2ª Lengua Extranjera)':'🇫🇷',
+    'Ciencias de la Naturaleza':'🔬',
+    'Ciencias Sociales':'🌎',
+    'Educación Artística':'🎨',
+    'Educación Física':'⚽',
+    'Valores Cívicos y Éticos':'🤝',
+    'Religión Católica':'✝️',
+};
+const AREA_COLORS = {
+    'Lengua Castellana y Literatura':'rgba(99,102,241,.07)',
+    'Matemáticas':'rgba(5,150,105,.07)',
+};
+const AREA_BTN_ACTIVE = {
+    'Lengua Castellana y Literatura':'active',
+    'Matemáticas':'mates-active',
+};
+
+function _areaKey(nombre){ return nombre.replace(/[^a-zA-Z0-9]/g,'_'); }
+
+function renderDiaSelectors(){
+    const container = document.getElementById('diasAreasContainer');
+    if(!container) return;
+    container.innerHTML = '';
+
+    areasSeleccionadas.forEach(area=>{
+        const key = _areaKey(area);
+        if(!diasPorArea[key]) diasPorArea[key] = {dias:[], rpDias:[]};
+        const d = diasPorArea[key];
+        const esLengua = area.toLowerCase().includes('castellana')||area.toLowerCase().includes('lcl');
+        const esMat = area.toLowerCase().includes('matem');
+        const icon = AREA_ICONS[area]||'📚';
+        const bg = AREA_COLORS[area]||'rgba(99,102,241,.05)';
+        const btnClass = AREA_BTN_ACTIVE[area]||'active';
+
+        const wrap = document.createElement('div');
+        wrap.className='dias-wrap';
+        wrap.style.background=bg;
+        wrap.id=`diasWrap_${key}`;
+
+        // Main days row
+        let diaButtons = [1,2,3,4,5].map(n=>{
+            const labels=['','L','M','X','J','V'];
+            const isActive = d.dias.includes(n);
+            return `<button type="button" class="dia-btn${isActive?' '+btnClass:''}" data-dia="${n}" data-area="${key}" onclick="toggleDiaArea(this,'${key}',${n})">${labels[n]}</button>`;
+        }).join('');
+
+        wrap.innerHTML=`
+            <div class="dias-label">${icon} Días de <strong>${area}</strong> por semana</div>
+            <div class="dias-row">${diaButtons}</div>
+            ${d.dias.length>0?`<small style="color:#4f46e5;font-weight:600;font-size:.76rem">✅ ${d.dias.length} día${d.dias.length!==1?'s':''}/semana · ${d.dias.length*4} sesiones aprox./mes</small>`:''}
+            ${esMat ? renderRPSubsection(key, d) : ''}
+        `;
+        container.appendChild(wrap);
+    });
+}
+
+function renderRPSubsection(key, d){
+    const rpButtons = [1,2,3,4,5].map(n=>{
+        const labels=['','L','M','X','J','V'];
+        const enabled = d.dias.includes(n);
+        const isRP = d.rpDias.includes(n);
+        return `<button type="button" class="dia-btn${isRP?' rp-active':''}" data-dia="${n}" ${!enabled?'disabled style="opacity:.3;cursor:not-allowed"':''} onclick="toggleRPDia(this,'${key}',${n})">${labels[n]}</button>`;
+    }).join('');
+    const c=d.rpDias.length;
+    const msg=c===0?'':c<3?`⚠️ Selecciona ${3-c} día${3-c!==1?'s':''} más (mínimo 3/semana)`:`✅ ${c} días de Resolución de Problemas/semana`;
+    return `<div style="margin-top:.65rem;padding-top:.6rem;border-top:1px solid rgba(5,150,105,.15)">
+        <div class="dias-label mates-label" style="font-size:.8rem">🔢 ¿Cuáles son de Resolución de Problemas? <span class="badge badge-green" style="font-size:.65rem">Mín. 3/sem</span></div>
+        <div class="dias-row" id="rpRow_${key}">${rpButtons}</div>
+        <small id="rpCount_${key}" style="color:#059669;font-weight:600;font-size:.76rem">${msg}</small>
+    </div>`;
+}
+
+function toggleDiaArea(btn, key, dia){
+    if(!diasPorArea[key]) diasPorArea[key]={dias:[],rpDias:[]};
+    const d=diasPorArea[key];
+    if(d.dias.includes(dia)){
+        d.dias=d.dias.filter(x=>x!==dia);
+        // Also remove from RP if present
+        d.rpDias=d.rpDias.filter(x=>x!==dia);
+    } else {
+        d.dias.push(dia);
+    }
+    renderDiaSelectors();
+    generarTablaSesiones();
+}
+
+function toggleRPDia(btn, key, dia){
+    if(!diasPorArea[key]) diasPorArea[key]={dias:[],rpDias:[]};
+    const d=diasPorArea[key];
+    if(!d.dias.includes(dia)) return;
+    if(d.rpDias.includes(dia)) d.rpDias=d.rpDias.filter(x=>x!==dia);
+    else d.rpDias.push(dia);
+    renderDiaSelectors();
+    generarTablaSesiones();
+}
+
+// ─── Generar tabla de sesiones ───────────────────────
+let sesionesData = [];
+
+function generarTablaSesiones(){
+    const ini=document.getElementById('fechaInicio').value;
+    const fin=document.getElementById('fechaFin').value;
+    if(!ini||!fin) return;
+
+    // Collect all days from all areas
+    let diasSesionesSet = new Set();
+    const esLenguaArea = areasSeleccionadas.some(a=>a.toLowerCase().includes('castellana')||a.toLowerCase().includes('lcl'));
+    const esMatArea    = areasSeleccionadas.some(a=>a.toLowerCase().includes('matem'));
+
+    let anyDiasConfigured = false;
+    Object.entries(diasPorArea).forEach(([key,d])=>{
+        if(d.dias.length>0){ anyDiasConfigured=true; d.dias.forEach(x=>diasSesionesSet.add(x)); }
+    });
+
+    // If no areas with days configured: use all weekdays (general SdA)
+    let diasSesiones = anyDiasConfigured ? [...diasSesionesSet].sort() : [1,2,3,4,5];
+
+    const nombres=['','Lunes','Martes','Miércoles','Jueves','Viernes'];
+    const iniD=new Date(ini+'T12:00:00');
+    const finD=new Date(fin+'T12:00:00');
+    if(finD<=iniD) return;
+
+    // Preserve existing notes + eval
+    const notasEx={}, evalEx={}, instrEx={};
+    sesionesData.forEach(s=>{
+        if(s.nota)  notasEx[s.num]=s.nota;
+        if(s.eval)  evalEx[s.num]=s.eval;
+        if(s.instr) instrEx[s.num]=s.instr;
+    });
+
+    sesionesData=[];
+    let cur=new Date(iniD), num=1;
+    while(cur<=finD){
+        const dow=cur.getDay();
+        const diaNum=dow===0?7:dow;
+        if(diasSesiones.includes(diaNum)){
+            // Determine session type
+            const esL  = esLenguaArea && (diasPorArea[_areaKey('Lengua Castellana y Literatura')]?.dias||[]).includes(diaNum);
+            // Find Mates key
+            const mKey = _areaKey('Matemáticas');
+            const esRP = esMatArea && (diasPorArea[mKey]?.rpDias||[]).includes(diaNum);
+            let tipo='normal';
+            if(esL&&esRP) tipo='lectura-rp';
+            else if(esL)  tipo='lectura';
+            else if(esRP) tipo='rp';
+
+            // Time available for activity content
+            const durTotal = parseInt(document.getElementById('duracion').value)||60;
+            const minReservados = (esL?30:0)+(esRP?30:0);
+            const durActividad = Math.max(10, durTotal - minReservados);
+
+            sesionesData.push({
+                num, fecha:new Date(cur), diaN:nombres[diaNum]||'', tipo,
+                durTotal, durActividad, minReservados,
+                nota: notasEx[num]||'', eval: evalEx[num]||'no', instr: instrEx[num]||''
+            });
+            num++;
+        }
+        cur.setDate(cur.getDate()+1);
+    }
+
+    // Update hidden sesiones + semanas
+    document.getElementById('sesiones').value=sesionesData.length;
+    updateSesInfo();
+    const ms=finD-iniD;
+    document.getElementById('semanas').value=Math.max(1,Math.ceil(ms/(1000*60*60*24*7)));
+
+    // Render table
+    const wrap=document.getElementById('tablaSesionesWrap');
+    wrap.style.display = sesionesData.length>0?'block':'none';
+    document.getElementById('sesionesTotal').textContent=`${sesionesData.length} sesiones calculadas`;
+
+    const tbody=document.getElementById('sesionesBody');
+    tbody.innerHTML=sesionesData.map(s=>{
+        const tagClass=s.tipo==='lectura'?'lectura':s.tipo==='rp'?'rp':s.tipo==='lectura-rp'?'lectura-rp':'normal';
+        const tagText=s.tipo==='lectura'?'📖 Lectura 30\'':s.tipo==='rp'?'🔢 RP 30\'':s.tipo==='lectura-rp'?'📖🔢':' 📚';
+        const fechaStr=s.fecha.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});
+        const tiempoInfo=s.minReservados>0?`<span style="font-size:.68rem;color:#6b7280">${s.durActividad}' actividad</span>`:'';
+        const evalSel=`<select class="ses-nota" style="width:auto;min-width:130px" onchange="sesionesData[${s.num-1}].eval=this.value;_toggleInstr(${s.num-1},this.value)">
+            <option value="no"${s.eval==='no'?' selected':''}>Sin evaluación</option>
+            <option value="intermedia"${s.eval==='intermedia'?' selected':''}>📋 Eval. actividad</option>
+            <option value="producto"${s.eval==='producto'?' selected':''}>⭐ Eval. producto final</option>
+        </select>`;
+        const instrInput=`<input class="ses-nota" id="instr_${s.num}" type="text" placeholder="Criterio + instrumento…" 
+            value="${(s.instr||'').replace(/"/g,'&quot;')}"
+            style="display:${s.eval!=='no'?'block':'none'};margin-top:.2rem"
+            oninput="sesionesData[${s.num-1}].instr=this.value">`;
+        return `<tr>
+            <td><strong style="color:#4f46e5">${s.num}</strong></td>
+            <td style="white-space:nowrap">${fechaStr}</td>
+            <td style="white-space:nowrap">${s.diaN}</td>
+            <td><span class="ses-tag ${tagClass}">${tagText}</span>${tiempoInfo}</td>
+            <td>${evalSel}${instrInput}</td>
+            <td><input class="ses-nota" type="text" placeholder="Nota del tutor…" value="${(s.nota||'').replace(/"/g,'&quot;')}" 
+                oninput="sesionesData[${s.num-1}].nota=this.value"></td>
+        </tr>`;
+    }).join('');
+
+    // Summary footer
+    const nL=sesionesData.filter(s=>s.tipo==='lectura'||s.tipo==='lectura-rp').length;
+    const nRP=sesionesData.filter(s=>s.tipo==='rp'||s.tipo==='lectura-rp').length;
+    const nEv=sesionesData.filter(s=>s.eval&&s.eval!=='no').length;
+    let info=`Total: <strong>${sesionesData.length} sesiones</strong>`;
+    if(nL>0) info+=` · 📖 ${nL} con lectura (30')`;
+    if(nRP>0) info+=` · 🔢 ${nRP} con RP (30')`;
+    if(nEv>0) info+=` · 📊 ${nEv} con evaluación`;
+    document.getElementById('sesTotalInfo').innerHTML=info;
+}
+
+function _toggleInstr(idx, val){
+    const el=document.getElementById('instr_'+(idx+1));
+    if(el) el.style.display=val!=='no'?'block':'none';
+}
+
+// Legacy stubs kept for backward compat (no longer used)
+function toggleDia(){} 
+function _updateRPCount(){}
 
 
 function showTip(btn, emoji, desc){
