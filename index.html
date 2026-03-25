@@ -695,16 +695,9 @@
                             <th>Día</th>
                             <th>Tipo</th>
                             <th style="position:relative">
-                                Evaluación en esta sesión
-                                <button class="chip-info" style="margin-left:4px;vertical-align:middle"
-                                    onclick="showTip(this,'📊','Marca si en esta sesión hay evaluación. La evaluación NO es por sesión sino al terminar una actividad o el producto final. Instrumento: rúbrica (para producto final), lista de cotejo (actividades intermedias), registro de observación.')"
-                                    onblur="hideTip(this)" aria-label="Ayuda evaluación">?</button>
-                                <div class="chip-tooltip" style="min-width:280px;white-space:normal"></div>
-                            </th>
-                            <th style="position:relative">
                                 Nota del tutor (opcional)
                                 <button class="chip-info" style="margin-left:4px;vertical-align:middle" 
-                                    onclick="showTip(this,'📝','Excursión o actividad fuera del aula · sala de informática · evaluación trimestral · sesión más corta · agrupamiento especial · materiales a traer · cualquier condicionante del centro. La IA lo tendrá en cuenta al diseñar esa sesión.')"
+                                    onclick="showTip(this,'📝','Excursión o actividad fuera del aula · sala de informática · sesión más corta · agrupamiento especial · materiales a traer · cualquier condicionante. La IA lo tendrá en cuenta.')"
                                     onblur="hideTip(this)" aria-label="Ayuda notas">?</button>
                                 <div class="chip-tooltip" style="min-width:280px;white-space:normal"></div>
                             </th>
@@ -2847,10 +2840,24 @@ function updProg(){
     document.querySelectorAll('.step').forEach((s,i)=>{const n=i+1;s.classList.remove('active','completed');if(n===currentStep)s.classList.add('active');else if(n<currentStep)s.classList.add('completed');});
 }
 function validar(step){
-    if(step===1&&areasSeleccionadas.length===0){showToast('⚠️ Selecciona al menos un área');return false;}
+    if(step===1&&areasSeleccionadas.length===0&&!anayaActivo){showToast('⚠️ Selecciona al menos un área');return false;}
     if(step===2&&!sdaTipo){showToast('⚠️ Selecciona el tipo de SdA');return false;}
     let ok=true;
-    document.getElementById(`step${step}`).querySelectorAll('[required]').forEach(f=>{if(!f.value){f.style.borderColor='#ef4444';ok=false;}else f.style.borderColor='';});
+    document.getElementById(`step${step}`).querySelectorAll('[required]').forEach(f=>{
+        // En modo Anaya, titSda y tematica no son obligatorios — la IA los genera
+        if(anayaActivo && (f.id==='titSda'||f.id==='tematica')){f.style.borderColor='';return;}
+        if(!f.value){f.style.borderColor='#ef4444';ok=false;}else f.style.borderColor='';
+    });
+    // En modo Anaya: validar que se han rellenado área y temas
+    if(anayaActivo && step===1){
+        const an=getAnayaData();
+        if(!an.area){showToast('⚠️ Selecciona el área en el panel Anaya');return false;}
+        if(!an.temas){showToast('⚠️ Indica los temas del libro en el panel Anaya');return false;}
+        // Auto-rellenar titSda y tematica con los datos Anaya para que el resto de la app funcione
+        const autoTit = an.centro || ('Anaya ' + an.area.split(' ')[0] + ' — Temas ' + an.temas);
+        if(!document.getElementById('titSda').value) document.getElementById('titSda').value = autoTit;
+        if(!document.getElementById('tematica').value) document.getElementById('tematica').value = autoTit;
+    }
     if(!ok)showToast('⚠️ Completa todos los campos obligatorios');
     return ok;
 }
@@ -2921,7 +2928,7 @@ function recopilarDatos(){
         sesionesData:[...sesionesData],
         medidasGenerales:Array.from(document.querySelectorAll('#step7 input[id^=mg_]:checked')).map(c=>c.value),
         dua:Array.from(document.querySelectorAll('#step7 input[id^=dua]:checked')).map(c=>c.value),
-        programas:Array.from(document.querySelectorAll('#step7 input[id^=prf],[id^=pro]:checked')).map(c=>c.value)
+        programas:Array.from(document.querySelectorAll('#step7 input[id^=prf]:checked,#step7 input[id^=pro]:checked')).map(c=>c.value)
     };
 }
 
@@ -3052,17 +3059,15 @@ function construirPrompt(d){
     let tablaT='';
     if(d.sesionesData&&d.sesionesData.length>0){
         tablaT='TABLA DE SESIONES (respeta estas fechas en toda la secuencia didáctica):\n';
-        tablaT+='| Nº | Fecha | Día | Tipo | Criterio/s sesión | Evaluación (cuando se cierra criterio) | Nota tutor |\n';
-        tablaT+='|---|---|---|---|---|---|---|\n';
+        tablaT+='| Nº | Fecha | Día | Tipo | Nota tutor |\n';
+        tablaT+='|---|---|---|---|---|\n';
         d.sesionesData.forEach(s=>{
             const f=fmtDate(s.fecha);
             const tp=s.tipo==='lectura'?'📖 Lectura (30min)':s.tipo==='rp'?'🔢 RP (30min)':s.tipo==='lectura-rp'?'📖🔢 Lect+RP':'📚 Normal';
-            const evalLabel=s.eval==='producto'?'⭐ Eval. PRODUCTO FINAL':s.eval==='intermedia'?'📋 Eval. intermedia (cierre criterio)':'—';
-            const instrLabel=s.instr||'';
-            tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | [código/s criterio] | ${evalLabel}${instrLabel?' — '+instrLabel:''} | ${s.nota||''} |\n`;
+            tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | ${s.nota||''} |\n`;
         });
         tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración: ${d.duracion} min/sesión\n`;
-        tablaT+=`⚠️ LÓGICA DE EVALUACIÓN: Rellena la columna "Criterio/s sesión" con los códigos de los criterios que se trabajan. La columna "Evaluación" solo se activa en la ÚLTIMA sesión que trabaja un criterio (cuando ese conjunto de sesiones cierra el criterio y se evalúa).\n`;
+        tablaT+=`⚠️ EVALUACIÓN — LA DECIDES TÚ: Una vez asignados los criterios a cada sesión, marca la evaluación en la ÚLTIMA sesión que trabaje cada criterio (o grupo de criterios relacionados). No evalúes en cada sesión — solo cuando se cierra un criterio. Refleja las fechas de evaluación en la tabla del punto 4.1.\n`;
     }
 
     // Activities: IA decides how many sessions each activity takes
@@ -3810,21 +3815,11 @@ function generarTablaSesiones(){
         const tagText=s.tipo==='lectura'?'📖 Lectura 30\'':s.tipo==='rp'?'🔢 RP 30\'':s.tipo==='lectura-rp'?'📖🔢':' 📚';
         const fechaStr=s.fecha.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});
         const tiempoInfo=s.minReservados>0?`<span style="font-size:.68rem;color:#6b7280">${s.durActividad}' actividad</span>`:'';
-        const evalSel=`<select class="ses-nota" style="width:auto;min-width:130px" onchange="sesionesData[${s.num-1}].eval=this.value;_toggleInstr(${s.num-1},this.value)">
-            <option value="no"${s.eval==='no'?' selected':''}>Sin evaluación</option>
-            <option value="intermedia"${s.eval==='intermedia'?' selected':''}>📋 Eval. actividad</option>
-            <option value="producto"${s.eval==='producto'?' selected':''}>⭐ Eval. producto final</option>
-        </select>`;
-        const instrInput=`<input class="ses-nota" id="instr_${s.num}" type="text" placeholder="Criterio + instrumento…" 
-            value="${(s.instr||'').replace(/"/g,'&quot;')}"
-            style="display:${s.eval!=='no'?'block':'none'};margin-top:.2rem"
-            oninput="sesionesData[${s.num-1}].instr=this.value">`;
         return `<tr>
             <td><strong style="color:#4f46e5">${s.num}</strong></td>
             <td style="white-space:nowrap">${fechaStr}</td>
             <td style="white-space:nowrap">${s.diaN}</td>
             <td><span class="ses-tag ${tagClass}">${tagText}</span>${tiempoInfo}</td>
-            <td>${evalSel}${instrInput}</td>
             <td><input class="ses-nota" type="text" placeholder="Nota del tutor…" value="${(s.nota||'').replace(/"/g,'&quot;')}" 
                 oninput="sesionesData[${s.num-1}].nota=this.value"></td>
         </tr>`;
@@ -3833,11 +3828,10 @@ function generarTablaSesiones(){
     // Summary footer
     const nL=sesionesData.filter(s=>s.tipo==='lectura'||s.tipo==='lectura-rp').length;
     const nRP=sesionesData.filter(s=>s.tipo==='rp'||s.tipo==='lectura-rp').length;
-    const nEv=sesionesData.filter(s=>s.eval&&s.eval!=='no').length;
     let info=`Total: <strong>${sesionesData.length} sesiones</strong>`;
     if(nL>0) info+=` · 📖 ${nL} con lectura (30')`;
     if(nRP>0) info+=` · 🔢 ${nRP} con RP (30')`;
-    if(nEv>0) info+=` · 📊 ${nEv} con evaluación`;
+    info+=` · 📊 La IA decide cuándo evaluar según criterios`;
     document.getElementById('sesTotalInfo').innerHTML=info;
 }
 
