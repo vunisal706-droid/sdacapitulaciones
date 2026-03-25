@@ -271,6 +271,29 @@
         .badge-yellow{background:#fef3c7;color:#92400e}
         .badge-green{background:#dcfce7;color:#166534}
 
+        /* ── MODO ANAYA ── */
+        .anaya-toggle{display:flex;align-items:center;gap:.75rem;background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(245,158,11,0.08));border:2px solid rgba(245,158,11,0.35);border-radius:14px;padding:.9rem 1.1rem;margin-bottom:1rem;cursor:pointer;transition:all .25s;user-select:none}
+        .anaya-toggle:hover{border-color:rgba(245,158,11,0.6);background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(245,158,11,0.12))}
+        .anaya-toggle.active{border-color:#f59e0b;background:linear-gradient(135deg,rgba(251,191,36,0.22),rgba(245,158,11,0.15));box-shadow:0 0 0 3px rgba(245,158,11,0.15)}
+        .anaya-toggle-icon{font-size:1.6rem;flex-shrink:0}
+        .anaya-toggle-text{flex:1}
+        .anaya-toggle-title{font-weight:700;color:#92400e;font-size:.92rem;display:flex;align-items:center;gap:.5rem}
+        .anaya-toggle-sub{font-size:.75rem;color:#a16207;margin-top:.1rem}
+        .anaya-toggle-switch{width:42px;height:24px;background:#d1d5db;border-radius:12px;position:relative;transition:background .25s;flex-shrink:0}
+        .anaya-toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:white;border-radius:50%;transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+        .anaya-toggle.active .anaya-toggle-switch{background:#f59e0b}
+        .anaya-toggle.active .anaya-toggle-switch::after{transform:translateX(18px)}
+        .anaya-panel{display:none;background:rgba(255,251,235,0.85);border:1.5px solid rgba(245,158,11,0.25);border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:1.2rem;animation:slideIn .3s ease}
+        .anaya-panel.show{display:block}
+        .anaya-temas-input{width:100%;padding:.62rem .88rem;border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;font-size:.88rem;font-family:'Poppins',inherit;background:rgba(255,255,255,0.9);color:#1e1b4b;transition:all .25s}
+        .anaya-temas-input:focus{outline:none;border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,0.15)}
+        .anaya-info{background:rgba(251,191,36,0.1);border-left:3px solid #f59e0b;border-radius:0 8px 8px 0;padding:.6rem .9rem;font-size:.78rem;color:#92400e;margin-top:.6rem;line-height:1.5}
+        .anaya-producto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem;margin-top:.5rem}
+        .anaya-prod-item{display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:rgba(255,255,255,0.85);border:1.5px solid rgba(245,158,11,0.2);border-radius:9px;cursor:pointer;transition:all .2s;font-size:.8rem;font-weight:500;color:#374151}
+        .anaya-prod-item:hover{border-color:#f59e0b;background:rgba(251,191,36,0.08)}
+        .anaya-prod-item.selected{background:rgba(245,158,11,0.12);border-color:#f59e0b;color:#92400e;font-weight:700}
+        .anaya-prod-item input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+
         /* ── PREVIEW BOX ── */
         .prev-box{background:#1e293b;color:#cbd5e1;padding:1.3rem;border-radius:14px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.8;white-space:pre-wrap;overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid rgba(255,255,255,0.06)}
         .prev-actions{position:sticky;top:0;background:#1e293b;padding-bottom:.85rem;margin-bottom:.85rem;border-bottom:1px solid #334155;display:flex;gap:.42rem;flex-wrap:wrap}
@@ -576,6 +599,66 @@
 
     <div class="fg">
         <label>Áreas/Ámbitos * <span class="badge badge-yellow">💡 Recomendado: una sola área</span></label>
+
+        <!-- ── MODO LIBRO ANAYA ── -->
+        <div class="anaya-toggle" id="anayaToggle" onclick="toggleAnaya()">
+            <div class="anaya-toggle-icon">📖</div>
+            <div class="anaya-toggle-text">
+                <div class="anaya-toggle-title">Modo Libro Anaya <span class="badge badge-yellow">Nuevo</span></div>
+                <div class="anaya-toggle-sub">Genera la SdA a partir de temas del libro — el maestro sigue usando Anaya igual que siempre</div>
+            </div>
+            <div class="anaya-toggle-switch"></div>
+        </div>
+
+        <div class="anaya-panel" id="anayaPanel">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem;margin-bottom:.85rem">
+                <div class="fg" style="margin:0">
+                    <label style="color:#92400e">Área *</label>
+                    <select id="anayaArea" class="anaya-temas-input" onchange="onAnayaAreaChange()">
+                        <option value="">Selecciona área…</option>
+                        <optgroup label="── Primaria ──">
+                        <option value="Lengua Castellana y Literatura">Lengua Castellana y Literatura</option>
+                        <option value="Matemáticas">Matemáticas</option>
+                        <option value="Conocimiento del Medio Natural, Social y Cultural">Conocimiento del Medio</option>
+                        <option value="Educación Artística">Educación Artística</option>
+                        <option value="Educación Física">Educación Física</option>
+                        <option value="Lengua Extranjera: Inglés">Inglés</option>
+                        <option value="Religión / Valores Cívicos y Éticos">Religión / Valores</option>
+                        </optgroup>
+                        <optgroup label="── Infantil ──">
+                        <option value="Crecimiento en Armonía">Crecimiento en Armonía</option>
+                        <option value="Descubrimiento y Exploración del Entorno">Descubrimiento del Entorno</option>
+                        <option value="Comunicación y Representación de la Realidad">Comunicación y Representación</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="fg" style="margin:0">
+                    <label style="color:#92400e">Temas del libro que cubre esta SdA *</label>
+                    <input class="anaya-temas-input" type="text" id="anayaTemas" placeholder="Ej: 3, 4 y 5  ·  Temas 6 al 8">
+                </div>
+                <div class="fg" style="margin:0">
+                    <label style="color:#92400e">Centro de interés que los agrupa <span style="font-weight:400">(opcional)</span></label>
+                    <input class="anaya-temas-input" type="text" id="anayaCentro" placeholder="Lo propone la IA si lo dejas vacío">
+                </div>
+            </div>
+            <div class="fg" style="margin-bottom:.75rem">
+                <label style="color:#92400e">Producto final real que harán los alumnos</label>
+                <div class="anaya-producto-grid" id="anayaProductoGrid">
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Periódico del aula (papel o digital)')"><input type="radio" name="anayaProd">📰 Periódico del aula</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Vídeo o podcast')"><input type="radio" name="anayaProd">🎬 Vídeo / Podcast</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Mural o exposición visual')"><input type="radio" name="anayaProd">🖼️ Mural / Exposición</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Presentación digital (Canva/Genially)')"><input type="radio" name="anayaProd">💻 Presentación digital</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Libro o cuento digital')"><input type="radio" name="anayaProd">📚 Libro / Cuento digital</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Guía o dossier impreso')"><input type="radio" name="anayaProd">📋 Guía / Dossier</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Exposición oral ante el grupo')"><input type="radio" name="anayaProd">🎤 Exposición oral</div>
+                    <div class="anaya-prod-item" onclick="selAnayaProducto(this,'Proyecto de mejora del centro o entorno')"><input type="radio" name="anayaProd">🏫 Proyecto de mejora</div>
+                </div>
+            </div>
+            <div class="anaya-info">
+                💡 <strong>Cómo funciona:</strong> La IA conoce el contenido de Anaya Primaria Andalucía. Le dirás qué temas usas y ella construirá la SdA <em>sobre esos contenidos del libro</em>, sin inventar nada nuevo. El maestro sigue dando clase con Anaya exactamente igual — la SdA documenta y envuelve ese trabajo con la estructura oficial que pide inspección.
+            </div>
+        </div>
+        <!-- ── FIN MODO ANAYA ── -->
         <div class="area-adv">
             <span style="font-size:1rem;flex-shrink:0">💡</span>
             <span><strong>Recomendación:</strong> Selecciona <strong>una sola área</strong> para una SdA más precisa. Puedes elegir varias para SdA interdisciplinares, pero el diseño y la evaluación serán más complejos.</span>
@@ -1003,6 +1086,11 @@
     <h2>✅ Criterios de Evaluación</h2>
     <p class="card-sub">Orden de 30 de mayo de 2023 · <span id="numSesLbl">4</span> actividades evaluables (una por sesión)</p>
 
+    <div id="anayaBypass5" style="display:none;background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(245,158,11,0.1));border:2px solid rgba(245,158,11,0.4);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem">
+        <div style="font-size:1.1rem;margin-bottom:.3rem">📖 <strong style="color:#92400e">Modo Libro Anaya activo</strong></div>
+        <div style="font-size:.83rem;color:#a16207;line-height:1.6">La IA seleccionará automáticamente los criterios de evaluación correspondientes a los temas <strong id="anayaTemasLabel5">—</strong> de <strong id="anayaAreaLabel5">—</strong>.<br>No necesitas seleccionar nada aquí — puedes pasar al siguiente paso.</div>
+    </div>
+
     <div id="criteriosPorArea">
         <p style="color:var(--text-light);padding:1rem;background:var(--bg);border-radius:8px">Selecciona al menos un área en el paso 1.</p>
     </div>
@@ -1022,6 +1110,11 @@
 <div class="card" id="step6">
     <h2>📖 Saberes Básicos</h2>
     <p class="card-sub">Saberes vinculados a los criterios seleccionados — Orden 30/05/2023</p>
+
+    <div id="anayaBypass6" style="display:none;background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(245,158,11,0.1));border:2px solid rgba(245,158,11,0.4);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem">
+        <div style="font-size:1.1rem;margin-bottom:.3rem">📖 <strong style="color:#92400e">Modo Libro Anaya activo</strong></div>
+        <div style="font-size:.83rem;color:#a16207;line-height:1.6">La IA seleccionará automáticamente los saberes básicos correspondientes a los temas <strong id="anayaTemasLabel6">—</strong> de <strong id="anayaAreaLabel6">—</strong>.<br>No necesitas seleccionar nada aquí — puedes pasar al siguiente paso.</div>
+    </div>
 
     <div id="saberesContainer">
         <p style="color:var(--text-light);padding:1rem;background:var(--bg);border-radius:8px">Selecciona criterios en el paso 5 para ver los saberes relacionados.</p>
@@ -2858,6 +2951,79 @@ function _tiempoBloque(tiempoT, esLengua, esMat){
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// MODO LIBRO ANAYA
+// ═══════════════════════════════════════════════════════════════════
+let anayaActivo = false;
+let anayaProductoSeleccionado = '';
+
+function toggleAnaya(){
+    anayaActivo = !anayaActivo;
+    document.getElementById('anayaToggle').classList.toggle('active', anayaActivo);
+    document.getElementById('anayaPanel').classList.toggle('show', anayaActivo);
+    _actualizarAnayaBypasses();
+}
+
+function _actualizarAnayaBypasses(){
+    const an = getAnayaData();
+    const temas = an ? (an.temas || '—') : '—';
+    const area  = an ? (an.area  || '—') : '—';
+    ['5','6'].forEach(n=>{
+        const el = document.getElementById('anayaBypass'+n);
+        if(el){
+            el.style.display = anayaActivo ? 'block' : 'none';
+            const tl = document.getElementById('anayaTemasLabel'+n);
+            const al = document.getElementById('anayaAreaLabel'+n);
+            if(tl) tl.textContent = temas;
+            if(al) al.textContent = area;
+        }
+    });
+}
+
+function onAnayaAreaChange(){
+    const areaVal = document.getElementById('anayaArea').value;
+    if(!areaVal) return;
+    // Determinar etapa según área seleccionada
+    const esInfantil = ['Crecimiento en Armonía','Descubrimiento y Exploración del Entorno','Comunicación y Representación de la Realidad'].includes(areaVal);
+    const etapaEl = document.getElementById('etapa');
+    if(esInfantil && etapaEl.value !== 'infantil'){
+        etapaEl.value = 'infantil';
+        cambiarEtapa();
+    } else if(!esInfantil && etapaEl.value !== 'primaria'){
+        etapaEl.value = 'primaria';
+        cambiarEtapa();
+    }
+    // Seleccionar el área correspondiente en el grid
+    const items = document.querySelectorAll('.area-item');
+    items.forEach(item => {
+        const titulo = item.querySelector('.at')?.textContent?.trim();
+        if(titulo && titulo === areaVal){
+            if(!areasSeleccionadas.includes(areaVal)) toggleArea(areaVal, item);
+        } else if(titulo && areasSeleccionadas.includes(titulo) && titulo !== areaVal){
+            // Deselect other areas when in Anaya mode
+            toggleArea(titulo, item);
+        }
+    });
+    _actualizarAnayaBypasses();
+}
+
+function selAnayaProducto(el, valor){
+    document.querySelectorAll('.anaya-prod-item').forEach(i=>i.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input[type=radio]').checked = true;
+    anayaProductoSeleccionado = valor;
+}
+
+function getAnayaData(){
+    if(!anayaActivo) return null;
+    return {
+        area:     document.getElementById('anayaArea')?.value?.trim() || '',
+        temas:    document.getElementById('anayaTemas')?.value?.trim() || '',
+        centro:   document.getElementById('anayaCentro')?.value?.trim() || '',
+        producto: anayaProductoSeleccionado
+    };
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // CONSTRUIR PROMPT SdA
 // ═══════════════════════════════════════════════════════════════════
 function construirPrompt(d){
@@ -2882,20 +3048,21 @@ function construirPrompt(d){
     const appsT=allApps.length>0?allApps.join(', '):'A criterio del experto';
 
     // Build session table string for the prompt
-    const fmtDate=d=>new Date(d).toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});
+    const fmtDate=d=>{const dt=new Date(d+'T12:00:00');const dd=String(dt.getDate()).padStart(2,'0');const mm=String(dt.getMonth()+1).padStart(2,'0');const yy=String(dt.getFullYear()).slice(-2);return `${dd}/${mm}/${yy}`;};
     let tablaT='';
     if(d.sesionesData&&d.sesionesData.length>0){
-        tablaT='TABLA DE SESIONES PLANIFICADAS (respeta estas fechas en toda la secuencia didáctica):\n';
-        tablaT+='| Nº | Fecha | Día | Tipo | Evaluación (criterio + instrumento) | Nota del tutor |\n';
-        tablaT+='|---|---|---|---|---|---|\n';
+        tablaT='TABLA DE SESIONES (respeta estas fechas en toda la secuencia didáctica):\n';
+        tablaT+='| Nº | Fecha | Día | Tipo | Criterio/s sesión | Evaluación (cuando se cierra criterio) | Nota tutor |\n';
+        tablaT+='|---|---|---|---|---|---|---|\n';
         d.sesionesData.forEach(s=>{
             const f=fmtDate(s.fecha);
-            const tp=s.tipo==='lectura'?'📖 Lectura planificada (30 min)':s.tipo==='rp'?'🔢 Resolución de Problemas (30 min)':s.tipo==='lectura-rp'?'📖🔢 Lectura + RP':'📚 Sesión normal';
-            const evalLabel=s.eval==='producto'?'⭐ Evaluación PRODUCTO FINAL':s.eval==='intermedia'?'📋 Evaluación de actividad':'—';
+            const tp=s.tipo==='lectura'?'📖 Lectura (30min)':s.tipo==='rp'?'🔢 RP (30min)':s.tipo==='lectura-rp'?'📖🔢 Lect+RP':'📚 Normal';
+            const evalLabel=s.eval==='producto'?'⭐ Eval. PRODUCTO FINAL':s.eval==='intermedia'?'📋 Eval. intermedia (cierre criterio)':'—';
             const instrLabel=s.instr||'';
-            tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | ${evalLabel}${instrLabel?' — '+instrLabel:''} | ${s.nota||''} |\n`;
+            tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | [código/s criterio] | ${evalLabel}${instrLabel?' — '+instrLabel:''} | ${s.nota||''} |\n`;
         });
-        tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración por sesión: ${d.duracion} min\n`;
+        tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración: ${d.duracion} min/sesión\n`;
+        tablaT+=`⚠️ LÓGICA DE EVALUACIÓN: Rellena la columna "Criterio/s sesión" con los códigos de los criterios que se trabajan. La columna "Evaluación" solo se activa en la ÚLTIMA sesión que trabaja un criterio (cuando ese conjunto de sesiones cierra el criterio y se evalúa).\n`;
     }
 
     // Activities: IA decides how many sessions each activity takes
@@ -2934,7 +3101,8 @@ ${Object.entries(d.critsPorArea).flatMap(([area,cs])=>cs.map(c=>`     ───�
      | [Dimensión 1] | [mínimo] | [básico] | [adecuado] | [bueno] | [excelente] |
      | [Dimensión 2] | [mínimo] | [básico] | [adecuado] | [bueno] | [excelente] |`}`:
 `  g) EVALUACIÓN INTERMEDIA al terminar actividad ${i}:
-     ⚠️ La evaluación ocurre al COMPLETAR la actividad (no en cada sesión).
+     ⚠️ La evaluación ocurre al COMPLETAR la actividad (última sesión de esta actividad).
+     Fecha de evaluación: [fecha dd/mm/aa de la última sesión de esta actividad — ver tabla]
      Criterio(s) a evaluar: [código] — [descripción]
      Evidencia: [tarea/artefacto concreto del alumnado al cerrar la actividad]
      Instrumento: [lista de cotejo / registro observación]`;
@@ -2990,6 +3158,25 @@ Normativa de referencia:
 ⚠️ CRÍTICO: Genera la SdA con EXACTAMENTE los 7 apartados de la estructura oficial. No omitas ninguno.
 ⚠️ FORMATO COMPACTO: Los apartados 1 (IDENTIFICACIÓN) y 2 (JUSTIFICACIÓN) deben caber juntos en UNA SOLA página A4. Sé conciso: sin listas extensas, sin párrafos largos. Usa frases cortas y directas.
 ⚠️ FORMATO TÍTULOS: Usa SIEMPRE el formato "1 — IDENTIFICACIÓN", "2 — JUSTIFICACIÓN"... NUNCA escribas "BLOQUE 1", "BLOQUE 2" ni similar. Los títulos van sin la palabra BLOQUE.
+${(()=>{
+    const an = getAnayaData();
+    if(!an || !an.temas) return '';
+    const areaAnaya = an.area || areasT;
+    return `
+⚠️ MODO LIBRO ANAYA — LEE ESTO ANTES DE GENERAR:
+Esta SdA se basa en el libro ANAYA de ${areaAnaya} — ${nivel} (edición Andalucía LOMLOE).
+Temas del libro que cubre esta SdA: ${an.temas}
+${an.centro?'Centro de interés elegido por el tutor: "'+an.centro+'"':'Propón tú el centro de interés más adecuado para agrupar estos temas bajo un título motivador para el alumnado.'}
+Producto final real que elaborará el alumnado: ${an.producto||'(propón el más adecuado para la edad y el área)'}
+
+INSTRUCCIONES CLAVE — MODO ANAYA:
+1. Conoces el contenido del libro Anaya ${areaAnaya} ${nivel} Andalucía. Construye TODA la SdA sobre los contenidos de esos temas. NO uses contenidos de otros temas ni de fuera del libro.
+2. CRITERIOS: Selecciona tú los criterios de evaluación de la Orden 30/05/2023 que corresponden a los contenidos de esos temas. Indícalos con su código exacto en el apartado de Concreción Curricular.
+3. SABERES: Selecciona tú los saberes básicos de la Orden 30/05/2023 que se trabajan en esos temas. Indícalos con su código exacto.
+4. El maestro sigue dando clase con el libro exactamente igual. La SdA documenta ese trabajo bajo un centro de interés común con producto final real. Las actividades del libro son el núcleo — la SdA les da estructura y sentido competencial.
+5. El producto final debe surgir de forma natural de los contenidos de esos temas, no ser algo ajeno a ellos.
+`;
+})()}
 
 ═══════════════════════════════════════════════════════════
 DATOS DE LA SdA
@@ -3061,15 +3248,42 @@ ${d.sesiones>3?'• Producto 4: [descripción del resultado final / presentació
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 4 — CONCRECIÓN CURRICULAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-4.1 Objetivos de enseñanza-aprendizaje o didácticos:
-    [Formula ${d.sesiones} objetivos didácticos, uno orientativo por sesión, con verbos observables]
+4.1 Concreción curricular por sesión:
+    Genera una tabla con este formato EXACTO:
 
-4.2 Vinculación del problema-reto-contexto con los desafíos del Siglo XXI (17 ODS):
-    [Indica qué ODS se trabaja y cómo se vincula con la SdA]
+    | Sesión | Fecha | Criterio/s trabajado/s | Evaluación |
+    |--------|-------|------------------------|------------|
+    [Para CADA sesión de la tabla de fechas: pon la fecha en formato dd/mm/aa, indica el/los código/s de criterio que se trabajan en esa sesión, y en la columna Evaluación escribe "Sí — [fecha dd/mm/aa]" SOLO en la ÚLTIMA sesión que trabaje cada criterio (es decir, cuando ese criterio se cierra y se evalúa); en el resto escribe "—"]
+
+4.2 Vinculación ODS: [ODS nº X — nombre] · [Una frase de conexión directa con la SdA]
 
 4.3 Transversalidad: ${d.transversalidad||'[Indica los ejes transversales: igualdad, sostenibilidad, salud, paz…]'}
 
-4.4 Saberes eventuales o efemérides: ${d.efemérides||'[Indica fechas señaladas o eventos integrados en la SdA]'}
+4.4 Saberes eventuales y efemérides: ${d.efemérides||''}
+    ⚠️ EFEMÉRIDES OBLIGATORIAS (Resolución de 12 de septiembre de 2025 de la Consejería de Educación de Andalucía):
+    Comprueba las fechas de inicio y fin de esta SdA (${d.fechaInicio||'sin fecha'} — ${d.fechaFin||'sin fecha'}).
+    Incluye ÚNICAMENTE las efemérides de la siguiente lista que caigan dentro de ese intervalo de fechas.
+    Si ninguna cae dentro del intervalo, NO incluyas ninguna ni inventes otras.
+
+    Lista completa de efemérides obligatorias 2025-2026 (Resolución 12/09/2025):
+    · 02/10 — Día Internacional de la No Violencia
+    · 05/10 — Día Mundial de los Docentes
+    · 16/10 — Día Mundial de la Alimentación
+    · 17/10 — Día Internacional para la Erradicación de la Pobreza
+    · 20/11 — Día Universal de los Derechos del Niño/a
+    · 25/11 — Día Internacional de la Eliminación de la Violencia contra la Mujer
+    · 01/12 — Día Mundial de la Lucha contra el SIDA
+    · 03/12 — Día Internacional de las Personas con Discapacidad
+    · 10/12 — Día Internacional de los Derechos Humanos
+    · 30/01 — Día Escolar de la No Violencia y la Paz
+    · 04/02 — Día Mundial contra el Cáncer
+    · 08/03 — Día Internacional de la Mujer
+    · 22/03 — Día Mundial del Agua
+    · 22/04 — Día de la Tierra
+    · 17/05 — Día Internacional contra la LGTBIfobia
+    · 05/06 — Día Mundial del Medio Ambiente
+
+    Para cada efeméride que caiga en el intervalo, indica en UNA LÍNEA: fecha · nombre · cómo se integra brevemente en la SdA.
 
 ${esLengua?`
 4.5 📖 LECTURA PLANIFICADA (Instrucciones Junta de Andalucía)
@@ -3082,16 +3296,10 @@ ${esLengua?`
     • Dentro de la SdA, CADA SESIÓN de Lengua debe reservar 30 minutos iniciales para lectura planificada.
     • Si la SdA tiene \${d.sesiones} sesiones, TODAS ellas incluyen el bloque de lectura planificada de 30 min.
 
-    Estructura obligatoria de los 30 minutos de lectura en CADA sesión:
-    • ANTES DE LEER (5 min): activación de conocimientos previos, hipótesis, conexión con la temática de la SdA.
-    • DURANTE LA LECTURA (15 min): lectura individual/parejas + estrategias activas (inferencias, subrayado, ideas clave).
-    • DESPUÉS DE LEER (10 min): síntesis oral o escrita, debate, aplicación o microtarea vinculada a la SdA.
-
-    Tipos de texto (alterna al menos 2 tipos distintos a lo largo de la SdA):
-    Literarios · Científicos · Periodísticos · Continuos · Discontinuos · Multimodales
-
+    Estructura 30 min de lectura (ANTES 5' · DURANTE 15' · DESPUÉS 10'):
+    Tipo de texto: [literario / científico / periodístico / continuo / discontinuo / multimodal]
     En la tabla de la secuencia didáctica marca CADA sesión con [📖 LECTURA 30'] al inicio.
-    En el apartado h) de CADA actividad indica: tipo de texto, los 3 momentos y su duración.
+    En el apartado h) de CADA actividad indica el tipo de texto y los 3 momentos en una línea.
 `:''}
 ${esMat?`
 4.5 🔢 RESOLUCIÓN DE PROBLEMAS (Instrucciones Junta de Andalucía)
@@ -3195,7 +3403,8 @@ ${actsT}
     ${d.programas.length>0?d.programas.join(' | '):'No se han indicado programas específicos'}
 ${d.programas.length>0?`
 ⚠️ INSTRUCCIÓN OBLIGATORIA — GENERACIÓN DE ANEXOS:
-Al finalizar los 7 bloques de la SdA, genera UN ANEXO INDEPENDIENTE por cada programa marcado.
+Al finalizar los 7 bloques de la SdA, genera UN ANEXO INDEPENDIENTE por cada uno de estos programas seleccionados: ${d.programas.join(' | ')}
+No generes anexos de programas que NO estén en esa lista.
 Cada anexo debe seguir EXACTAMENTE esta estructura:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -3211,32 +3420,32 @@ SdA: ${d.titSda||d.tematica} | Curso: ${d.curso} | Área/s: ${d.areas.join(', ')
    de la SdA pero ajustando el grado de consecución esperado.
 
 3. ACTIVIDADES ADAPTADAS (una por sesión de la SdA)
-   Para CADA una de las ${d.sesiones} actividades/sesiones de la SdA genera su versión adaptada:
+   ⚠️ CRITERIO CLAVE: Todos los alumnos de este programa trabajan LO MISMO en el mismo momento.
+   UNA actividad adaptada por sesión, igual para todos los que reciben este apoyo.
+   No hay actividades distintas por alumno/a — el docente de apoyo atiende al grupo completo con la misma tarea.
 
-   | Sesión | Actividad original (resumen) | Adaptación para este programa | Agrupamiento | Materiales/Apoyo |
-   |--------|------------------------------|-------------------------------|--------------|------------------|
-   ${d.programas.some(p=>p.includes('refuerzo'))?`
-   📌 CRITERIO PARA REFUERZO: simplifica la tarea manteniendo el mismo criterio de evaluación.
-   Reduce la cantidad (menos ejercicios, texto más corto), proporciona andamiaje (esquemas, vocabulario
-   clave, instrucciones paso a paso) y permite más tiempo o apoyo docente.
-   El nivel mínimo exigible "Suficiente (5-6)" debe ser alcanzable con estas adaptaciones.`:''}${d.programas.some(p=>p.includes('profundizaci'))?`
-   📌 CRITERIO PARA PROFUNDIZACIÓN: amplía y enriquece sin cambiar el criterio de evaluación.
-   Añade complejidad (más fuentes, mayor abstracción, conexiones interdisciplinares) y producción creativa.
-   El nivel "Sobresaliente (9-10)" debe ser el estándar esperado para este alumnado.`:''}
+   | Sesión | Actividad original (resumen) | Adaptación (todos igual) | Agrupamiento | Materiales/Apoyo |
+   |--------|------------------------------|--------------------------|--------------|------------------|
+
+   ${d.programas.some(p=>p.toLowerCase().includes('refuerzo'))?`📌 REFUERZO: simplifica manteniendo el mismo criterio de evaluación. Menos cantidad, andamiaje
+   (esquemas, vocabulario clave, instrucciones paso a paso), más tiempo o apoyo docente.
+   El nivel "Suficiente (5-6)" debe ser alcanzable con estas adaptaciones.`:''}${d.programas.some(p=>p.includes('profundizaci'))?`
+   📌 PROFUNDIZACIÓN: amplía y enriquece sin cambiar el criterio. Mayor complejidad, más fuentes,
+   producción creativa. El nivel "Sobresaliente (9-10)" es el estándar esperado.`:''}
 
 4. ORIENTACIONES METODOLÓGICAS
-   - Momento de intervención: dentro del aula / fuera del aula / ambos
-   - Agrupamiento recomendado: individual / pareja / grupo reducido
+   - Momento: dentro del aula / fuera del aula / ambos
+   - Agrupamiento: pequeño grupo (todos los de este programa juntos)
    - Rol del docente de apoyo (PT/AL/tutor/a): [descripción concreta]
-   - Coordinación con el tutor/a: [frecuencia y tipo de seguimiento]
+   - Coordinación con el tutor/a: [frecuencia y tipo]
 
 5. SEGUIMIENTO Y EVALUACIÓN
-   - Los criterios de evaluación son los mismos que en la SdA general.
-   - Se adaptará el instrumento si es necesario (oral en lugar de escrito, etc.).
-   - Indicador de mejora: [evidencia que mostrará que el alumno/a ha superado la dificultad]
+   - Mismos criterios que la SdA general.
+   - Instrumento adaptado si necesario (oral en lugar de escrito, etc.).
+   - Indicador de mejora: [evidencia concreta de superación]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-FIN ANEXO — repite la estructura completa para cada programa marcado
+FIN ANEXO — repite la estructura completa para CADA uno de los programas listados arriba
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `:''}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -3281,7 +3490,7 @@ ${(()=>{ const _a=recopilarACI(); return _a.length>0 ? construirSeccionACI(_a,d)
 ✅ Referencias exactas: Orden 30/05/2023, Decreto 101/2023, RD 157/2022
 ✅ Lenguaje profesional docente aplicable directamente en ${nivel}
 ✅ Coherencia total entre todos los bloques
-${d.programas.length>0?`✅ ${d.programas.length} ANEXO/S AL FINAL: ${d.programas.join(' + ')} — con actividades adaptadas para CADA sesión de la SdA`:''}`;
+${d.programas.length>0?`✅ ${d.programas.length} ANEXO/S AL FINAL: ${d.programas.join(' + ')} — con actividades adaptadas para CADA sesión (todos los alumnos del programa trabajan lo mismo)`:''}`;
 
 }
 
@@ -3701,6 +3910,11 @@ function descargar(cont,nom){const a=document.createElement('a');a.href=URL.crea
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 function instalarPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast('✅ App instalada');document.getElementById('installBtn').classList.remove('show');}deferredPrompt=null;});}}
 setInterval(()=>{try{localStorage.setItem('sda_v6',JSON.stringify({sdaTipo,etapa:document.getElementById('etapa').value,areas:areasSeleccionadas,tematica:document.getElementById('tematica').value}));}catch(e){}},5000);
+
+// ── Inicialización: renderizar áreas al cargar según la etapa por defecto ──
+document.addEventListener('DOMContentLoaded', function() {
+    cambiarEtapa();
+});
 </script>
 </body>
 </html>
