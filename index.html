@@ -741,7 +741,34 @@
         </div>
 
         <div class="sant-panel" id="santPanel">
-            <!-- PASO 1: Selección Curso / Trimestre / SdA -->
+            <!-- PASO 1: Asignatura PRIMERO -->
+            <div style="margin-bottom:.85rem">
+                <label style="color:#991b1b;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. ¿Qué asignatura quieres trabajar? *</label>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem">
+                    <div id="santModBtn_mat" onclick="setSantModalidadPrimero('mat')"
+                         style="display:flex;align-items:center;gap:.55rem;padding:.7rem .9rem;background:rgba(255,255,255,0.85);border:2px solid rgba(239,68,68,0.15);border-radius:11px;cursor:pointer;transition:all .22s">
+                        <span style="font-size:1.3rem">📐</span>
+                        <div><div style="font-weight:700;font-size:.82rem;color:#1e1b4b">Matemáticas</div>
+                        <div style="font-size:.7rem;color:#6b7280">SdA de Matemáticas</div></div>
+                    </div>
+                    <div id="santModBtn_len" onclick="setSantModalidadPrimero('len')"
+                         style="display:flex;align-items:center;gap:.55rem;padding:.7rem .9rem;background:rgba(255,255,255,0.85);border:2px solid rgba(239,68,68,0.15);border-radius:11px;cursor:pointer;transition:all .22s">
+                        <span style="font-size:1.3rem">📖</span>
+                        <div><div style="font-weight:700;font-size:.82rem;color:#1e1b4b">Lengua</div>
+                        <div style="font-size:.7rem;color:#6b7280">SdA de Lengua</div></div>
+                    </div>
+                    <div id="santModBtn_ambas" onclick="setSantModalidadPrimero('ambas')"
+                         style="display:flex;align-items:center;gap:.55rem;padding:.7rem .9rem;background:rgba(255,255,255,0.85);border:2px solid rgba(239,68,68,0.15);border-radius:11px;cursor:pointer;transition:all .22s">
+                        <span style="font-size:1.3rem">🔗</span>
+                        <div><div style="font-weight:700;font-size:.82rem;color:#1e1b4b">Interdisciplinar</div>
+                        <div style="font-size:.7rem;color:#6b7280">Lengua + Matemáticas</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 2: Curso / Trimestre / SdA — se muestra tras elegir asignatura -->
+            <div id="santSelectoresWrap" style="display:none">
+            <label style="color:#991b1b;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">2. Elige el curso y la SdA *</label>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem;margin-bottom:.85rem">
                 <div class="fg" style="margin:0">
                     <label style="color:#991b1b">Curso *</label>
@@ -771,31 +798,10 @@
                     </select>
                 </div>
             </div>
-
-            <!-- SELECTOR DE MODALIDAD -->
-            <div id="santModalidadWrap" style="display:none;margin-bottom:.85rem">
-                <label style="color:#991b1b;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">¿Cómo quieres generar la SdA? *</label>
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem">
-                    <div id="santModBtn_mat" onclick="setSantModalidad('mat')"
-                         style="display:flex;align-items:center;gap:.55rem;padding:.7rem .9rem;background:rgba(255,255,255,0.85);border:2px solid rgba(239,68,68,0.15);border-radius:11px;cursor:pointer;transition:all .22s">
-                        <span style="font-size:1.3rem">📐</span>
-                        <div><div style="font-weight:700;font-size:.82rem;color:#1e1b4b">Solo Matemáticas</div>
-                        <div style="font-size:.7rem;color:#6b7280">SdA de una asignatura</div></div>
-                    </div>
-                    <div id="santModBtn_len" onclick="setSantModalidad('len')"
-                         style="display:flex;align-items:center;gap:.55rem;padding:.7rem .9rem;background:rgba(255,255,255,0.85);border:2px solid rgba(239,68,68,0.15);border-radius:11px;cursor:pointer;transition:all .22s">
-                        <span style="font-size:1.3rem">📖</span>
-                        <div><div style="font-weight:700;font-size:.82rem;color:#1e1b4b">Solo Lengua</div>
-                        <div style="font-size:.7rem;color:#6b7280">SdA de una asignatura</div></div>
-                    </div>
-                    <div id="santModBtn_ambas" onclick="setSantModalidad('ambas')"
-                         style="display:flex;align-items:center;gap:.55rem;padding:.7rem .9rem;background:rgba(255,255,255,0.85);border:2px solid rgba(239,68,68,0.15);border-radius:11px;cursor:pointer;transition:all .22s">
-                        <span style="font-size:1.3rem">🔗</span>
-                        <div><div style="font-weight:700;font-size:.82rem;color:#1e1b4b">Interdisciplinar</div>
-                        <div style="font-size:.7rem;color:#6b7280">Lengua + Matemáticas</div></div>
-                    </div>
-                </div>
             </div>
+
+            <!-- SELECTOR MODALIDAD (oculto, usado internamente) -->
+            <div id="santModalidadWrap" style="display:none"></div>
 
             <!-- TARJETA PRECARGADA -->
             <div id="santCardPreview" style="display:none;background:rgba(255,255,255,0.9);border:2px solid rgba(239,68,68,0.4);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:1rem;animation:slideIn .3s ease">
@@ -1544,219 +1550,6 @@
             <p style="font-size:.78rem;color:var(--text-light);margin:.4rem 0 0;text-align:center">
                 Copia el prompt ACI al portapapeles y abre la IA seleccionada · Pega y envía para obtener el documento completo
             </p>
-        </div>
-    </div>
-
-    <div class="btn-container">
-        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
-        <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
-    </div>
-</div>
-
-<!-- ══ PASO 8 — GENERAR PROMPT SdA ═══════════════════════════════════ -->
-<div class="card" id="step8">
-    <h2>🚀 Generar SdA Completa</h2>
-    <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> + <strong id="promptSesLbl">4</strong> actividades evaluables con escala numérica</p>
-
-    <!-- PANEL RESUMEN -->
-    <div id="resumenSda" style="background:linear-gradient(135deg,rgba(99,102,241,.07),rgba(124,58,237,.05));border:1.5px solid rgba(99,102,241,.2);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem;display:none">
-        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem">
-            <span style="font-size:1.1rem">📋</span>
-            <strong style="color:#4f46e5;font-size:.92rem">Resumen de tu SdA</strong>
-        </div>
-        <div id="resumenContenido" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.45rem .9rem;font-size:.83rem"></div>
-    </div>
-
-    <div class="fg">
-        <label>¿Con qué IA vas a trabajar?</label>
-        <div class="ia-chips">
-            <div class="ia-chip selected" data-ia="claude" data-url="https://claude.ai" onclick="selIA(this)">🟠 Claude <span style="font-size:.65rem;background:#fef3c7;color:#92400e;border-radius:8px;padding:.1rem .4rem;margin-left:.2rem;font-weight:700">⭐ Recomendada</span></div>
-            <div class="ia-chip" data-ia="gemini" data-url="https://gemini.google.com" onclick="selIA(this)">🔵 Gemini <span style="font-size:.65rem;background:#dbeafe;color:#1e40af;border-radius:8px;padding:.1rem .4rem;margin-left:.2rem;font-weight:700">2ª opción</span></div>
-            <div class="ia-chip" data-ia="chatgpt" data-url="https://chat.openai.com" onclick="selIA(this)">🟢 ChatGPT</div>
-            <div class="ia-chip" data-ia="copilot" data-url="https://copilot.microsoft.com" onclick="selIA(this)">🟣 Copilot</div>
-            <div class="ia-chip" data-ia="kimi" data-url="https://kimi.ai" onclick="selIA(this)">🔷 Kimi 2.5</div>
-        </div>
-        <span class="ia-status" id="iaStatus">⭐ Se abrirá <strong>Claude</strong> — el prompt se copiará al portapapeles.</span>
-    </div>
-
-    <div class="prev-box">
-        <div class="prev-actions">
-            <button class="btn btn-success btn-sm" onclick="copiarPrompt()">📋 Copiar</button>
-            <button class="btn btn-primary btn-sm" onclick="descargarTXT()">💾 Descargar</button>
-            <button class="btn btn-secondary btn-sm" onclick="compartirPrompt()">📤 Compartir</button>
-        </div>
-        <div id="promptContent">Pulsa "Generar Prompt" para ver el resultado aquí…</div>
-    </div>
-
-    <div class="final-actions">
-        <div class="far">
-            <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
-            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
-                <button class="btn btn-success" onclick="generarPrompt()">✨ Generar Prompt</button>
-                <button class="btn-launch" onclick="generarYAbrir()">🚀 Generar y Abrir IA</button>
-            </div>
-        </div>
-        <div style="text-align:right">
-            <button class="btn btn-purple" onclick="irARubricas()">📐 Ya tengo la SdA → Crear Rúbricas</button>
-        </div>
-    </div>
-</div>
-
-<!-- ══ PASO 9 — RÚBRICAS ══════════════════════════════════════════════ -->
-<div class="card" id="step9">
-    <h2>📐 Rúbricas de Evaluación</h2>
-    <p class="card-sub">Genera las rúbricas con la escala numérica oficial: Insuficiente·Suficiente·Bien·Notable·Sobresaliente</p>
-
-    <div class="rub-intro">
-        <h3>📋 Flujo de trabajo</h3>
-        <ol>
-            <li>Lleva el prompt del paso 8 a tu IA y obtén la SdA completa</li>
-            <li>Copia el texto completo que te devolvió la IA</li>
-            <li>Pégalo en el cuadro de abajo</li>
-            <li>Pulsa <strong>"Generar y Abrir IA"</strong> para obtener las rúbricas con escala numérica</li>
-        </ol>
-    </div>
-
-    <div class="fg">
-        <label for="sdaPegada">📄 Pega aquí tu SdA completa generada por la IA *</label>
-        <textarea id="sdaPegada" class="sda-paste" style="min-height:180px" placeholder="Pega aquí el texto completo de la SdA que generó la IA…"></textarea>
-    </div>
-
-    <div class="fg">
-        <label>¿Con qué IA vas a generar las rúbricas?</label>
-        <div class="ia-chips" id="iaChipsRubrica">
-            <div class="ia-chip selected" data-ia="claude" onclick="selIARubrica(this)">🟠 Claude</div>
-            <div class="ia-chip" data-ia="gemini" onclick="selIARubrica(this)">🔵 Gemini</div>
-            <div class="ia-chip" data-ia="chatgpt" onclick="selIARubrica(this)">🟢 ChatGPT</div>
-            <div class="ia-chip" data-ia="copilot" onclick="selIARubrica(this)">🟣 Copilot</div>
-            <div class="ia-chip" data-ia="kimi" onclick="selIARubrica(this)">🔷 Kimi 2.5</div>
-        </div>
-        <span class="ia-status" id="iaStatusRubrica">🟠 Se abrirá <strong>Claude</strong> — el prompt se copiará al portapapeles.</span>
-    </div>
-
-    <div class="fg">
-        <label>Tipo de rúbricas adicionales:</label>
-        <div class="chips" id="tipoRubrica">
-            <div class="chip selected" onclick="toggleChip(this)">Analítica (por criterios)</div>
-            <div class="chip selected" onclick="toggleChip(this)">Con descriptores detallados</div>
-            <div class="chip" onclick="toggleChip(this)">Formato tabla Word</div>
-            <div class="chip" onclick="toggleChip(this)">Co-evaluación alumnado</div>
-            <div class="chip" onclick="toggleChip(this)">Autoevaluación del alumno</div>
-        </div>
-    </div>
-
-    <div class="prev-box" style="margin-top:1rem">
-        <div class="prev-actions">
-            <button class="btn btn-success btn-sm" onclick="copiarRubrica()">📋 Copiar prompt rúbrica</button>
-            <button class="btn btn-primary btn-sm" onclick="descargarRubrica()">💾 Descargar</button>
-        </div>
-        <div id="rubricContent">El prompt de rúbricas aparecerá aquí…</div>
-    </div>
-
-    <div class="final-actions">
-        <div class="far">
-            <button class="btn btn-secondary" onclick="prevStep()">← Volver</button>
-            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
-                <button class="btn btn-purple" onclick="generarPromptRubricas()">📐 Generar Prompt Rúbricas</button>
-                <button class="btn-rlaunce" onclick="generarYAbrirRubricas()">🚀 Generar y Abrir IA</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-</div><!-- /container -->
-
-<div class="toast" id="toast"></div>
-<button class="install-btn" id="installBtn" onclick="instalarPWA()">📲 Instalar App</button>
-
-
-<!-- ══ PASO 7 — ATENCIÓN A LA DIVERSIDAD ════════════════════════════ -->
-<div class="card" id="step7">
-    <h2>♿ Atención a la Diversidad</h2>
-    <p class="card-sub">Medidas ordinarias de atención a la diversidad — sin ACS</p>
-
-    <div class="fg">
-        <label for="acneae">ACNEAE en el aula</label>
-        <select id="acneae" multiple size="4">
-            <option value="Ninguna" selected>Ninguna específica</option>
-            <option value="TDAH">TDAH</option>
-            <option value="Dislexia">Dislexia</option>
-            <option value="Discapacidad intelectual">Discapacidad intelectual</option>
-            <option value="Altas capacidades">Altas capacidades</option>
-            <option value="TEA">TEA (Autismo)</option>
-            <option value="Discapacidad motora">Discapacidad motora</option>
-            <option value="Discapacidad visual">Discapacidad visual</option>
-            <option value="Discapacidad auditiva">Discapacidad auditiva</option>
-            <option value="Trastorno del lenguaje">Trastorno del lenguaje</option>
-            <option value="Síndrome de Down">Síndrome de Down</option>
-        </select>
-        <small>Ctrl/Cmd para seleccionar varias</small>
-    </div>
-
-    <div class="fg">
-        <label>Medidas generales a aplicar (art. Decreto 101/2023)</label>
-        <div class="cbg">
-            <div class="cbi"><input type="checkbox" id="mg_a" value="a) Agrupación de áreas en ámbitos de conocimiento"><label for="mg_a">a) Agrupación de áreas en ámbitos</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_b" value="b) Apoyo en grupos ordinarios mediante segundo/a profesor/a" checked><label for="mg_b">b) Apoyo segundo/a docente en aula</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_c" value="c) Desdoblamientos de grupos en áreas instrumentales"><label for="mg_c">c) Desdoblamientos en instrumentales</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_d" value="d) Agrupamientos flexibles para atención específica" checked><label for="mg_d">d) Agrupamientos flexibles</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_e" value="e) Acción tutorial como seguimiento individualizado" checked><label for="mg_e">e) Acción tutorial individualizada</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_f" value="f) Metodologías colaborativas en grupos heterogéneos" checked><label for="mg_f">f) Metodologías colaborativas</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_g" value="g) Coordinación en transición entre etapas"><label for="mg_g">g) Coordinación transición etapas</label></div>
-            <div class="cbi"><input type="checkbox" id="mg_h" value="h) Prevención y control del absentismo"><label for="mg_h">h) Prevención absentismo</label></div>
-        </div>
-    </div>
-
-    <div class="fg">
-        <label>Principios DUA v3.0 <span class="badge badge-blue">Diseño Universal para el Aprendizaje</span></label>
-        <small style="margin-bottom:.6rem">Selecciona los que se aplicarán en esta SdA. La IA asignará a cada sesión: pauta + estrategia concreta + herramienta digital.</small>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.38rem;margin-top:.4rem">
-            <div style="background:#eff6ff;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#1e40af;display:block;margin-bottom:.3rem">🧠 REPRESENTACIÓN</strong>
-                <div class="cbi"><input type="checkbox" id="dua1" value="1.1 Opciones de personalización de la presentación"><label for="dua1">1.1 Personalización presentación</label></div>
-                <div class="cbi"><input type="checkbox" id="dua2" value="1.2 Opciones para el lenguaje y los símbolos"><label for="dua2">1.2 Lenguaje y símbolos</label></div>
-                <div class="cbi"><input type="checkbox" id="dua3" value="1.3 Opciones para la comprensión"><label for="dua3">1.3 Comprensión</label></div>
-                <div class="cbi"><input type="checkbox" id="dua4" value="2.1 Alternativas para la información auditiva"><label for="dua4">2.1 Info auditiva</label></div>
-                <div class="cbi"><input type="checkbox" id="dua5" value="2.2 Alternativas para la información visual"><label for="dua5">2.2 Info visual</label></div>
-                <div class="cbi"><input type="checkbox" id="dua6" value="3.1 Activar conocimientos previos"><label for="dua6">3.1 Conocimientos previos</label></div>
-                <div class="cbi"><input type="checkbox" id="dua7" value="3.2 Destacar patrones, características y relaciones"><label for="dua7">3.2 Patrones y relaciones</label></div>
-                <div class="cbi"><input type="checkbox" id="dua8" value="3.3 Guiar el procesamiento de la información" checked><label for="dua8">3.3 Procesar información</label></div>
-                <div class="cbi"><input type="checkbox" id="dua9" value="3.4 Maximizar la transferencia y la generalización"><label for="dua9">3.4 Transferencia</label></div>
-            </div>
-            <div style="background:#f0fdf4;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#166534;display:block;margin-bottom:.3rem">✋ ACCIÓN Y EXPRESIÓN</strong>
-                <div class="cbi"><input type="checkbox" id="dua10" value="4.1 Variedad en los métodos de respuesta y navegación"><label for="dua10">4.1 Métodos de respuesta</label></div>
-                <div class="cbi"><input type="checkbox" id="dua11" value="4.2 Optimizar el acceso a herramientas y tecnologías de apoyo"><label for="dua11">4.2 Acceso a herramientas</label></div>
-                <div class="cbi"><input type="checkbox" id="dua12" value="5.1 Uso de múltiples medios de comunicación"><label for="dua12">5.1 Múltiples medios</label></div>
-                <div class="cbi"><input type="checkbox" id="dua13" value="5.2 Uso de múltiples herramientas para la construcción y composición"><label for="dua13">5.2 Herramientas construcción</label></div>
-                <div class="cbi"><input type="checkbox" id="dua14" value="5.3 Desarrollar fluidez con niveles de apoyo graduados"><label for="dua14">5.3 Fluidez graduada</label></div>
-                <div class="cbi"><input type="checkbox" id="dua15" value="6.1 Establecer metas apropiadas"><label for="dua15">6.1 Establecer metas</label></div>
-                <div class="cbi"><input type="checkbox" id="dua16" value="6.2 Apoyar la planificación y el desarrollo de estrategias"><label for="dua16">6.2 Planificación y estrategia</label></div>
-                <div class="cbi"><input type="checkbox" id="dua17" value="6.3 Facilitar la gestión de información y recursos"><label for="dua17">6.3 Gestión información</label></div>
-                <div class="cbi"><input type="checkbox" id="dua18" value="6.4 Mejorar la capacidad de seguimiento del progreso"><label for="dua18">6.4 Seguimiento progreso</label></div>
-            </div>
-            <div style="background:#fef9c3;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#854d0e;display:block;margin-bottom:.3rem">💛 IMPLICACIÓN</strong>
-                <div class="cbi"><input type="checkbox" id="dua19" value="7.1 Optimizar elecciones individuales y la autonomía"><label for="dua19">7.1 Autonomía y elección</label></div>
-                <div class="cbi"><input type="checkbox" id="dua20" value="7.2 Optimizar la relevancia, el valor y la autenticidad" checked><label for="dua20">7.2 Relevancia y autenticidad</label></div>
-                <div class="cbi"><input type="checkbox" id="dua21" value="7.3 Minimizar la sensación de inseguridad y las distracciones"><label for="dua21">7.3 Minimizar inseguridad</label></div>
-                <div class="cbi"><input type="checkbox" id="dua22" value="8.1 Aumentar la retroalimentación orientada al dominio"><label for="dua22">8.1 Retroalimentación</label></div>
-                <div class="cbi"><input type="checkbox" id="dua23" value="8.2 Variar las demandas y los recursos para optimizar el desafío"><label for="dua23">8.2 Optimizar desafío</label></div>
-                <div class="cbi"><input type="checkbox" id="dua24" value="8.3 Fomentar la colaboración y la comunidad"><label for="dua24">8.3 Colaboración</label></div>
-                <div class="cbi"><input type="checkbox" id="dua25" value="8.4 Aumentar el dominio orientado a la superación de desafíos"><label for="dua25">8.4 Dominio y superación</label></div>
-                <div class="cbi"><input type="checkbox" id="dua26" value="9.1 Promover las expectativas y las creencias que optimizan la motivación"><label for="dua26">9.1 Motivación y expectativas</label></div>
-                <div class="cbi"><input type="checkbox" id="dua27" value="9.2 Facilitar estrategias y habilidades de afrontamiento"><label for="dua27">9.2 Estrategias afrontamiento</label></div>
-                <div class="cbi"><input type="checkbox" id="dua28" value="9.3 Desarrollar la autoevaluación y la reflexión"><label for="dua28">9.3 Autoevaluación</label></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fg">
-        <label>Programas de atención a la diversidad</label>
-        <div class="cbg">
-            <div class="cbi"><input type="checkbox" id="prf1" value="Programa de refuerzo: alumnado que no ha promocionado"><label for="prf1">Refuerzo: alumnado no promocionado</label></div>
-            <div class="cbi"><input type="checkbox" id="prf2" value="Programa de refuerzo: áreas no superadas del curso anterior"><label for="prf2">Refuerzo: áreas no superadas</label></div>
-            <div class="cbi"><input type="checkbox" id="prf3" value="Programa de refuerzo: dificultades de aprendizaje"><label for="prf3">Refuerzo: dificultades de aprendizaje</label></div>
-            <div class="cbi"><input type="checkbox" id="prf4" value="Programa de refuerzo: dificultades en comunicación lingüística"><label for="prf4">Refuerzo: comunicación lingüística</label></div>
-            <div class="cbi"><input type="checkbox" id="pro1" value="Programa de profundización: alumnado altamente motivado"><label for="pro1">Profundización: altamente motivado</label></div>
-            <div class="cbi"><input type="checkbox" id="pro2" value="Programa de profundización: altas capacidades intelectuales"><label for="pro2">Profundización: altas capacidades</label></div>
         </div>
     </div>
 
@@ -3313,25 +3106,103 @@ const ANAYA_MAP = {
 // ═══════════════════════════════════════════════════════════════════
 const SANTILLANA_MAP = {
 
-  // ── 1º DE PRIMARIA — pendiente de datos reales ──────────────────
+  // ── 1º DE PRIMARIA — DATOS REALES EXTRAÍDOS DE ARCHIVOS SANTILLANA ──
   '1': {
-    '1': { sdaNombre:'Primer trimestre', reto:'SdA T1', sda:[
-      { num:'1A', nombre:'(Pendiente — sube el docx de Lengua T1 1º)', mes:'SEPTIEMBRE',
-        mat:{ titulo:'(Pendiente)', criterios:'', saberes:'', tarea:'Datos pendientes de archivo Santillana.' },
-        len:{ titulo:'(Pendiente)', criterios:'', saberes:'', tarea:'Datos pendientes de archivo Santillana.' },
-        producto:'Pendiente' }
+    '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
+      { num:'1A', nombre:'NOS DIVERTIMOS CON LOS NÚMEROS / LOS PIRATAS EN EL POLO — OCTUBRE', mes:'OCTUBRE',
+        mat:{ titulo:'NOS DIVERTIMOS CON LOS NÚMEROS',
+              criterios:'1.2.a, 2.2.a, 6.1.a, 6.2.a',
+              saberes:'MAT.1.A.3.2., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.2.5., MAT.1.A.4.1., MAT.1.B.1.1., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
+              tarea:'El alumnado resolverá situaciones cotidianas usando los números, aplicando sumas y estrategias de conteo y comparación de cantidades en contextos lúdicos y manipulativos.' },
+        len:{ titulo:'LOS PIRATAS EN EL POLO',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.5.',
+              tarea:'El alumnado creará y expondrá oralmente un listado de normas de comportamiento para piratas generosos, trabajando la comprensión oral y escrita a partir de la historia y desarrollando su expresión oral con apoyo visual.' },
+        producto:'Listado de normas de los piratas (exposición oral) + situaciones numéricas lúdicas' },
+      { num:'1B', nombre:'VAMOS A MEDIR / ¿UN TESORO BAJO EL MAR? — NOVIEMBRE', mes:'NOVIEMBRE',
+        mat:{ titulo:'VAMOS A MEDIR',
+              criterios:'1.1.a, 1.2.a, 2.2.a, 3.2.a, 5.1.a',
+              saberes:'MAT.1.A.3.1., MAT.1.B.2.1., MAT.1.A.3.2., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.A.5.1., MAT.1.B.3.1., MAT.1.B.3.2., MAT.1.C.1.1., MAT.1.C.1.2., MAT.1.C.1.3., MAT.1.C.1.4., MAT.1.C.1.5.',
+              tarea:'El alumnado explorará y aplicará conceptos de medida de longitud, capacidad y masa usando unidades no convencionales y convencionales, resolviendo situaciones de comparación y estimación en contextos reales.' },
+        len:{ titulo:'¿UN TESORO BAJO EL MAR?',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.5.',
+              tarea:'El alumnado creará y expondrá oralmente un listado con los objetos que llevaría en una aventura submarina, trabajando la comprensión lectora, el vocabulario y la expresión oral con apoyo de imágenes.' },
+        producto:'Listado de objetos para la aventura (exposición oral) + registro de mediciones' },
+      { num:'1C', nombre:'PASEAMOS POR LA CALLE / EL PUERTO DE LOS ESQUELETOS — DICIEMBRE', mes:'DICIEMBRE',
+        mat:{ titulo:'PASEAMOS POR LA CALLE',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.3.a, 3.1.a, 3.2.a, 6.2.a',
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.B.1.5., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
+              tarea:'El alumnado identificará y usará los números presentes en el entorno urbano, aplicará la recta numérica, interpretará posiciones y orientaciones espaciales y resolverá situaciones con números en contextos cotidianos de la calle.' },
+        len:{ titulo:'EL PUERTO DE LOS ESQUELETOS',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 5.1.a, 8.3.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.5., LCL.1.C.2.',
+              tarea:'El alumnado creará una nota breve para los piratas junto con un pequeño texto narrativo ambientado en el puerto, trabajando la escritura funcional, la comprensión lectora y el conocimiento de la biblioteca.' },
+        producto:'Nota para los piratas + texto narrativo breve / mapa de números del entorno' }
     ]},
-    '2': { sdaNombre:'Segundo trimestre', reto:'SdA T2', sda:[
-      { num:'2A', nombre:'(Pendiente — sube el docx de Lengua T2 1º)', mes:'ENERO',
-        mat:{ titulo:'(Pendiente)', criterios:'', saberes:'', tarea:'Datos pendientes de archivo Santillana.' },
-        len:{ titulo:'(Pendiente)', criterios:'', saberes:'', tarea:'Datos pendientes de archivo Santillana.' },
-        producto:'Pendiente' }
+    '2': { sdaNombre:'Segundo trimestre', reto:'SdA mensuales T2', sda:[
+      { num:'2A', nombre:'¿JUGAMOS JUNTOS? / EN BUSCA DEL PEZ DE PLATA — ENERO', mes:'ENERO',
+        mat:{ titulo:'¿JUGAMOS JUNTOS?',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.2.a',
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.A.3.2., MAT.1.B.1.4., MAT.1.C.2.1.',
+              tarea:'El alumnado resolverá situaciones de suma y resta mediante juegos de mesa con dados y cartas, identificará patrones numéricos y aplicará estrategias de cálculo en contextos lúdicos cooperativos.' },
+        len:{ titulo:'EN BUSCA DEL PEZ DE PLATA',
+              criterios:'2.1.a, 3.1.a, 4.1.a, 4.2.a, 5.1.a, 7.2.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.4., LCL.1.C.5., LCL.1.C.8.',
+              tarea:'El alumnado elaborará y expondrá un menú para piratas, trabajando la comprensión y producción de textos instructivos, la lectura expresiva y el uso básico de la biblioteca digital.' },
+        producto:'Menú para piratas elaborado y expuesto oralmente + resolución de situaciones de suma y resta con juegos' },
+      { num:'2B', nombre:'¿QUÉ DÍA ES HOY? / EL RESCATE DE PATA PALO — FEBRERO', mes:'FEBRERO',
+        mat:{ titulo:'¿QUÉ DÍA ES HOY?',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 5.2.a',
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.B.1.4., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2.',
+              tarea:'El alumnado trabajará el concepto del tiempo y el calendario, reconocerá los días de la semana, los meses y las horas, y resolverá situaciones cotidianas relacionadas con la organización temporal.' },
+        len:{ titulo:'EL RESCATE DE PATA PALO',
+              criterios:'2.1.a, 3.1.a, 4.1.a, 4.2.a, 5.1.a, 8.1.a, 8.2.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.C.4., LCL.1.C.7.',
+              tarea:'El alumnado elaborará una invitación para los piratas, trabajando textos multimodales, la lectura en voz alta, la comprensión lectora y la creación de textos breves con estructura definida.' },
+        producto:'Invitación elaborada para los piratas + calendario personal con situaciones temporales' },
+      { num:'2C', nombre:'HACEMOS DEPORTE / LA CIGARRA Y LA HORMIGA — MARZO', mes:'MARZO',
+        mat:{ titulo:'HACEMOS DEPORTE',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 6.2.a',
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
+              tarea:'El alumnado resolverá situaciones matemáticas vinculadas al deporte: conteo de participantes, clasificaciones, marcas y distancias, aplicando el orden, la comparación y la estadística básica en contextos deportivos.' },
+        len:{ titulo:'LA CIGARRA Y LA HORMIGA',
+              criterios:'2.1.a, 3.1.a, 4.1.a, 4.2.a, 5.1.a, 8.1.a, 8.2.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.C.4., LCL.1.C.7.',
+              tarea:'El alumnado elaborará un cartel relacionado con la fábula de La cigarra y la hormiga, trabajando la comprensión lectora de textos narrativos, la escritura con propósito comunicativo y la relación texto-imagen.' },
+        producto:'Cartel elaborado sobre la fábula + clasificación deportiva con datos numéricos' }
     ]},
-    '3': { sdaNombre:'Tercer trimestre', reto:'SdA T3', sda:[
-      { num:'3A', nombre:'(Pendiente — sube el docx de Lengua T3 1º)', mes:'ABRIL',
-        mat:{ titulo:'(Pendiente)', criterios:'', saberes:'', tarea:'Datos pendientes de archivo Santillana.' },
-        len:{ titulo:'(Pendiente)', criterios:'', saberes:'', tarea:'Datos pendientes de archivo Santillana.' },
-        producto:'Pendiente' }
+    '3': { sdaNombre:'Tercer trimestre', reto:'SdA mensuales T3', sda:[
+      { num:'3A', nombre:'¡A COCINAR! / EL LIBRO DE LA SELVA — ABRIL', mes:'ABRIL',
+        mat:{ titulo:'¡A COCINAR!',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.2.a, 5.2.a, 6.2.a',
+              saberes:'MAT.1.B.2.1., MAT.1.A.3.2., MAT.1.D.2.4., MAT.1.A.3.3., MAT.1.B.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.1.1., MAT.1.C.2.1., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.B.1.5., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
+              tarea:'El alumnado usará conceptos de masa, capacidad y cantidad para seguir una receta de cocina, aplicando medidas no convencionales y convencionales, operaciones sencillas y comparación de cantidades en un contexto real y manipulativo.' },
+        len:{ titulo:'EL LIBRO DE LA SELVA',
+              criterios:'2.1.a, 3.2.a, 5.1.a, 8.1.a, 8.2.a, 9.1.a, 10.2.a',
+              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.3.1., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.4., LCL.1.C.7., LCL.1.D.1., LCL.1.D.2., LCL.1.B.1.1.',
+              tarea:'El alumnado elaborará un texto instructivo con normas de convivencia inspiradas en El libro de la selva, iniciándose en la reflexión sobre el lenguaje, la interacción oral y el uso de recursos digitales básicos.' },
+        producto:'Texto instructivo de normas de la selva + ficha de ingredientes con cálculos de cocina' },
+      { num:'3B', nombre:'NUESTRO COLEGIO / EL ENANITO SALTARÍN — MAYO', mes:'MAYO',
+        mat:{ titulo:'NUESTRO COLEGIO',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 5.2.a',
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2.',
+              tarea:'El alumnado resolverá situaciones matemáticas en el contexto del colegio: conteo de alumnos, reparto de materiales, tiempos de recreo, planos simples e identificación de formas geométricas en el entorno escolar.' },
+        len:{ titulo:'EL ENANITO SALTARÍN',
+              criterios:'3.1.a, 5.1.a, 7.1.a, 8.2.a, 9.1.a, 10.1.a',
+              saberes:'LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.C.1., LCL.1.C.3., LCL.1.D.5., LCL.1.D.1., LCL.1.D.2., LCL.1.B.3.2., LCL.1.B.3.4.',
+              tarea:'El alumnado elaborará un texto instructivo a partir del cuento El enanito saltarín, trabajando la producción escrita, la lectura de textos digitales, la reflexión sobre el lenguaje y los signos de puntuación.' },
+        producto:'Texto instructivo basado en el cuento + plano del colegio con datos numéricos' },
+      { num:'3C', nombre:'NOS VAMOS DE VIAJE / EL MAGO GASPAR — JUNIO', mes:'JUNIO',
+        mat:{ titulo:'NOS VAMOS DE VIAJE',
+              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.2.a, 5.1.a, 5.2.a, 6.2.a',
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.4., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.1.1., MAT.1.A.5.1., MAT.1.B.3.1., MAT.1.B.3.2., MAT.1.C.1.1., MAT.1.C.1.2., MAT.1.C.1.3., MAT.1.C.1.4., MAT.1.C.1.5., MAT.1.B.1.4., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.B.1.5., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
+              tarea:'El alumnado planificará un viaje resolviendo situaciones matemáticas: lectura de relojes, gestión del tiempo, cálculo de distancias, interpretación de billetes y dinero, y recogida de datos del trayecto.' },
+        len:{ titulo:'EL MAGO GASPAR',
+              criterios:'3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 9.1.a',
+              saberes:'LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.D.3., LCL.1.B.2.1., LCL.1.B.3.5., LCL.1.D.1., LCL.1.D.2.',
+              tarea:'El alumnado elaborará un texto narrativo —un cuento de magia— trabajando la producción escrita con estructura narrativa completa, la interacción oral, la comprensión lectora y la iniciación a la reflexión lingüística.' },
+        producto:'Cuento de magia escrito + planning de viaje con horarios y situaciones de tiempo y dinero' }
     ]}
   },
 
@@ -3928,8 +3799,221 @@ const SANTILLANA_MAP = {
 
 // ── FUNCIONES SANTILLANA ──────────────────────────────────────────
 
+// Calendario escolar Andalucía 2025-26 (días NO lectivos a excluir)
+// Festivos nacionales + festivos andaluces + vacaciones
+const FESTIVOS_25_26 = new Set([
+    // Septiembre inicio: 9 sep 2025
+    // Festivos oct-dic
+    '2025-10-12','2025-11-01','2025-11-02', // Fiesta Nacional, Todos los Santos, recuperable
+    '2025-12-06','2025-12-08',              // Constitución, Inmaculada
+    // Navidad: 22 dic 2025 – 8 ene 2026
+    '2025-12-22','2025-12-23','2025-12-24','2025-12-25','2025-12-26',
+    '2025-12-27','2025-12-28','2025-12-29','2025-12-30','2025-12-31',
+    '2026-01-01','2026-01-02','2026-01-03','2026-01-04','2026-01-05',
+    '2026-01-06','2026-01-07','2026-01-08',
+    // Semana Santa aprox: 30 mar – 5 abr 2026
+    '2026-03-30','2026-03-31','2026-04-01','2026-04-02','2026-04-03',
+    '2026-04-04','2026-04-05',
+    // Festivos ene-jun
+    '2026-01-28', // Día de Andalucía (28 feb, pero aquí 28 ene = festivo local placeholder)
+    '2026-02-28', // Día de Andalucía
+    '2026-03-02', // Si cae lunes, ajuste; se deja como ejemplo
+    '2026-05-01', // Día del Trabajo
+    '2026-06-24', // San Juan (Andalucía)
+]);
+// Días lectivos por mes (Andalucía 2025-26, estimación real)
+// Excluye festivos y fines de semana
+const DIAS_LECTIVOS_MES = {
+    'SEPTIEMBRE':16, 'OCTUBRE':21, 'NOVIEMBRE':19, 'DICIEMBRE':14,
+    'ENERO':18,      'FEBRERO':18, 'MARZO':16,     'ABRIL':17,
+    'MAYO':20,       'JUNIO':16
+};
+// Sesiones típicas de Matemáticas y Lengua por semana en Primaria Andalucía
+// Matemáticas: 4 h/semana → ~4 sesiones/semana
+// Lengua: 5 h/semana → ~5 sesiones/semana
+// Interdisciplinar: ~6 sesiones/semana
+const SESIONES_SEMANA = { mat:4, len:5, ambas:6 };
+
+function _calcularSesionesMes(mes, modalidad){
+    const diasL = DIAS_LECTIVOS_MES[mes.toUpperCase()] || 18;
+    const semanas = diasL / 5;
+    const porSemana = SESIONES_SEMANA[modalidad] || 4;
+    return Math.round(semanas * porSemana);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODO LIBRO ANAYA — FUNCIONES
+// ═══════════════════════════════════════════════════════════════════
+function toggleAnaya(){
+    if(santActivo){ toggleSantillana(); }
+    anayaActivo = !anayaActivo;
+    document.getElementById('anayaToggle').classList.toggle('active', anayaActivo);
+    document.getElementById('anayaPanel').classList.toggle('show', anayaActivo);
+    if(!anayaActivo){ _resetAnaya(); }
+    _actualizarAnayaBypasses();
+}
+
+function _resetAnaya(){
+    document.getElementById('anayaCurso').value = '';
+    const selTrim = document.getElementById('anayaTrimestre');
+    const selSda  = document.getElementById('anayaSdaNum');
+    selTrim.value=''; selTrim.disabled=true;
+    selSda.value=''; selSda.disabled=true;
+    selSda.innerHTML='<option value="">Primero elige el trimestre…</option>';
+    document.getElementById('anayaCardPreview').style.display='none';
+    document.getElementById('anayaModalidadWrap').style.display='none';
+    document.getElementById('anayaArea').value='';
+    document.getElementById('anayaTemas').value='';
+    anayaModalidad='';
+    ['mat','len','ambas'].forEach(m=>{
+        const b=document.getElementById('anayaModBtn_'+m);
+        if(b){b.style.borderColor='rgba(99,102,241,0.2)';b.style.background='rgba(255,255,255,0.85)';}
+    });
+}
+
+function setAnayaModalidad(mod){
+    anayaModalidad=mod;
+    ['mat','len','ambas'].forEach(m=>{
+        const b=document.getElementById('anayaModBtn_'+m);
+        if(!b) return;
+        b.style.borderColor=m===mod?'#f59e0b':'rgba(99,102,241,0.2)';
+        b.style.background=m===mod?'rgba(245,158,11,0.1)':'rgba(255,255,255,0.85)';
+    });
+    const curso=document.getElementById('anayaCurso').value;
+    const trim=document.getElementById('anayaTrimestre').value;
+    const sdaNum=document.getElementById('anayaSdaNum').value;
+    if(sdaNum) _cargarTarjetaAnaya(curso, trim, sdaNum, mod);
+    const areasTarget=mod==='mat'?['Matemáticas']:mod==='len'?['Lengua Castellana y Literatura']:['Lengua Castellana y Literatura','Matemáticas'];
+    document.querySelectorAll('.area-item').forEach(item=>{
+        const titulo=item.querySelector('.at')?.textContent?.trim();
+        if(!titulo) return;
+        const debe=areasTarget.includes(titulo), esta=areasSeleccionadas.includes(titulo);
+        if(debe&&!esta) toggleArea(titulo,item);
+        else if(!debe&&esta) toggleArea(titulo,item);
+    });
+}
+
+function onAnayaCursoChange(){
+    const curso=document.getElementById('anayaCurso').value;
+    const selTrim=document.getElementById('anayaTrimestre');
+    const selSda=document.getElementById('anayaSdaNum');
+    selTrim.disabled=!curso; selTrim.value='';
+    selSda.value=''; selSda.disabled=true;
+    selSda.innerHTML='<option value="">Primero elige el trimestre…</option>';
+    document.getElementById('anayaCardPreview').style.display='none';
+    document.getElementById('anayaModalidadWrap').style.display=curso?'block':'none';
+    if(curso){
+        const etapaEl=document.getElementById('etapa');
+        if(etapaEl&&etapaEl.value!=='primaria'){etapaEl.value='primaria';cambiarEtapa();}
+        const cursoEl=document.getElementById('curso');
+        if(cursoEl){const cm={'1':'1º de Primaria','2':'2º de Primaria','3':'3º de Primaria','4':'4º de Primaria','5':'5º de Primaria','6':'6º de Primaria'};cursoEl.value=cm[curso]||cursoEl.value;}
+    }
+}
+
+function onAnayaTrimestreChange(){
+    const curso=document.getElementById('anayaCurso').value;
+    const trim=document.getElementById('anayaTrimestre').value;
+    const selSda=document.getElementById('anayaSdaNum');
+    selSda.innerHTML='<option value="">Elige la SdA…</option>';
+    selSda.disabled=true;
+    document.getElementById('anayaCardPreview').style.display='none';
+    if(!curso||!trim) return;
+    const data=ANAYA_MAP[curso]?.[trim];
+    if(!data) return;
+    data.sda.forEach(s=>{
+        const opt=document.createElement('option');
+        opt.value=s.num;
+        opt.textContent=`SdA ${s.num} — "${s.nombre}"`;
+        selSda.appendChild(opt);
+    });
+    selSda.disabled=false;
+    const trimEl=document.getElementById('trimestre');
+    if(trimEl){const tm={'1':'1er Trimestre','2':'2º Trimestre','3':'3er Trimestre'};trimEl.value=tm[trim]||trimEl.value;}
+}
+
+function onAnayaSdaNumChange(){
+    const curso=document.getElementById('anayaCurso').value;
+    const trim=document.getElementById('anayaTrimestre').value;
+    const sdaNum=document.getElementById('anayaSdaNum').value;
+    if(!curso||!trim||!sdaNum){document.getElementById('anayaCardPreview').style.display='none';return;}
+    _cargarTarjetaAnaya(curso, trim, sdaNum, anayaModalidad||'ambas');
+}
+
+function _cargarTarjetaAnaya(curso, trim, sdaNum, mod){
+    const sda=ANAYA_MAP[curso]?.[trim]?.sda?.find(s=>String(s.num)===String(sdaNum));
+    if(!sda) return;
+    anayaModalidad=mod;
+    ['mat','len','ambas'].forEach(m=>{
+        const b=document.getElementById('anayaModBtn_'+m);
+        if(!b) return;
+        b.style.borderColor=m===mod?'#f59e0b':'rgba(99,102,241,0.2)';
+        b.style.background=m===mod?'rgba(245,158,11,0.1)':'rgba(255,255,255,0.85)';
+    });
+    document.getElementById('anayaCardMatBox').style.display=mod==='len'?'none':'block';
+    document.getElementById('anayaCardLenBox').style.display=mod==='mat'?'none':'block';
+    const nombreSda=mod==='mat'?(sda.mat?.temas||sda.nombre):mod==='len'?(sda.len?.temas||sda.nombre):sda.nombre;
+    document.getElementById('anayaCardNombre').textContent=`"${sda.nombre}"`;
+    document.getElementById('anayaCardProducto').textContent=sda.producto;
+    document.getElementById('anayaCardMat').textContent=sda.mat?.temas||'';
+    document.getElementById('anayaCardMatCrit').innerHTML=`<strong>Contenidos:</strong> ${sda.mat?.contenidos||''}<br><strong>Criterios:</strong> ${sda.mat?.criterios||''}`;
+    document.getElementById('anayaCardLen').textContent=sda.len?.temas||'';
+    document.getElementById('anayaCardLenCrit').innerHTML=`<strong>Contenidos:</strong> ${sda.len?.contenidos||''}<br><strong>Criterios:</strong> ${sda.len?.criterios||''}`;
+    document.getElementById('anayaProductoTexto').value=sda.producto;
+    document.getElementById('anayaCentro').value='';
+    document.getElementById('anayaCardPreview').style.display='block';
+    if(mod==='mat'){
+        document.getElementById('anayaArea').value='Matemáticas';
+        document.getElementById('anayaTemas').value=`Temas: ${sda.mat.temas} | Contenidos: ${sda.mat.contenidos} | Criterios: ${sda.mat.criterios}`;
+    } else if(mod==='len'){
+        document.getElementById('anayaArea').value='Lengua Castellana y Literatura';
+        document.getElementById('anayaTemas').value=`Temas: ${sda.len.temas} | Contenidos: ${sda.len.contenidos} | Criterios: ${sda.len.criterios}`;
+    } else {
+        document.getElementById('anayaArea').value='Lengua Castellana y Literatura + Matemáticas';
+        document.getElementById('anayaTemas').value=`MAT: ${sda.mat.temas} (${sda.mat.contenidos}) | LEN: ${sda.len.temas} (${sda.len.contenidos})`;
+    }
+    const titEl=document.getElementById('titSda');
+    if(titEl&&!titEl.value) titEl.value=sda.nombre;
+    const temEl=document.getElementById('tematica');
+    if(temEl&&!temEl.value) temEl.value=sda.nombre;
+    _actualizarAnayaBypasses();
+}
+
+function getAnayaData(){
+    if(!anayaActivo) return null;
+    return {
+        area:    document.getElementById('anayaArea')?.value?.trim()||'',
+        temas:   document.getElementById('anayaTemas')?.value?.trim()||'',
+        centro:  document.getElementById('anayaCentro')?.value?.trim()||'',
+        producto:document.getElementById('anayaProductoTexto')?.value?.trim()||''
+    };
+}
+
+function _actualizarAnayaBypasses(){
+    const an=getAnayaData();
+    const temas=an?(an.temas||'—'):'—';
+    const area=an?(an.area||'—'):'—';
+    ['5','6'].forEach(n=>{
+        const el=document.getElementById('anayaBypass'+n);
+        if(el&&anayaActivo){
+            el.style.display='block';
+            const titulo=el.querySelector('strong');
+            if(titulo) titulo.textContent='Modo Libro Anaya activo';
+            const desc=el.querySelector('div:last-child');
+            if(desc){
+                const num=n==='5'?'criterios de evaluación':'saberes básicos';
+                desc.innerHTML=`La IA seleccionará automáticamente los ${num} correspondientes a los temas <strong id="anayaTemasLabel${n}">—</strong> de <strong id="anayaAreaLabel${n}">—</strong>.<br>No necesitas seleccionar nada aquí — puedes pasar al siguiente paso.`;
+            }
+            const tl=document.getElementById('anayaTemasLabel'+n);
+            const al=document.getElementById('anayaAreaLabel'+n);
+            if(tl) tl.textContent=temas;
+            if(al) al.textContent=area;
+        } else if(el&&!anayaActivo&&!santActivo){
+            el.style.display='none';
+        }
+    });
+}
+
 function toggleSantillana(){
-    // Si Anaya está activo, desactivarlo
     if(anayaActivo){ toggleAnaya(); }
     santActivo = !santActivo;
     document.getElementById('santToggle').classList.toggle('active', santActivo);
@@ -3944,14 +4028,45 @@ function _resetSant(){
     document.getElementById('santTrimestre').disabled = true;
     document.getElementById('santSdaNum').value = '';
     document.getElementById('santSdaNum').disabled = true;
-    document.getElementById('santModalidadWrap').style.display = 'none';
     document.getElementById('santCardPreview').style.display = 'none';
     document.getElementById('santArea').value = '';
     document.getElementById('santTemas').value = '';
+    const sw = document.getElementById('santSelectoresWrap');
+    if(sw) sw.style.display = 'none';
     santModalidad = '';
     ['mat','len','ambas'].forEach(m=>{
         const b=document.getElementById('santModBtn_'+m);
         if(b){b.style.borderColor='rgba(239,68,68,0.15)';b.style.background='rgba(255,255,255,0.85)';}
+    });
+}
+
+// NUEVA: se llama al elegir asignatura (PASO 1)
+function setSantModalidadPrimero(mod){
+    santModalidad = mod;
+    // Resaltar botón seleccionado
+    ['mat','len','ambas'].forEach(m=>{
+        const b=document.getElementById('santModBtn_'+m);
+        if(!b) return;
+        b.style.borderColor = m===mod ? '#ef4444' : 'rgba(239,68,68,0.15)';
+        b.style.background  = m===mod ? 'rgba(239,68,68,0.08)' : 'rgba(255,255,255,0.85)';
+    });
+    // Mostrar selectores de curso/trimestre/SdA
+    const sw = document.getElementById('santSelectoresWrap');
+    if(sw) sw.style.display = 'block';
+    // Resetear selectores dependientes
+    const selTrim = document.getElementById('santTrimestre');
+    const selSda  = document.getElementById('santSdaNum');
+    if(selTrim){ selTrim.value=''; selTrim.disabled=true; }
+    if(selSda){ selSda.value=''; selSda.disabled=true; selSda.innerHTML='<option value="">Primero elige el trimestre…</option>'; }
+    document.getElementById('santCardPreview').style.display='none';
+    // Sincronizar áreas del formulario principal
+    const areasTarget = mod==='mat' ? ['Matemáticas'] : mod==='len' ? ['Lengua Castellana y Literatura'] : ['Lengua Castellana y Literatura','Matemáticas'];
+    document.querySelectorAll('.area-item').forEach(item=>{
+        const titulo=item.querySelector('.at')?.textContent?.trim();
+        if(!titulo) return;
+        const debe=areasTarget.includes(titulo), esta=areasSeleccionadas.includes(titulo);
+        if(debe&&!esta) toggleArea(titulo,item);
+        else if(!debe&&esta) toggleArea(titulo,item);
     });
 }
 
@@ -3961,7 +4076,7 @@ function onSantCursoChange(){
     const selSda  = document.getElementById('santSdaNum');
     selTrim.disabled = !curso; selTrim.value = '';
     selSda.value = ''; selSda.disabled = true;
-    document.getElementById('santModalidadWrap').style.display = 'none';
+    selSda.innerHTML='<option value="">Primero elige el trimestre…</option>';
     document.getElementById('santCardPreview').style.display = 'none';
     if(curso){
         const etapaEl=document.getElementById('etapa');
@@ -3977,15 +4092,20 @@ function onSantTrimestreChange(){
     const selSda=document.getElementById('santSdaNum');
     selSda.innerHTML='<option value="">Elige la SdA…</option>';
     selSda.disabled=true;
-    document.getElementById('santModalidadWrap').style.display='none';
     document.getElementById('santCardPreview').style.display='none';
     if(!curso||!trim) return;
     const data=SANTILLANA_MAP[curso]?.[trim];
     if(!data) return;
+    const mod = santModalidad || 'ambas';
     data.sda.forEach(s=>{
         const opt=document.createElement('option');
         opt.value=s.num;
-        opt.textContent=`SdA ${s.num} — "${s.nombre}"`;
+        // Mostrar solo el nombre de la asignatura elegida
+        let nombreMostrado;
+        if(mod==='mat') nombreMostrado = s.mat?.titulo || s.nombre;
+        else if(mod==='len') nombreMostrado = s.len?.titulo || s.nombre;
+        else nombreMostrado = s.nombre;
+        opt.textContent=`${s.mes} — "${nombreMostrado}"`;
         selSda.appendChild(opt);
     });
     selSda.disabled=false;
@@ -3997,54 +4117,67 @@ function onSantSdaNumChange(){
     const curso=document.getElementById('santCurso').value;
     const trim=document.getElementById('santTrimestre').value;
     const sdaNum=document.getElementById('santSdaNum').value;
-    const modWrap=document.getElementById('santModalidadWrap');
     const preview=document.getElementById('santCardPreview');
-    if(!curso||!trim||!sdaNum){modWrap.style.display='none';preview.style.display='none';return;}
-    modWrap.style.display='block';
-    preview.style.display='none';
-    santModalidad='';
-    ['mat','len','ambas'].forEach(m=>{
-        const b=document.getElementById('santModBtn_'+m);
-        if(b){b.style.borderColor='rgba(239,68,68,0.15)';b.style.background='rgba(255,255,255,0.85)';}
-    });
+    if(!curso||!trim||!sdaNum){preview.style.display='none';return;}
+    // Cargar la tarjeta directamente con la modalidad ya elegida
+    _cargarTarjetaSant(curso, trim, sdaNum, santModalidad||'ambas');
     const sdaNumEl=document.getElementById('sdaNum');
-    if(sdaNumEl) sdaNumEl.value=sdaNum.replace(/[AB]/,'');
+    if(sdaNumEl) sdaNumEl.value=sdaNum.replace(/[ABC]/g,'');
 }
 
-function setSantModalidad(mod){
-    const curso=document.getElementById('santCurso').value;
-    const trim=document.getElementById('santTrimestre').value;
-    const sdaNum=document.getElementById('santSdaNum').value;
+function _cargarTarjetaSant(curso, trim, sdaNum, mod){
     const trimData=SANTILLANA_MAP[curso]?.[trim];
     const sda=trimData?.sda?.find(s=>String(s.num)===String(sdaNum));
     if(!sda) return;
     santModalidad=mod;
-    ['mat','len','ambas'].forEach(m=>{
-        const b=document.getElementById('santModBtn_'+m);
-        if(!b) return;
-        b.style.borderColor=m===mod?'#ef4444':'rgba(239,68,68,0.15)';
-        b.style.background=m===mod?'rgba(239,68,68,0.08)':'rgba(255,255,255,0.85)';
-    });
-    // Mostrar/ocultar cajas
+    // Mostrar/ocultar cajas según asignatura
     document.getElementById('santCardMatBox').style.display=mod==='len'?'none':'block';
     document.getElementById('santCardLenBox').style.display=mod==='mat'?'none':'block';
-    // Rellenar tarjeta
+    // Título de la tarjeta = solo la asignatura elegida
     const tituloMat = sda.mat?.titulo || sda.nombre || '';
     const tituloLen = sda.len?.titulo || sda.nombre || '';
     const nombreSda = mod==='mat' ? tituloMat : mod==='len' ? tituloLen : sda.nombre;
+    // Producto final filtrado
+    let productoFinal;
+    if(mod==='mat'){
+        // Extraer solo la parte de mat del producto (antes de " + " o " / ")
+        productoFinal = sda.producto.split(/\s*[+\/]\s*/)[1] ? sda.producto.split(/\s*\/\s*/)[1]?.trim() || sda.producto.split(/\s*\+\s*/)[0]?.trim() || sda.producto : sda.producto;
+        // Buscar la parte que NO sea de lengua
+        const partes = sda.producto.split(/\s*\+\s*/);
+        productoFinal = partes.find(p=> !p.toLowerCase().includes('text') && !p.toLowerCase().includes('cuent') && !p.toLowerCase().includes('norm') && !p.toLowerCase().includes('cart') && !p.toLowerCase().includes('nota') && !p.toLowerCase().includes('invit') && !p.toLowerCase().includes('list')) || partes[partes.length-1] || sda.producto;
+        if(partes.length===1) productoFinal = sda.producto;
+    } else if(mod==='len'){
+        const partes = sda.producto.split(/\s*\+\s*/);
+        productoFinal = partes[0]?.trim() || sda.producto;
+        if(partes.length===1) productoFinal = sda.producto;
+    } else {
+        productoFinal = sda.producto;
+    }
     document.getElementById('santCardReto').textContent=`Reto: ${trimData.reto}`;
-    document.getElementById('santCardNombre').textContent=`"${nombreSda}"`;
-    document.getElementById('santCardProducto').textContent=sda.producto;
-    document.getElementById('santCardMat').innerHTML=(sda.mat.unidades||sda.mat.titulo||'').split(' · ').map(u=>`• ${u}`).join('<br>');
-    document.getElementById('santCardMatCrit').innerHTML=`<strong>Crit:</strong> ${sda.mat.criterios}<br><strong>Sab:</strong> ${sda.mat.saberes||sda.mat.saberes||''}`;
-    document.getElementById('santCardLen').innerHTML=(sda.len.unidades||sda.len.titulo||'').split(' · ').map(u=>`• ${u}`).join('<br>');
-    document.getElementById('santCardLenCrit').innerHTML=`<strong>Crit:</strong> ${sda.len.criterios}<br><strong>Sab:</strong> ${sda.len.saberes||''}`;
-    document.getElementById('santProductoTexto').value=sda.producto;
+    document.getElementById('santCardNombre').textContent=`"${nombreSda}" — ${sda.mes}`;
+    document.getElementById('santCardProducto').textContent=productoFinal;
+    document.getElementById('santCardMat').innerHTML=`• ${tituloMat}`;
+    document.getElementById('santCardMatCrit').innerHTML=`<strong>Crit:</strong> ${sda.mat.criterios}<br><strong>Sab:</strong> ${sda.mat.saberes||''}`;
+    document.getElementById('santCardLen').innerHTML=`• ${tituloLen}`;
+    document.getElementById('santCardLenCrit').innerHTML=`<strong>Crit:</strong> ${sda.len.criterios||'—'}<br><strong>Sab:</strong> ${sda.len.saberes||''}`;
+    document.getElementById('santProductoTexto').value=productoFinal;
     document.getElementById('santCentro').value='';
     document.getElementById('santCardPreview').style.display='block';
+    // Calcular sesiones automáticamente según mes y asignatura (Andalucía 2025-26)
+    const sesionesCalc = _calcularSesionesMes(sda.mes, mod);
+    const selSes = document.getElementById('sesiones');
+    if(selSes && sesionesCalc){
+        // Buscar la opción más cercana
+        const opciones = [...selSes.options].map(o=>parseInt(o.value)||0);
+        const closest = opciones.reduce((a,b)=>Math.abs(b-sesionesCalc)<Math.abs(a-sesionesCalc)?b:a, opciones[0]);
+        selSes.value = closest || sesionesCalc;
+        if(!selSes.value) selSes.value = sesionesCalc;
+        // Disparar evento para actualizar otros campos
+        selSes.dispatchEvent(new Event('change'));
+    }
     // Campos ocultos
-    const matDesc = sda.mat.titulo ? `"${sda.mat.titulo}" — ${sda.mat.tarea||''}` : (sda.mat.unidades||'');
-    const lenDesc = sda.len.titulo ? `"${sda.len.titulo}" — ${sda.len.tarea||''}` : (sda.len.unidades||'');
+    const matDesc = `"${tituloMat}" — ${sda.mat.tarea||''}`;
+    const lenDesc = `"${tituloLen}" — ${sda.len.tarea||''}`;
     if(mod==='mat'){
         document.getElementById('santArea').value='Matemáticas';
         document.getElementById('santTemas').value=`${matDesc} | Criterios: ${sda.mat.criterios} | Saberes: ${sda.mat.saberes||''}`;
@@ -4053,24 +4186,23 @@ function setSantModalidad(mod){
         document.getElementById('santTemas').value=`${lenDesc} | Criterios: ${sda.len.criterios} | Saberes: ${sda.len.saberes||''}`;
     } else {
         document.getElementById('santArea').value='Lengua Castellana y Literatura + Matemáticas';
-        document.getElementById('santTemas').value=`MAT: ${matDesc} (Crit: ${sda.mat.criterios}) | LEN: ${lenDesc} (Crit: ${sda.len.criterios})`;
+        document.getElementById('santTemas').value=`MAT: ${matDesc} (Crit: ${sda.mat.criterios}) | LEN: ${lenDesc} (Crit: ${sda.len.criterios||''})`;
     }
-    // Sincronizar áreas
-    const areasTarget=mod==='mat'?['Matemáticas']:mod==='len'?['Lengua Castellana y Literatura']:['Lengua Castellana y Literatura','Matemáticas'];
-    document.querySelectorAll('.area-item').forEach(item=>{
-        const titulo=item.querySelector('.at')?.textContent?.trim();
-        if(!titulo) return;
-        const debe=areasTarget.includes(titulo);
-        const esta=areasSeleccionadas.includes(titulo);
-        if(debe&&!esta) toggleArea(titulo,item);
-        else if(!debe&&esta) toggleArea(titulo,item);
-    });
     // Título
     const titEl=document.getElementById('titSda');
-    if(titEl&&!titEl.value) titEl.value=sda.nombre;
+    if(titEl&&!titEl.value) titEl.value=nombreSda;
     const temEl=document.getElementById('tematica');
-    if(temEl&&!temEl.value) temEl.value=sda.nombre;
+    if(temEl&&!temEl.value) temEl.value=nombreSda;
     _actualizarSantBypasses();
+}
+
+function setSantModalidad(mod){
+    // Thin wrapper — llama al cargador central
+    const curso=document.getElementById('santCurso').value;
+    const trim=document.getElementById('santTrimestre').value;
+    const sdaNum=document.getElementById('santSdaNum').value;
+    if(!curso||!trim||!sdaNum) return;
+    _cargarTarjetaSant(curso, trim, sdaNum, mod);
 }
 
 function getSantillanaData(){
@@ -4091,10 +4223,20 @@ function _actualizarSantBypasses(){
         const el=document.getElementById('anayaBypass'+n);
         if(el&&santActivo){
             el.style.display='block';
+            // Cambiar el texto a Santillana
+            const titulo=el.querySelector('strong');
+            if(titulo) titulo.textContent='Modo Libro Santillana activo';
+            const desc=el.querySelector('div:last-child');
+            if(desc){
+                const num=n==='5'?'criterios de evaluación':'saberes básicos';
+                desc.innerHTML=`La IA seleccionará automáticamente los ${num} correspondientes al proyecto <strong id="anayaTemasLabel${n}">—</strong> de <strong id="anayaAreaLabel${n}">—</strong>.<br>No necesitas seleccionar nada aquí — puedes pasar al siguiente paso.`;
+            }
             const tl=document.getElementById('anayaTemasLabel'+n);
             const al=document.getElementById('anayaAreaLabel'+n);
             if(tl) tl.textContent=temas;
             if(al) al.textContent=area;
+        } else if(el&&!santActivo&&!anayaActivo){
+            el.style.display='none';
         }
     });
 }
@@ -4308,7 +4450,7 @@ ${sd.producto ? `Reto/Producto final confirmado por el tutor: ${sd.producto}` : 
 INSTRUCCIONES CLAVE — MODO SANTILLANA:
 1. ${esAmbas ? 'Esta SdA es INTERDISCIPLINAR: integra Matemáticas y Lengua bajo el hilo conductor del Proyecto Construyendo Mundos.' : `Esta SdA es de UNA SOLA ÁREA: ${modLabel}. Céntrate exclusivamente en esa asignatura.`}
 2. El maestro trabaja con el Proyecto Construyendo Mundos de Santillana. La SdA documenta ese trabajo con estructura oficial LOMLOE.
-3. USA los criterios y saberes indicados arriba con su código exacto de la Orden 30/05/2023 — no inventes nuevos.
+3. ⚠️ ADAPTACIÓN ANDALUZA OBLIGATORIA: Los criterios y saberes mostrados arriba son referencias de la editorial Santillana (nomenclatura genérica). Debes sustituirlos por los códigos y textos LITERALES de la Orden de 30 de mayo de 2023 de Andalucía para ${nivel}. Usa los criterios con su código oficial (ej: LCL.4.1.b, MAT.2.1.a) y los saberes con su código oficial (ej: LCL.2.B.3.2, MAT.2.A.3.1). NO uses ni inventes códigos de la editorial.
 4. El reto/producto final debe ser exactamente el del proyecto Santillana o muy cercano a él.
 5. Las actividades deben reflejar el trabajo de las unidades del libro organizadas bajo el hilo del proyecto.
 `;
