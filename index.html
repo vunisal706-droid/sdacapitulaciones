@@ -271,6 +271,44 @@
         .badge-yellow{background:#fef3c7;color:#92400e}
         .badge-green{background:#dcfce7;color:#166534}
 
+
+        /* ── MODO DE TRABAJO (selector superior) ── */
+        .modo-wrap{background:rgba(255,255,255,0.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(99,102,241,0.15);padding:1rem 1.5rem}
+        .modo-inner{max-width:1000px;margin:0 auto}
+        .modo-label{font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.09em;margin-bottom:.65rem}
+        .modo-btns{display:flex;gap:.7rem;flex-wrap:wrap}
+        .modo-btn{display:flex;align-items:center;gap:.65rem;padding:.65rem 1.25rem;border-radius:14px;border:2px solid rgba(99,102,241,0.18);background:rgba(255,255,255,0.92);cursor:pointer;transition:all .25s;color:#374151;user-select:none;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .modo-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.1)}
+        .modo-btn .mb-icon{font-size:1.7rem;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.12))}
+        .modo-btn .mb-text{display:flex;flex-direction:column;gap:.06rem}
+        .modo-btn .mb-title{font-size:.85rem;font-weight:700;line-height:1.2}
+        .modo-btn .mb-sub{font-size:.67rem;font-weight:500;opacity:.65;line-height:1.2}
+        .modo-btn.active-libre{border-color:#4f46e5;background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(79,70,229,0.06));color:#3730a3;box-shadow:0 4px 16px rgba(79,70,229,0.2)}
+        .modo-btn.active-anaya{border-color:#d97706;background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(245,158,11,0.08));color:#92400e;box-shadow:0 4px 16px rgba(245,158,11,0.25)}
+        .modo-btn.active-sant{border-color:#dc2626;background:linear-gradient(135deg,rgba(239,68,68,0.13),rgba(220,38,38,0.06));color:#991b1b;box-shadow:0 4px 16px rgba(239,68,68,0.2)}
+        .modo-panel{max-width:1000px;margin:.7rem auto 0;display:none;animation:slideIn .3s ease}
+        .modo-panel.show{display:block}
+        /* ── PACK MODAL ── */
+        .pack-overlay{position:fixed;inset:0;background:rgba(30,27,75,0.5);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(12px)}
+        .pack-overlay.show{display:flex}
+        .pack-panel{background:rgba(255,255,255,0.97);border-radius:20px;padding:1.75rem;max-width:620px;width:100%;box-shadow:0 30px 70px rgba(99,102,241,0.18);max-height:90vh;overflow-y:auto}
+        .pack-panel h3{color:var(--primary);margin-bottom:.35rem;font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+        .pack-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
+        .pack-opt{display:flex;align-items:center;gap:.55rem;padding:.65rem .9rem;background:rgba(255,255,255,0.9);border:2px solid rgba(99,102,241,0.15);border-radius:11px;cursor:pointer;transition:all .2s;font-size:.82rem;font-weight:600;color:#374151}
+        .pack-opt:hover{border-color:rgba(99,102,241,0.4)}
+        .pack-opt.selected{border-color:#4f46e5;background:rgba(99,102,241,0.08);color:#4f46e5}
+        .pack-sda-list{background:#f8f9ff;border-radius:10px;padding:.75rem;margin:.75rem 0;max-height:200px;overflow-y:auto;font-size:.78rem;color:#374151;border:1.5px solid rgba(99,102,241,0.12)}
+        .pack-sda-item{padding:.3rem .5rem;border-bottom:1px solid rgba(99,102,241,0.08);display:flex;align-items:center;gap:.5rem}
+        .pack-sda-item:last-child{border-bottom:none}
+        .pack-sda-num{font-weight:700;color:#4f46e5;min-width:24px;font-size:.7rem}
+        .pack-progress{font-size:.8rem;color:#6b7280;margin-top:.6rem;min-height:1.2em}
+        .btn-pack-dl{background:linear-gradient(135deg,var(--primary),var(--purple));color:white;padding:.72rem 1.5rem;border:none;border-radius:9px;font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;gap:.45rem;transition:all .22s;font-family:'Poppins',inherit;box-shadow:0 4px 12px rgba(79,70,229,0.25)}
+        .btn-pack-dl:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(79,70,229,0.38)}
+        .btn-pack-dl:disabled{opacity:.5;pointer-events:none}
+        .btn-pack-close{background:rgba(255,255,255,0.9);color:#374151;border:1.5px solid rgba(99,102,241,0.2);padding:.72rem 1.2rem;border-radius:9px;font-weight:600;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:'Poppins',inherit}
+        .btn-pack-dl-float{position:fixed;bottom:2rem;left:6rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;padding:.7rem 1.2rem;border-radius:50px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.4);display:flex;align-items:center;gap:.42rem;z-index:998;border:none;font-size:.82rem;transition:all .25s;white-space:nowrap;font-family:'Poppins',inherit}
+        .btn-pack-dl-float:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,70,229,0.5)}
+
         /* ── MODO ANAYA ── */
         .anaya-toggle{display:flex;align-items:center;gap:.75rem;background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(245,158,11,0.08));border:2px solid rgba(245,158,11,0.35);border-radius:14px;padding:.9rem 1.1rem;margin-bottom:1rem;cursor:pointer;transition:all .25s;user-select:none}
         .anaya-toggle:hover{border-color:rgba(245,158,11,0.6);background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(245,158,11,0.12))}
@@ -445,6 +483,7 @@
         </div>
         <button class="btn-foto" id="btnFotoStep1" onclick="abrirFotoLibro()">📸 Generar SdA con foto del libro</button>
         <button class="btn-foto-step2" id="btnFotoStep2" onclick="abrirPanelJSON()">📋 Pegar respuesta de la IA</button>
+        <button class="btn-foto" style="background:rgba(79,70,229,.15);border-color:rgba(99,102,241,.5)" onclick="abrirPackModal()">📦 Pack Trimestral</button>
         <button class="btn-foto" style="background:rgba(124,58,237,.25);border-color:rgba(196,181,253,.7)" onclick="irAPaso(9)">📐 Ir a Rúbricas</button>
     </div>
 </header>
@@ -519,6 +558,104 @@
         <div class="json-actions">
             <button class="btn-json-close" onclick="cerrarPanelJSON()">Cancelar</button>
             <button class="btn-json-fill" onclick="rellenarDesdeJSON()">✅ Rellenar formulario</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══ SELECTOR MODO DE TRABAJO ══════════════════════════════════════ -->
+<div class="modo-wrap">
+    <div class="modo-inner">
+        <div class="modo-label">⚡ Modo de trabajo — selecciona cómo quieres generar la SdA</div>
+        <div class="modo-btns">
+            <button class="modo-btn active-libre" id="modoBtnLibre" onclick="setModoTrabajo('libre')">
+                <span class="mb-icon">✍️</span>
+                <span class="mb-text">
+                    <span class="mb-title">Modo Libre</span>
+                    <span class="mb-sub">Rellena manualmente todos los campos</span>
+                </span>
+            </button>
+            <button class="modo-btn" id="modoBtnAnaya" onclick="setModoTrabajo('anaya')">
+                <span class="mb-icon">📙</span>
+                <span class="mb-text">
+                    <span class="mb-title">Modo Anaya</span>
+                    <span class="mb-sub">Genera desde el libro Anaya</span>
+                </span>
+            </button>
+            <button class="modo-btn" id="modoBtnSant" onclick="setModoTrabajo('sant')">
+                <span class="mb-icon">📗</span>
+                <span class="mb-text">
+                    <span class="mb-title">Modo Santillana</span>
+                    <span class="mb-sub">Construyendo Mundos · datos precargados</span>
+                </span>
+            </button>
+        </div>
+        <!-- Panel Anaya en modo superior -->
+        <div class="modo-panel" id="modoPanelAnaya"></div>
+        <!-- Panel Santillana en modo superior -->
+        <div class="modo-panel" id="modoPanelSant"></div>
+    </div>
+</div>
+
+<!-- ══ PACK MODAL ══════════════════════════════════════════════════════ -->
+<div class="pack-overlay" id="packOverlay" onclick="if(event.target===this)cerrarPackModal()">
+    <div class="pack-panel" onclick="event.stopPropagation()">
+        <h3>📦 Pack Trimestral — Generación masiva de prompts</h3>
+        <p style="color:#6b7280;font-size:.8rem;margin-bottom:.9rem">Genera todos los prompts de un trimestre en un ZIP (un .txt por SdA). Solo disponible para modos Anaya y Santillana.</p>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem">
+            <div>
+                <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:.3rem">Editorial</div>
+                <div style="display:flex;gap:.4rem">
+                    <div class="pack-opt" id="packOptAnaya" onclick="selPackEditorial('anaya')">📖 Anaya</div>
+                    <div class="pack-opt" id="packOptSant" onclick="selPackEditorial('sant')">📗 Santillana</div>
+                </div>
+            </div>
+            <div>
+                <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:.3rem">Asignatura</div>
+                <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+                    <div class="pack-opt" id="packOptMat" onclick="selPackMod('mat')">📐 Mat</div>
+                    <div class="pack-opt" id="packOptLen" onclick="selPackMod('len')">📖 Len</div>
+                    <div class="pack-opt" id="packOptAmbas" onclick="selPackMod('ambas')">🔗 Ambas</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem">
+            <div class="fg" style="margin:0">
+                <label style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase">Curso</label>
+                <select id="packCurso" class="sant-temas-input" onchange="actualizarPackSdaList()">
+                    <option value="">Selecciona…</option>
+                    <option value="1">1º de Primaria</option>
+                    <option value="2">2º de Primaria</option>
+                    <option value="3">3º de Primaria</option>
+                    <option value="4">4º de Primaria</option>
+                    <option value="5">5º de Primaria</option>
+                    <option value="6">6º de Primaria</option>
+                </select>
+            </div>
+            <div class="fg" style="margin:0">
+                <label style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase">Trimestre</label>
+                <select id="packTrim" class="sant-temas-input" onchange="actualizarPackSdaList()">
+                    <option value="">Selecciona…</option>
+                    <option value="1">1er Trimestre</option>
+                    <option value="2">2º Trimestre</option>
+                    <option value="3">3er Trimestre</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="packSdaListWrap" style="display:none">
+            <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:.3rem">SdAs incluidas en el pack</div>
+            <div class="pack-sda-list" id="packSdaList"></div>
+        </div>
+
+        <div class="pack-progress" id="packProgress"></div>
+
+        <div style="display:flex;gap:.75rem;margin-top:1.1rem;justify-content:flex-end;flex-wrap:wrap">
+            <button class="btn-pack-close" onclick="cerrarPackModal()">Cancelar</button>
+            <button class="btn-pack-dl" id="btnPackDl" onclick="generarPackZip()">
+                📦 Descargar ZIP
+            </button>
         </div>
     </div>
 </div>
@@ -615,7 +752,7 @@
         <label>Áreas/Ámbitos * <span class="badge badge-yellow">💡 Recomendado: una sola área</span></label>
 
         <!-- ── MODO LIBRO ANAYA ── -->
-        <div class="anaya-toggle" id="anayaToggle" onclick="toggleAnaya()">
+        <div class="anaya-toggle" id="anayaToggle" onclick="toggleAnaya()" style="display:none">
             <div class="anaya-toggle-icon">📖</div>
             <div class="anaya-toggle-text">
                 <div class="anaya-toggle-title">Modo Libro Anaya <span class="badge badge-yellow">Nuevo</span></div>
@@ -731,7 +868,7 @@
         <!-- ── FIN MODO ANAYA ── -->
 
         <!-- ── MODO LIBRO SANTILLANA ── -->
-        <div class="sant-toggle" id="santToggle" onclick="toggleSantillana()">
+        <div class="sant-toggle" id="santToggle" onclick="toggleSantillana()" style="display:none">
             <div style="font-size:1.6rem;flex-shrink:0">📗</div>
             <div style="flex:1">
                 <div style="font-weight:700;color:#991b1b;font-size:.92rem;display:flex;align-items:center;gap:.5rem">Modo Libro Santillana <span class="badge" style="background:#fee2e2;color:#991b1b">Construyendo Mundos</span></div>
@@ -2819,10 +2956,13 @@ function updProg(){
 function validar(step){
     const modoLibro = anayaActivo || santActivo;
     if(step===1&&areasSeleccionadas.length===0&&!modoLibro){showToast('⚠️ Selecciona al menos un área');return false;}
+    // En modo libro también saltamos validación de fechas y campos auto-rellenados
+    const camposBypassModo=['etapa','curso','trimestre','fechaInicio','fechaFin'];
     if(step===2&&!sdaTipo){showToast('⚠️ Selecciona el tipo de SdA');return false;}
     let ok=true;
     document.getElementById(`step${step}`).querySelectorAll('[required]').forEach(f=>{
         if(modoLibro && (f.id==='titSda'||f.id==='tematica')){f.style.borderColor='';return;}
+        if(modoLibro && camposBypassModo.includes(f.id)){f.style.borderColor='';return;}
         if(!f.value){f.style.borderColor='#ef4444';ok=false;}else f.style.borderColor='';
     });
     // En modo Anaya: validar curso, trimestre, SdA y modalidad
@@ -3110,98 +3250,98 @@ const SANTILLANA_MAP = {
   '1': {
     '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
       { num:'1A', nombre:'NOS DIVERTIMOS CON LOS NÚMEROS / LOS PIRATAS EN EL POLO — OCTUBRE', mes:'OCTUBRE',
-        mat:{ titulo:'NOS DIVERTIMOS CON LOS NÚMEROS',
-              criterios:'1.2.a, 2.2.a, 6.1.a, 6.2.a',
-              saberes:'MAT.1.A.3.2., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.2.5., MAT.1.A.4.1., MAT.1.B.1.1., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
-              tarea:'El alumnado resolverá situaciones cotidianas usando los números, aplicando sumas y estrategias de conteo y comparación de cantidades en contextos lúdicos y manipulativos.' },
-        len:{ titulo:'LOS PIRATAS EN EL POLO',
+        mat:{ titulo:'NOS DIVERTIMOS CON LOS NUMEROS — Crucigrama numerico',
+              criterios:'2.2.a, 6.1.a, 6.2.a',
+              saberes:'MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.A.2.3., MAT.1.A.3.2., MAT.1.A.4.2., MAT.1.D.2.3., MAT.1.D.3.3., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
+              tarea:'El alumnado realizara un crucigrama resolviendo enigmas con su numero correspondiente, aplicando numeros del 0 al 9, conteo y grafía' },
+        len:{ titulo:'LOS PIRATAS EN EL POLO — Listado de deseos',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.5.',
-              tarea:'El alumnado creará y expondrá oralmente un listado de normas de comportamiento para piratas generosos, trabajando la comprensión oral y escrita a partir de la historia y desarrollando su expresión oral con apoyo visual.' },
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.6.',
+              tarea:'Crear un listado de deseos personales y exponerlo al resto de companeros del aula de forma oral' },
         producto:'Listado de normas de los piratas (exposición oral) + situaciones numéricas lúdicas' },
       { num:'1B', nombre:'VAMOS A MEDIR / ¿UN TESORO BAJO EL MAR? — NOVIEMBRE', mes:'NOVIEMBRE',
-        mat:{ titulo:'VAMOS A MEDIR',
-              criterios:'1.1.a, 1.2.a, 2.2.a, 3.2.a, 5.1.a',
-              saberes:'MAT.1.A.3.1., MAT.1.B.2.1., MAT.1.A.3.2., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.A.5.1., MAT.1.B.3.1., MAT.1.B.3.2., MAT.1.C.1.1., MAT.1.C.1.2., MAT.1.C.1.3., MAT.1.C.1.4., MAT.1.C.1.5.',
-              tarea:'El alumnado explorará y aplicará conceptos de medida de longitud, capacidad y masa usando unidades no convencionales y convencionales, resolviendo situaciones de comparación y estimación en contextos reales.' },
-        len:{ titulo:'¿UN TESORO BAJO EL MAR?',
+        mat:{ titulo:'VAMOS A MEDIR — Fabricar un pin midiendo y recortando',
+              criterios:'1.1.a, 2.2.a, 3.2.a, 5.1.a, 6.1.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.4.1., MAT.1.A.4.3., MAT.1.B.1.1., MAT.1.B.2.1., MAT.1.B.2.2., MAT.1.B.3.1., MAT.1.B.3.2., MAT.1.B.3.3., MAT.1.D.2.3.',
+              tarea:'El alumnado fabricara un pin para un companero manipulando papel cuadriculado, pinza y cartulina, aplicando medidas no convencionales y figuras geometricas' },
+        len:{ titulo:'¿UN TESORO BAJO EL MAR? — Listado de emociones',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.5.',
-              tarea:'El alumnado creará y expondrá oralmente un listado con los objetos que llevaría en una aventura submarina, trabajando la comprensión lectora, el vocabulario y la expresión oral con apoyo de imágenes.' },
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.6.',
+              tarea:'Crear un listado de emociones propias y ajenas y exponerlo al resto de companeros de forma oral y escrita' },
         producto:'Listado de objetos para la aventura (exposición oral) + registro de mediciones' },
       { num:'1C', nombre:'PASEAMOS POR LA CALLE / EL PUERTO DE LOS ESQUELETOS — DICIEMBRE', mes:'DICIEMBRE',
-        mat:{ titulo:'PASEAMOS POR LA CALLE',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.3.a, 3.1.a, 3.2.a, 6.2.a',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.B.1.5., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
-              tarea:'El alumnado identificará y usará los números presentes en el entorno urbano, aplicará la recta numérica, interpretará posiciones y orientaciones espaciales y resolverá situaciones con números en contextos cotidianos de la calle.' },
-        len:{ titulo:'EL PUERTO DE LOS ESQUELETOS',
-              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 5.1.a, 8.3.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.5., LCL.1.C.2.',
-              tarea:'El alumnado creará una nota breve para los piratas junto con un pequeño texto narrativo ambientado en el puerto, trabajando la escritura funcional, la comprensión lectora y el conocimiento de la biblioteca.' },
+        mat:{ titulo:'PASEAMOS POR LA CALLE — Numeros de casas y ordinal',
+              criterios:'1.1.a, 2.1.a, 2.3.a, 3.1.a, 3.2.a, 6.1.a, 6.2.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.4.1., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.D.2.4., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.D.3.3.',
+              tarea:'El alumnado observara e identificara los numeros de las casas de una calle, aplicando numeros ordinales, comparacion y orden de numeros naturales hasta 99' },
+        len:{ titulo:'EL PUERTO DE LOS ESQUELETOS — Nota de ayuda y texto poetico',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 8.3.a',
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.2., LCL.1.C.6.',
+              tarea:'Crear una nota pidiendo ayuda para limpiar el mar de residuos y elaborar un texto poetico relacionado con el mar' },
         producto:'Nota para los piratas + texto narrativo breve / mapa de números del entorno' }
     ]},
     '2': { sdaNombre:'Segundo trimestre', reto:'SdA mensuales T2', sda:[
       { num:'2A', nombre:'¿JUGAMOS JUNTOS? / EN BUSCA DEL PEZ DE PLATA — ENERO', mes:'ENERO',
-        mat:{ titulo:'¿JUGAMOS JUNTOS?',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.2.a',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.A.3.2., MAT.1.B.1.4., MAT.1.C.2.1.',
-              tarea:'El alumnado resolverá situaciones de suma y resta mediante juegos de mesa con dados y cartas, identificará patrones numéricos y aplicará estrategias de cálculo en contextos lúdicos cooperativos.' },
-        len:{ titulo:'EN BUSCA DEL PEZ DE PLATA',
-              criterios:'2.1.a, 3.1.a, 4.1.a, 4.2.a, 5.1.a, 7.2.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.B.3.4., LCL.1.C.5., LCL.1.C.8.',
-              tarea:'El alumnado elaborará y expondrá un menú para piratas, trabajando la comprensión y producción de textos instructivos, la lectura expresiva y el uso básico de la biblioteca digital.' },
+        mat:{ titulo:'¿JUGAMOS JUNTOS? — Sumas y restas hasta el 19',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.2.a, 6.1.a, 6.2.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.4.1., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.B.1.4., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.2.4., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.D.3.3., MAT.1.D.4.1., MAT.1.D.4.2.',
+              tarea:'El alumnado practicara la realizacion de sumas y restas con numeros hasta el 19 en el contexto de juegos de mesa y actividades grupales' },
+        len:{ titulo:'EN BUSCA DEL PEZ DE PLATA — Menu de piratas',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.2.a',
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.5., LCL.1.C.6., LCL.1.C.8.',
+              tarea:'Elaborar un menu para que los piratas almuercen o cenen siguiendo un modelo y exponerlo al resto de companeros' },
         producto:'Menú para piratas elaborado y expuesto oralmente + resolución de situaciones de suma y resta con juegos' },
       { num:'2B', nombre:'¿QUÉ DÍA ES HOY? / EL RESCATE DE PATA PALO — FEBRERO', mes:'FEBRERO',
-        mat:{ titulo:'¿QUÉ DÍA ES HOY?',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 5.2.a',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.A.4.3., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.B.1.4., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2.',
-              tarea:'El alumnado trabajará el concepto del tiempo y el calendario, reconocerá los días de la semana, los meses y las horas, y resolverá situaciones cotidianas relacionadas con la organización temporal.' },
-        len:{ titulo:'EL RESCATE DE PATA PALO',
-              criterios:'2.1.a, 3.1.a, 4.1.a, 4.2.a, 5.1.a, 8.1.a, 8.2.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.C.4., LCL.1.C.7.',
-              tarea:'El alumnado elaborará una invitación para los piratas, trabajando textos multimodales, la lectura en voz alta, la comprensión lectora y la creación de textos breves con estructura definida.' },
+        mat:{ titulo:'¿QUE DIA ES HOY? — Calendario y medida del tiempo',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 5.2.a, 6.1.a, 6.2.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.4.1., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.B.1.4., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.2.4., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.D.3.3., MAT.1.D.4.1., MAT.1.D.4.2.',
+              tarea:'El alumnado aprendera a usar el calendario, los dias de la semana y los meses del ano para orientarse en el tiempo cotidiano y resolver situaciones reales' },
+        len:{ titulo:'EL RESCATE DE PATA PALO — Elaborar una invitacion',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 8.1.a, 8.2.a',
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.4., LCL.1.C.6., LCL.1.C.7.',
+              tarea:'Elaborar una invitacion de forma individual siguiendo un modelo y exponerla al resto de los companeros de aula' },
         producto:'Invitación elaborada para los piratas + calendario personal con situaciones temporales' },
       { num:'2C', nombre:'HACEMOS DEPORTE / LA CIGARRA Y LA HORMIGA — MARZO', mes:'MARZO',
-        mat:{ titulo:'HACEMOS DEPORTE',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 6.2.a',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
-              tarea:'El alumnado resolverá situaciones matemáticas vinculadas al deporte: conteo de participantes, clasificaciones, marcas y distancias, aplicando el orden, la comparación y la estadística básica en contextos deportivos.' },
-        len:{ titulo:'LA CIGARRA Y LA HORMIGA',
-              criterios:'2.1.a, 3.1.a, 4.1.a, 4.2.a, 5.1.a, 8.1.a, 8.2.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.6., LCL.1.B.2.1., LCL.1.C.4., LCL.1.C.7.',
-              tarea:'El alumnado elaborará un cartel relacionado con la fábula de La cigarra y la hormiga, trabajando la comprensión lectora de textos narrativos, la escritura con propósito comunicativo y la relación texto-imagen.' },
+        mat:{ titulo:'HACEMOS DEPORTE — Operaciones en contexto deportivo',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 6.1.a, 6.2.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.4.1., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.2.4., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.D.3.3.',
+              tarea:'El alumnado resolvera operaciones matematicas en el contexto del deporte, aplicando sumas, restas y estrategias de calculo mental con numeros hasta el 99' },
+        len:{ titulo:'LA CIGARRA Y LA HORMIGA — Cartel de concierto',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 8.1.a, 8.2.a',
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.4., LCL.1.C.6., LCL.1.C.7.',
+              tarea:'Elaborar un cartel para anunciar un concierto de la cigarra y la hormiga de forma individual siguiendo un modelo' },
         producto:'Cartel elaborado sobre la fábula + clasificación deportiva con datos numéricos' }
     ]},
     '3': { sdaNombre:'Tercer trimestre', reto:'SdA mensuales T3', sda:[
       { num:'3A', nombre:'¡A COCINAR! / EL LIBRO DE LA SELVA — ABRIL', mes:'ABRIL',
-        mat:{ titulo:'¡A COCINAR!',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.2.a, 5.2.a, 6.2.a',
-              saberes:'MAT.1.B.2.1., MAT.1.A.3.2., MAT.1.D.2.4., MAT.1.A.3.3., MAT.1.B.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.1.1., MAT.1.C.2.1., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.B.1.5., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
-              tarea:'El alumnado usará conceptos de masa, capacidad y cantidad para seguir una receta de cocina, aplicando medidas no convencionales y convencionales, operaciones sencillas y comparación de cantidades en un contexto real y manipulativo.' },
-        len:{ titulo:'EL LIBRO DE LA SELVA',
-              criterios:'2.1.a, 3.2.a, 5.1.a, 8.1.a, 8.2.a, 9.1.a, 10.2.a',
-              saberes:'LCL.1.B.2.3., LCL.1.B.3.2., LCL.1.B.3.1., LCL.1.B.3.5., LCL.1.C.1., LCL.1.C.4., LCL.1.C.7., LCL.1.D.1., LCL.1.D.2., LCL.1.B.1.1.',
-              tarea:'El alumnado elaborará un texto instructivo con normas de convivencia inspiradas en El libro de la selva, iniciándose en la reflexión sobre el lenguaje, la interacción oral y el uso de recursos digitales básicos.' },
+        mat:{ titulo:'¡A COCINAR! — Medidas de capacidad y masa en recetas',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 2.3.a, 3.2.a, 4.1.a, 5.1.a, 5.2.a, 6.1.a, 6.2.a, 7.1.a, 7.2.a, 8.1.a, 8.2.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.2.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.1., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.B.2.1., MAT.1.B.2.2., MAT.1.B.2.3., MAT.1.B.3.2., MAT.1.C.1.1., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.2.4., MAT.1.D.3.1., MAT.1.D.3.2., MAT.1.D.3.3., MAT.1.D.4.2., MAT.1.F.1.1., MAT.1.F.1.2., MAT.1.F.1.3., MAT.1.F.1.4., MAT.1.F.2.1., MAT.1.F.2.2., MAT.1.F.2.3., MAT.1.F.2.4.',
+              tarea:'El alumnado resolvera situaciones de cocina aplicando medidas de capacidad, masa, geometria y operaciones basicas para elaborar y planificar recetas' },
+        len:{ titulo:'EL LIBRO DE LA SELVA — Normas de convivencia',
+              criterios:'2.1.a, 3.1.a, 3.2.a, 5.1.a, 8.1.a, 8.2.a, 9.1.a, 10.2.a',
+              saberes:'LCL.1.B.1., LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.4., LCL.1.C.7., LCL.1.D.1., LCL.1.D.2.',
+              tarea:'Elaborar normas de convivencia del aula a partir del modelo del libro y crear actividades para un clima de pertenencia' },
         producto:'Texto instructivo de normas de la selva + ficha de ingredientes con cálculos de cocina' },
       { num:'3B', nombre:'NUESTRO COLEGIO / EL ENANITO SALTARÍN — MAYO', mes:'MAYO',
-        mat:{ titulo:'NUESTRO COLEGIO',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 5.2.a',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.1., MAT.1.D.2.4., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.B.2.2., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.2.4., MAT.1.D.4.1., MAT.1.A.1.1., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2.',
-              tarea:'El alumnado resolverá situaciones matemáticas en el contexto del colegio: conteo de alumnos, reparto de materiales, tiempos de recreo, planos simples e identificación de formas geométricas en el entorno escolar.' },
-        len:{ titulo:'EL ENANITO SALTARÍN',
-              criterios:'3.1.a, 5.1.a, 7.1.a, 8.2.a, 9.1.a, 10.1.a',
-              saberes:'LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.C.1., LCL.1.C.3., LCL.1.D.5., LCL.1.D.1., LCL.1.D.2., LCL.1.B.3.2., LCL.1.B.3.4.',
-              tarea:'El alumnado elaborará un texto instructivo a partir del cuento El enanito saltarín, trabajando la producción escrita, la lectura de textos digitales, la reflexión sobre el lenguaje y los signos de puntuación.' },
+        mat:{ titulo:'NUESTRO COLEGIO — Agrupaciones y repartos',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 2.3.a, 3.1.a, 3.2.a, 4.1.a, 5.2.a, 6.2.a, 7.1.a, 8.1.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.1.2., MAT.1.A.2.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.C.2.1., MAT.1.C.3.1., MAT.1.C.3.2., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.2.4., MAT.1.D.4.1., MAT.1.D.4.2., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3., MAT.1.F.1.1., MAT.1.F.1.2., MAT.1.F.1.3., MAT.1.F.2.1., MAT.1.F.2.2.',
+              tarea:'El alumnado elaborara grupos de alumnos aplicando multiplicacion, reparto y division en situaciones reales del entorno escolar' },
+        len:{ titulo:'EL ENANITO SALTARIN — Texto instructivo',
+              criterios:'3.1.a, 3.2.a, 5.1.a, 7.1.a, 8.2.a, 9.1.a, 10.1.a',
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.C.1., LCL.1.C.3., LCL.1.D.1., LCL.1.D.2., LCL.1.D.5., LCL.1.D.6.',
+              tarea:'Elaborar un texto instructivo sobre el cesto proporcionando informacion y describiendo como es y como se hace' },
         producto:'Texto instructivo basado en el cuento + plano del colegio con datos numéricos' },
       { num:'3C', nombre:'NOS VAMOS DE VIAJE / EL MAGO GASPAR — JUNIO', mes:'JUNIO',
-        mat:{ titulo:'NOS VAMOS DE VIAJE',
-              criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 2.3.a, 3.2.a, 5.1.a, 5.2.a, 6.2.a',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.3.2., MAT.1.D.2.4., MAT.1.D.2.3., MAT.1.A.4.4., MAT.1.A.1.1., MAT.1.A.5.1., MAT.1.B.3.1., MAT.1.B.3.2., MAT.1.C.1.1., MAT.1.C.1.2., MAT.1.C.1.3., MAT.1.C.1.4., MAT.1.C.1.5., MAT.1.B.1.4., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.B.1.2., MAT.1.B.1.5., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3.',
-              tarea:'El alumnado planificará un viaje resolviendo situaciones matemáticas: lectura de relojes, gestión del tiempo, cálculo de distancias, interpretación de billetes y dinero, y recogida de datos del trayecto.' },
-        len:{ titulo:'EL MAGO GASPAR',
+        mat:{ titulo:'NOS VAMOS DE VIAJE — Relojes y calculo del tiempo',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 2.3.a, 3.2.a, 4.1.a, 5.1.a, 5.2.a, 6.1.a, 6.2.a, 7.1.a, 7.2.a, 8.1.a, 8.2.a',
+              saberes:'MAT.1.A.1.1., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.3.4., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.A.5.1., MAT.1.B.1.2., MAT.1.B.1.4., MAT.1.B.1.5., MAT.1.B.2.3., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.2.4., MAT.1.D.4.2., MAT.1.E.1.1., MAT.1.E.1.2., MAT.1.E.1.3., MAT.1.F.1.1., MAT.1.F.1.2., MAT.1.F.1.3., MAT.1.F.1.4., MAT.1.F.2.1., MAT.1.F.2.2., MAT.1.F.2.3., MAT.1.F.2.4.',
+              tarea:'El alumnado aprendera el uso de relojes analogicos y digitales y calculara el tiempo transcurrido en situaciones de planificacion de un viaje' },
+        len:{ titulo:'EL MAGO GASPAR — Diario personal',
               criterios:'3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 9.1.a',
-              saberes:'LCL.1.B.2.2., LCL.1.B.3.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.D.3., LCL.1.B.2.1., LCL.1.B.3.5., LCL.1.D.1., LCL.1.D.2.',
-              tarea:'El alumnado elaborará un texto narrativo —un cuento de magia— trabajando la producción escrita con estructura narrativa completa, la interacción oral, la comprensión lectora y la iniciación a la reflexión lingüística.' },
+              saberes:'LCL.1.B.2., LCL.1.B.3., LCL.1.D.1., LCL.1.D.2., LCL.1.D.3.',
+              tarea:'Aprender a escribir un diario personal identificando sus partes y escribiendo de forma cronologica los hechos vividos' },
         producto:'Cuento de magia escrito + planning de viaje con horarios y situaciones de tiempo y dinero' }
     ]}
   },
@@ -3210,98 +3350,98 @@ const SANTILLANA_MAP = {
   '2': {
     '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
       { num:'1A', nombre:'DISTANCIAS — ORDENAR INFORMACIÓN / TEXTO DESCRIPTIVO DE UNA PERSONA', mes:'SEPTIEMBRE',
-        mat:{ titulo:'ORDENAR DE MAYOR A MENOR LAS DISTANCIAS Y ORGANIZAR LA INFORMACIÓN',
+        mat:{ titulo:'VAMOS DE EXCURSION — Ordenar distancias y organizar informacion',
               criterios:'1.1.b, 1.2.b, 2.2.b, 3.1.b, 3.2.b, 4.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.1.A.2.2., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2.',
-              tarea:'El alumnado ordenará distancias de mayor a menor y organizará la información obtenida, aplicando la comparación y ordenación de números naturales y estrategias de recogida de datos.' },
+              saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.D.1.1., MAT.1.D.3.3.',
+              tarea:'El alumnado ordenara distancias de menor a mayor y organizara la informacion en un cartel, aplicando numeros 0-99, descomposicion en decenas y unidades, sumas y restas.' },
         len:{ titulo:'ELABORACIÓN DE UN TEXTO DESCRIPTIVO DE UNA PERSONA',
               criterios:'1.1.b, 2.1.b, 3.1.a, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.3.b',
               saberes:'LCL.1.B.1.1., LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5.',
               tarea:'El alumnado elaborará un texto descriptivo sobre una persona de su entorno, usando adjetivos calificativos, el orden lógico de la descripción y las normas ortográficas trabajadas.' },
         producto:'Texto descriptivo de una persona + clasificación de distancias ordenadas' },
       { num:'1B', nombre:'PUNTUACIONES DE VIDEOJUEGO — CLASIFICACIÓN / ELABORACIÓN DE UN CÓMIC', mes:'OCTUBRE',
-        mat:{ titulo:'AVERIGUAR LA PUNTUACIÓN FALTANTE Y ORDENAR CLASIFICACIÓN DEL VIDEOJUEGO',
+        mat:{ titulo:'UNA CARRERA CICLISTA — Clasificacion de puntuaciones',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 3.2.b, 4.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.D.2.4.',
-              tarea:'El alumnado averiguará la puntuación que falta tras los resultados de un videojuego, ordenará quién ha conseguido más puntos y elaborará una clasificación aplicando el cálculo y la comparación de números.' },
-        len:{ titulo:'ELABORACIÓN DE UN CÓMIC',
-              criterios:'1.1.b, 2.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b',
-              saberes:'LCL.1.B.1.1., LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6.',
-              tarea:'El alumnado elaborará un cómic con personajes propios, usando viñetas, globos de diálogo y onomatopeyas, con una secuencia narrativa clara y revisión ortográfica.' },
+              saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.5., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.4., MAT.1.D.3.3.',
+              tarea:'El alumnado averiguara la puntuacion faltante del videojuego, ordenara y hara una clasificacion, aplicando numeros 100-199, centenas/decenas/unidades y suma llevando.' },
+        len:{ titulo:'¿TE GUSTA APRENDER? — Describir a una persona',
+              criterios:'1.1.b, 2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.3.b',
+              saberes:'LCL.1.A.1., LCL.1.B.1.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.C.2., LCL.1.D.3., LCL.1.D.6.',
+              tarea:'Describir a una persona especial indicando aspecto fisico, personalidad, gustos y rasgos, para que los demas puedan imaginarsela' },
         producto:'Cómic elaborado + clasificación de puntuaciones del videojuego' },
       { num:'1C', nombre:'COMPARAR CAPACIDAD DE RECIPIENTES / TEXTO DESCRIPTIVO DE UN OBJETO', mes:'NOVIEMBRE',
-        mat:{ titulo:'COMPARAR LOS RECIPIENTES Y AVERIGUAR EN CUÁL CABE MÁS CAPACIDAD',
+        mat:{ titulo:'UNA VISITA AL ACUARIO — Comparar recipientes por capacidad',
               criterios:'1.1.b, 1.2.b, 2.1.b, 3.2.b, 4.1.b, 5.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.B.1.2., MAT.1.D.2.4.',
-              tarea:'El alumnado comparará los recipientes que aparecen en imágenes y averiguará en cuál cabe más capacidad en función de los datos dados, aplicando estimación y medida de capacidad.' },
-        len:{ titulo:'ELABORAR UN TEXTO DESCRIPTIVO DE UN OBJETO',
-              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.3.b',
-              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5.',
-              tarea:'El alumnado elaborará un texto descriptivo sobre un objeto cotidiano, identificando y ordenando sus características (forma, color, tamaño, uso), usando vocabulario preciso y ortografía correcta.' },
+              saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.B.1.1., MAT.1.B.1.2., MAT.1.B.1.3., MAT.1.B.2.3., MAT.1.D.2.4., MAT.1.E.1.2.',
+              tarea:'El alumnado comparara recipientes e identificara cual tiene mayor capacidad, aplicando unidades de medida, el litro y resta llevando.' },
+        len:{ titulo:'¿QUE SABES DE LOS ANIMALES? — Elaborar un comic',
+              criterios:'1.1.b, 2.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b',
+              saberes:'LCL.1.A.1., LCL.1.B.2.1., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.D.3., LCL.1.D.6.',
+              tarea:'Elaborar un comic sobre animales con bocadillos, vinetas y dibujos propios, aplicando el vocabulario y la ortografia de la letra R trabajados' },
         producto:'Texto descriptivo de un objeto + comparación de capacidad de recipientes' }
     ]},
     '2': { sdaNombre:'Segundo trimestre', reto:'SdA mensuales T2', sda:[
-      { num:'2A', nombre:'MEDIR ALTURAS CON CINTA MÉTRICA / PERSONAJES INVENTADOS Y CUENTO', mes:'ENERO',
-        mat:{ titulo:'MEDIR LA ALTURA DE LOS COMPAÑEROS CON CINTA MÉTRICA Y ORDENAR DATOS',
-              criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 4.1.b, 5.2.b, 6.1.b, 6.2.b, 8.1.b, 8.2.b',
-              saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.B.1.2., MAT.1.D.2.4., MAT.1.D.3.1.',
-              tarea:'El alumnado usará la cinta métrica para medir la altura de sus compañeros de equipo, ordenará los datos de mayor a menor usando los signos y completará en grupo una tabla con todos los resultados.' },
-        len:{ titulo:'ELABORACIÓN DE PERSONAJES INVENTADOS Y PRINCIPIO DE UN CUENTO',
+      { num:'2A', nombre:'MEDIR ALTURAS — ORDENAR DATOS / ¿NOS VAMOS DE VIAJE?', mes:'ENERO',
+        mat:{ titulo:'LA REVISION MEDICA — Medir alturas y ordenar datos',
+              criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 4.1.b, 5.2.b, 6.1.b, 6.2.b',
+              saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.2.5., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.B.1.2., MAT.1.B.1.3., MAT.1.D.1.1., MAT.1.D.2.4., MAT.1.D.3.1., MAT.1.D.3.3., MAT.1.E.1.2., MAT.1.F.1.3., MAT.1.F.2.1., MAT.1.F.2.2., MAT.1.F.2.4.',
+              tarea:'El alumnado medira alturas de compañeros con cinta metrica, las ordenara de mayor a menor y completara una tabla de datos, aplicando longitud y numeros ordinales.' },
+        len:{ titulo:'¿NOS VAMOS DE VIAJE? — Inventar personajes e inicio de cuento',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b, 8.1.b',
-              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6.',
-              tarea:'El alumnado inventará personajes originales y escribirá el principio de un cuento, describiendo protagonistas, escenario e inicio del conflicto, con coherencia narrativa y ortografía cuidada.' },
-        producto:'Personajes y principio de cuento + tabla de alturas medidas con cinta métrica' },
-      { num:'2B', nombre:'PESAR COMPAÑEROS CON BALANZA / ELABORACIÓN DE UN TEXTO NARRATIVO', mes:'FEBRERO',
-        mat:{ titulo:'USAR UNA BALANZA PARA PESAR A LOS COMPAÑEROS Y COMPARAR DATOS',
+              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.C.1., LCL.1.C.4., LCL.1.D.3., LCL.1.D.6.',
+              tarea:'Inventar personajes describiendo quien, como y donde se encuentran, y elaborar el inicio de un cuento con dichos personajes usando vocabulario de viajes' },
+        producto:'Presentacion oral de personaje inventado + inicio de cuento escrito con descripcion fisica y de caracter' },
+      { num:'2B', nombre:'AGILIDAD EN CALCULOS — OPERACIONES / ¿A QUE JUGAMOS?', mes:'FEBRERO',
+        mat:{ titulo:'EN EL MERCADO — Pesar con balanza y comparar masas',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 3.2.b, 4.1.b, 5.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.D.2.4.',
-              tarea:'El alumnado usará una balanza para pesar a sus compañeros de equipo y completará los datos comparando resultados con "más que" o "menos que", aplicando medida de masa y comparación de cantidades.' },
-        len:{ titulo:'ELABORACIÓN DE UN TEXTO NARRATIVO',
-              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.2.b, 8.3.b',
-              saberes:'LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5.',
-              tarea:'El alumnado elaborará un texto narrativo completo con inicio, nudo y desenlace, usando conectores temporales, diálogos y la voz narrativa trabajada, aplicando las reglas ortográficas del nivel.' },
-        producto:'Texto narrativo completo + tabla de pesos con comparaciones' },
-      { num:'2C', nombre:'ROBOT CON FIGURAS GEOMÉTRICAS / DESCRIPCIÓN DE UN PAISAJE', mes:'MARZO',
-        mat:{ titulo:'DISEÑO DE UN ROBOT CON FIGURAS GEOMÉTRICAS',
+              saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.B.1.3., MAT.1.B.2.3., MAT.1.D.2.4., MAT.1.D.3.3., MAT.1.E.1.1., MAT.1.E.1.3.',
+              tarea:'El alumnado usara una balanza para pesar compañeros, comparara los resultados usando mas que / menos que, aplicando unidades de masa y operaciones con numeros de 3 cifras.' },
+        len:{ titulo:'¿A QUE JUGAMOS? — Escribir el final de un cuento',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 5.1.b, 8.2.b, 8.3.b',
+              saberes:'LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.C.3., LCL.1.C.7., LCL.1.D.3., LCL.1.D.5., LCL.1.D.6.',
+              tarea:'Inventar y escribir el final de un cuento elegido, aplicando marcadores espaciales, vocabulario de juegos y ortografia za/zo/zu/ce/ci' },
+        producto:'Final de cuento escrito con ilustracion + recital de retahila de clase' },
+      { num:'2C', nombre:'FIGURAS GEOMETRICAS — PAISAJE / ¿DONDE ES LA FIESTA?', mes:'MARZO',
+        mat:{ titulo:'UNA TARDE DE JUEGOS — Disenar robot con figuras geometricas',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 2.3.b, 3.1.b, 3.2.b, 4.1.b, 5.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2.',
-              tarea:'El alumnado diseñará un robot usando figuras geométricas bidimensionales y tridimensionales, identificando y describiendo sus propiedades (lados, vértices, caras) e integrando cálculo de cantidades de materiales.' },
-        len:{ titulo:'DESCRIPCIÓN DE UN PAISAJE',
-              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b, 8.3.b',
-              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6.',
-              tarea:'El alumnado elaborará la descripción de un paisaje real o imaginado, usando adjetivos de lugar, vocabulario de la naturaleza, el orden espacial y la ortografía trabajada.' },
-        producto:'Descripción de paisaje + robot diseñado con figuras geométricas' }
+              saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.4.4., MAT.1.C.1.1., MAT.1.C.1.2., MAT.1.C.1.3., MAT.1.C.1.4., MAT.1.D.1.1., MAT.1.D.2.4., MAT.1.D.3.3., MAT.1.D.4.1.',
+              tarea:'El alumnado usara el tangram para disenar un robot con figuras geometricas, identificando poligonos, circunferencia y circulo, y aplicando sumas llevando.' },
+        len:{ titulo:'¿DONDE ES LA FIESTA? — Describir un paisaje',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 8.3.b',
+              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.C.2., LCL.1.D.3., LCL.1.D.4., LCL.1.D.6.',
+              tarea:'Describir un paisaje con detalle siguiendo un orden logico, usando marcadores temporales, adjetivos de lugar y vocabulario de celebraciones' },
+        producto:'Descripcion de paisaje escrita + mural de la clase sobre fiestas del mundo' }
     ]},
     '3': { sdaNombre:'Tercer trimestre', reto:'SdA mensuales T3', sda:[
       { num:'3A', nombre:'CALCULADORA — SUMAS Y RESTAS DE COMPRA / TEXTO INSTRUCTIVO', mes:'ABRIL',
-        mat:{ titulo:'USAR LA CALCULADORA PARA RESOLVER OPERACIONES DE COMPRA',
+        mat:{ titulo:'VAMOS DE COMPRAS — Usar calculadora en situaciones de compra',
               criterios:'1.1.b, 1.2.b, 2.2.b, 3.2.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 7.1.b, 7.2.b',
-              saberes:'MAT.1.A.1.1., MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.5.1., MAT.1.D.2.3., MAT.1.F.1.1.',
-              tarea:'El alumnado usará la calculadora para resolver sumas y restas en situaciones de compra, identificando para qué sirve cada botón y aplicando el razonamiento sobre el cambio y el gasto en situaciones cotidianas.' },
-        len:{ titulo:'ELABORACIÓN DE UN TEXTO INSTRUCTIVO',
+              saberes:'MAT.1.A.1.1., MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.A.5.1., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.D.3.3., MAT.1.D.4.2., MAT.1.E.1.1., MAT.1.F.1.1., MAT.1.F.1.2., MAT.1.F.1.4.',
+              tarea:'El alumnado usara la calculadora para resolver sumas y restas en situaciones de compra con monedas y billetes, identificando cada funcion de la calculadora.' },
+        len:{ titulo:'¿TE INTERESA LA CIENCIA? — Texto instructivo',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.3.b',
-              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5.',
-              tarea:'El alumnado elaborará un texto instructivo (receta, normas de un juego, instrucciones), usando el imperativo o el infinitivo, numerando los pasos en orden y revisando la claridad y la ortografía.' },
+              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.C.2., LCL.1.D.3., LCL.1.D.4., LCL.1.D.5., LCL.1.D.6.',
+              tarea:'Elaborar un texto instructivo describiendo las fases de un proceso conocido paso a paso, usando vocabulario de inventos y conectores de secuencia' },
         producto:'Texto instructivo + resolución de operaciones de compra con calculadora' },
       { num:'3B', nombre:'HORARIO DEL COLEGIO Y ACTIVIDADES DIARIAS / CORREO ELECTRÓNICO', mes:'MAYO',
-        mat:{ titulo:'CALCULAR EL TIEMPO EN EL COLEGIO Y ELABORAR UN HORARIO DE ACTIVIDADES',
+        mat:{ titulo:'NUESTRA CLASE — Elaborar horario y calcular duraciones',
               criterios:'1.1.b, 1.2.b, 2.3.b, 4.1.b, 5.1.b, 5.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.B.1.4., MAT.1.C.1.5., MAT.1.C.2.1.',
-              tarea:'El alumnado calculará el tiempo que tarda en llegar al colegio y las horas que pasa allí, y elaborará un horario completo de todas las actividades que hace en un día, desde que se levanta hasta que se acuesta.' },
-        len:{ titulo:'ESCRIBE UN CORREO ELECTRÓNICO',
-              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b, 7.1.b, 7.2.b, 8.3.b, 9.2.b, 10.1.b, 10.2.b',
-              saberes:'LCL.1.B.1.1., LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6.',
-              tarea:'El alumnado escribirá un correo electrónico a un destinatario conocido, aplicando la estructura del género digital (asunto, saludo, cuerpo, despedida), el registro adecuado y la revisión ortográfica.' },
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.4., MAT.1.B.1.4., MAT.1.B.1.5., MAT.1.B.2.3., MAT.1.C.1.1., MAT.1.C.1.2., MAT.1.C.1.3., MAT.1.C.1.4., MAT.1.C.1.5., MAT.1.C.2.1., MAT.1.C.3.2., MAT.1.D.3.3., MAT.1.E.1.1.',
+              tarea:'El alumnado calculara el tiempo de llegada al colegio y elaborara un horario diario completo, aplicando lectura de relojes, horas, minutos, simetrias y cuerpos geometricos.' },
+        len:{ titulo:'¿LO HABLAMOS? — Correo electronico',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.3.b, 9.2.b, 10.1.b, 10.2.b',
+              saberes:'LCL.1.A.4., LCL.1.B.1.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.D.3., LCL.1.D.5., LCL.1.D.6.',
+              tarea:'Escribir un correo electronico resolviendo un conflicto de forma dialogada, con sujeto, predicado y ortografia correcta, usando lenguaje no discriminatorio' },
         producto:'Correo electrónico + horario de actividades diarias con tiempos calculados' },
       { num:'3C', nombre:'PLANNING DE VERANO — CERTEZA Y AZAR / ELABORAR UNA NOTICIA', mes:'JUNIO',
-        mat:{ titulo:'ELABORAR UN PLANNING DE PLANES DE VERANO CON CERTEZA, POSIBILIDAD E IMPOSIBILIDAD',
+        mat:{ titulo:'ESTAMOS EN LA PLAYA — Planning de verano con certeza y azar',
               criterios:'1.1.b, 1.2.b, 2.2.b, 3.2.b, 6.2.b',
-              saberes:'MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.D.2.3.',
-              tarea:'El alumnado elaborará un planning de los planes a realizar en verano clasificándolos en cosas que hará seguro (certeza), posiblemente (posibilidad) o que serán imposibles, introduciendo el azar y la probabilidad.' },
-        len:{ titulo:'ELABORAR UNA NOTICIA',
-              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 7.1.b, 7.2.b, 8.3.b, 9.2.b',
-              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6.',
-              tarea:'El alumnado elaborará una noticia periodística sobre un hecho del entorno escolar o local, aplicando la estructura básica (titular, entradilla, cuerpo), el lenguaje informativo y la revisión ortográfica.' },
+              saberes:'MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.D.2.2., MAT.1.D.2.3., MAT.1.E.1.1., MAT.1.E.1.2.',
+              tarea:'El alumnado elaborara un planning de planes de verano clasificando actividades como seguras, posibles o imposibles, aplicando multiplicacion, repartos, doble y mitad.' },
+        len:{ titulo:'¿CONCURSAMOS? — Elaborar una noticia',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 7.1.b, 8.3.b, 9.2.b',
+              saberes:'LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.B.3.6., LCL.1.C.2., LCL.1.D.3., LCL.1.D.4., LCL.1.D.5., LCL.1.D.6.',
+              tarea:'Elaborar una noticia con titular, cuerpo y estructura periodistica correcta sobre un hecho real o inventado relacionado con un concurso' },
         producto:'Noticia periodística + planning de verano con clasificación de probabilidad' }
     ]}
   },
@@ -3346,7 +3486,7 @@ const SANTILLANA_MAP = {
               tarea:'El alumnado calculará las cantidades y el coste de una merienda saludable para la clase, aplicando operaciones con números naturales y tomando decisiones de compra responsable.' },
         len:{ titulo:'ELABORACIÓN DE UN PRONÓSTICO DEL TIEMPO — VÍDEO DEL PROGRAMA DEL TIEMPO',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 9.2.a',
-              saberes:'LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.2.A.4., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.D.3., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará un pronóstico del tiempo y lo grabará en vídeo simulando un programa meteorológico, usando el lenguaje expositivo, el vocabulario específico y la presentación oral ante la cámara.' },
         producto:'Vídeo del programa del tiempo + merienda saludable con cantidades calculadas' }
     ]},
@@ -3416,7 +3556,7 @@ const SANTILLANA_MAP = {
       { num:'3C', nombre:'HORARIOS DE LA FUNCIÓN / (Lengua pendiente)', mes:'JUNIO',
         mat:{ titulo:'ELABORACIÓN DE HORARIOS PARA LAS ACTIVIDADES DE LA FUNCIÓN',
               criterios:'1.1.a, 3.2.a, 4.1.a, 4.2.a, 5.2.a, 7.1.a, 7.2.a',
-              saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.5.1., MAT.2.B.1.3., MAT.2.B.2.2., MAT.2.D.2.2., MAT.2.D.4.1., MAT.2.F.1.1., MAT.2.F.1.2., MAT.2.F.1.3.',
+              saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.6., MAT.2.A.5.1., MAT.2.B.1.3., MAT.2.B.2.2., MAT.2.D.2.2., MAT.2.D.4.1., MAT.2.F.1.1., MAT.2.F.1.2., MAT.2.F.1.3.',
               tarea:'El alumnado elaborará los horarios para las actividades de una función escolar, calculando duraciones, organizando turnos y gestionando el tiempo con el reloj analógico y digital.' },
         len:{ titulo:'ELABORACIÓN DE UN DECÁLOGO PARA HACER UN MUNDO MEJOR — TEXTO NORMATIVO',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 8.2.a',
@@ -3436,45 +3576,45 @@ const SANTILLANA_MAP = {
     ]}
   },
 
-  // ── 4º DE PRIMARIA — DATOS REALES MATEMÁTICAS / Lengua pendiente ──
+  // ── 4º DE PRIMARIA — DATOS REALES MATEMÁTICAS Y LENGUA (Santillana, 12 unidades) ──
   '4': {
     '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
       { num:'1A', nombre:'DISTANCIAS ENTRE CIUDADES / RETRATO DE MI FAMILIA', mes:'SEPTIEMBRE',
-        mat:{ titulo:'DISTANCIAS ENTRE CIUDADES — ORGANIZAMOS NUESTRO VIAJE',
-              criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 3.2.b, 5.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.2.A.1.1., MAT.2.A.2.1., MAT.2.A.2.3., MAT.2.A.2.7., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.3., MAT.2.A.3.4., MAT.2.A.3.5., MAT.2.A.3.6., MAT.2.A.4.2., MAT.2.A.4.3., MAT.2.D.2.1., MAT.2.E.1.1., MAT.2.E.1.3.',
+        mat:{ titulo:'DE VIAJE POR EUROPA — NUMEROS GRANDES Y VALOR POSICIONAL',
+              criterios:'1.1.b, 1.2.b, 2.2.b, 6.1.b, 6.2.b',
+              saberes:'MAT.2.A.1.1., MAT.2.A.2.1., MAT.2.A.2.2., MAT.2.A.2.3., MAT.2.A.2.7., MAT.2.A.2.8., MAT.2.A.3.1., MAT.2.A.4.2., MAT.2.D.3.3., MAT.2.E.1.1., MAT.2.E.1.3.',
               tarea:'El alumnado realizará un estudio de las distancias entre ciudades para organizar su propio viaje, aplicando el orden de magnitud de los números y estrategias de cálculo.' },
-        len:{ titulo:'RETRATO DE MI FAMILIA — TEXTO DESCRIPTIVO',
-              criterios:'1.1.b, 1.2.b, 1.3.b, 2.1.b, 3.1.b, 3.2.b, 3.3.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 8.1.b, 8.2.b, 8.3.b, 9.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+        len:{ titulo:'EN FAMILIA — TEXTO DESCRIPTIVO (Retrato familiar)',
+              criterios:'1.1.b, 1.2.b, 1.3.b, 2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.1.b, 8.2.b',
+              saberes:'LCL.2.A.1., LCL.2.A.2., LCL.2.A.3., LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.1., LCL.2.C.3., LCL.2.C.4., LCL.2.C.5., LCL.2.C.7., LCL.2.C.8., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6.',
               tarea:'El alumnado elaborará un retrato escrito de su familia en forma de texto descriptivo, aplicando las convenciones del género, el vocabulario adecuado y las normas ortográficas trabajadas.' },
         producto:'Retrato descriptivo familiar + estudio de distancias para planificar viaje' },
       { num:'1B', nombre:'PRESUPUESTO VIAJE A LA GRANJA / NOTAS DE AGRADECIMIENTO', mes:'OCTUBRE',
-        mat:{ titulo:'PRESUPUESTO VIAJE A LA GRANJA',
-              criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 3.2.b, 5.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.2.A.1.1., MAT.2.A.2.1., MAT.2.A.2.7., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.3.5., MAT.2.A.4.2., MAT.2.A.4.3., MAT.2.A.5.1., MAT.2.D.2.1., MAT.2.D.2.2., MAT.2.E.1.1.',
+        mat:{ titulo:'EN LA GRANJA ESCUELA — SUMA Y RESTA',
+              criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 6.2.b',
+              saberes:'MAT.2.A.2.1., MAT.2.A.2.2., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.3.5., MAT.2.A.4.3., MAT.2.A.5.1., MAT.2.E.1.1., MAT.2.E.1.3.',
               tarea:'El alumnado elaborará el presupuesto de un viaje escolar a la granja, calculando costes, comparando precios y tomando decisiones de compra responsable.' },
-        len:{ titulo:'ELABORACIÓN DE NOTAS DE AGRADECIMIENTO — TEXTO INFORMATIVO',
-              criterios:'1.1.b, 1.2.b, 1.3.b, 2.1.b, 3.1.b, 3.2.b, 3.3.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 8.1.b, 8.2.b, 8.3.b, 9.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+        len:{ titulo:'TE LO REGALO — NOTA DE AGRADECIMIENTO',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b',
+              saberes:'LCL.2.A.4., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.D.4., LCL.2.D.5.',
               tarea:'El alumnado redactará notas de agradecimiento en formato de texto informativo, usando las convenciones propias del género epistolar, el registro adecuado y la ortografía correcta.' },
         producto:'Notas de agradecimiento + presupuesto detallado del viaje a la granja' },
       { num:'1C', nombre:'ESTADÍSTICA DE LA PÁGINA WEB / ELABORACIÓN DE UN ANUNCIO', mes:'NOVIEMBRE',
-        mat:{ titulo:'ESTADÍSTICA DE LA PÁGINA WEB',
-              criterios:'1.1.b, 1.2.b, 2.1.b, 3.2.b, 5.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.2.A.2.3., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.6., MAT.2.C.1.1., MAT.2.C.1.2., MAT.2.C.4.1., MAT.2.D.2.1., MAT.2.D.2.2., MAT.2.D.3.3., MAT.2.E.1.3.',
+        mat:{ titulo:'LA PAGINA WEB DEL COLE — MULTIPLICACION',
+              criterios:'1.1.b, 1.2.b, 2.2.b, 3.2.b, 6.2.b',
+              saberes:'MAT.2.A.2.2., MAT.2.A.3.1., MAT.2.A.3.3., MAT.2.A.3.4., MAT.2.A.3.7., MAT.2.A.4.3., MAT.2.D.2.1., MAT.2.D.2.2., MAT.2.E.1.1., MAT.2.E.1.3.',
               tarea:'El alumnado analizará los datos estadísticos de una página web escolar para elaborar gráficas, interpretar resultados y sacar conclusiones matemáticas.' },
-        len:{ titulo:'ELABORACIÓN DE UN ANUNCIO — TEXTO INFORMATIVO',
-              criterios:'1.1.b, 1.2.b, 1.3.b, 2.1.b, 3.1.b, 3.2.b, 3.3.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 8.1.b, 8.2.b, 8.3.b, 9.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+        len:{ titulo:'CUANTO CUESTA — ELABORACION DE UN ANUNCIO',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 3.3.b, 4.1.b, 5.1.b, 8.3.b, 9.2.b',
+              saberes:'LCL.2.A.4., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.7., LCL.2.D.3., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará un anuncio publicitario en formato de texto informativo, identificando sus elementos clave (imagen, eslogan, mensaje), usando el registro persuasivo y las normas ortográficas.' },
         producto:'Anuncio publicitario + informe estadístico con gráficas de la página web' },
       { num:'1D', nombre:'LOGOTIPO DEL EQUIPO / ENTRADA EN UN BLOG', mes:'DICIEMBRE',
-        mat:{ titulo:'HACEMOS EL LOGOTIPO DEL EQUIPO',
-              criterios:'1.1.b, 1.2.b, 2.1.b, 3.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.B.1.1., MAT.2.C.1.1., MAT.2.C.1.2., MAT.2.C.1.3., MAT.2.C.4.1., MAT.2.C.4.3., MAT.2.D.2.2.',
+        mat:{ titulo:'LLEGA EL TORNEO — ANGULOS PERIMETROS Y GEOMETRIA',
+              criterios:'1.1.b, 2.1.b, 3.2.b, 5.1.b, 6.2.b',
+              saberes:'MAT.2.A.3.1., MAT.2.A.3.6., MAT.2.B.1.1., MAT.2.C.1.1., MAT.2.C.1.2., MAT.2.C.1.3., MAT.2.C.4.1., MAT.2.C.4.3., MAT.2.D.2.2., MAT.2.E.1.1., MAT.2.E.1.3.',
               tarea:'El alumnado diseñará el logotipo de su equipo de clase utilizando figuras geométricas, aplicando conceptos de simetría, proporciones y lenguaje matemático.' },
-        len:{ titulo:'ELABORACIÓN DE UNA ENTRADA EN UN BLOG',
+        len:{ titulo:'ADONDE VAMOS — ENTRADA EN UN BLOG DE VIAJES',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 9.2.b',
               saberes:'LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
               tarea:'El alumnado elaborará una entrada para un blog creado por el propio alumnado, aplicando las convenciones del género digital, el lenguaje adecuado al medio y la revisión ortográfica.' },
@@ -3482,85 +3622,85 @@ const SANTILLANA_MAP = {
     ]},
     '2': { sdaNombre:'Segundo trimestre', reto:'SdA mensuales T2', sda:[
       { num:'2A', nombre:'REPARTO DE TAREAS DE COCINA / ELABORACIÓN DE UNA SOLICITUD', mes:'ENERO',
-        mat:{ titulo:'REPARTO DE TAREAS DE COCINA',
+        mat:{ titulo:'PONEMOS LA MESA — DIVISION Y REPARTO',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.3.b, 6.2.b, 8.1.b, 8.2.b',
               saberes:'MAT.2.A.2.5., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.4.3., MAT.2.D.2.1., MAT.2.E.1.1., MAT.2.E.1.3., MAT.2.F.2.1., MAT.2.F.2.2., MAT.2.F.2.3., MAT.2.F.2.4., MAT.2.F.2.5., MAT.2.F.2.6.',
               tarea:'El alumnado organizará el reparto de tareas de cocina en equipo, aplicando las cuatro operaciones para gestionar cantidades, tiempos y distribuciones equitativas.' },
-        len:{ titulo:'ELABORACIÓN DE UNA SOLICITUD',
+        len:{ titulo:'NOS UNIMOS — ELABORACION DE UNA SOLICITUD',
               criterios:'2.1.b, 3.1.b, 3.2.b, 3.3.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 8.3.b, 9.2.b, 10.1.b, 10.2.b',
-              saberes:'LCL.1.B.3.2., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.1.B.3.2., LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.7., LCL.2.D.3., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará una solicitud formal dirigida a la dirección del centro o a una institución, aplicando la estructura y el registro propios de los textos administrativos y las normas de cortesía.' },
         producto:'Solicitud formal escrita + plan de reparto de tareas de cocina con cálculos' },
       { num:'2B', nombre:'PRESUPUESTO DE DECORACIÓN DE LA CLASE / ELABORACIÓN DE UN CÓMIC', mes:'FEBRERO',
-        mat:{ titulo:'ELABORACIÓN DE PRESUPUESTO DE DECORACIÓN DE LA CLASE',
+        mat:{ titulo:'UN NUEVO COLEGIO — DIVISION PROBLEMAS COTIDIANOS',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.3.b, 3.1.b, 8.1.b, 8.2.b',
               saberes:'MAT.2.A.2.5., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.4.3., MAT.2.D.2.1., MAT.2.E.2.1., MAT.2.E.2.2., MAT.2.E.2.3., MAT.2.F.2.1., MAT.2.F.2.2., MAT.2.F.2.3., MAT.2.F.2.4., MAT.2.F.2.5., MAT.2.F.2.6.',
               tarea:'El alumnado elaborará el presupuesto para decorar la clase, comparando precios, haciendo estimaciones y tomando decisiones de compra responsable con un presupuesto limitado.' },
-        len:{ titulo:'ELABORACIÓN DE UN CÓMIC',
-              criterios:'2.1.b, 3.1.b, 3.2.b, 3.3.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 8.3.b, 9.1.b, 9.2.b, 10.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+        len:{ titulo:'DEMASIADA TELE — ELABORACION DE UN COMIC',
+              criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 8.3.b, 9.1.b, 9.2.b, 10.2.b',
+              saberes:'LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.D.1., LCL.2.D.2., LCL.2.D.3., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará un cómic con personajes, diálogos y secuencia narrativa propia, aplicando los recursos expresivos del género (viñetas, globos, onomatopeyas) y la revisión ortográfica.' },
         producto:'Cómic elaborado por el alumnado + presupuesto de decoración de clase' },
       { num:'2C', nombre:'FIESTA SORPRESA — REPARTO DEL DINERO / ELABORACIÓN DE UNA NOTICIA', mes:'MARZO',
-        mat:{ titulo:'ORGANIZAMOS UNA FIESTA SORPRESA — REPARTO DEL DINERO',
+        mat:{ titulo:'LA FIESTA SORPRESA — FRACCIONES Y EUROS',
               criterios:'1.1.b, 1.2.b, 2.1.b, 4.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.4.2., MAT.2.A.5.1., MAT.2.E.1.3.',
+              saberes:'MAT.2.A.2.4., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.4.2., MAT.2.A.5.1., MAT.2.D.3.3., MAT.2.D.4.1., MAT.2.E.1.3.',
               tarea:'El alumnado organizará una fiesta sorpresa a un compañero/a, gestionando el presupuesto y representando con colores el reparto del dinero para cada parte de la fiesta.' },
-        len:{ titulo:'ELABORACIÓN DE UNA NOTICIA',
+        len:{ titulo:'ESO ES VERDAD — ELABORACION DE UNA NOTICIA',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 8.1.b, 8.3.b, 9.1.b, 9.2.b, 10.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.1., LCL.2.C.3., LCL.2.C.4., LCL.2.C.5., LCL.2.C.7., LCL.2.D.1., LCL.2.D.2., LCL.2.D.3., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará una noticia periodística sobre un hecho de actualidad o del entorno escolar, aplicando la estructura de la pirámide invertida, el titular, la entradilla y el cuerpo del texto.' },
         producto:'Noticia periodística escolar + organización de fiesta con reparto económico' },
       { num:'2D', nombre:'DISEÑO DE CABAÑA — CAPACIDAD Y COSTE / CARTEL CON RECOMENDACIONES', mes:'ABRIL',
-        mat:{ titulo:'DIBUJA UNA CABAÑA — CAPACIDAD Y COSTE',
+        mat:{ titulo:'EXCURSION AL CAMPO — CUERPOS GEOMETRICOS',
               criterios:'1.1.b, 3.2.b, 4.1.b, 5.1.b',
               saberes:'MAT.2.A.3.1., MAT.2.A.5.1., MAT.2.C.1.1., MAT.2.C.1.2., MAT.2.C.1.3., MAT.2.C.1.4., MAT.2.C.4.3., MAT.2.D.2.2., MAT.2.D.4.1.',
               tarea:'El alumnado diseñará y dibujará una cabaña, inventando su capacidad y calculando el coste de su construcción usando propiedades de figuras geométricas y medidas.' },
-        len:{ titulo:'ELABORACIÓN DE UN CARTEL CON RECOMENDACIONES',
+        len:{ titulo:'QUEREMOS CIUDADES MAS SANAS — CARTEL CON RECOMENDACIONES',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 8.3.b, 9.2.b, 10.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.D.3., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará un cartel con recomendaciones sobre un tema de interés (salud, medioambiente, convivencia), usando el texto instructivo, el lenguaje visual y la síntesis de información.' },
         producto:'Cartel de recomendaciones + diseño de cabaña con cálculo de capacidad y coste' }
     ]},
     '3': { sdaNombre:'Tercer trimestre', reto:'SdA mensuales T3', sda:[
       { num:'3A', nombre:'PRESUPUESTO ALQUILER DE SURF / ELABORACIÓN DE UNA LEYENDA', mes:'MAYO',
-        mat:{ titulo:'ELABORACIÓN DEL PRESUPUESTO DEL ALQUILER DE SURF',
+        mat:{ titulo:'HACEMOS DEPORTE EN EL MAR — FRACCIONES DECIMALES Y EUROS',
               criterios:'1.1.b, 1.2.b, 2.1.b, 4.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.4.2., MAT.2.A.5.1., MAT.2.E.1.3.',
+              saberes:'MAT.2.A.2.3., MAT.2.A.2.4., MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.4., MAT.2.A.4.2., MAT.2.A.5.1., MAT.2.D.3.3., MAT.2.D.4.1., MAT.2.E.1.3.',
               tarea:'El alumnado elaborará el presupuesto del alquiler de material de surf para un grupo, calculando costes por horas y personas, y tomando decisiones económicas justificadas.' },
-        len:{ titulo:'ELABORACIÓN DE UNA LEYENDA',
+        len:{ titulo:'CUANTAS LEYENDAS — ELABORACION DE UNA LEYENDA',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 7.2.b, 8.1.b, 8.2.b, 9.2.b, 10.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.1., LCL.2.C.2., LCL.2.C.3., LCL.2.C.5., LCL.2.C.7., LCL.2.C.8., LCL.2.C.9., LCL.2.D.3., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará una leyenda propia de tradición oral vinculada a un lugar o personaje, aplicando las características del género (narración en tercera persona, ambiente misterioso, moraleja implícita) y la revisión ortográfica.' },
         producto:'Leyenda escrita + presupuesto de alquiler de surf con decisiones argumentadas' },
       { num:'3B', nombre:'TIEMPO ENTRE PARADAS DE MAPA / DECÁLOGO DEPORTIVO', mes:'MAYO',
-        mat:{ titulo:'CÁLCULO DEL TIEMPO ENTRE PARADAS SEGÚN EL MAPA',
+        mat:{ titulo:'UN VIAJE EN METRO — TIEMPO Y MEDIDAS',
               criterios:'1.1.b, 3.2.b, 4.1.b, 4.2.b, 5.2.b, 7.1.b, 7.2.b',
-              saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.5.1., MAT.2.B.1.3., MAT.2.B.2.2., MAT.2.D.2.2., MAT.2.D.4.1., MAT.2.F.1.1., MAT.2.F.1.2., MAT.2.F.1.3.',
+              saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.6., MAT.2.A.5.1., MAT.2.B.1.3., MAT.2.B.2.2., MAT.2.D.2.2., MAT.2.D.4.1., MAT.2.F.1.1., MAT.2.F.1.2., MAT.2.F.1.3.',
               tarea:'El alumnado calculará los tiempos que se tarda de una parada a otra en un mapa de transporte, utilizando instrumentos de medida y representaciones gráficas.' },
-        len:{ titulo:'ELABORACIÓN DE UN TEXTO DE NORMAS — DECÁLOGO DEPORTIVO',
+        len:{ titulo:'ECHAMOS UNA CARRERA — TEXTO NORMATIVO (Decalogo deportivo)',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 5.1.b, 6.1.b, 6.3.b, 8.3.b, 9.2.b, 10.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.7., LCL.2.D.3., LCL.2.D.4., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará un decálogo deportivo en forma de texto normativo, usando el imperativo o el infinitivo, ordenando las normas por importancia y aplicando el registro formal y la corrección ortográfica.' },
         producto:'Decálogo deportivo + mapa de tiempos de transporte con cálculos de recorrido' },
       { num:'3C', nombre:'CÁLCULO DE LA RUTA DE SENDERISMO / FICHAS DE FIGURAS LITERARIAS', mes:'JUNIO',
-        mat:{ titulo:'CÁLCULO DE LA RUTA DE SENDERISMO',
+        mat:{ titulo:'VAYA MARCHA — MEDIDAS DE LONGITUD Y SENDERISMO',
               criterios:'1.1.b, 3.2.b, 4.1.b, 4.2.b, 5.2.b',
               saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.6., MAT.2.B.1.1., MAT.2.B.1.2., MAT.2.C.2.3., MAT.2.D.2.2., MAT.2.D.4.1.',
               tarea:'El alumnado calculará la distancia, el desnivel y el tiempo estimado de una ruta de senderismo, interpretando mapas e itinerarios con soportes físicos y digitales.' },
-        len:{ titulo:'ELABORACIÓN DE FICHAS DE GRANDES FIGURAS LITERARIAS',
+        len:{ titulo:'GRANDES FIGURAS LITERARIAS — FICHAS INFORMATIVAS',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 8.1.b, 8.3.b, 9.2.b, 10.2.b',
-              saberes:'LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.1., LCL.2.C.3., LCL.2.C.4., LCL.2.C.5., LCL.2.C.7., LCL.2.D.3., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado elaborará fichas biográficas de grandes figuras literarias (escritores, poetas), investigando sus obras más importantes, su época y su aportación a la literatura, usando fuentes variadas y el texto expositivo.' },
         producto:'Fichas de figuras literarias + plan de ruta de senderismo con distancias y tiempos' },
       { num:'3D', nombre:'CÁLCULO DE INGREDIENTES — ANÁLISIS DE ENVASES / CARTEL SOBRE LA IGUALDAD', mes:'JUNIO',
-        mat:{ titulo:'CÁLCULO DE INGREDIENTES Y ANÁLISIS DE ENVASES',
+        mat:{ titulo:'FIESTA FIN DE CURSO — MEDIDAS CAPACIDAD Y MASA',
               criterios:'1.1.b, 3.2.b, 4.1.b, 4.2.b, 5.2.b',
               saberes:'MAT.2.A.3.1., MAT.2.A.3.2., MAT.2.A.3.6., MAT.2.B.1.1., MAT.2.B.1.2., MAT.2.C.2.3., MAT.2.D.2.2., MAT.2.D.4.1.',
               tarea:'El alumnado calculará los ingredientes que se necesitan comprar para una receta, analizando cómo vienen envasados los productos y ajustando las cantidades a los envases disponibles.' },
-        len:{ titulo:'DISEÑAR UN CARTEL SOBRE LA IGUALDAD',
+        len:{ titulo:'PUEDE HACERLO CUALQUIERA — CARTEL SOBRE LA IGUALDAD',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.3.b, 7.1.b, 8.3.b, 9.2.b, 10.1.b',
-              saberes:'LCL.1.B.3.2., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6.',
+              saberes:'LCL.1.B.3.2., LCL.2.A.4., LCL.2.B.1.1., LCL.2.B.2.1., LCL.2.B.2.2., LCL.2.B.2.3., LCL.2.B.3.1., LCL.2.B.3.2., LCL.2.B.3.3., LCL.2.B.3.4., LCL.2.B.3.5., LCL.2.B.3.6., LCL.2.C.1., LCL.2.C.6., LCL.2.C.7., LCL.2.D.3., LCL.2.D.5., LCL.2.D.6., LCL.2.D.7.',
               tarea:'El alumnado diseñará un cartel sobre la igualdad de género o la igualdad de oportunidades, seleccionando el mensaje principal, el eslogan, las imágenes y el texto persuasivo, con conciencia del valor social del lenguaje.' },
         producto:'Cartel sobre la igualdad + lista de la compra con ingredientes calculados según envases' }
     ]}
@@ -3570,128 +3710,128 @@ const SANTILLANA_MAP = {
   '5': {
     '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
       { num:'1A', nombre:'¿CUÁNTOS BEBÉS NACEN CADA AÑO? / ¿CUIDAMOS LOS MARES?', mes:'SEPTIEMBRE',
-        mat:{ titulo:'¿CUÁNTOS BEBÉS NACEN CADA AÑO?',
+        mat:{ titulo:'¿CUANTOS BEBES NACEN CADA ANO? — Nacimientos por CC.AA.',
               criterios:'1.2.a, 2.1.a, 2.2.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.7., MAT.3.A.2.8., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.3.5., MAT.3.A.4.2., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio de nacimientos por comunidad y elaborará gráficos estadísticos comparativos.' },
-        len:{ titulo:'¿CUIDAMOS LOS MARES?',
+              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.7., MAT.3.A.2.8., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.3.5., MAT.3.A.3.7., MAT.3.A.4.1., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.7.',
+              tarea:'Estudio de nacimientos por comunidad autonoma con elaboracion de grafico comparativo con los de Andalucia o la localidad propia' },
+        len:{ titulo:'¿CUIDAMOS LOS MARES? — Cartel y encuesta sobre oceanos',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.1.a, 7.2.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6., LCL.3.C.3.',
-              tarea:'El alumnado realizará un cartel sobre el día de los océanos y una exposición oral sobre la contaminación marina.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.3.',
+              tarea:'Elaborar un cartel sobre el Dia de los Oceanos y realizar una encuesta sobre la importancia de los oceanos y la vida marina para su exposicion al resto de la clase' },
         producto:'Cartel océanos + estudio estadístico de nacimientos por CCAA' },
       { num:'1B', nombre:'¿CÓMO NOS DESPLAZAMOS? / ¿PARA QUÉ VAMOS AL COLEGIO?', mes:'OCTUBRE',
-        mat:{ titulo:'¿CÓMO NOS DESPLAZAMOS?',
+        mat:{ titulo:'¿COMO NOS DESPLAZAMOS? — Estadistica de medios de transporte',
               criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.2., MAT.3.A.2.6., MAT.3.A.2.7., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.3., MAT.3.A.3.4., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio de los desplazamientos en distintos medios de transporte.' },
-        len:{ titulo:'¿PARA QUÉ VAMOS AL COLEGIO?',
+              saberes:'MAT.3.A.2.2., MAT.3.A.2.6., MAT.3.A.2.7., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.3., MAT.3.A.3.4., MAT.3.A.3.5., MAT.3.A.3.7., MAT.3.A.4.1., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.7.',
+              tarea:'Estudio del uso de medios de transporte en Espana y CC.AA. con elaboracion de grafico y exposicion comparativa de resultados' },
+        len:{ titulo:'¿PARA QUE VAMOS AL COLEGIO? — Noticia del colegio',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 6.3.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará una noticia sobre su colegio para publicar en el periódico escolar.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar una noticia sobre lo sucedido en el colegio teniendo en cuenta las efemerides del mes (Diabetes, Derechos del Nino...) y presentarla como periodistas' },
         producto:'Periódico escolar con noticia + infografía de medios de transporte' },
       { num:'1C', nombre:'¿CUÁNTOS SOMOS EN PRIMARIA? / ¡NO ES JUSTO!', mes:'NOVIEMBRE',
-        mat:{ titulo:'¿CUÁNTOS SOMOS EN PRIMARIA?',
+        mat:{ titulo:'¿CUANTOS SOMOS EN PRIMARIA? — Centros y alumnado',
               criterios:'1.1.a, 1.2.a, 2.1.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.4., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio del número de estudiantes, centros y grupos de Educación Primaria.' },
-        len:{ titulo:'¡NO ES JUSTO!',
+              saberes:'MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.4., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3., MAT.3.E.3.1.',
+              tarea:'Estudio del numero de estudiantes, centros y grupos de Primaria en la CC.AA. con elaboracion de grafico estadistico comparativo' },
+        len:{ titulo:'¡NO ES JUSTO! — Reclamacion escrita',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.1.a, 7.2.a, 8.1.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6., LCL.3.C.3., LCL.3.C.4.',
-              tarea:'El alumnado presentará una reclamación ante algo injusto y la defenderá oralmente ante el grupo.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5.',
+              tarea:'Presentar por escrito una reclamacion ante algo que ha parecido injusto, relacionandola con las efemerides del mes (Derechos del Nino, Dia Escuela Inclusiva)' },
         producto:'Reclamación oral + estudio estadístico del sistema educativo' },
       { num:'1D', nombre:'¿GASTAMOS BIEN EL DINERO? / ¿RESPETAMOS A LOS ANIMALES?', mes:'DICIEMBRE',
-        mat:{ titulo:'¿GASTAMOS BIEN EL DINERO?',
+        mat:{ titulo:'¿GASTAMOS BIEN EL DINERO? — Relojes y geometria',
               criterios:'1.1.a, 5.1.a, 5.2.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.C.1.1., MAT.3.C.1.2., MAT.3.C.1.3., MAT.3.C.3.1., MAT.3.C.3.2., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio del gasto familiar para elaborar propuestas de ahorro responsable.' },
-        len:{ titulo:'¿RESPETAMOS A LOS ANIMALES?',
+              saberes:'MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.C.1.1., MAT.3.C.1.2., MAT.3.C.1.3., MAT.3.C.3.1., MAT.3.C.3.2., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio del numero de personas que usan relojes circulares o rectangulares; elaboracion de grafico e identificacion de simetrias y figuras geometricas en los relojes' },
+        len:{ titulo:'¿RESPETAMOS A LOS ANIMALES? — Cuento sobre extincion',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 6.3.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará un cuento sobre animales en peligro de extinción para compartir con otros cursos.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar un cuento sobre animales en peligro de extincion haciendo enfasis en aquellos que ayudan a personas con discapacidad' },
         producto:'Cuento de animales en peligro + informe de gastos familiares' }
     ]},
     '2': { sdaNombre:'Segundo trimestre', reto:'SdA mensuales T2', sda:[
       { num:'2A', nombre:'¿QUÉ ANIMALES ESTÁN EN PELIGRO? / ¿CÓMO ES TU LOCALIDAD?', mes:'ENERO',
-        mat:{ titulo:'¿QUÉ ANIMALES ESTÁN EN PELIGRO?',
+        mat:{ titulo:'¿QUE ANIMALES ESTAN EN PELIGRO? — Extincion por CC.AA.',
               criterios:'1.1.a, 1.2.a, 2.1.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio del número de animales en peligro de extinción en España.' },
-        len:{ titulo:'¿CÓMO ES TU LOCALIDAD?',
+              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio del numero de animales en peligro de extincion en Espana y la CC.AA. propia; elaboracion de grafico comparativo con exposicion de datos' },
+        len:{ titulo:'¿COMO ES TU LOCALIDAD? — Folleto turistico',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.1.a, 7.2.a, 8.2.a, 8.3.a',
-              saberes:'LCL.3.B.2.1., LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará un folleto turístico de su localidad con monumentos, entorno natural y datos de interés.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5.',
+              tarea:'Elaborar un folleto turistico de la localidad (monumentos, entorno, historia, fiestas, gastronomia) para posterior presentacion y exposicion oral ante el grupo' },
         producto:'Cuento de animales en extinción + campaña de concienciación con gráficas' },
       { num:'2B', nombre:'¿CUÁNTAS PERSONAS VIVIMOS EN ESPAÑA? / ¿QUÉ DEPORTE HACES?', mes:'FEBRERO',
-        mat:{ titulo:'¿CUÁNTAS PERSONAS VIVIMOS EN ESPAÑA?',
+        mat:{ titulo:'¿CUANTAS PERSONAS VIVIMOS EN ESPANA? — Habitantes por municipios',
               criterios:'1.1.a, 1.2.a, 2.1.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio del número de habitantes por municipios en cada comunidad autónoma.' },
-        len:{ titulo:'¿QUÉ DEPORTE HACES?',
+              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio del numero de habitantes por municipios en cada CC.AA.; elaboracion de grafico estadistico y exposicion comparativa de datos de poblacion' },
+        len:{ titulo:'¿QUE DEPORTE HACEMOS? — Retrato de deportista',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 6.3.a, 10.1.a, 10.2.a',
-              saberes:'LCL.3.A.4., LCL.3.B.1.1., LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará un retrato de un deportista y organizará una demostración deportiva para el cole.' },
+              saberes:'LCL.3.A.4., LCL.3.B.1., LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar un retrato de un deportista famoso y organizar una competicion deportiva relacionada con las efemerides del mes de febrero' },
         producto:'Folleto turístico local + mapa de población de España por CCAA' },
       { num:'2C', nombre:'¿PRACTICAMOS DEPORTE? / ¿TE GUSTA LA MÚSICA?', mes:'MARZO',
-        mat:{ titulo:'¿PRACTICAMOS DEPORTE?',
+        mat:{ titulo:'¿PRACTICAMOS DEPORTE? — Tiempo y deportes practicados',
               criterios:'1.1.a, 1.2.a, 2.1.a, 2.2.a, 4.1.a, 6.1.a, 6.2.a',
-              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.A.5.2., MAT.3.D.3.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio del tiempo dedicado a los deportes para elaborar una infografía deportiva.' },
-        len:{ titulo:'¿TE GUSTA LA MÚSICA?',
+              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.3.5., MAT.3.A.3.7., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio del tiempo dedicado a deportes practicados para comparar con propios habitos; elaboracion de grafico estadistico y exposicion de resultados' },
+        len:{ titulo:'¿TE GUSTA LA MUSICA? — Anuncio academia y mural poetico',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.1.a, 7.2.a, 8.1.a, 9.1.a, 9.2.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6., LCL.3.C.1., LCL.3.C.3.',
-              tarea:'El alumnado elaborará un anuncio para una academia de música y realizará una exposición oral del mismo.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5., LCL.3.D.1., LCL.3.D.7.',
+              tarea:'Elaborar un anuncio para una academia de musica y un mural poetico con biografias de poetas andaluces' },
         producto:'Anuncio academia de música + infografía deportiva estadística' }
     ]},
     '3': { sdaNombre:'Tercer trimestre', reto:'SdA mensuales T3', sda:[
       { num:'3A', nombre:'¿USAMOS ENERGÍAS LIMPIAS? / ¿PROTEGEMOS LA NATURALEZA?', mes:'ABRIL',
-        mat:{ titulo:'¿USAMOS ENERGÍAS LIMPIAS?',
-              criterios:'1.1.a, 2.1.a, 2.2.a, 3.2.a, 4.1.a, 4.2.a, 6.2.a, 8.2.a',
-              saberes:'MAT.3.A.2.2., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3., MAT.3.E.1.7., MAT.3.E.3.1., MAT.3.F.2.1., MAT.3.F.2.2., MAT.3.F.2.4., MAT.3.F.2.5.',
-              tarea:'El alumnado realizará un estudio del porcentaje de energía consumida por países para elaborar un informe sobre energías renovables.' },
-        len:{ titulo:'¿PROTEGEMOS LA NATURALEZA?',
+        mat:{ titulo:'¿USAMOS ENERGIAS LIMPIAS? — Estadistica energetica',
+              criterios:'1.1.a, 2.1.a, 2.2.a, 3.2.a, 4.1.a, 4.2.a, 6.2.a, 8.1.a, 8.2.a',
+              saberes:'MAT.3.A.2.2., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.3.1., MAT.3.F.2.1., MAT.3.F.2.2., MAT.3.F.2.4., MAT.3.F.2.5.',
+              tarea:'Estudio de datos estadisticos sobre uso de energias renovables en Espana; elaboracion de grafico comparativo con propuestas de mejora y exposicion de resultados' },
+        len:{ titulo:'¿PROTEGEMOS LA NATURALEZA? — Carta al director',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 6.3.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará una carta al director de un periódico sobre la protección del medioambiente.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar una carta al director de un periodico sobre la proteccion de la naturaleza; celebrar el Dia del Libro con actividades y juegos literarios' },
         producto:'Carta al director sobre medioambiente + informe de energías renovables' },
       { num:'3B', nombre:'¿CUIDAMOS NUESTRA ALIMENTACIÓN? / ¿QUÉ QUIERES SER?', mes:'ABRIL',
-        mat:{ titulo:'¿CUIDAMOS NUESTRA ALIMENTACIÓN?',
-              criterios:'1.1.a, 2.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.2.a, 8.2.a',
+        mat:{ titulo:'¿CUIDAMOS NUESTRA ALIMENTACION? — Nutricion y estadistica',
+              criterios:'1.1.a, 2.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.2.a, 8.1.a, 8.2.a',
               saberes:'MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.B.1.1., MAT.3.B.3.1., MAT.3.B.3.2., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.3.1., MAT.3.F.2.1., MAT.3.F.2.2., MAT.3.F.2.4., MAT.3.F.2.5.',
-              tarea:'El alumnado realizará un estudio sobre los alimentos que se consumen anualmente en España para elaborar una pirámide alimentaria estadística.' },
-        len:{ titulo:'¿QUÉ QUIERES SER?',
+              tarea:'Estudio sobre datos de alimentacion y nutricion; elaboracion de grafico comparativo y propuesta de dieta equilibrada con exposicion de resultados' },
+        len:{ titulo:'¿QUE QUIERES SER? — Encuesta y recital de poesia',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.1.a, 7.2.a, 8.1.a, 10.1.a, 10.2.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará una encuesta a distintos profesionales y organizará una feria de profesiones.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5.',
+              tarea:'Elaborar una encuesta a distintos profesionales y organizar un programa de recital de poesia con las profesiones como tema principal' },
         producto:'Feria de profesiones + pirámide alimentaria con datos de consumo' },
       { num:'3C', nombre:'¿CÓMO SON LAS VIVIENDAS? / ¿QUÉ COMEMOS?', mes:'MAYO',
-        mat:{ titulo:'¿CÓMO SON LAS VIVIENDAS?',
-              criterios:'1.1.a, 2.1.a, 3.2.a, 4.1.a, 4.2.a, 6.2.a, 8.2.a',
+        mat:{ titulo:'¿COMO SON LAS VIVIENDAS? — Estadistica sobre viviendas',
+              criterios:'1.1.a, 2.1.a, 3.2.a, 4.1.a, 4.2.a, 6.2.a, 8.1.a, 8.2.a',
               saberes:'MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.B.1.1., MAT.3.C.4.1., MAT.3.C.4.2., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.3.1., MAT.3.F.2.1., MAT.3.F.2.2., MAT.3.F.2.4., MAT.3.F.2.5.',
-              tarea:'El alumnado realizará un estudio sobre las viviendas en España y su comunidad para elaborar gráficas comparativas.' },
-        len:{ titulo:'¿QUÉ COMEMOS?',
+              tarea:'Estudio sobre viviendas en Espana y la CC.AA. propia; comparativa de tipos, superficies y caracteristicas con elaboracion de grafico y exposicion' },
+        len:{ titulo:'¿QUE COMEMOS? — Libro de recetas',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 6.3.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará un libro de recetas saludables y lo presentará al resto del colegio.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar un libro de recetas con posterior presentacion al alumnado; orientar las recetas segun las efemerides del mes (Dia de Europa, Dia de la Familia)' },
         producto:'Libro de recetas saludables + gráficas comparativas de viviendas' },
       { num:'3D', nombre:'¿A QUÉ DEDICAMOS NUESTRO TIEMPO? / ¡QUÉ VALIENTE!', mes:'MAYO',
-        mat:{ titulo:'¿A QUÉ DEDICAMOS NUESTRO TIEMPO?',
+        mat:{ titulo:'¿A QUE DEDICAMOS NUESTRO TIEMPO? — Actividades no remuneradas',
               criterios:'1.1.a, 2.1.a, 3.2.a, 4.1.a, 4.2.a, 6.2.a, 7.1.a, 7.2.a',
-              saberes:'MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.B.1.1., MAT.3.B.2.1., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.F.1.1., MAT.3.F.1.2., MAT.3.F.1.3., MAT.3.F.1.4., MAT.3.F.1.5.',
-              tarea:'El alumnado realizará un estudio sobre el tiempo dedicado a actividades para elaborar gráficas comparativas por género.' },
-        len:{ titulo:'¡QUÉ VALIENTE!',
+              saberes:'MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.B.1.1., MAT.3.B.2.1., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7.',
+              tarea:'Estudio del tiempo dedicado a actividades no remuneradas; comparativa con los propios habitos y elaboracion de grafico estadistico con exposicion' },
+        len:{ titulo:'¡QUE VALIENTE! — Comic en equipo y juego literario',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 7.1.a, 7.2.a, 8.1.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6., LCL.3.C.1., LCL.3.C.3.',
-              tarea:'El alumnado elaborará un cómic en equipo e inventará un juego de mesa basado en personajes valientes.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5.',
+              tarea:'Elaborar un comic en equipo e inventar un juego de mesa literario con tarjetas de preguntas y respuestas; exponer ambos proyectos en clase' },
         producto:'Cómic y juego de mesa + gráficas del uso del tiempo' },
       { num:'3E', nombre:'¿DESPERDICIAMOS MUCHA COMIDA? / ¿DE DÓNDE ERES?', mes:'JUNIO',
-        mat:{ titulo:'¿DESPERDICIAMOS MUCHA COMIDA?',
+        mat:{ titulo:'¿DESPERDICIAMOS MUCHA COMIDA? — Alimentos desperdiciados',
               criterios:'1.1.a, 2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 6.2.a',
-              saberes:'MAT.3.A.3.1., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.2.1., MAT.3.E.2.2.',
-              tarea:'El alumnado realizará un estudio sobre los alimentos desperdiciados para elaborar un informe estadístico con propuestas.' },
-        len:{ titulo:'¿DE DÓNDE ERES?',
+              saberes:'MAT.3.A.3.1., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3., MAT.3.E.1.5., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.2.1., MAT.3.E.2.2.',
+              tarea:'Estudio de datos sobre alimentos desperdiciados; comparativa con habitos propios y elaboracion de grafico estadistico con propuestas de reduccion de desperdicio' },
+        len:{ titulo:'¿DE DONDE ERES? — Folleto exposicion intercultural',
               criterios:'2.1.a, 3.1.a, 3.2.a, 4.1.a, 4.2.a, 5.1.a, 6.1.a, 6.2.a, 6.3.a',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.B.3.6.',
-              tarea:'El alumnado elaborará un folleto para una exposición intercultural del aula.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar un folleto para una exposicion intercultural considerando las nacionalidades presentes en el centro y preparar una presentacion oral multicultural' },
         producto:'Exposición intercultural + informe sobre desperdicio alimentario' }
     ]}
   },
@@ -3700,98 +3840,98 @@ const SANTILLANA_MAP = {
   '6': {
     '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
       { num:'1A', nombre:'¿DÓNDE VIVE MÁS GENTE? / ¿PROTEGEMOS LOS BOSQUES?', mes:'OCTUBRE',
-        mat:{ titulo:'¿DÓNDE VIVE MÁS GENTE?',
+        mat:{ titulo:'¿DONDE VIVE MAS GENTE? — Estudio poblacion y graficos',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.3.A.3.1., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.7.',
-              tarea:'El alumnado realizará un estudio de las regiones donde viven más personas y lo presentará en una exposición con gráficos estadísticos.' },
-        len:{ titulo:'¿PROTEGEMOS LOS BOSQUES?',
+              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.7., MAT.3.A.2.8., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.3., MAT.3.A.3.4., MAT.3.A.3.5., MAT.3.A.3.7., MAT.3.A.4.1., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.7.',
+              tarea:'Estudio de regiones donde viven mas personas; elaboracion de grafico de habitantes de Andalucia y la localidad en los ultimos anos con exposicion de resultados' },
+        len:{ titulo:'¿PROTEGEMOS LOS BOSQUES? — Atlas de botanica',
               criterios:'2.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b',
-              saberes:'LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.2., LCL.3.B.3.4., LCL.3.B.3.5., LCL.3.C.2.',
-              tarea:'Los alumnos investigarán sobre los bosques y elaborarán un informe medioambiental con textos descriptivos e información contrastada.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.2., LCL.3.C.6., LCL.3.D.6., LCL.3.D.7.',
+              tarea:'Investigar plantas o arboles, redactar descripciones en grupo, corregirlas entre todos y elaborar un atlas de botanica con portada y encuadernacion' },
         producto:'Informe medioambiental + gráficos estadísticos de población' },
       { num:'1B', nombre:'¿DÓNDE ESTÁ ESE LUGAR? / LA UNIÓN HACE LA FUERZA', mes:'NOVIEMBRE',
-        mat:{ titulo:'¿DÓNDE ESTÁ ESE LUGAR?',
+        mat:{ titulo:'¿DONDE ESTA ESE LUGAR? — Posiciones geograficas y graficos',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.3.A.1.1., MAT.3.A.3.1., MAT.3.A.3.4., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3.',
-              tarea:'El alumnado realizará un estudio de posiciones de países usando coordenadas y lo presentará en una exposición.' },
-        len:{ titulo:'LA UNIÓN HACE LA FUERZA',
+              saberes:'MAT.3.A.1.1., MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.3.5., MAT.3.A.3.7., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.7.',
+              tarea:'Estudio de posiciones de paises aplicando coordenadas y sistemas de referencia; elaboracion de grafico comparativo de cada pais con exposicion oral' },
+        len:{ titulo:'LA UNION HACE LA FUERZA — Ruta literaria y campana solidaria',
               criterios:'1.1.b, 2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 8.3.b',
-              saberes:'LCL.1.A.1., LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.3.1., LCL.1.B.3.4., LCL.1.B.3.5.',
-              tarea:'El alumnado elaborará y preparará una ruta literaria por la localidad para su posterior presentación y exposición oral.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.2., LCL.3.D.3., LCL.3.D.4., LCL.3.D.6.',
+              tarea:'Elaborar y presentar una ruta literaria por la localidad como guia turistico y realizar una campana solidaria sobre el uso responsable de la tecnologia' },
         producto:'Ruta literaria local + mapa de coordenadas geográficas' },
       { num:'1C', nombre:'¿QUÉ FRUTAS HAY AHORA? / ¿QUÉ DICEN LOS ANIMALES?', mes:'DICIEMBRE',
-        mat:{ titulo:'¿QUÉ FRUTAS HAY AHORA?',
+        mat:{ titulo:'¿QUE FRUTAS HAY AHORA? — Simetrias y frutas de temporada',
               criterios:'1.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 5.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.3.A.2.6., MAT.3.B.1.1., MAT.3.B.2.1., MAT.3.C.3.1., MAT.3.C.3.2., MAT.3.E.1.1.',
-              tarea:'El alumnado realizará un estudio de frutas según estaciones para elaborar un calendario de temporada con gráficas.' },
-        len:{ titulo:'¿QUÉ DICEN LOS ANIMALES?',
+              saberes:'MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.5., MAT.3.B.1.1., MAT.3.B.2.1., MAT.3.C.3.1., MAT.3.C.3.2., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio de frutas segun estaciones y su recoleccion; elaboracion de grafico de frutas correspondientes y trabajo de ejes de simetria con cada fruta' },
+        len:{ titulo:'¿QUE DICEN LOS ANIMALES? — Noticia con animales',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'Los discentes inventarán noticias sobre animales elaborando textos informativos y expositivos para compartir con la clase.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.D.6., LCL.3.D.7.',
+              tarea:'Inventar y redactar una noticia protagonizada por animales siguiendo el modelo periodistico y presentarla oralmente al resto de la clase como un reportero' },
         producto:'Calendario de frutas de temporada + noticias sobre animales' }
     ]},
     '2': { sdaNombre:'Segundo trimestre', reto:'SdA mensuales T2', sda:[
       { num:'2A', nombre:'¿EN QUÉ GASTAMOS EL DINERO? / ¿QUIÉN ES ARTISTA?', mes:'ENERO',
-        mat:{ titulo:'¿EN QUÉ GASTAMOS EL DINERO?',
+        mat:{ titulo:'¿EN QUE GASTAMOS EL DINERO? — Gastos del hogar y estadistica',
               criterios:'1.1.b, 1.2.b, 2.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.4., MAT.3.D.3.1., MAT.3.E.1.1.',
-              tarea:'El alumnado realizará un estudio de los gastos del hogar y comparará con datos de la comunidad para elaborar un informe económico.' },
-        len:{ titulo:'¿QUIÉN ES ARTISTA?',
+              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio de los gastos habituales del hogar comparados con la media de la comunidad autonoma; elaboracion de grafico de gastos con exposicion de resultados' },
+        len:{ titulo:'¿QUIEN ES ARTISTA? — Biografia de artista y karaoke poetico',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 7.1.b, 7.2.b, 8.2.b, 8.3.b',
-              saberes:'LCL.3.B.2.1., LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'El alumnado elaborará la biografía de un artista y organizará un karaoke poético para presentarlo ante el grupo.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5., LCL.3.C.9.',
+              tarea:'Elaborar la biografia de un artista elegido y exponerla al resto; organizar un karaoke poetico recitando textos liricos con entonacion y expresividad' },
         producto:'Informe económico familiar + biografía de artista y karaoke poético' },
       { num:'2B', nombre:'¿CUÁNTO VIAJAMOS? / ¿QUEDA AGUA?', mes:'FEBRERO',
-        mat:{ titulo:'¿CUÁNTO VIAJAMOS?',
+        mat:{ titulo:'¿CUANTO VIAJAMOS? — Estudio de viajes y porcentajes',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 6.1.b, 6.2.b',
-              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.4., MAT.3.A.3.4., MAT.3.D.3.1., MAT.3.E.1.1.',
-              tarea:'El alumnado realizará un estudio del número de viajes y gastos de vacaciones para elaborar una propuesta de viaje con presupuesto.' },
-        len:{ titulo:'¿QUEDA AGUA?',
+              saberes:'MAT.3.A.2.2., MAT.3.A.2.3., MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.4.2., MAT.3.D.3.1., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio de gastos y numero de viajes por vacaciones incluyendo duracion media; elaboracion de grafico comparativo con exposicion de datos obtenidos' },
+        len:{ titulo:'¿QUEDA AGUA? — Articulo de opinion y carteles sobre agua',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b, 10.1.b, 10.2.b',
-              saberes:'LCL.3.A.4., LCL.3.B.1.1., LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'El alumnado redactará un artículo de opinión sobre el uso responsable y ahorro del agua argumentando con datos reales.' },
+              saberes:'LCL.3.A.4., LCL.3.B.1., LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Redactar un articulo de opinion argumentado sobre el uso responsable del agua y elaborar carteles de concienciacion para el ahorro hidrico' },
         producto:'Propuesta de viaje con presupuesto + artículo de opinión sobre el agua' },
       { num:'2C', nombre:'¿CUÁNTA AGUA GASTAMOS? / ¿NOS CUIDAMOS?', mes:'MARZO',
-        mat:{ titulo:'¿CUÁNTA AGUA GASTAMOS?',
+        mat:{ titulo:'¿CUANTA AGUA GASTAMOS? — Estadistica del consumo de agua',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.3.b, 4.1.b, 6.1.b, 6.2.b',
-              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.4., MAT.3.A.3.6., MAT.3.D.4.1., MAT.3.E.1.1.',
-              tarea:'El alumnado realizará un estudio del consumo de agua en hogares y comparará con su casa para elaborar propuestas de ahorro.' },
-        len:{ titulo:'¿NOS CUIDAMOS?',
+              saberes:'MAT.3.A.2.4., MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.3.6., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3.',
+              tarea:'Estudio del consumo de agua en los hogares comparado con el de casa propia; elaboracion de grafico y propuesta de medidas para el ahorro hidrico' },
+        len:{ titulo:'¿NOS CUIDAMOS? — Entrevista a profesional de salud y obra teatral',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 7.1.b, 7.2.b, 8.1.b, 9.1.b, 9.2.b',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'El alumnado elaborará una entrevista a alguien relacionado con la salud y una obra de teatro sobre hábitos saludables.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5., LCL.3.D.1., LCL.3.D.7.',
+              tarea:'Elaborar y realizar una entrevista a un profesional de la salud (nutricionista, fisioterapeuta, dentista) y representar una obra teatral sobre habitos saludables' },
         producto:'Propuestas de ahorro de agua + entrevista sobre salud y obra de teatro' }
     ]},
     '3': { sdaNombre:'Tercer trimestre', reto:'SdA mensuales T3', sda:[
       { num:'3A', nombre:'¿SABES DE ORDENADORES? / ¿CÓMO NOS DIVERTIMOS?', mes:'ABRIL',
-        mat:{ titulo:'¿SABES DE ORDENADORES?',
+        mat:{ titulo:'¿SABES DE ORDENADORES? — Porcentajes y habilidades digitales',
               criterios:'1.1.b, 1.2.b, 2.1.b, 4.1.b, 6.1.b, 6.2.b, 8.1.b, 8.2.b',
-              saberes:'MAT.3.A.2.6., MAT.3.A.3.4., MAT.3.A.5.1., MAT.3.A.5.2., MAT.3.F.2.1., MAT.3.F.2.2.',
-              tarea:'El alumnado realizará un estudio de las habilidades tecnológicas de las personas para elaborar un informe con porcentajes y gráficos.' },
-        len:{ titulo:'¿CÓMO NOS DIVERTIMOS?',
+              saberes:'MAT.3.A.2.6., MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.4., MAT.3.A.5.1., MAT.3.A.5.2., MAT.3.C.2.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.3.1., MAT.3.F.2.1., MAT.3.F.2.2., MAT.3.F.2.4., MAT.3.F.2.5.',
+              tarea:'Estudio de porcentajes de habilidades tecnologicas en Espana comparado con la experiencia propia; elaboracion de grafico y exposicion de datos estadisticos' },
+        len:{ titulo:'¿COMO NOS DIVERTIMOS? — Cronica sobre un espectaculo',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'El alumnado elaborará una crónica sobre un espectáculo o evento cultural al que haya asistido.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar una cronica periodistica sobre un espectaculo vivido o imaginado, aplicando la estructura del genero; celebrar el Dia del Libro con juegos literarios' },
         producto:'Informe de habilidades tecnológicas + crónica de espectáculo' },
       { num:'3B', nombre:'¿CUÁNTA GENTE VIVE AHÍ? / ¡QUEREMOS APRENDER!', mes:'MAYO',
-        mat:{ titulo:'¿CUÁNTA GENTE VIVE AHÍ?',
+        mat:{ titulo:'¿CUANTA GENTE VIVE AHI? — Poblacion y areas urbanas',
               criterios:'1.1.b, 2.1.b, 3.2.b, 4.1.b, 4.2.b, 6.2.b, 8.1.b, 8.2.b',
-              saberes:'MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.C.4.1., MAT.3.C.4.2., MAT.3.D.4.1., MAT.3.E.1.1.',
-              tarea:'El alumnado realizará un estudio sobre extensión y población de países para elaborar gráficas comparativas con áreas geométricas.' },
-        len:{ titulo:'¡QUEREMOS APRENDER!',
+              saberes:'MAT.3.A.3.1., MAT.3.A.3.2., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.B.1.1., MAT.3.C.4.1., MAT.3.C.4.2., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.3., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.3.1., MAT.3.F.2.1., MAT.3.F.2.2., MAT.3.F.2.4., MAT.3.F.2.5.',
+              tarea:'Estudio de extension y poblacion de paises con areas urbanas mas pobladas; comparativa con datos del propio pais, ciudad o localidad y elaboracion de graficos' },
+        len:{ titulo:'¡QUEREMOS APRENDER! — Pagina de diario y album de greguerias',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 7.1.b, 7.2.b, 8.1.b, 10.1.b, 10.2.b',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.1., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'El alumnado elaborará una página de diario personal y un álbum de greguerías creativas.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3., LCL.3.C.1., LCL.3.C.3., LCL.3.C.4., LCL.3.C.5.',
+              tarea:'Elaborar una pagina de diario personal y confeccionar en grupo un album de greguerias para exponer en clase coincidiendo con el Dia del Libro' },
         producto:'Gráficas comparativas de población + diario personal y álbum de greguerías' },
       { num:'3C', nombre:'¿HAY BECAS SUFICIENTES? / ¿COMEMOS SANOS?', mes:'JUNIO',
-        mat:{ titulo:'¿HAY BECAS SUFICIENTES?',
+        mat:{ titulo:'¿HAY BECAS SUFICIENTES? — Gastos en educacion y becas',
               criterios:'1.1.b, 2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 6.2.b',
-              saberes:'MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.2.1., MAT.3.E.2.2.',
-              tarea:'El alumnado realizará un estudio sobre datos de becas y estudios para elaborar un informe estadístico con propuestas de mejora.' },
-        len:{ titulo:'¿COMEMOS SANOS?',
+              saberes:'MAT.3.A.3.1., MAT.3.A.3.5., MAT.3.A.4.3., MAT.3.D.1.1., MAT.3.D.4.1., MAT.3.E.1.1., MAT.3.E.1.2., MAT.3.E.1.3., MAT.3.E.1.5., MAT.3.E.1.6., MAT.3.E.1.7., MAT.3.E.2.1., MAT.3.E.2.2.',
+              tarea:'Estudio de datos de gastos en becas y educacion segun infografia; comparativa con gastos educativos propios y elaboracion de grafico con exposicion de resultados' },
+        len:{ titulo:'¿COMEMOS SANOS? — Libro de recetas de cocina andaluza',
               criterios:'2.1.b, 3.1.b, 3.2.b, 4.1.b, 4.2.b, 5.1.b, 6.1.b, 6.2.b, 6.3.b',
-              saberes:'LCL.3.B.2.2., LCL.3.B.2.3., LCL.3.B.3.2., LCL.3.B.3.3., LCL.3.B.3.4., LCL.3.B.3.5.',
-              tarea:'El alumnado elaborará un libro de recetas de cocina andaluza combinando textos instructivos con vocabulario gastronómico.' },
+              saberes:'LCL.3.B.2., LCL.3.B.3.',
+              tarea:'Elaborar un libro de recetas de cocina andaluza con presentacion al alumnado; opcionalmente, adaptarlo a un libro de recetas europeas para el Dia de Europa' },
         producto:'Informe estadístico de becas + libro de recetas de cocina andaluza' }
     ]}
   }
@@ -4187,6 +4327,28 @@ function _cargarTarjetaSant(curso, trim, sdaNum, mod){
     } else {
         document.getElementById('santArea').value='Lengua Castellana y Literatura + Matemáticas';
         document.getElementById('santTemas').value=`MAT: ${matDesc} (Crit: ${sda.mat.criterios}) | LEN: ${lenDesc} (Crit: ${sda.len.criterios||''})`;
+    }
+    // Auto-fill contexto educativo
+    const etapaEl=document.getElementById('etapa');
+    if(etapaEl) etapaEl.value='primaria';
+    const mCurso={'1':'1º','2':'2º','3':'3º','4':'4º','5':'5º','6':'6º'};
+    const cursoEl2=document.getElementById('curso');
+    if(cursoEl2) cursoEl2.value=mCurso[curso]||cursoEl2.value;
+    const mTrim={'1':'1er Trimestre','2':'2º Trimestre','3':'3er Trimestre'};
+    const trimEl2=document.getElementById('trimestre');
+    if(trimEl2) trimEl2.value=mTrim[trim]||trimEl2.value;
+    // Marcar áreas automáticamente
+    if(mod==='mat'||mod==='ambas'){
+        document.querySelectorAll('.area-item').forEach(it=>{
+            const cb=it.querySelector('input[type=checkbox]');
+            if(cb&&cb.value==='MAT'){cb.checked=true;it.classList.add('selected');if(!areasSeleccionadas.includes('MAT'))areasSeleccionadas.push('MAT');}
+        });
+    }
+    if(mod==='len'||mod==='ambas'){
+        document.querySelectorAll('.area-item').forEach(it=>{
+            const cb=it.querySelector('input[type=checkbox]');
+            if(cb&&cb.value==='LCL'){cb.checked=true;it.classList.add('selected');if(!areasSeleccionadas.includes('LCL'))areasSeleccionadas.push('LCL');}
+        });
     }
     // Título
     const titEl=document.getElementById('titSda');
@@ -5176,11 +5338,247 @@ function descargarRubrica(){const c=document.getElementById('rubricContent').tex
 function descargar(cont,nom){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([cont],{type:'text/plain;charset=utf-8'}));a.download=nom;a.click();showToast('💾 Descargado');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 function instalarPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast('✅ App instalada');document.getElementById('installBtn').classList.remove('show');}deferredPrompt=null;});}}
+
+// ═══════════════════════════════════════════════════════════════════
+// SELECTOR DE MODO DE TRABAJO (top)
+// ═══════════════════════════════════════════════════════════════════
+function setModoTrabajo(modo){
+    if(modo==='anaya'){
+        if(!anayaActivo){ toggleAnaya(); }
+        if(santActivo){ toggleSantillana(); }
+    } else if(modo==='sant'){
+        if(!santActivo){ toggleSantillana(); }
+        if(anayaActivo){ toggleAnaya(); }
+    } else {
+        if(anayaActivo){ toggleAnaya(); }
+        if(santActivo){ toggleSantillana(); }
+    }
+    _actualizarModoUI();
+}
+
+function _actualizarModoUI(){
+    const mLibre=document.getElementById('modoBtnLibre');
+    const mAnaya=document.getElementById('modoBtnAnaya');
+    const mSant=document.getElementById('modoBtnSant');
+    const pAnaya=document.getElementById('modoPanelAnaya');
+    const pSant=document.getElementById('modoPanelSant');
+    if(mLibre){ mLibre.className='modo-btn'+((!anayaActivo&&!santActivo)?' active-libre':''); }
+    if(mAnaya){ mAnaya.className='modo-btn'+(anayaActivo?' active-anaya':''); }
+    if(mSant){ mSant.className='modo-btn'+(santActivo?' active-sant':''); }
+    // Mover panel Anaya al contenedor superior
+    if(pAnaya){
+        const panelOrig=document.getElementById('anayaPanel');
+        if(panelOrig && anayaActivo){ pAnaya.appendChild(panelOrig); pAnaya.classList.add('show'); }
+        else if(!anayaActivo){ pAnaya.classList.remove('show'); }
+    }
+    // Mover panel Santillana al contenedor superior
+    if(pSant){
+        const panelOrig=document.getElementById('santPanel');
+        if(panelOrig && santActivo){ pSant.appendChild(panelOrig); pSant.classList.add('show'); }
+        else if(!santActivo){ pSant.classList.remove('show'); }
+    }
+    // Mostrar/ocultar panel correspondiente en el contenedor superior
+    document.getElementById('modoPanelAnaya').classList.toggle('show', anayaActivo);
+    document.getElementById('modoPanelSant').classList.toggle('show', santActivo);
+    // Banner en step1
+    _mostrarBannerModo();
+}
+
+function _mostrarBannerModo(){
+    const b=document.getElementById('importBanner');
+    const t=document.getElementById('importBannerText');
+    if(!b||!t) return;
+    if(anayaActivo||santActivo){
+        b.style.display='flex';
+        t.textContent='✅ Modo libro activo: etapa, curso y trimestre se rellenan automáticamente. Ve directamente al paso 2.';
+    } else {
+        if(!b.style.display||b.style.display==='none') return; // dejar como está
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PACK TRIMESTRAL
+// ═══════════════════════════════════════════════════════════════════
+let packEditorial='sant', packMod='ambas';
+
+function abrirPackModal(){
+    document.getElementById('packOverlay').classList.add('show');
+    // Preseleccionar modo activo si hay uno
+    if(santActivo) selPackEditorial('sant');
+    else if(anayaActivo) selPackEditorial('anaya');
+    else selPackEditorial('sant');
+    selPackMod('ambas');
+}
+function cerrarPackModal(){ document.getElementById('packOverlay').classList.remove('show'); }
+
+function selPackEditorial(ed){
+    packEditorial=ed;
+    ['anaya','sant'].forEach(e=>{
+        const el=document.getElementById('packOpt'+e[0].toUpperCase()+e.slice(1));
+        if(el) el.classList.toggle('selected', e===ed);
+    });
+    actualizarPackSdaList();
+}
+function selPackMod(mod){
+    packMod=mod;
+    ['mat','len','ambas'].forEach(m=>{
+        const el=document.getElementById('packOpt'+m[0].toUpperCase()+m.slice(1));
+        if(el) el.classList.toggle('selected', m===mod);
+    });
+    actualizarPackSdaList();
+}
+
+function actualizarPackSdaList(){
+    const curso=document.getElementById('packCurso')?.value;
+    const trim=document.getElementById('packTrim')?.value;
+    const wrap=document.getElementById('packSdaListWrap');
+    const list=document.getElementById('packSdaList');
+    const btn=document.getElementById('btnPackDl');
+    const prog=document.getElementById('packProgress');
+    if(!curso||!trim||!packEditorial){if(wrap)wrap.style.display='none';return;}
+    const map=packEditorial==='anaya'?ANAYA_MAP:SANTILLANA_MAP;
+    const data=map[curso]?.[trim];
+    if(!data?.sda){if(wrap)wrap.style.display='none';if(prog)prog.textContent='⚠️ No hay datos para esta combinación.';return;}
+    wrap.style.display='block';
+    list.innerHTML=data.sda.map((s,i)=>{
+        let titulo=s.nombre||`SdA ${i+1}`;
+        if(packMod==='mat'&&s.mat?.titulo) titulo=s.mat.titulo;
+        else if(packMod==='len'&&s.len?.titulo) titulo=s.len.titulo;
+        return `<div class="pack-sda-item"><span class="pack-sda-num">${i+1}</span><span>${s.mes||''} — <strong>${titulo.substring(0,55)}${titulo.length>55?'…':''}</strong></span></div>`;
+    }).join('');
+    if(prog) prog.textContent=`✅ ${data.sda.length} prompts listos para generar.`;
+    if(btn) btn.disabled=false;
+}
+
+async function _loadJSZip(){
+    return new Promise((res,rej)=>{
+        if(window.JSZip){res();return;}
+        const s=document.createElement('script');
+        s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        s.onload=res; s.onerror=()=>rej(new Error('JSZip no cargó'));
+        document.head.appendChild(s);
+    });
+}
+
+async function generarPackZip(){
+    const curso=document.getElementById('packCurso')?.value;
+    const trim=document.getElementById('packTrim')?.value;
+    const prog=document.getElementById('packProgress');
+    const btn=document.getElementById('btnPackDl');
+    if(!curso||!trim||!packEditorial){showToast('⚠️ Selecciona editorial, curso y trimestre');return;}
+    const map=packEditorial==='anaya'?ANAYA_MAP:SANTILLANA_MAP;
+    const data=map[curso]?.[trim];
+    if(!data?.sda){showToast('⚠️ No hay datos para esta combinación');return;}
+    btn.disabled=true; prog.textContent='⏳ Cargando JSZip…';
+    try{ await _loadJSZip(); } catch(e){ prog.textContent='❌ Error cargando JSZip.'; btn.disabled=false; return; }
+    const edLabel=packEditorial==='anaya'?'Anaya':'Santillana';
+    const cursoLabel=curso+'º de Primaria';
+    const trimLabel=['','1er Trimestre','2º Trimestre','3er Trimestre'][parseInt(trim)]||('Trimestre '+trim);
+    const safe=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,'').replace(/\s+/g,'_').substring(0,35);
+    const zip=new JSZip();
+    const folder=zip.folder('SDA_Pack_'+safe(cursoLabel)+'_'+safe(trimLabel)+'_'+edLabel);
+    for(let idx=0;idx<data.sda.length;idx++){
+        const sda=data.sda[idx];
+        prog.textContent=`⏳ Generando ${idx+1}/${data.sda.length}…`;
+        const ses=_calcularSesionesMes(sda.mes||'',packMod);
+        const prompt=_construirPromptPack(sda,{edLabel,cursoLabel,cursoNum:curso,trimLabel,trimNum:trim,mod:packMod,ses});
+        let titulo=sda.nombre||('SdA_'+(idx+1));
+        if(packMod==='mat'&&sda.mat?.titulo) titulo=sda.mat.titulo;
+        else if(packMod==='len'&&sda.len?.titulo) titulo=sda.len.titulo;
+        const archivo=String(idx+1).padStart(2,'0')+'_'+safe(sda.mes||'')+'_'+safe(titulo)+'.txt';
+        folder.file(archivo, prompt);
+        await new Promise(r=>setTimeout(r,10));
+    }
+    prog.textContent='⏳ Comprimiendo ZIP…';
+    const blob=await zip.generateAsync({type:'blob'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='SDA_Pack_'+safe(cursoLabel)+'_'+safe(trimLabel)+'_'+edLabel+'.zip';
+    a.click();
+    prog.textContent='✅ ZIP descargado — '+data.sda.length+' prompts listos';
+    btn.disabled=false;
+    showToast('✅ Pack ZIP con '+data.sda.length+' prompts descargado');
+}
+
+function _construirPromptPack(sda, cfg){
+    const {edLabel,cursoLabel,cursoNum,trimLabel,trimNum,mod,ses}=cfg;
+    const esMat=mod==='mat'||mod==='ambas';
+    const esLen=mod==='len'||mod==='ambas';
+    const esAmbas=mod==='ambas';
+    const modLabel=mod==='mat'?'Matemáticas':mod==='len'?'Lengua Castellana y Literatura':'Interdisciplinar (Matemáticas + Lengua)';
+    const nivel=cursoLabel;
+    const mTrim={'1':'1er Trimestre','2':'2º Trimestre','3':'3er Trimestre'};
+
+    // Bloque datos del libro
+    let datosLibro='';
+    if(esMat&&sda.mat){
+        datosLibro+=`
+MATEMÁTICAS:
+  Título SdA: "${sda.mat.titulo||sda.nombre}"
+  Criterios (Orden 30/05/2023 Andalucía): ${sda.mat.criterios||''}
+  Saberes básicos: ${sda.mat.saberes||''}
+  Tarea/reto: ${sda.mat.tarea||''}
+`;
+    }
+    if(esLen&&sda.len){
+        datosLibro+=`
+LENGUA CASTELLANA Y LITERATURA:
+  Título SdA: "${sda.len.titulo||sda.nombre}"
+  Criterios (Orden 30/05/2023 Andalucía): ${sda.len.criterios||''}
+  Saberes básicos: ${sda.len.saberes||''}
+  Tarea/reto: ${sda.len.tarea||''}
+`;
+    }
+
+    return `═════════════════════════════════════════════════════════
+GENERADOR DE SITUACIÓN DE APRENDIZAJE — CEIP CAPITULACIONES DE SANTA FE
+═════════════════════════════════════════════════════════
+Centro: CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía)
+Marco: LOMLOE · Decreto 101/2023 · Orden 30/05/2023 (Andalucía)
+Editorial: ${edLabel} — Proyecto Construyendo Mundos
+Curso: ${nivel} | Trimestre: ${trimLabel} | Mes: ${sda.mes||'—'}
+Modalidad: ${modLabel}
+SdA: "${sda.nombre||'—'}"
+Sesiones estimadas: ${ses} × 60 min
+Reto/Producto final del proyecto: ${sda.producto||'—'}
+
+⚠️ DATOS PRECARGADOS DEL LIBRO ${edLabel.toUpperCase()}:
+${datosLibro}
+═════════════════════════════════════════════════════════
+INSTRUCCIONES PARA GENERAR LA SdA
+═════════════════════════════════════════════════════════
+
+Genera una Situación de Aprendizaje completa para ${nivel}, ${trimLabel}, en la asignatura ${modLabel}, para el CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía), siguiendo ESTRICTAMENTE la estructura oficial de 7 apartados de la Consejería de Educación de Andalucía (Decreto 101/2023):
+
+⚠️ OBLIGATORIO:
+- Usa los criterios y saberes básicos de la Orden 30/05/2023 de Andalucía (con sus códigos oficiales).
+- Adapta el reto y las actividades al contexto del proyecto ${edLabel} indicado arriba.
+- Las ${ses} sesiones deben estar planificadas por semanas, con actividades concretas por sesión.
+- Incluye medidas DUA (tres principios: compromiso, representación, acción/expresión).
+- ACNEAE del aula: contempla alumnado con NEE general (TEA leve, TDAH, dificultades lecto-escritoras).
+- Metodologías: aprendizaje cooperativo, ABP, gamificación, pensamiento visible.
+- Apps del centro a integrar si procede: Capitulín Multiplicaciones, División Quest, El Tesoro de Capitulín, SuperLector Adventures, CapiRobots.
+
+ESTRUCTURA DE LOS 7 APARTADOS (desarrolla TODOS):
+1. IDENTIFICACIÓN Y LOCALIZACIÓN (centro de interés, justificación, conexión curricular)
+2. CONTEXTUALIZACIÓN Y RELACIÓN CON EL ENTORNO (situación real, vinculación con la vida cotidiana)
+3. DISEÑO DE LA TAREA (descripción detallada de la tarea final/producto)
+4. PLANIFICACIÓN DE ACTIVIDADES (tabla de sesiones: semana, sesión, actividad, recursos, evidencia)
+5. EVALUACIÓN (criterios, indicadores, instrumentos, tabla de rúbrica con 4 niveles)
+6. ATENCIÓN A LA DIVERSIDAD Y DUA (medidas ordinarias, medidas de apoyo, principios DUA desarrollados)
+7. RECURSOS Y MATERIALES (materiales físicos, digitales, apps, webs)
+
+Genera la SdA completa, detallada y lista para entregar a inspección educativa.
+═════════════════════════════════════════════════════════
+`;
+}
+
 setInterval(()=>{try{localStorage.setItem('sda_v6',JSON.stringify({sdaTipo,etapa:document.getElementById('etapa').value,areas:areasSeleccionadas,tematica:document.getElementById('tematica').value}));}catch(e){}},5000);
 
 // ── Inicialización: renderizar áreas al cargar según la etapa por defecto ──
 document.addEventListener('DOMContentLoaded', function() {
     cambiarEtapa();
+    _actualizarModoUI();
 });
 </script>
 </body>
