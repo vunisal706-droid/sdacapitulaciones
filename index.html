@@ -291,7 +291,7 @@
         /* ── PACK MODAL ── */
         .pack-overlay{position:fixed;inset:0;background:rgba(30,27,75,0.5);z-index:600;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(12px)}
         .pack-overlay.show{display:flex}
-        .pack-panel{background:rgba(255,255,255,0.97);border-radius:20px;padding:1.75rem;max-width:620px;width:100%;box-shadow:0 30px 70px rgba(99,102,241,0.18);max-height:90vh;overflow-y:auto}
+        .pack-panel{background:rgba(255,255,255,0.97);border-radius:20px;padding:1.75rem;max-width:700px;width:100%;box-shadow:0 30px 70px rgba(99,102,241,0.18);max-height:90vh;overflow-y:auto}
         .pack-panel h3{color:var(--primary);margin-bottom:.35rem;font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
         .pack-opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.75rem 0}
         .pack-opt{display:flex;align-items:center;gap:.55rem;padding:.65rem .9rem;background:rgba(255,255,255,0.9);border:2px solid rgba(99,102,241,0.15);border-radius:11px;cursor:pointer;transition:all .2s;font-size:.82rem;font-weight:600;color:#374151}
@@ -306,6 +306,40 @@
         .btn-pack-dl:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(79,70,229,0.38)}
         .btn-pack-dl:disabled{opacity:.5;pointer-events:none}
         .btn-pack-close{background:rgba(255,255,255,0.9);color:#374151;border:1.5px solid rgba(99,102,241,0.2);padding:.72rem 1.2rem;border-radius:9px;font-weight:600;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:'Poppins',inherit}
+
+        /* ── PLAN LECTURA ── */
+        .lect-ov{position:fixed;inset:0;background:rgba(5,60,35,.3);z-index:650;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(10px)}
+        .lect-ov.show{display:flex}
+        .lect-panel{background:#fff;border-radius:20px;padding:1.75rem;max-width:730px;width:100%;box-shadow:0 28px 64px rgba(5,150,105,.14);max-height:90vh;overflow-y:auto}
+        .lect-panel>h3{color:#059669;margin-bottom:.18rem;font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+        .lect-panel>.lsub{color:#6b7280;font-size:.78rem;margin-bottom:1rem;line-height:1.5}
+        .lnorm{background:#f0fdf4;border-left:3px solid #059669;border-radius:0 8px 8px 0;padding:.55rem .85rem;margin-bottom:1rem;font-size:.76rem;color:#065f46;line-height:1.5}
+        .lect-tabs{display:flex;gap:.4rem;background:rgba(5,150,105,.08);border-radius:11px;padding:.28rem;margin-bottom:1.1rem}
+        .lect-tab{flex:1;padding:.5rem .8rem;border:none;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;color:#4d7c0f;font-family:'Poppins',inherit;line-height:1.3}
+        .lect-tab.on{background:white;color:#059669;box-shadow:0 2px 8px rgba(5,150,105,.12)}
+        .lect-pane{display:none}
+        .lect-pane.on{display:block}
+        .lg2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.8rem}
+        .llabel{font-size:.71rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.28rem;display:block}
+        .lsel{width:100%;padding:.58rem .82rem;border:1.5px solid rgba(5,150,105,.22);border-radius:10px;font-size:.87rem;font-family:'Poppins',inherit;background:#fff;color:#1e1b4b;transition:all .2s}
+        .lsel:focus{outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.09)}
+        .cg6{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;margin:.35rem 0 .85rem}
+        .cchip{display:flex;align-items:center;gap:.45rem;padding:.55rem .78rem;background:#fff;border:1.5px solid rgba(5,150,105,.18);border-radius:9px;cursor:pointer;font-size:.82rem;font-weight:600;color:#374151;user-select:none;transition:all .2s}
+        .cchip:hover{border-color:#059669}
+        .cchip.on{background:rgba(5,150,105,.09);border-color:#059669;color:#065f46}
+        .cchip input{width:auto;min-width:14px;min-height:14px;cursor:pointer;accent-color:#059669;flex-shrink:0;margin:0}
+        .linfo{background:#f0fdf4;border:1.5px solid rgba(5,150,105,.18);border-radius:10px;padding:.65rem .9rem;margin:.65rem 0;font-size:.79rem;color:#065f46;line-height:1.6}
+        .lprompt-wrap{margin-top:.85rem;display:none}
+        .lprompt-wrap.on{display:block}
+        .lprompt-actions{display:flex;gap:.45rem;margin-bottom:.58rem;flex-wrap:wrap}
+        .lprompt-box{background:#f5fff9;color:#1e1b4b;padding:1rem;border-radius:12px;font-family:'Courier New',monospace;font-size:.77rem;line-height:1.68;white-space:pre-wrap;overflow-x:auto;max-height:350px;overflow-y:auto;border:1.5px solid rgba(5,150,105,.16)}
+        .btn-lg{background:linear-gradient(135deg,#059669,#047857);color:white;padding:.7rem 1.3rem;border:none;border-radius:9px;font-weight:700;font-size:.87rem;cursor:pointer;display:flex;align-items:center;gap:.42rem;transition:all .2s;font-family:'Poppins',inherit;box-shadow:0 4px 12px rgba(5,150,105,.24)}
+        .btn-lg:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(5,150,105,.36)}
+        .btn-lg:disabled{opacity:.5;pointer-events:none;transform:none}
+        .btn-ls{background:#fff;color:#374151;border:1.5px solid rgba(5,150,105,.22);padding:.6rem 1rem;border-radius:9px;font-weight:600;font-size:.82rem;cursor:pointer;font-family:'Poppins',inherit;display:flex;align-items:center;gap:.38rem;transition:all .2s}
+        .btn-ls:hover{border-color:#059669;color:#059669}
+        .lprog{font-size:.79rem;color:#059669;font-weight:600;min-height:1.1em}
+
         .btn-pack-dl-float{position:fixed;bottom:2rem;left:6rem;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;padding:.7rem 1.2rem;border-radius:50px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.4);display:flex;align-items:center;gap:.42rem;z-index:998;border:none;font-size:.82rem;transition:all .25s;white-space:nowrap;font-family:'Poppins',inherit}
         .btn-pack-dl-float:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,70,229,0.5)}
 
@@ -412,7 +446,10 @@
         .btn-foto-step2.show{display:flex}
         .btn-foto-step2:hover{background:white;border-color:rgba(99,102,241,0.55);transform:translateY(-2px)}
 
-        /* ── SCROLLBAR ── */
+        /* ── SKIPPED STEPS (modo Santillana) ── */
+        .step.skipped .sn{background:rgba(156,163,175,.15);border-color:rgba(156,163,175,.3);color:#9ca3af}
+        .step.skipped .sl{color:#9ca3af;text-decoration:line-through;font-style:italic}
+        .step.skipped{opacity:.5;pointer-events:none}
         ::-webkit-scrollbar{width:6px;height:6px}
         ::-webkit-scrollbar-track{background:rgba(99,102,241,0.05)}
         ::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.3);border-radius:3px}
@@ -484,6 +521,7 @@
         <button class="btn-foto" id="btnFotoStep1" onclick="abrirFotoLibro()">📸 Generar SdA con foto del libro</button>
         <button class="btn-foto-step2" id="btnFotoStep2" onclick="abrirPanelJSON()">📋 Pegar respuesta de la IA</button>
         <button class="btn-foto" style="background:rgba(79,70,229,.15);border-color:rgba(99,102,241,.5)" onclick="abrirPackModal()">📦 Pack Trimestral</button>
+        <button class="btn-foto" style="background:rgba(5,150,105,.12);border-color:rgba(5,150,105,.4);color:#065f46" onclick="abrirPlanLectura()">📚 Plan de Lectura</button>
         <button class="btn-foto" style="background:rgba(124,58,237,.25);border-color:rgba(196,181,253,.7)" onclick="irAPaso(9)">📐 Ir a Rúbricas</button>
     </div>
 </header>
@@ -596,6 +634,106 @@
     </div>
 </div>
 
+<!-- ══ PLAN LECTURA MODAL ══════════════════════════════════════════ -->
+<div class="lect-ov" id="lectOv" onclick="if(event.target===this)cerrarPlanLectura()">
+ <div class="lect-panel" onclick="event.stopPropagation()">
+  <h3>📚 Plan de Lectura Planificada — CEIP Capitulaciones</h3>
+  <p class="lsub">Instrucciones 21/06/2023 · Decreto 101/2023 · 30 min diarios · Opción 2: texto diferente cada día, 3 fases en cada sesión · Área LCL · Textos contextualizados con la SdA Santillana</p>
+  <div class="lnorm">📋 <strong>Marco normativo:</strong> Instrucciones de 21 de junio de 2023 sobre el tratamiento de la lectura para el despliegue de la CCL en Educación Primaria · Plan de Actuación para el Tratamiento de la Lectura del CEIP Capitulaciones (curso 24-25)</div>
+
+  <div class="lect-tabs">
+   <button class="lect-tab on" id="ltabTrim" onclick="switchLT('trim')">📅 Plan Trimestral — Un curso</button>
+   <button class="lect-tab" id="ltabAnual" onclick="switchLT('anual')">🏫 Plan Anual del Centro</button>
+  </div>
+
+  <!-- ── PANE TRIMESTRAL ── -->
+  <div class="lect-pane on" id="lpTrim">
+   <div class="lg2">
+    <div>
+     <span class="llabel">Curso</span>
+     <select class="lsel" id="ltCurso" onchange="infoLT()">
+      <option value="">Selecciona…</option>
+      <option value="1">1º de Primaria (1er Ciclo)</option>
+      <option value="2">2º de Primaria (1er Ciclo)</option>
+      <option value="3">3º de Primaria (2º Ciclo)</option>
+      <option value="4">4º de Primaria (2º Ciclo)</option>
+      <option value="5">5º de Primaria (3er Ciclo)</option>
+      <option value="6">6º de Primaria (3er Ciclo)</option>
+     </select>
+    </div>
+    <div>
+     <span class="llabel">Trimestre</span>
+     <select class="lsel" id="ltTrim" onchange="infoLT()">
+      <option value="">Selecciona…</option>
+      <option value="1">1er Trimestre (Oct–Dic)</option>
+      <option value="2">2º Trimestre (Ene–Mar)</option>
+      <option value="3">3er Trimestre (Abr–Jun)</option>
+     </select>
+    </div>
+   </div>
+   <div class="lg2">
+    <div>
+     <span class="llabel">Sesiones LCL / semana</span>
+     <select class="lsel" id="ltSes">
+      <option value="5" selected>5 días/semana (lectura diaria)</option>
+      <option value="4">4 días/semana</option>
+     </select>
+    </div>
+    <div>
+     <span class="llabel">ACNEAE del aula</span>
+     <input class="lsel" type="text" id="ltAcn" placeholder="Ej: TEA leve, TDAH, dislexia…" style="padding:.58rem .82rem">
+    </div>
+   </div>
+   <div class="linfo" id="ltInfo">ℹ️ Selecciona curso y trimestre para ver las SdAs incluidas.</div>
+  </div>
+
+  <!-- ── PANE ANUAL ── -->
+  <div class="lect-pane" id="lpAnual">
+   <p style="font-size:.82rem;color:#374151;margin-bottom:.5rem">Selecciona los cursos a incluir en el Plan Anual del Centro:</p>
+   <div class="cg6">
+    <label class="cchip on" id="lchip1"><input type="checkbox" value="1" checked onchange="toggleLC(this)"> 1º (1er C.)</label>
+    <label class="cchip on" id="lchip2"><input type="checkbox" value="2" checked onchange="toggleLC(this)"> 2º (1er C.)</label>
+    <label class="cchip on" id="lchip3"><input type="checkbox" value="3" checked onchange="toggleLC(this)"> 3º (2º C.)</label>
+    <label class="cchip on" id="lchip4"><input type="checkbox" value="4" checked onchange="toggleLC(this)"> 4º (2º C.)</label>
+    <label class="cchip on" id="lchip5"><input type="checkbox" value="5" checked onchange="toggleLC(this)"> 5º (3er C.)</label>
+    <label class="cchip on" id="lchip6"><input type="checkbox" value="6" checked onchange="toggleLC(this)"> 6º (3er C.)</label>
+   </div>
+   <div class="lg2">
+    <div>
+     <span class="llabel">Sesiones LCL / semana</span>
+     <select class="lsel" id="laSes">
+      <option value="5" selected>5 días/semana (lectura diaria)</option>
+      <option value="4">4 días/semana</option>
+     </select>
+    </div>
+    <div>
+     <span class="llabel">ACNEAE generales del centro</span>
+     <input class="lsel" type="text" id="laAcn" placeholder="Ej: TEA, TDAH, dislexia…" style="padding:.58rem .82rem">
+    </div>
+   </div>
+   <div class="linfo">ℹ️ Plan coordinado verticalmente para todos los cursos — 10 meses · Opción 2 por ciclo · Coordinación vertical de tipos de texto y estrategias lectoras · Itinerario lector del centro.</div>
+  </div>
+
+  <!-- ── OUTPUT ── -->
+  <div class="lprompt-wrap" id="lwrap">
+   <div class="lprompt-actions">
+    <button class="btn-ls" onclick="copiarLP()">📋 Copiar</button>
+    <button class="btn-ls" onclick="descargarLP()">💾 Descargar .txt</button>
+    <button class="btn-ls" onclick="abrirClaudeLP()">🚀 Abrir en Claude</button>
+   </div>
+   <div class="lprompt-box" id="lbox"></div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem;margin-top:1rem">
+   <span class="lprog" id="lprog"></span>
+   <div style="display:flex;gap:.65rem">
+    <button class="btn-ls" onclick="cerrarPlanLectura()">Cerrar</button>
+    <button class="btn-lg" id="btnLP" onclick="generarLP()">📚 Generar Plan</button>
+   </div>
+  </div>
+ </div>
+</div>
+
 <!-- ══ PACK MODAL ══════════════════════════════════════════════════════ -->
 <div class="pack-overlay" id="packOverlay" onclick="if(event.target===this)cerrarPackModal()">
     <div class="pack-panel" onclick="event.stopPropagation()">
@@ -642,6 +780,64 @@
                     <option value="3">3er Trimestre</option>
                 </select>
             </div>
+        </div>
+
+        <!-- ── PANEL SANTILLANA: datos de sesiones reales ── -->
+        <div id="packSantConfigWrap" style="display:none;background:rgba(239,68,68,0.05);border:1.5px solid rgba(239,68,68,0.2);border-radius:12px;padding:.85rem 1rem;margin-bottom:.85rem">
+            <div style="font-size:.75rem;font-weight:700;color:#b91c1c;margin-bottom:.65rem;display:flex;align-items:center;gap:.4rem">
+                📗 Configuración horaria real del aula (Santillana — igual que en modo individual)
+            </div>
+
+            <!-- Sesiones semanales -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.65rem" id="packSesMatWrap">
+                <div class="fg" style="margin:0" id="packSesMatBox">
+                    <label style="font-size:.72rem;font-weight:700;color:#4338ca;text-transform:uppercase">📐 Sesiones semanales de Matemáticas</label>
+                    <select id="packSesMat" class="sant-temas-input" onchange="actualizarPackSdaList()" style="font-size:.83rem">
+                        <option value="3">3 sesiones/semana</option>
+                        <option value="4" selected>4 sesiones/semana</option>
+                        <option value="5">5 sesiones/semana</option>
+                    </select>
+                    <small style="color:#6b7280;font-size:.68rem;margin-top:.2rem">Incluye las que tienen RP (resolución de problemas)</small>
+                </div>
+                <div class="fg" style="margin:0" id="packSesLenBox">
+                    <label style="font-size:.72rem;font-weight:700;color:#065f46;text-transform:uppercase">📖 Sesiones semanales de Lengua</label>
+                    <select id="packSesLen" class="sant-temas-input" onchange="actualizarPackSdaList()" style="font-size:.83rem">
+                        <option value="4">4 sesiones/semana</option>
+                        <option value="5" selected>5 sesiones/semana</option>
+                        <option value="6">6 sesiones/semana</option>
+                    </select>
+                    <small style="color:#6b7280;font-size:.68rem;margin-top:.2rem">Incluye las que tienen 30' de lectura diaria</small>
+                </div>
+            </div>
+
+            <!-- RP y Lectura -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.55rem" id="packRpLecWrap">
+                <div class="fg" style="margin:0" id="packRpBox">
+                    <label style="font-size:.72rem;font-weight:700;color:#4338ca;text-transform:uppercase">🔢 Sesiones con RP (30 min) por semana</label>
+                    <select id="packRpSes" class="sant-temas-input" style="font-size:.83rem">
+                        <option value="0">Sin sesiones RP</option>
+                        <option value="1">1 sesión con RP</option>
+                        <option value="2" selected>2 sesiones con RP</option>
+                        <option value="3">3 sesiones con RP</option>
+                    </select>
+                    <small style="color:#6b7280;font-size:.68rem;margin-top:.2rem">Cada sesión: 30' RP + 30' SdA Matemáticas</small>
+                </div>
+                <div class="fg" style="margin:0" id="packLecBox">
+                    <label style="font-size:.72rem;font-weight:700;color:#065f46;text-transform:uppercase">📖 Sesiones con lectura diaria (30 min)</label>
+                    <select id="packLecSes" class="sant-temas-input" style="font-size:.83rem">
+                        <option value="0">Sin lectura diaria</option>
+                        <option value="1">1 sesión con lectura</option>
+                        <option value="2">2 sesiones con lectura</option>
+                        <option value="3">3 sesiones con lectura</option>
+                        <option value="4">4 sesiones con lectura</option>
+                        <option value="5" selected>5 sesiones con lectura (diaria)</option>
+                    </select>
+                    <small style="color:#6b7280;font-size:.68rem;margin-top:.2rem">Cada sesión: 30' lectura + 30' SdA Lengua</small>
+                </div>
+            </div>
+
+            <!-- Resumen calculado -->
+            <div id="packSesResumen" style="background:rgba(99,102,241,0.07);border-radius:8px;padding:.5rem .8rem;margin-top:.6rem;font-size:.76rem;color:#374151;display:none"></div>
         </div>
 
         <div id="packSdaListWrap" style="display:none">
@@ -1048,6 +1244,37 @@
     <h2>🗂️ Tipo de Situación de Aprendizaje</h2>
     <p class="card-sub">El tipo determina el resultado final y condiciona toda la estructura de la SdA.</p>
 
+    <!-- Banner modo Santillana: paso saltado -->
+    <div id="step2SantBanner" style="display:none;background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(99,102,241,.05));border:1.5px solid rgba(239,68,68,.25);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1rem;font-size:.83rem;color:#7f1d1d">
+        <strong>📕 Modo Santillana activo</strong> — Este paso se rellena automáticamente con el reto del libro. <a href="#" style="color:#b91c1c;font-weight:700" onclick="irAPaso(4);return false">Ir al paso 4 →</a>
+    </div>
+
+    <!-- ── PANEL LIBRO: visible en modo Santillana/Anaya ── -->
+    <div id="step2LibroPanel" style="display:none">
+        <div style="background:linear-gradient(135deg,rgba(239,68,68,.07),rgba(99,102,241,.05));border:1.5px solid rgba(239,68,68,.3);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1rem">
+            <div style="display:flex;align-items:center;gap:.55rem;margin-bottom:.55rem">
+                <span style="font-size:1.1rem" id="step2LibroIcon">📕</span>
+                <strong style="color:#991b1b;font-size:.9rem" id="step2LibroLabel">Modo Santillana — Reto precargado</strong>
+            </div>
+            <div style="font-size:.82rem;color:#374151;margin-bottom:.55rem;line-height:1.6">
+                El <strong>Reto/Producto final</strong> se toma directamente del libro. La app inferirá el tipo de SdA a partir de él. Puedes ajustarlo si lo necesitas.
+            </div>
+            <div style="background:#fff;border-radius:10px;padding:.7rem .95rem;border:1.5px solid rgba(239,68,68,.2);margin-bottom:.7rem">
+                <div style="font-size:.7rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem">Reto / Producto del libro</div>
+                <div style="font-size:.92rem;font-weight:700;color:#1e1b4b" id="step2RetoLibro">—</div>
+            </div>
+            <!-- Matemáticas: itinerario mensual -->
+            <div id="step2MatBlock" style="display:none;background:rgba(99,102,241,.06);border-radius:10px;padding:.65rem .9rem;border:1px solid rgba(99,102,241,.15);margin-bottom:.7rem">
+                <div style="font-size:.7rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem">📐 Itinerario RP Matemáticas — Plan de Actuación del Centro</div>
+                <div style="font-size:.81rem;color:#374151;line-height:1.6" id="step2MatItinerario">—</div>
+            </div>
+            <div style="font-size:.78rem;color:#6b7280">
+                Tipo inferido automáticamente: <strong id="step2TipoInferido" style="color:#059669">—</strong>
+                <span style="margin-left:.5rem;opacity:.6">(puedes cambiarlo abajo si es necesario)</span>
+            </div>
+        </div>
+    </div>
+
     <div class="types-grid">
         <div class="type-card" onclick="selTipo('producto',this)">
             <input type="radio" name="tipo" value="producto">
@@ -1093,6 +1320,9 @@
 <div class="card" id="step3">
     <h2>🏫 Datos del Centro</h2>
     <p class="card-sub">CEIP Capitulaciones de Santa Fe — Información del apartado 1</p>
+    <div id="step3SantBanner" style="display:none;background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(99,102,241,.05));border:1.5px solid rgba(239,68,68,.25);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1rem;font-size:.83rem;color:#7f1d1d">
+        <strong>📕 Modo Santillana activo</strong> — El título y la temática se toman del libro automáticamente. <a href="#" style="color:#b91c1c;font-weight:700" onclick="irAPaso(4);return false">Ir al paso 4 →</a>
+    </div>
 
     <div class="fg">
         <label for="titSda">Título de la SdA *</label>
@@ -1405,6 +1635,9 @@
 <div class="card" id="step5">
     <h2>✅ Criterios de Evaluación</h2>
     <p class="card-sub">Orden de 30 de mayo de 2023 · <span id="numSesLbl">4</span> actividades evaluables (una por sesión)</p>
+    <div id="step5SantBanner" style="display:none;background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(99,102,241,.05));border:1.5px solid rgba(239,68,68,.25);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1rem;font-size:.83rem;color:#7f1d1d">
+        <strong>📕 Modo Santillana activo</strong> — Los criterios vienen del libro Santillana. La IA los adaptará a la Orden 30/05/2023 de Andalucía. <a href="#" style="color:#b91c1c;font-weight:700" onclick="irAPaso(7);return false">Ir al paso 7 →</a>
+    </div>
 
     <div id="anayaBypass5" style="display:none;background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(245,158,11,0.1));border:2px solid rgba(245,158,11,0.4);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem">
         <div style="font-size:1.1rem;margin-bottom:.3rem">📖 <strong style="color:#92400e">Modo Libro Anaya activo</strong></div>
@@ -1430,6 +1663,9 @@
 <div class="card" id="step6">
     <h2>📖 Saberes Básicos</h2>
     <p class="card-sub">Saberes vinculados a los criterios seleccionados — Orden 30/05/2023</p>
+    <div id="step6SantBanner" style="display:none;background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(99,102,241,.05));border:1.5px solid rgba(239,68,68,.25);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1rem;font-size:.83rem;color:#7f1d1d">
+        <strong>📕 Modo Santillana activo</strong> — Los saberes vienen del libro Santillana. La IA los adaptará a la Orden 30/05/2023 de Andalucía. <a href="#" style="color:#b91c1c;font-weight:700" onclick="irAPaso(7);return false">Ir al paso 7 →</a>
+    </div>
 
     <div id="anayaBypass6" style="display:none;background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(245,158,11,0.1));border:2px solid rgba(245,158,11,0.4);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem">
         <div style="font-size:1.1rem;margin-bottom:.3rem">📖 <strong style="color:#92400e">Modo Libro Anaya activo</strong></div>
@@ -2941,24 +3177,107 @@ function irAPaso(n){
     document.getElementById(`step${n}`).classList.add('active');
     updProg();
     window.scrollTo({top:0,behavior:'smooth'});
-    // Refresh saberes when entering step 6 — small delay so JSON-imported
-    // criteria checkboxes are already in the DOM and checked before reading them
     if(n===6) setTimeout(actualizarSaberes, 350);
     if(n===8) setTimeout(mostrarResumenSda, 50);
+    if(n===2) setTimeout(_actualizarStep2LibroPanel, 60);
 }
-function nextStep(){if(!validar(currentStep))return;if(currentStep<totalSteps){irAPaso(currentStep+1);}}
-function prevStep(){if(currentStep>1){irAPaso(currentStep-1);}}
+
+// En modo Santillana: pasos que se saltan (2=tipo SdA, 3=datos centro, 5=criterios, 6=saberes)
+const _SANT_SKIP = [2, 3, 5, 6];
+
+function _pasoSaltado(n){
+    return (santActivo) && _SANT_SKIP.includes(n);
+}
+
+function _siguientePasoReal(desde, direccion){
+    let n = desde + direccion;
+    while(n >= 1 && n <= totalSteps && _pasoSaltado(n)) n += direccion;
+    return n;
+}
+
+function nextStep(){
+    if(!validar(currentStep)) return;
+    if(currentStep < totalSteps){
+        const siguiente = _siguientePasoReal(currentStep, 1);
+        if(siguiente <= totalSteps) irAPaso(siguiente);
+    }
+}
+
+function prevStep(){
+    if(currentStep > 1){
+        const anterior = _siguientePasoReal(currentStep, -1);
+        if(anterior >= 1) irAPaso(anterior);
+    }
+}
 function irARubricas(){irAPaso(9);}
+
+// ── Auto-rellenar pasos saltados (2, 3, 5, 6) con datos Santillana ──
+function _autoRellenarPasosSant(curso, trim, sdaNum, mod){
+    if(!santActivo) return;
+    const trimData = SANTILLANA_MAP[curso]?.[trim];
+    const sda = trimData?.sda?.find(s=>String(s.num)===String(sdaNum));
+    if(!sda) return;
+
+    // PASO 2: tipo SdA — inferir desde producto
+    const productoTexto = document.getElementById('santProductoTexto')?.value || sda.producto || '';
+    if(productoTexto && !sdaTipo){
+        const tipoInferido = _inferirTipoSdA ? _inferirTipoSdA(productoTexto) : 'producto';
+        const tc = document.querySelector(`.type-card input[value="${tipoInferido}"]`)?.closest('.type-card');
+        if(tc) selTipo(tipoInferido, tc);
+    }
+
+    // PASO 3: título SdA y tematica — usar datos del libro si vacíos
+    const titEl = document.getElementById('titSda');
+    if(titEl && !titEl.value){
+        const titulo = mod==='mat' ? (sda.mat?.titulo||sda.nombre)
+                     : mod==='len' ? (sda.len?.titulo||sda.nombre)
+                     : sda.nombre;
+        titEl.value = titulo;
+    }
+    const temEl = document.getElementById('tematica');
+    if(temEl && !temEl.value) temEl.value = sda.nombre || '';
+    const pmEl = document.getElementById('preguntaMotriz');
+    if(pmEl && !pmEl.value && productoTexto){
+        const p = productoTexto.toLowerCase();
+        const verbo = /^(elabora|crea|diseña|construye|produce|escribe)/.test(p) ? p : 'crear '+p;
+        pmEl.value = `¿Cómo podemos ${verbo}?`;
+    }
+
+    // PASOS 5 y 6: criterios y saberes — llegan via santTemas (campo oculto)
+    // La IA los resuelve con los códigos Santillana + instrucción de adaptación andaluza.
+    // No se bloquea la validación en modo libro para estos pasos.
+
+    updProg();
+}
 function updProg(){
     document.getElementById('progLine').style.width=`${((currentStep-1)/(totalSteps-1))*100}%`;
-    document.querySelectorAll('.step').forEach((s,i)=>{const n=i+1;s.classList.remove('active','completed');if(n===currentStep)s.classList.add('active');else if(n<currentStep)s.classList.add('completed');});
+    document.querySelectorAll('.step').forEach((s,i)=>{
+        const n=i+1;
+        s.classList.remove('active','completed','skipped');
+        if(n===currentStep) s.classList.add('active');
+        else if(_pasoSaltado(n)) s.classList.add('skipped');
+        else if(n<currentStep) s.classList.add('completed');
+    });
 }
 function validar(step){
+    // En modo Santillana: pasos 2,3,5,6 se saltan — siempre válidos
+    if(santActivo && _SANT_SKIP.includes(step)) return true;
     const modoLibro = anayaActivo || santActivo;
     if(step===1&&areasSeleccionadas.length===0&&!modoLibro){showToast('⚠️ Selecciona al menos un área');return false;}
     // En modo libro también saltamos validación de fechas y campos auto-rellenados
     const camposBypassModo=['etapa','curso','trimestre','fechaInicio','fechaFin'];
-    if(step===2&&!sdaTipo){showToast('⚠️ Selecciona el tipo de SdA');return false;}
+    if(step===2&&!sdaTipo){
+        // En modo libro intentar autoseleccionar antes de bloquear
+        if(santActivo||anayaActivo){
+            const productoTexto=(santActivo?document.getElementById('santProductoTexto')?.value:document.getElementById('anayaProductoTexto')?.value)||'';
+            if(productoTexto){
+                const ti=_inferirTipoSdA(productoTexto);
+                const tc=document.querySelector(`.type-card input[value="${ti}"]`)?.closest('.type-card');
+                if(tc){selTipo(ti,tc);return true;}
+            }
+        }
+        showToast('⚠️ Selecciona el tipo de SdA');return false;
+    }
     let ok=true;
     document.getElementById(`step${step}`).querySelectorAll('[required]').forEach(f=>{
         if(modoLibro && (f.id==='titSda'||f.id==='tematica')){f.style.borderColor='';return;}
@@ -3003,6 +3322,187 @@ function validar(step){
 function toggleChip(el){el.classList.toggle('selected');}
 function toggleApp(el){const cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('selected',cb.checked);}
 function selTipo(tipo,el){document.querySelectorAll('.type-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');el.querySelector('input[type=radio]').checked=true;sdaTipo=tipo;}
+
+// ═══════════════════════════════════════════════════════════════════
+// PASO 2 — MODO LIBRO: reto precargado + inferencia de tipo + MAT itinerario
+// ═══════════════════════════════════════════════════════════════════
+
+// Itinerario mensual del Plan de Actuación de Matemáticas (CEIP Capitulaciones)
+const _MAT_ITINERARIO = {
+    '1':{ // 1º Primaria
+        'OCTUBRE':  'Conteo y comparación · Sumas con objetos manipulativos',
+        'NOVIEMBRE':'Ubicación espacial · Sumas y restas hasta 10',
+        'DICIEMBRE':'Comparación de cantidades · Clasificación y ordenación',
+        'ENERO':    'Sumas y restas hasta 20 · Identificación de patrones',
+        'FEBRERO':  'Sumas y restas con elementos visuales · Conteo hasta 20',
+        'MARZO':    'Clasificación de objetos · Estimación',
+        'ABRIL':    'Sumas con objetos manipulativos · Comparación',
+        'MAYO':     'Ubicación espacial · Series numéricas',
+        'JUNIO':    'Sumas y restas hasta 20 · Estimación'
+    },
+    '2':{ // 2º Primaria
+        'OCTUBRE':  'Sumas y restas hasta 20 · Comparación de cantidades',
+        'NOVIEMBRE':'Dobles y mitades · Introducción a la multiplicación',
+        'DICIEMBRE':'Problemas de dinero · Sumas y restas hasta 50',
+        'ENERO':    'Multiplicación (repetición de sumas) · División sencilla',
+        'FEBRERO':  'Medidas (longitud y peso) · Tiempo básico',
+        'MARZO':    'Fracciones sencillas · Suma y resta con decenas',
+        'ABRIL':    'Multiplicación y división en contextos cotidianos · Dinero',
+        'MAYO':     'Medidas (kilogramos, litros) · Fracciones sencillas',
+        'JUNIO':    'Geometría básica (formas y longitudes) · Patrones'
+    },
+    '3':{ // 3º Primaria
+        'OCTUBRE':  'Sumas y restas hasta 100 · Multiplicación tablas 1-5',
+        'NOVIEMBRE':'División como reparto equitativo · Tiempo (horas y días)',
+        'DICIEMBRE':'Fracciones simples (medias y cuartos) · Dinero con monedas',
+        'ENERO':    'Multiplicación tablas 6-10 · División con números mayores',
+        'FEBRERO':  'Fracciones en situaciones cotidianas · Estimación y medidas',
+        'MARZO':    'Geometría (perímetro de figuras) · Tiempo (días y semanas)',
+        'ABRIL':    'Decimales simples · Dinero (compras y devoluciones)',
+        'MAYO':     'Multiplicación y división combinadas · Estimación de longitud',
+        'JUNIO':    'Fracciones y decimales combinados · Patrones numéricos'
+    },
+    '4':{ // 4º Primaria
+        'OCTUBRE':  'Sumas y restas hasta 1.000 · Multiplicación de dos cifras',
+        'NOVIEMBRE':'División de dos cifras · Fracciones (tercios, cuartos, quintos)',
+        'DICIEMBRE':'Medidas (longitud, peso, capacidad) · Tiempo',
+        'ENERO':    'Fracciones equivalentes · Dinero (compras con cambio)',
+        'FEBRERO':  'Multiplicación y división complejas · Geometría (áreas y perímetros)',
+        'MARZO':    'Fracciones en la vida cotidiana · Geometría y medidas',
+        'ABRIL':    'Decimales y medidas · División con números grandes',
+        'MAYO':     'Porcentajes sencillos · Dinero con decimales',
+        'JUNIO':    'Geometría (áreas y perímetros complejos) · Fracciones y decimales'
+    },
+    '5':{ // 5º Primaria
+        'OCTUBRE':  'Números naturales — operaciones básicas, suma de dinero, multiplicación, reparto',
+        'NOVIEMBRE':'Multiplicación y potencias — propiedad distributiva, uso de potencias',
+        'DICIEMBRE':'División · Múltiplos y divisores — reparto equitativo, divisibilidad',
+        'ENERO':    'Figuras geométricas — clasificación de triángulos, simetría, ángulos',
+        'FEBRERO':  'Fracciones — comparación, fracción de un número, compartir cantidades',
+        'MARZO':    'Números decimales — compras, distribución de dinero',
+        'ABRIL':    'Operaciones con decimales — división y multiplicación decimal',
+        'MAYO':     'Proporcionalidad y porcentajes — descuentos, proporción en compras',
+        'JUNIO':    'Unidades de medida · Perímetros · Volúmenes'
+    },
+    '6':{ // 6º Primaria
+        'OCTUBRE':  'Números naturales — suma, multiplicación, división en contextos cotidianos',
+        'NOVIEMBRE':'Divisibilidad — reparto de objetos, agrupaciones, criterios',
+        'DICIEMBRE':'Números enteros — temperaturas, ahorro, niveles',
+        'ENERO':    'Ángulos y movimientos — giros, simetría, medición de ángulos',
+        'FEBRERO':  'Fracciones — repartir, compartir, fracciones en recetas',
+        'MARZO':    'Números decimales — compra de frutas, distribución, gasolina',
+        'ABRIL':    'División de números decimales — distribución, compra de artículos',
+        'MAYO':     'Proporcionalidad y porcentajes — descuentos, reparto proporcional',
+        'JUNIO':    'Medidas · Perímetros · Volúmenes — longitud, volumen de cajas, área'
+    }
+};
+
+// Inferir tipo de SdA desde el texto del producto/reto
+function _inferirTipoSdA(producto){
+    const p = (producto||'').toLowerCase();
+    // Producto/artefacto
+    if(/crea|elabora|diseña|construye|fabrica|maqueta|dossier|cartel|mural|guía|libro|blog|vídeo|video|póster|poster|álbum|recetario|periódico|revista|folleto|ficha|comic|cómic|collage|diario|menú|invitación|nota|listado|crucigrama|receta|texto|cuento|fábula|poema|norma|presentacion/.test(p))
+        return 'producto';
+    // Desempeño
+    if(/expone|debate|representa|drama|obra|teatro|simulación|exposición|presentación|informe oral|tertulia|debate|defensa/.test(p))
+        return 'desempeno';
+    // Resolución
+    if(/resuelve|soluciona|propone|diseña sistema|mejora|responde a|necesidad|problema real/.test(p))
+        return 'resolucion';
+    // Indagación
+    if(/investiga|averigua|descubre|responde a la pregunta|hipótesis|experimento|observa/.test(p))
+        return 'indagacion';
+    // Por defecto si hay verbo de creación o sustantivo
+    return 'producto';
+}
+
+// Obtener el mes activo desde el Santillana/Anaya seleccionado
+function _getMesActivo(){
+    if(santActivo){
+        const curso=document.getElementById('santCurso')?.value;
+        const trim=document.getElementById('santTrimestre')?.value;
+        const sdaNum=document.getElementById('santSdaNum')?.value;
+        if(!curso||!trim||!sdaNum) return null;
+        const sda=SANTILLANA_MAP[curso]?.[trim]?.sda?.find(s=>String(s.num)===String(sdaNum));
+        return sda?{mes:sda.mes,curso,sda}:null;
+    }
+    if(anayaActivo){
+        const curso=document.getElementById('anayaCurso')?.value;
+        const trim=document.getElementById('anayaTrimestre')?.value;
+        const sdaNum=document.getElementById('anayaSdaNum')?.value;
+        if(!curso||!trim||!sdaNum) return null;
+        const sda=ANAYA_MAP[curso]?.[trim]?.sda?.find(s=>String(s.num)===String(sdaNum));
+        return sda?{mes:sda.mes,curso,sda}:null;
+    }
+    return null;
+}
+
+// Actualizar el panel del paso 2 según el modo activo
+function _actualizarStep2LibroPanel(){
+    const panel=document.getElementById('step2LibroPanel');
+    const matBlock=document.getElementById('step2MatBlock');
+    const modoLibro=santActivo||anayaActivo;
+
+    if(!modoLibro){ panel.style.display='none'; return; }
+
+    panel.style.display='block';
+
+    // Obtener producto del libro activo
+    let productoTexto='';
+    let esAnaya=anayaActivo;
+    const info=_getMesActivo();
+
+    if(santActivo){
+        productoTexto=document.getElementById('santProductoTexto')?.value||
+                      document.getElementById('santCardProducto')?.textContent||'';
+        document.getElementById('step2LibroIcon').textContent='📕';
+        document.getElementById('step2LibroLabel').textContent='Modo Santillana — Reto precargado del libro';
+    } else {
+        productoTexto=document.getElementById('anayaProductoTexto')?.value||
+                      document.getElementById('anayaCardProducto')?.textContent||'';
+        document.getElementById('step2LibroIcon').textContent='📘';
+        document.getElementById('step2LibroLabel').textContent='Modo Anaya — Reto precargado del libro';
+    }
+
+    // Mostrar reto
+    const retoEl=document.getElementById('step2RetoLibro');
+    retoEl.textContent=productoTexto||'(Selecciona primero la SdA en el panel del libro)';
+
+    // Mostrar itinerario MAT si corresponde
+    const tieneMAT = santActivo
+        ? (document.getElementById('santArea')?.value||'').toLowerCase().includes('mat')
+        : (document.getElementById('anayaArea')?.value||'').toLowerCase().includes('mat');
+
+    if(tieneMAT && info?.mes && info?.curso){
+        const itinerario=_MAT_ITINERARIO[info.curso]?.[info.mes];
+        if(itinerario){
+            matBlock.style.display='block';
+            document.getElementById('step2MatItinerario').innerHTML=
+                `<strong>${info.mes}:</strong> ${itinerario}<br>
+                 <span style="font-size:.74rem;color:#6366f1;margin-top:.25rem;display:block">Según el Plan de Actuación para Resolución de Problemas — CEIP Capitulaciones</span>`;
+        } else {
+            matBlock.style.display='none';
+        }
+    } else {
+        matBlock.style.display='none';
+    }
+
+    // Inferir tipo y autoseleccionar
+    if(productoTexto){
+        const tipoInferido=_inferirTipoSdA(productoTexto);
+        const tipoLabels={producto:'🎨 SdA de Producto',desempeno:'🎭 SdA de Desempeño',
+                         indagacion:'🔍 SdA de Indagación',resolucion:'🧩 SdA de Resolución'};
+        document.getElementById('step2TipoInferido').textContent=tipoLabels[tipoInferido]||'🎨 SdA de Producto';
+
+        // Autoseleccionar la type-card correspondiente
+        const targetCard=document.querySelector(`.type-card input[value="${tipoInferido}"]`)?.closest('.type-card');
+        if(targetCard && !sdaTipo){
+            selTipo(tipoInferido, targetCard);
+        } else if(targetCard && sdaTipo===tipoInferido){
+            targetCard.classList.add('selected');
+        }
+    }
+}
 function selIA(el){
     document.querySelectorAll('#step8 .ia-chip').forEach(c=>c.classList.remove('selected'));
     el.classList.add('selected');
@@ -3981,6 +4481,21 @@ function _calcularSesionesMes(mes, modalidad){
     return Math.round(semanas * porSemana);
 }
 
+// Cálculo de sesiones para Santillana Pack — usa sesiones reales del aula
+// cfg: { sesMat, sesLen, rpSes, lecSes }
+function _calcularSesionesMesSant(mes, modalidad, cfg){
+    const diasL = DIAS_LECTIVOS_MES[mes.toUpperCase()] || 18;
+    const semanas = diasL / 5;
+    const esMat = modalidad==='mat'||modalidad==='ambas';
+    const esLen = modalidad==='len'||modalidad==='ambas';
+    let total = 0;
+    if(esMat) total += Math.round(semanas * (cfg.sesMat||4));
+    if(esLen) total += Math.round(semanas * (cfg.sesLen||5));
+    // Si es interdisciplinar no sumamos los dos sino que usamos el mayor (misma sesión puede cubrir ambas)
+    if(modalidad==='ambas') total = Math.round(semanas * Math.max(cfg.sesMat||4, cfg.sesLen||5));
+    return total || Math.round(semanas * 4);
+}
+
 // ═══════════════════════════════════════════════════════════════════
 // MODO LIBRO ANAYA — FUNCIONES
 // ═══════════════════════════════════════════════════════════════════
@@ -4101,6 +4616,7 @@ function _cargarTarjetaAnaya(curso, trim, sdaNum, mod){
     document.getElementById('anayaProductoTexto').value=sda.producto;
     document.getElementById('anayaCentro').value='';
     document.getElementById('anayaCardPreview').style.display='block';
+    if(typeof _actualizarStep2LibroPanel==='function') setTimeout(_actualizarStep2LibroPanel,80);
     if(mod==='mat'){
         document.getElementById('anayaArea').value='Matemáticas';
         document.getElementById('anayaTemas').value=`Temas: ${sda.mat.temas} | Contenidos: ${sda.mat.contenidos} | Criterios: ${sda.mat.criterios}`;
@@ -4160,6 +4676,15 @@ function toggleSantillana(){
     document.getElementById('santPanel').classList.toggle('show', santActivo);
     if(!santActivo){ _resetSant(); }
     _actualizarSantBypasses();
+    // Mostrar/ocultar banners de pasos saltados
+    [2,3,5,6].forEach(n=>{
+        const b=document.getElementById(`step${n}SantBanner`);
+        if(b) b.style.display=santActivo?'block':'none';
+    });
+    // Actualizar barra de progreso para mostrar pasos saltados
+    updProg();
+    // Si estamos en un paso saltado, mover al paso 1
+    if(santActivo && _pasoSaltado(currentStep)) irAPaso(1);
 }
 
 function _resetSant(){
@@ -4178,6 +4703,12 @@ function _resetSant(){
         const b=document.getElementById('santModBtn_'+m);
         if(b){b.style.borderColor='rgba(239,68,68,0.15)';b.style.background='rgba(255,255,255,0.85)';}
     });
+    // Ocultar banners de pasos saltados
+    [2,3,5,6].forEach(n=>{
+        const b=document.getElementById(`step${n}SantBanner`);
+        if(b) b.style.display='none';
+    });
+    updProg();
 }
 
 // NUEVA: se llama al elegir asignatura (PASO 1)
@@ -4303,6 +4834,10 @@ function _cargarTarjetaSant(curso, trim, sdaNum, mod){
     document.getElementById('santProductoTexto').value=productoFinal;
     document.getElementById('santCentro').value='';
     document.getElementById('santCardPreview').style.display='block';
+    // Actualizar panel paso 2 si ya estamos en él o cuando se acceda
+    if(typeof _actualizarStep2LibroPanel==='function') setTimeout(_actualizarStep2LibroPanel,80);
+    // Auto-rellenar pasos saltados con datos Santillana
+    setTimeout(()=>_autoRellenarPasosSant(curso, trim, sdaNum, mod), 120);
     // Calcular sesiones automáticamente según mes y asignatura (Andalucía 2025-26)
     const sesionesCalc = _calcularSesionesMes(sda.mes, mod);
     const selSes = document.getElementById('sesiones');
@@ -4615,6 +5150,24 @@ INSTRUCCIONES CLAVE — MODO SANTILLANA:
 3. ⚠️ ADAPTACIÓN ANDALUZA OBLIGATORIA: Los criterios y saberes mostrados arriba son referencias de la editorial Santillana (nomenclatura genérica). Debes sustituirlos por los códigos y textos LITERALES de la Orden de 30 de mayo de 2023 de Andalucía para ${nivel}. Usa los criterios con su código oficial (ej: LCL.4.1.b, MAT.2.1.a) y los saberes con su código oficial (ej: LCL.2.B.3.2, MAT.2.A.3.1). NO uses ni inventes códigos de la editorial.
 4. El reto/producto final debe ser exactamente el del proyecto Santillana o muy cercano a él.
 5. Las actividades deben reflejar el trabajo de las unidades del libro organizadas bajo el hilo del proyecto.
+${(()=>{
+    // Inyectar itinerario MAT si el área incluye Matemáticas
+    const esMat2=sd.area&&(sd.area.toLowerCase().includes('mat'));
+    if(!esMat2) return '';
+    const mCurso={'1º':'1','2º':'2','3º':'3','4º':'4','5º':'5','6º':'6'};
+    const cNum=mCurso[d.curso]||'';
+    const mesActual=sSda?.mes||'';
+    const itMat=_MAT_ITINERARIO[cNum]?.[mesActual];
+    if(!itMat) return '';
+    return `6. ⚠️ ITINERARIO MATEMÁTICAS — Plan de Actuación RP del CEIP Capitulaciones:
+   Mes: ${mesActual} | Curso: ${d.curso}
+   Tipos de problemas del Plan de Actuación de Matemáticas para este mes:
+   ${itMat}
+   → Las sesiones de Matemáticas de esta SdA deben incluir estos tipos de problemas contextualizados en la temática "${sSda?.nombre||d.titSda}". Respeta el itinerario mensual del centro.
+   → Metodología RP: planteamiento oral → manipulativo → representación gráfica → simbólico/algorítmico.
+   → Mínimo 3 sesiones semanales de 30 min para resolución de problemas (Plan de Actuación del centro).
+`;
+})()}
 `;
 })()}
 
@@ -5408,8 +5961,451 @@ function abrirPackModal(){
     else if(anayaActivo) selPackEditorial('anaya');
     else selPackEditorial('sant');
     selPackMod('ambas');
+    // Añadir listeners de los nuevos selects si no están ya
+    ['packSesMat','packSesLen','packRpSes','packLecSes'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el && !el._packListenerAdded){
+            el.addEventListener('change', ()=>{ _actualizarResumenPackSes(); actualizarPackSdaList(); });
+            el._packListenerAdded=true;
+        }
+    });
 }
 function cerrarPackModal(){ document.getElementById('packOverlay').classList.remove('show'); }
+
+// ═══════════════════════════════════════════════════════════════════
+// PLAN DE LECTURA — CEIP CAPITULACIONES
+// Normativa: Instrucciones 21/06/2023 · Decreto 101/2023
+// Plan de Actuación Lectura del Centro (24-25)
+// ═══════════════════════════════════════════════════════════════════
+let _ltModo='trim';
+const _CL={'1':'1º de Primaria','2':'2º de Primaria','3':'3º de Primaria','4':'4º de Primaria','5':'5º de Primaria','6':'6º de Primaria'};
+const _CICLO={'1':'1er Ciclo','2':'1er Ciclo','3':'2º Ciclo','4':'2º Ciclo','5':'3er Ciclo','6':'3er Ciclo'};
+const _TL={'1':'1er Trimestre (Oct–Dic)','2':'2º Trimestre (Ene–Mar)','3':'3er Trimestre (Abr–Jun)'};
+
+// ── Objetivos específicos del Plan de Actuación de Lectura del centro ──
+const _OBJ_CICLO = {
+    '1': {
+        label:'1er Ciclo (1º–2º)',
+        objetivos:[
+            'Promover el uso cotidiano de la biblioteca de aula y escolar.',
+            'Fomentar el interés por la lectura a través de distintos tipos de textos: cuentos, rimas, poemas, pictogramas.',
+            'Ser capaces de contar una historia o expresar sus ideas principales tras escucharla o leerla.',
+            'Despertar el interés por actividades de lectura: cuentacuentos, audiocuentos, obras de teatro.',
+            'Identificación de letras, sonidos, partes del libro, palabras conocidas y desconocidas.',
+            'Desarrollo de conciencia fonológica y conocimiento alfabético.',
+        ],
+        ejes:['Conciencia fonológica','Conocimiento alfabético','Fluidez inicial'],
+        estrategias:[
+            'Lectura en voz alta del maestro/a',
+            'Lectura coral',
+            'Lectura por turnos',
+            'Identificación de palabras clave',
+            'Dibujo de escenas',
+            'Identificación de personajes y emociones',
+            'Creación de final alternativo',
+        ]
+    },
+    '2': {
+        label:'2º Ciclo (3º–4º)',
+        objetivos:[
+            'Consolidar la correcta decodificación y fluidez lectora.',
+            'Analizar vocabulario: raíces, prefijos, sufijos.',
+            'Comprensión de construcción de oraciones: cohesión y coherencia.',
+            'Identificación de ideas principales y secundarias.',
+            'Memoria funcional y atención lectora.',
+            'Abordar la lectura con diferentes propósitos: informarse, aprender, instruirse, disfrutar, compartir.',
+            'Conocer tipos de texto e identificar estructura y funcionalidad.',
+            'Iniciar al alumnado en la lectura inferencial: leer entre líneas.',
+            'Fomentar la curiosidad y el gusto por leer como experiencia enriquecedora.',
+            'Acercar a la experiencia literaria a través de textos de calidad.',
+        ],
+        ejes:['Fluidez y precisión','Vocabulario','Comprensión literal','Comprensión inferencial'],
+        estrategias:[
+            'Actividad de vocabulario previa',
+            'Discusión contexto histórico/cultural del texto',
+            'Red de ideas previas',
+            'Lectura en voz alta docente',
+            'Lectura silenciosa individual',
+            'Lectura guiada con corrección de pronunciación y entonación',
+            'Lectura en sombra (seguimiento visual)',
+            'Identificación ideas principales',
+            'Subrayado de frases importantes',
+            'Preguntas de comprensión',
+            'Discusión en grupo',
+            'Creación de cómic / mapa conceptual',
+        ]
+    },
+    '3': {
+        label:'3er Ciclo (5º–6º)',
+        objetivos:[
+            'Desarrollo del espíritu crítico a través de lecturas colectivas e individuales.',
+            'Lecturas sobre temáticas de actualidad e interés en debates y tertulias dialógicas.',
+            'Contribuir al placer de la lectura promoviendo espacios generadores de emociones positivas.',
+            'Ampliar comprensión crítica y análisis de textos multimodales.',
+            'Diario de lectura personal.',
+            'Presentaciones orales sobre temas de interés.',
+            'Debates en torno a noticias y textos informativos.',
+        ],
+        ejes:['Comprensión crítica','Análisis de textos multimodales','Argumentación y debate','Respuesta lectora personal'],
+        estrategias:[
+            'Debate sobre acciones y decisiones de personajes',
+            'Creación de ensayos breves',
+            'Análisis de textos multimodales (infografías, vídeos)',
+            'Diario de lectura personal',
+            'Presentación oral',
+            'Tertulia dialógica',
+            'Lectura de textos periodísticos y de actualidad',
+            'Comprensión inferencial y crítica',
+        ]
+    }
+};
+
+// ── Tipo de texto inferido de la SdA Santillana ──
+function _tt(t,ta){
+    const s=(t+' '+ta).toLowerCase();
+    if(/poem|poétic|rima|verso|adivinanz|trabalengua|líric/.test(s)) return 'poético';
+    if(/cómic|comic|viñeta/.test(s)) return 'narrativo (cómic)';
+    if(/cuento|fábula|leyenda|aventura|personaje|novel/.test(s)) return 'narrativo (cuento/fábula)';
+    if(/noticia|crónica|reportaje|entrevista|periodístic/.test(s)) return 'periodístico';
+    if(/instruccio|receta|norma|manual|pasos|procediment/.test(s)) return 'instructivo';
+    if(/descrip|describir|retrato|paisaje/.test(s)) return 'descriptivo';
+    if(/diario|carta|invitaci|nota|mensaje|correo/.test(s)) return 'epistolar / funcional';
+    if(/exposi|explic|científic|informati|datos|report/.test(s)) return 'expositivo / informativo';
+    if(/argumen|debate|opinión|convenc/.test(s)) return 'argumentativo';
+    if(/teatro|dramátic|obra|dialogad/.test(s)) return 'dramático / teatral';
+    return 'narrativo';
+}
+
+function _cicloKey(curso){ return ['1','2'].includes(String(curso))?'1':['3','4'].includes(String(curso))?'2':'3'; }
+
+// ── Bloque mensual — Opción 2: texto diferente cada día, 3 fases en 30 min ──
+function _bloqueMes(sda, cursoLabel, curso, sesSem, acn){
+    const ck=_cicloKey(curso);
+    const cd=_OBJ_CICLO[ck];
+    const tipo=_tt(sda.len?.titulo||'',sda.len?.tarea||'');
+    const temSdA=sda.len?.titulo||sda.nombre;
+    const tarea=sda.len?.tarea||'';
+    const crits=sda.len?.criterios||'';
+    const semanas=sda.mes==='SEPTIEMBRE'?3:sda.mes==='DICIEMBRE'?2:sda.mes==='JUNIO'?3:4;
+    const totalSes=semanas*parseInt(sesSem);
+    const ejesList=cd.ejes.join(' · ');
+    const estratList=cd.estrategias.slice(0,5).join(', ');
+
+    const diasOpt2=parseInt(sesSem)===5
+        ? `L-M-X-J: texto diferente cada día (3 fases en 30 min) · V: lectura de libre elección del itinerario lector del centro`
+        : `4 días: texto diferente cada día (3 fases en 30 min) · Un día: libre elección del itinerario lector`;
+
+return `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MES: ${sda.mes} | ${cursoLabel} | ${cd.label}
+SdA Santillana LCL: "${temSdA}"
+Tipo de texto base del mes: ${tipo}
+Criterios LCL: ${crits}
+Ejes lectores del ciclo: ${ejesList}
+Distribución: ${diasOpt2}
+Sesiones: ${sesSem}/semana · ${semanas} semanas · ${totalSes} sesiones en total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GENERA EL PLAN DE LECTURA PARA ESTE MES — OPCIÓN 2:
+
+METODOLOGÍA OBLIGATORIA (Plan de Actuación de Lectura CEIP Capitulaciones):
+• Opción 2: cada sesión de 30 min trabaja un TEXTO DIFERENTE con las 3 fases completas.
+• Estructura de cada sesión:
+    ANTES (5 min): activar conocimientos previos, predicción, vocabulario clave, presentación del texto.
+    DURANTE (15 min): lectura activa con estrategia específica del ${cd.label}.
+    DESPUÉS (10 min): recapitulación, respuesta lectora, conexión con la SdA Santillana "${temSdA}".
+• Viernes (si 5 sesiones/semana): lectura de LIBRE ELECCIÓN del alumnado o del itinerario lector del centro.
+• Los textos deben ser variados en tipo: no repetir el mismo tipo dos días consecutivos.
+• Progresión de dificultad: semana 1 → accesible · semana ${semanas} → más exigente cognitivamente.
+• Planos de comprensión a trabajar en el ciclo: LITERAL · INFERENCIAL · CRÍTICO (el alumnado debe ser consciente de estos procesos).
+• Cinco ejes de la planificación lectora: ${ejesList}.
+${acn?`• Pautas DUA en CADA sesión para: ${acn} (detección precoz dislexia, medidas ordinarias ATD).`:''}
+
+OBJETIVOS DEL CICLO A TRABAJAR ESTE MES:
+${cd.objetivos.map((o,i)=>`  ${i+1}. ${o}`).join('\n')}
+
+ESTRATEGIAS LECTORAS PROPIAS DEL CICLO:
+${cd.estrategias.map(e=>`  · ${e}`).join('\n')}
+
+TEMÁTICA SANTILLANA DE REFERENCIA PARA LOS TEXTOS:
+  Los textos propuestos deben estar contextualizados con: "${temSdA}"
+  La tarea LCL Santillana de este mes es: ${tarea}
+  El tipo de texto base del mes es: ${tipo}
+  → Los textos de cada día deben orbitar en torno a esta temática y preparar o complementar la tarea Santillana.
+
+SEMANAS A DESARROLLAR:
+${Array.from({length:semanas},(_,si)=>{
+const diasLect=parseInt(sesSem)===5?['Lunes','Martes','Miércoles','Jueves']:['Lunes','Martes','Miércoles','Jueves'];
+return `
+SEMANA ${si+1} de ${semanas}:
+${diasLect.map((dia,di)=>`
+  ${dia.toUpperCase()} — Sesión ${si*parseInt(sesSem)+di+1} (30 min):
+    Texto propuesto: [título real + autor/fuente + por qué es adecuado para ${cursoLabel}]
+    Tipo de texto: [tipo de esta sesión — diferente al día anterior]
+    ANTES (5'): [actividad concreta de activación/predicción para este texto y ciclo]
+    DURANTE (15'): [estrategia lectora del ${cd.label} — de la lista anterior — describe la tarea del alumnado]
+    DESPUÉS (10'): [respuesta lectora conectada con "${temSdA}" — producto concreto]
+    ${acn?`DUA [${acn}]: [medida de acceso al texto]`:''}`).join('')}
+${parseInt(sesSem)===5?`
+  VIERNES — Libre elección / Itinerario Lector:
+    El alumnado elige un libro del itinerario lector del centro o de biblioteca.
+    Actividad: [según el ciclo — en ${cd.label}: ${ck==='1'?'lectura en voz alta compartida, dibujo de escena favorita':ck==='2'?'recomendación a un compañero/a, diario de lectura breve':'recomendación oral, diario personal de lectura'}]`:''}`
+}).join('\n')}
+
+TABLA RESUMEN DEL MES — Una fila por semana (para PGA y dosier de lectura):
+
+| Semana | L | M | X | J | ${parseInt(sesSem)===5?'V (libre) |':''} Estrategia clave | Criterio LCL |
+|--------|---|---|---|---|${parseInt(sesSem)===5?'-----------|':''}-------------|--------------|
+${Array.from({length:semanas},(_,i)=>`| Sem. ${i+1} | [tipo texto] | [tipo] | [tipo] | [tipo] | ${parseInt(sesSem)===5?'[itinerario] |':''} [estrategia] | [código] |`).join('\n')}
+
+NOTA DE EVALUACIÓN:
+  La evaluación tiene carácter COMPETENCIAL y CUALITATIVO (no da calificación directa).
+  Instrumentos: observación directa y continuada + combinación con otras herramientas.
+  Referentes: competencias específicas LCL · descriptores operativos del perfil competencial.
+  Antes del 15 de octubre: evaluación inicial vinculante de comprensión lectora.
+  El ETCP supervisará trimestralmente a través de los Equipos de Ciclo.
+
+Criterios LCL a trabajar: ${crits}
+Tarea Santillana de referencia: ${tarea}
+`;
+}
+
+// ── Prompt trimestral ──
+function _promptTrim(curso,trim,ses,acn){
+    const data=SANTILLANA_MAP[curso]?.[trim];
+    if(!data) return '';
+    const cl=_CL[curso]||curso+'º';
+    const tl=_TL[trim]||'T'+trim;
+    const ck=_cicloKey(curso);
+    const cd=_OBJ_CICLO[ck];
+    const bloques=data.sda.map(s=>_bloqueMes(s,cl,curso,ses,acn)).join('\n');
+    return `═══════════════════════════════════════════════════════════
+PLAN DE LECTURA PLANIFICADA — ${cl.toUpperCase()} · ${tl.toUpperCase()}
+CEIP Capitulaciones de Santa Fe · Curso 2025-26
+═══════════════════════════════════════════════════════════
+Normativa: Instrucciones de 21 de junio de 2023 sobre el tratamiento de la lectura
+           para el despliegue de la CCL en Educación Primaria (Junta de Andalucía)
+           Decreto 101/2023, de 9 de mayo (principios pedagógicos)
+           Plan de Actuación para el Tratamiento de la Lectura CEIP Capitulaciones 24-25
+Área: Lengua Castellana y Literatura — solo LCL
+Metodología: OPCIÓN 2 — Texto diferente cada día · 3 fases en cada sesión de 30 min
+Ciclo: ${cd.label} | Curso: ${cl} | ${tl} | ${data.sda.length} meses
+Sesiones: ${ses}/semana${acn?'\nACNEAE: '+acn:''}
+Editorial: Santillana — Proyecto Construyendo Mundos (textos contextualizados con la SdA)
+
+ROL: Eres docente de LCL de ${cl} en el CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía). Conoces a fondo el Plan de Actuación para el Tratamiento de la Lectura del centro y la normativa andaluza vigente. Genera el Plan de Lectura Planificada completo para los ${data.sda.length} meses del ${tl}.
+
+PRINCIPIOS GENERALES DEL PLAN DEL CENTRO:
+1. La lectura NO es un tiempo aislado del resto de la función docente — se integra en la programación LCL.
+2. OPCIÓN 2: cada sesión trabaja un texto DIFERENTE con las 3 fases completas (Antes 5' · Durante 15' · Después 10').
+3. Los textos se contextualizan con la SdA Santillana de cada mes.
+4. Variedad tipológica obligatoria: no repetir el mismo tipo de texto dos días consecutivos.
+5. Los viernes (si 5 sesiones) se dedican a la libre elección del alumnado del itinerario lector.
+6. Planos de comprensión: LITERAL · INFERENCIAL · CRÍTICO — el alumnado es consciente de estos procesos.
+7. Canon amplio, diverso y adecuado al nivel. Combinar clásicos y contemporáneos, literarios e informativos.
+8. La figura del mediador de lecturas es clave: docente, alumnado (recomendaciones entre pares), familias.
+9. La poesía tiene un papel relevante en la planificación.
+10. Los textos deben ser cercanos a la experiencia andaluza del alumnado sin abandonar el patrimonio literario.
+${acn?`11. Pautas DUA para ${acn} en CADA sesión. Detección precoz de dislexia. Medidas ordinarias ATD.`:''}
+
+CINCO EJES DE LA PLANIFICACIÓN LECTORA (Instrucciones 21/06/2023):
+1ª Conciencia fonológica · 2ª Conocimiento alfabético · 3ª Fluidez · 4ª Vocabulario · 5ª Comprensión
+${bloques}
+═══════════════════════════════════════════════════════════
+TABLA GLOBAL DEL TRIMESTRE — Para la PGA del centro
+═══════════════════════════════════════════════════════════
+Genera esta tabla resumen al final:
+
+| Mes | Sem. | Día | Texto propuesto | Tipo | Estrategia | Criterio LCL |
+|-----|------|-----|-----------------|------|------------|--------------|
+${data.sda.flatMap(s=>{
+    const sem=s.mes==='SEPTIEMBRE'?3:s.mes==='DICIEMBRE'?2:s.mes==='JUNIO'?3:4;
+    return Array.from({length:sem},(_,i)=>
+        ['L','M','X','J'].map(d=>`| ${s.mes} | ${i+1} | ${d} | [título] | [tipo] | [estrategia] | [código] |`).join('\n')
+    );
+}).join('\n')}
+
+EVALUACIÓN DEL PLAN (supervisión ETCP):
+  · Trimestral: a través de los Equipos de Ciclo.
+  · Final de curso: conclusiones en Claustro y valoración en Consejo Escolar.
+  · Reflejo en la Memoria de Autoevaluación y en el Plan de Mejora del centro.
+═══════════════════════════════════════════════════════════`;
+}
+
+// ── Prompt anual del centro ──
+function _promptAnual(cursos,ses,acn){
+    const cl=cursos.map(c=>_CL[c]||c+'º').join(', ');
+    let bloquesCursos='';
+    cursos.forEach(c=>{
+        const ck=_cicloKey(c);
+        const cd=_OBJ_CICLO[ck];
+        bloquesCursos+=`\n${'━'.repeat(56)}\n${(_CL[c]||c+'º').toUpperCase()} — ${cd.label}\n${'━'.repeat(56)}\n`;
+        bloquesCursos+=`Ejes lectores: ${cd.ejes.join(' · ')}\n`;
+        [1,2,3].forEach(t=>{
+            const data=SANTILLANA_MAP[c]?.[t];
+            if(!data?.sda) return;
+            bloquesCursos+=`  ${_TL[t]}:\n`;
+            data.sda.forEach(s=>{
+                const tipo=_tt(s.len?.titulo||'',s.len?.tarea||'');
+                bloquesCursos+=`  · ${s.mes}: "${s.len?.titulo||s.nombre}" → tipo base: ${tipo} | criterios: ${s.len?.criterios||'—'}\n`;
+            });
+        });
+    });
+    const meses=['SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE','ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO'];
+    const cabCursos=cursos.map(c=>`${c}º(${_cicloKey(c)}ºC)`).join(' | ');
+    return `═══════════════════════════════════════════════════════════
+PLAN DE LECTURA PLANIFICADA ANUAL DEL CENTRO
+CEIP Capitulaciones de Santa Fe · Curso 2025-26
+═══════════════════════════════════════════════════════════
+Normativa: Instrucciones 21/06/2023 · Decreto 101/2023 · Plan de Actuación Lectura CEIP Capitulaciones 24-25
+Área: Lengua Castellana y Literatura — solo LCL
+Metodología: OPCIÓN 2 — Texto diferente cada día · 3 fases (Antes 5' · Durante 15' · Después 10')
+Cursos: ${cl}
+Sesiones: ${ses}/semana · Viernes: libre elección del itinerario lector${acn?'\nACNEAE del centro: '+acn:''}
+Editorial: Santillana — Proyecto Construyendo Mundos
+
+ROL: Eres el Equipo Técnico de Coordinación Pedagógica del CEIP Capitulaciones de Santa Fe. Elaboras el Plan de Lectura Planificada ANUAL DEL CENTRO para los ${cursos.length} cursos seleccionados, coordinado verticalmente, en base al Plan de Actuación para el Tratamiento de la Lectura del centro y la normativa andaluza vigente (Instrucciones 21/06/2023).
+
+PRINCIPIOS DEL PLAN DEL CENTRO QUE RIGEN ESTE DOCUMENTO:
+1. OPCIÓN 2: texto diferente cada día · 3 fases en 30 min (Antes · Durante · Después).
+2. COORDINACIÓN VERTICAL OBLIGATORIA: en el mismo mes, diferentes ciclos trabajan tipos de texto distintos y estrategias de complejidad creciente.
+3. Los viernes: libre elección del itinerario lector del centro.
+4. Variedad tipológica: no se repite el mismo tipo de texto dos días consecutivos en ningún curso.
+5. Planos de comprensión: LITERAL → INFERENCIAL → CRÍTICO, con mayor peso del crítico en ciclos superiores.
+6. La poesía tiene papel relevante — incluir al menos una sesión poética por semana en todos los ciclos.
+7. Canon lectoral diverso: clásicos + contemporáneos, literarios + informativos, andaluces + universales.
+8. Los textos conectan con la SdA Santillana de cada mes en cada curso.
+9. Los viernes de 1er Ciclo se dedican a cuentacuentos, audiocuentos o lectura compartida.
+${acn?`10. Pautas DUA para ${acn} en todos los cursos. Detección precoz de dislexia.`:''}
+
+DATOS POR CURSO (SdAs Santillana + objetivos del ciclo):
+${bloquesCursos}
+
+ESTRUCTURA A GENERAR:
+Para CADA CURSO y CADA MES:
+  · 4 días de lectura con texto diferente cada día (L/M/X/J) + viernes libre elección
+  · Cada sesión: ANTES (5') · DURANTE (15') · DESPUÉS (10')
+  · Texto propuesto cada día: título real, autor/fuente, tipo, justificación del nivel
+  · Estrategia lectora del ciclo correspondiente
+  · Conexión con la SdA Santillana del mes
+  · Tabla resumen semanal (una fila por semana)
+  · Medidas DUA${acn?' para: '+acn:''}
+
+TABLA DE COORDINACIÓN VERTICAL — Tipos de texto por mes y curso (para PGA):
+
+| Mes | ${cabCursos} |
+|-----|${cursos.map(()=>'---').join('|')}|
+${meses.map(m=>`| ${m} | ${cursos.map(()=>'[tipo]').join(' | ')} |`).join('\n')}
+
+REGLA DE COORDINACIÓN: en cada fila (mes), los tipos de texto deben ser DISTINTOS entre ciclos, salvo excepciones justificadas por la SdA Santillana. La progresión vertical: 1er Ciclo = textos más breves y accesibles · 2º Ciclo = textos medios con inferencias · 3er Ciclo = textos complejos con análisis crítico.
+
+TABLA DE ESTRATEGIAS LECTORAS POR CICLO (progresión vertical):
+
+| Estrategia | 1er Ciclo (1º-2º) | 2º Ciclo (3º-4º) | 3er Ciclo (5º-6º) |
+|------------|-------------------|------------------|-------------------|
+| Conciencia fonológica | Iniciación | Consolidación | Automatizada |
+| Fluidez | Lectura coral/turnos | Lectura guiada/sombra | Lectura autónoma |
+| Vocabulario | Palabras clave | Raíces/prefijos/sufijos | Vocabulario académico |
+| Comprensión literal | Central | Consolidada | Automatizada |
+| Comprensión inferencial | Iniciación | En desarrollo | Plena |
+| Comprensión crítica | No trabajada | Iniciación | Central |
+| Respuesta lectora | Dibujo/oral | Cómic/resumen | Ensayo/debate |
+
+EVALUACIÓN (Plan de Actuación de Lectura del centro):
+  · Supervisión ETCP trimestral · Claustro final de curso · Consejo Escolar
+  · Carácter competencial y cualitativo · No calificación directa
+  · Evaluación inicial antes del 15 de octubre en todos los cursos
+  · Memoria de Autoevaluación y Plan de Mejora del centro
+═══════════════════════════════════════════════════════════`;
+}
+
+// ── Modal actions ──
+function abrirPlanLectura(){ document.getElementById('lectOv').classList.add('show'); infoLT(); }
+function cerrarPlanLectura(){ document.getElementById('lectOv').classList.remove('show'); }
+
+function switchLT(m){
+    _ltModo=m;
+    document.getElementById('ltabTrim').classList.toggle('on',m==='trim');
+    document.getElementById('ltabAnual').classList.toggle('on',m==='anual');
+    document.getElementById('lpTrim').classList.toggle('on',m==='trim');
+    document.getElementById('lpAnual').classList.toggle('on',m==='anual');
+    document.getElementById('lwrap').classList.remove('on');
+    document.getElementById('lprog').textContent='';
+}
+function toggleLC(cb){ document.getElementById('lchip'+cb.value).classList.toggle('on',cb.checked); }
+
+function infoLT(){
+    const c=document.getElementById('ltCurso')?.value;
+    const t=document.getElementById('ltTrim')?.value;
+    const el=document.getElementById('ltInfo');
+    if(!el) return;
+    if(!c||!t){el.textContent='ℹ️ Selecciona curso y trimestre para ver las SdAs incluidas.';return;}
+    const data=SANTILLANA_MAP[c]?.[t];
+    if(!data){el.textContent='⚠️ No hay datos Santillana para esta combinación.';return;}
+    const ck=_cicloKey(c);
+    const cd=_OBJ_CICLO[ck];
+    const lista=data.sda.map(s=>`<strong>${s.mes}</strong>: "${s.len?.titulo||s.nombre}"`).join(' · ');
+    el.innerHTML=`✅ <strong>${cd.label}</strong> · ${data.sda.length} meses · Ejes: ${cd.ejes.join(', ')}<br>📚 ${lista}`;
+}
+
+function generarLP(){
+    const btn=document.getElementById('btnLP');
+    const prog=document.getElementById('lprog');
+    btn.disabled=true; prog.textContent='⏳ Generando…';
+    let p='';
+    try{
+        if(_ltModo==='trim'){
+            const c=document.getElementById('ltCurso').value;
+            const t=document.getElementById('ltTrim').value;
+            const s=document.getElementById('ltSes').value;
+            const a=document.getElementById('ltAcn').value.trim();
+            if(!c||!t){showToast('⚠️ Selecciona curso y trimestre');btn.disabled=false;prog.textContent='';return;}
+            p=_promptTrim(c,t,s,a);
+            if(!p){showToast('⚠️ Sin datos Santillana para esa combinación');btn.disabled=false;prog.textContent='';return;}
+            prog.textContent=`✅ Plan Trimestral — ${_CL[c]} · ${_TL[t]}`;
+        } else {
+            const cs=[...document.querySelectorAll('.cg6 input:checked')].map(cb=>cb.value);
+            const s=document.getElementById('laSes').value;
+            const a=document.getElementById('laAcn').value.trim();
+            if(!cs.length){showToast('⚠️ Selecciona al menos un curso');btn.disabled=false;prog.textContent='';return;}
+            p=_promptAnual(cs,s,a);
+            prog.textContent=`✅ Plan Anual — ${cs.length} cursos`;
+        }
+        document.getElementById('lbox').textContent=p;
+        const w=document.getElementById('lwrap');
+        w.classList.add('on');
+        setTimeout(()=>w.scrollIntoView({behavior:'smooth',block:'nearest'}),80);
+    } catch(e){ showToast('❌ Error generando el plan'); console.error(e); }
+    btn.disabled=false;
+}
+
+async function copiarLP(){
+    const c=document.getElementById('lbox').textContent;
+    if(!c){showToast('⚠️ Primero genera el plan');return;}
+    try{await navigator.clipboard.writeText(c);showToast('📋 Plan de lectura copiado');}
+    catch(e){showToast('⚠️ Selecciona el texto manualmente');}
+}
+function descargarLP(){
+    const c=document.getElementById('lbox').textContent;
+    if(!c){showToast('⚠️ Primero genera el plan');return;}
+    let n='Plan_Lectura';
+    if(_ltModo==='trim'){
+        const cv=document.getElementById('ltCurso').value;
+        const tv=document.getElementById('ltTrim').value;
+        n=`Plan_Lectura_${cv}Primaria_T${tv}_CEIP_Capitulaciones_2025-26`;
+    } else n='Plan_Lectura_Anual_CEIP_Capitulaciones_2025-26';
+    descargar(c,n+'.txt');
+}
+async function abrirClaudeLP(){
+    const c=document.getElementById('lbox').textContent;
+    if(!c){showToast('⚠️ Primero genera el plan');return;}
+    try{await navigator.clipboard.writeText(c);}catch(e){}
+    showToast('📋 Copiado — abriendo Claude…');
+    setTimeout(()=>window.open('https://claude.ai','_blank'),700);
+}
+
+
+
 
 function selPackEditorial(ed){
     packEditorial=ed;
@@ -5417,6 +6413,10 @@ function selPackEditorial(ed){
         const el=document.getElementById('packOpt'+e[0].toUpperCase()+e.slice(1));
         if(el) el.classList.toggle('selected', e===ed);
     });
+    // Mostrar/ocultar panel configuración Santillana
+    const cfgWrap=document.getElementById('packSantConfigWrap');
+    if(cfgWrap) cfgWrap.style.display=(ed==='sant'?'block':'none');
+    _actualizarVisibilidadPackSesiones();
     actualizarPackSdaList();
 }
 function selPackMod(mod){
@@ -5425,7 +6425,63 @@ function selPackMod(mod){
         const el=document.getElementById('packOpt'+m[0].toUpperCase()+m.slice(1));
         if(el) el.classList.toggle('selected', m===mod);
     });
+    _actualizarVisibilidadPackSesiones();
     actualizarPackSdaList();
+}
+
+// Muestra/oculta los controles de Mate/Lengua/RP/Lectura según asignatura elegida
+function _actualizarVisibilidadPackSesiones(){
+    const esMat=packMod==='mat'||packMod==='ambas';
+    const esLen=packMod==='len'||packMod==='ambas';
+    const matBox=document.getElementById('packSesMatBox');
+    const lenBox=document.getElementById('packSesLenBox');
+    const rpBox=document.getElementById('packRpBox');
+    const lecBox=document.getElementById('packLecBox');
+    const rpLecWrap=document.getElementById('packRpLecWrap');
+    if(matBox) matBox.style.display=esMat?'block':'none';
+    if(lenBox) lenBox.style.display=esLen?'block':'none';
+    if(rpBox)  rpBox.style.display=esMat?'block':'none';
+    if(lecBox) lecBox.style.display=esLen?'block':'none';
+    // Si solo hay un control de sesiones, usar grid 1 columna
+    const sesGrid=document.getElementById('packSesMatWrap');
+    if(sesGrid) sesGrid.style.gridTemplateColumns=(esMat&&esLen)?'1fr 1fr':'1fr';
+    if(rpLecWrap) rpLecWrap.style.gridTemplateColumns=(esMat&&esLen)?'1fr 1fr':'1fr';
+    _actualizarResumenPackSes();
+}
+
+// Genera el texto de resumen "X sesiones Mat (Y con RP) · Z sesiones Len (W con lectura)"
+function _actualizarResumenPackSes(){
+    const div=document.getElementById('packSesResumen');
+    if(!div) return;
+    const esMat=packMod==='mat'||packMod==='ambas';
+    const esLen=packMod==='len'||packMod==='ambas';
+    const sesMat=parseInt(document.getElementById('packSesMat')?.value)||4;
+    const sesLen=parseInt(document.getElementById('packSesLen')?.value)||5;
+    const rpSes=parseInt(document.getElementById('packRpSes')?.value)||0;
+    const lecSes=parseInt(document.getElementById('packLecSes')?.value)||5;
+    let partes=[];
+    if(esMat){
+        const durMat=rpSes>0?`${rpSes} con 30' RP + 30' SdA · ${sesMat-rpSes} completas`:`${sesMat} completas (60' SdA)`;
+        partes.push(`📐 Mat: ${sesMat} ses/sem — ${durMat}`);
+    }
+    if(esLen){
+        const durLen=lecSes>0?`${lecSes} con 30' lectura + 30' SdA · ${sesLen-lecSes} completas`:`${sesLen} completas (60' SdA)`;
+        partes.push(`📖 Len: ${sesLen} ses/sem — ${durLen}`);
+    }
+    div.innerHTML=partes.join('<br>');
+    div.style.display=partes.length?'block':'none';
+}
+
+// Obtiene los parámetros de sesión del pack modal
+function _getPackSesConfig(){
+    const esMat=packMod==='mat'||packMod==='ambas';
+    const esLen=packMod==='len'||packMod==='ambas';
+    return {
+        sesMat:  esMat ? (parseInt(document.getElementById('packSesMat')?.value)||4) : 0,
+        sesLen:  esLen ? (parseInt(document.getElementById('packSesLen')?.value)||5) : 0,
+        rpSes:   esMat ? (parseInt(document.getElementById('packRpSes')?.value)||0) : 0,
+        lecSes:  esLen ? (parseInt(document.getElementById('packLecSes')?.value)||0) : 0,
+    };
 }
 
 function actualizarPackSdaList(){
@@ -5435,6 +6491,7 @@ function actualizarPackSdaList(){
     const list=document.getElementById('packSdaList');
     const btn=document.getElementById('btnPackDl');
     const prog=document.getElementById('packProgress');
+    _actualizarResumenPackSes();
     if(!curso||!trim||!packEditorial){if(wrap)wrap.style.display='none';return;}
     const map=packEditorial==='anaya'?ANAYA_MAP:SANTILLANA_MAP;
     const data=map[curso]?.[trim];
@@ -5444,7 +6501,14 @@ function actualizarPackSdaList(){
         let titulo=s.nombre||`SdA ${i+1}`;
         if(packMod==='mat'&&s.mat?.titulo) titulo=s.mat.titulo;
         else if(packMod==='len'&&s.len?.titulo) titulo=s.len.titulo;
-        return `<div class="pack-sda-item"><span class="pack-sda-num">${i+1}</span><span>${s.mes||''} — <strong>${titulo.substring(0,55)}${titulo.length>55?'…':''}</strong></span></div>`;
+        // Calcular sesiones reales si es Santillana
+        let sesBadge='';
+        if(packEditorial==='sant'){
+            const cfg=_getPackSesConfig();
+            const ses=_calcularSesionesMesSant(s.mes||'', packMod, cfg);
+            sesBadge=`<span style="font-size:.67rem;color:#6b7280;background:rgba(99,102,241,0.1);padding:.1rem .4rem;border-radius:8px;margin-left:.4rem">${ses} ses.</span>`;
+        }
+        return `<div class="pack-sda-item"><span class="pack-sda-num">${i+1}</span><span>${s.mes||''} — <strong>${titulo.substring(0,55)}${titulo.length>55?'…':''}</strong>${sesBadge}</span></div>`;
     }).join('');
     if(prog) prog.textContent=`✅ ${data.sda.length} prompts listos para generar.`;
     if(btn) btn.disabled=false;
@@ -5477,11 +6541,18 @@ async function generarPackZip(){
     const safe=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w\s]/g,'').replace(/\s+/g,'_').substring(0,35);
     const zip=new JSZip();
     const folder=zip.folder('SDA_Pack_'+safe(cursoLabel)+'_'+safe(trimLabel)+'_'+edLabel);
+    // Obtener configuración de sesiones real (solo Santillana)
+    const packSesCfg = packEditorial==='sant' ? _getPackSesConfig() : null;
     for(let idx=0;idx<data.sda.length;idx++){
         const sda=data.sda[idx];
         prog.textContent=`⏳ Generando ${idx+1}/${data.sda.length}…`;
-        const ses=_calcularSesionesMes(sda.mes||'',packMod);
-        const prompt=_construirPromptPack(sda,{edLabel,cursoLabel,cursoNum:curso,trimLabel,trimNum:trim,mod:packMod,ses});
+        let ses;
+        if(packEditorial==='sant' && packSesCfg){
+            ses = _calcularSesionesMesSant(sda.mes||'', packMod, packSesCfg);
+        } else {
+            ses = _calcularSesionesMes(sda.mes||'', packMod);
+        }
+        const prompt=_construirPromptPack(sda,{edLabel,cursoLabel,cursoNum:curso,trimLabel,trimNum:trim,mod:packMod,ses,packSesCfg});
         let titulo=sda.nombre||('SdA_'+(idx+1));
         if(packMod==='mat'&&sda.mat?.titulo) titulo=sda.mat.titulo;
         else if(packMod==='len'&&sda.len?.titulo) titulo=sda.len.titulo;
@@ -5501,34 +6572,101 @@ async function generarPackZip(){
 }
 
 function _construirPromptPack(sda, cfg){
-    const {edLabel,cursoLabel,cursoNum,trimLabel,trimNum,mod,ses}=cfg;
+    const {edLabel,cursoLabel,cursoNum,trimLabel,trimNum,mod,ses,packSesCfg}=cfg;
     const esMat=mod==='mat'||mod==='ambas';
     const esLen=mod==='len'||mod==='ambas';
     const esAmbas=mod==='ambas';
     const modLabel=mod==='mat'?'Matemáticas':mod==='len'?'Lengua Castellana y Literatura':'Interdisciplinar (Matemáticas + Lengua)';
     const nivel=cursoLabel;
-    const mTrim={'1':'1er Trimestre','2':'2º Trimestre','3':'3er Trimestre'};
 
-    // Bloque datos del libro
+    // ── Bloque datos del libro Santillana ──
     let datosLibro='';
     if(esMat&&sda.mat){
         datosLibro+=`
-MATEMÁTICAS:
+MATEMÁTICAS (Santillana — Construyendo Mundos):
   Título SdA: "${sda.mat.titulo||sda.nombre}"
   Criterios (Orden 30/05/2023 Andalucía): ${sda.mat.criterios||''}
   Saberes básicos: ${sda.mat.saberes||''}
-  Tarea/reto: ${sda.mat.tarea||''}
+  Tarea/reto del libro: ${sda.mat.tarea||''}
 `;
     }
     if(esLen&&sda.len){
         datosLibro+=`
-LENGUA CASTELLANA Y LITERATURA:
+LENGUA CASTELLANA Y LITERATURA (Santillana — Construyendo Mundos):
   Título SdA: "${sda.len.titulo||sda.nombre}"
   Criterios (Orden 30/05/2023 Andalucía): ${sda.len.criterios||''}
   Saberes básicos: ${sda.len.saberes||''}
-  Tarea/reto: ${sda.len.tarea||''}
+  Tarea/reto del libro: ${sda.len.tarea||''}
 `;
     }
+
+    // ── Desglose de sesiones por tipo (igual que modo individual) ──
+    let bloqueHorario='';
+    let bloqueSesiones='';
+
+    if(packSesCfg){
+        const {sesMat,sesLen,rpSes,lecSes}=packSesCfg;
+        const diasL = DIAS_LECTIVOS_MES[sda.mes?.toUpperCase()||''] || 18;
+        const semanas = Math.round(diasL / 5);
+
+        if(esMat){
+            const totalMat=Math.round(semanas*(sesMat||4));
+            const totalRP=Math.round(semanas*(rpSes||0));
+            const totalMatPura=totalMat-totalRP;
+            bloqueHorario+=`
+MATEMÁTICAS — Organización horaria real del aula:
+  · Sesiones/semana de Matemáticas: ${sesMat}
+  · Sesiones/semana con Resolución de Problemas (30'): ${rpSes}
+  · Semanas del mes de ${sda.mes||'este mes'}: ~${semanas}
+  · Total sesiones de Matemáticas el mes: ${totalMat}
+    - ${totalRP} sesiones: 30' Resolución de Problemas + 30' SdA Matemáticas
+    - ${totalMatPura} sesiones: 60' íntegros de SdA Matemáticas
+`;
+        }
+        if(esLen){
+            const totalLen=Math.round(semanas*(sesLen||5));
+            const totalLec=Math.round(semanas*(lecSes||0));
+            const totalLenPura=totalLen-totalLec;
+            bloqueHorario+=`
+LENGUA — Organización horaria real del aula:
+  · Sesiones/semana de Lengua: ${sesLen}
+  · Sesiones/semana con lectura diaria (30'): ${lecSes}
+  · Total sesiones de Lengua el mes: ${totalLen}
+    - ${totalLec} sesiones: 30' Lectura diaria + 30' SdA Lengua
+    - ${totalLenPura} sesiones: 60' íntegros de SdA Lengua
+`;
+        }
+
+        // Instrucciones específicas de planificación por tipo de sesión
+        let instrRP='', instrLec='';
+        if(esMat && rpSes>0){
+            instrRP=`
+- SESIONES CON RESOLUCIÓN DE PROBLEMAS (Matemáticas):
+  · Primera mitad (30 min): Resolución de Problemas Matemáticos — estrategia comprensiva, modelo Pólya, trabajo cooperativo
+  · Segunda mitad (30 min): Actividad de la SdA de Matemáticas "${sda.mat?.titulo||sda.nombre}"
+  · Señala claramente en la tabla de sesiones cuáles son de tipo "RP + SdA Mat"`;
+        }
+        if(esLen && lecSes>0){
+            instrLec=`
+- SESIONES CON LECTURA DIARIA (Lengua):
+  · Primera mitad (30 min): Lectura silenciosa / en voz alta / comprensión lectora — texto relacionado con el proyecto si es posible
+  · Segunda mitad (30 min): Actividad de la SdA de Lengua "${sda.len?.titulo||sda.nombre}"
+  · Señala claramente en la tabla de sesiones cuáles son de tipo "Lectura + SdA Len"`;
+        }
+        if(instrRP||instrLec){
+            bloqueSesiones=`
+⚠️ TIPOS DE SESIÓN — PLANIFICA EXACTAMENTE ASÍ:
+${instrRP}${instrLec}
+- SESIONES COMPLETAS (60 min): dedicadas íntegramente a la SdA, sin bloques fijos reservados
+- En la tabla de planificación (Apartado 4) usa columna "Tipo" con: "RP+SdA", "Lec+SdA" o "SdA completa"`;
+        }
+    } else {
+        // Anaya u otro sin config detallada
+        bloqueSesiones='';
+    }
+
+    // ── Reto/producto: siempre del libro Santillana, no se pregunta ──
+    const productoFinal=sda.producto||'—';
 
     return `═════════════════════════════════════════════════════════
 GENERADOR DE SITUACIÓN DE APRENDIZAJE — CEIP CAPITULACIONES DE SANTA FE
@@ -5539,21 +6677,24 @@ Editorial: ${edLabel} — Proyecto Construyendo Mundos
 Curso: ${nivel} | Trimestre: ${trimLabel} | Mes: ${sda.mes||'—'}
 Modalidad: ${modLabel}
 SdA: "${sda.nombre||'—'}"
-Sesiones estimadas: ${ses} × 60 min
-Reto/Producto final del proyecto: ${sda.producto||'—'}
+Sesiones totales del mes: ${ses}
+Reto/Producto final (propuesto por Santillana — NO CAMBIAR): ${productoFinal}
 
 ⚠️ DATOS PRECARGADOS DEL LIBRO ${edLabel.toUpperCase()}:
 ${datosLibro}
+${bloqueHorario?'⚠️ ORGANIZACIÓN HORARIA REAL DEL AULA:\n'+bloqueHorario:''}
 ═════════════════════════════════════════════════════════
 INSTRUCCIONES PARA GENERAR LA SdA
 ═════════════════════════════════════════════════════════
 
-Genera una Situación de Aprendizaje completa para ${nivel}, ${trimLabel}, en la asignatura ${modLabel}, para el CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía), siguiendo ESTRICTAMENTE la estructura oficial de 7 apartados de la Consejería de Educación de Andalucía (Decreto 101/2023):
+Genera una Situación de Aprendizaje completa para ${nivel}, ${trimLabel}, mes de ${sda.mes||'—'}, en la asignatura ${modLabel}, para el CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía), siguiendo ESTRICTAMENTE la estructura oficial de 7 apartados de la Consejería de Educación de Andalucía (Decreto 101/2023):
 
 ⚠️ OBLIGATORIO:
-- Usa los criterios y saberes básicos de la Orden 30/05/2023 de Andalucía (con sus códigos oficiales).
-- Adapta el reto y las actividades al contexto del proyecto ${edLabel} indicado arriba.
-- Las ${ses} sesiones deben estar planificadas por semanas, con actividades concretas por sesión.
+- Usa los criterios y saberes básicos de la Orden 30/05/2023 de Andalucía indicados arriba (con sus códigos oficiales).
+- El reto y producto final es EXACTAMENTE el propuesto por Santillana: "${productoFinal}" — NO lo cambies ni inventes otro.
+- Adapta todas las actividades al proyecto ${edLabel} y a las tareas concretas indicadas arriba.
+- Las ${ses} sesiones del mes deben estar planificadas por semanas, con actividades concretas por sesión.
+${bloqueSesiones}
 - Incluye medidas DUA (tres principios: compromiso, representación, acción/expresión).
 - ACNEAE del aula: contempla alumnado con NEE general (TEA leve, TDAH, dificultades lecto-escritoras).
 - Metodologías: aprendizaje cooperativo, ABP, gamificación, pensamiento visible.
@@ -5562,8 +6703,8 @@ Genera una Situación de Aprendizaje completa para ${nivel}, ${trimLabel}, en la
 ESTRUCTURA DE LOS 7 APARTADOS (desarrolla TODOS):
 1. IDENTIFICACIÓN Y LOCALIZACIÓN (centro de interés, justificación, conexión curricular)
 2. CONTEXTUALIZACIÓN Y RELACIÓN CON EL ENTORNO (situación real, vinculación con la vida cotidiana)
-3. DISEÑO DE LA TAREA (descripción detallada de la tarea final/producto)
-4. PLANIFICACIÓN DE ACTIVIDADES (tabla de sesiones: semana, sesión, actividad, recursos, evidencia)
+3. DISEÑO DE LA TAREA (descripción detallada de la tarea final/producto — usa el reto Santillana indicado arriba)
+4. PLANIFICACIÓN DE ACTIVIDADES (tabla de sesiones: semana, sesión, tipo de sesión, actividad, recursos, evidencia)
 5. EVALUACIÓN (criterios, indicadores, instrumentos, tabla de rúbrica con 4 niveles)
 6. ATENCIÓN A LA DIVERSIDAD Y DUA (medidas ordinarias, medidas de apoyo, principios DUA desarrollados)
 7. RECURSOS Y MATERIALES (materiales físicos, digitales, apps, webs)
