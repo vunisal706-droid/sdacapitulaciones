@@ -1357,6 +1357,27 @@
     <h2>📚 Contenidos, Metodología y Recursos</h2>
     <p class="card-sub">Define la temática, la pregunta motriz y selecciona las herramientas del CEIP Capitulaciones</p>
 
+    <!-- Bloque extra visible solo en modo Santillana: campos del paso 3 que se saltan -->
+    <div id="step4SantExtras" style="display:none;background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(99,102,241,.04));border:1.5px solid rgba(239,68,68,.2);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem">
+        <div style="font-size:.78rem;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.7rem">📕 Modo Santillana — datos opcionales para enriquecer la SdA</div>
+        <div class="fg" style="margin-bottom:.65rem">
+            <label for="titSda" style="font-size:.8rem">Título personalizado de la SdA <span style="color:#9ca3af;font-weight:400">(opcional — si lo dejas vacío se usa el título del libro)</span></label>
+            <input type="text" id="titSda" placeholder="Ej: El Universo y sus secretos, La ciudad que queremos…">
+        </div>
+        <div class="fg" style="margin-bottom:.65rem">
+            <label for="planesProyectos" style="font-size:.8rem">Planes y proyectos del centro asociados</label>
+            <textarea id="planesProyectos" rows="2" placeholder="Ej: Plan de Igualdad, Proyecto Erasmus+, Plan de Biblioteca, Eco-Escuela…" style="min-height:55px"></textarea>
+        </div>
+        <div class="fg" style="margin-bottom:.65rem">
+            <label for="efemérides" style="font-size:.8rem">Efemérides / Saberes eventuales</label>
+            <textarea id="efemérides" rows="2" placeholder="Ej: Día de la Paz (30 enero), Día del Libro (23 abril), Día de Andalucía (28 febrero)…" style="min-height:55px"></textarea>
+        </div>
+        <div class="fg">
+            <label for="transversalidad" style="font-size:.8rem">Transversalidad</label>
+            <textarea id="transversalidad" rows="2" placeholder="Ej: Educación para la paz, Educación ambiental, Igualdad de género…" style="min-height:55px"></textarea>
+        </div>
+    </div>
+
     <div class="fg">
         <label for="tematica">Temática / Descripción breve de la SdA *</label>
         <input type="text" id="tematica" placeholder="Ej: El Universo, Las plantas, Las emociones, La ciudad sostenible…" required>
@@ -3180,6 +3201,7 @@ function irAPaso(n){
     if(n===6) setTimeout(actualizarSaberes, 350);
     if(n===8) setTimeout(mostrarResumenSda, 50);
     if(n===2) setTimeout(_actualizarStep2LibroPanel, 60);
+    if(n===4) setTimeout(()=>{ renderDiaSelectors(); generarTablaSesiones(); }, 80);
 }
 
 // En modo Santillana: pasos que se saltan (2=tipo SdA, 3=datos centro, 5=criterios, 6=saberes)
@@ -4681,6 +4703,9 @@ function toggleSantillana(){
         const b=document.getElementById(`step${n}SantBanner`);
         if(b) b.style.display=santActivo?'block':'none';
     });
+    // Mostrar/ocultar bloque extra en paso 4
+    const extras=document.getElementById('step4SantExtras');
+    if(extras) extras.style.display=santActivo?'block':'none';
     // Actualizar barra de progreso para mostrar pasos saltados
     updProg();
     // Si estamos en un paso saltado, mover al paso 1
@@ -4708,6 +4733,9 @@ function _resetSant(){
         const b=document.getElementById(`step${n}SantBanner`);
         if(b) b.style.display='none';
     });
+    // Ocultar bloque extra paso 4
+    const extras=document.getElementById('step4SantExtras');
+    if(extras) extras.style.display='none';
     updProg();
 }
 
@@ -4878,13 +4906,19 @@ function _cargarTarjetaSant(curso, trim, sdaNum, mod){
             const cb=it.querySelector('input[type=checkbox]');
             if(cb&&cb.value==='MAT'){cb.checked=true;it.classList.add('selected');if(!areasSeleccionadas.includes('MAT'))areasSeleccionadas.push('MAT');}
         });
+        // También registrar con nombre completo para renderDiaSelectors
+        if(!areasSeleccionadas.includes('Matemáticas'))areasSeleccionadas.push('Matemáticas');
     }
     if(mod==='len'||mod==='ambas'){
         document.querySelectorAll('.area-item').forEach(it=>{
             const cb=it.querySelector('input[type=checkbox]');
             if(cb&&cb.value==='LCL'){cb.checked=true;it.classList.add('selected');if(!areasSeleccionadas.includes('LCL'))areasSeleccionadas.push('LCL');}
         });
+        if(!areasSeleccionadas.includes('Lengua Castellana y Literatura'))areasSeleccionadas.push('Lengua Castellana y Literatura');
     }
+    // Renderizar selectores de días ahora que las áreas están marcadas
+    if(typeof renderDiaSelectors==='function') renderDiaSelectors();
+    if(typeof generarTablaSesiones==='function') generarTablaSesiones();
     // Título
     const titEl=document.getElementById('titSda');
     if(titEl&&!titEl.value) titEl.value=nombreSda;
@@ -4943,11 +4977,17 @@ function _actualizarSantBypasses(){
 // ═══════════════════════════════════════════════════════════════════
 function construirPrompt(d){
     const esInf=d.etapa==='infantil', esMulti=d.areas.length>1;
-    const areasT=d.areas.join(', ');
-    const esLengua=d.areas.some(a=>a.toLowerCase().includes('castellana')||a.toLowerCase().includes('lcl'));
-    const esMat=d.areas.some(a=>a.toLowerCase().includes('matem')||a.toLowerCase().includes('mat'));
+    // En modo Santillana usar el área del selector Santillana
+    const _santArea = santActivo ? (document.getElementById('santArea')?.value||'') : '';
+    const areasT = santActivo && _santArea ? _santArea : d.areas.join(', ');
+    const esLengua = santActivo ? (santModalidad==='len'||santModalidad==='ambas') : d.areas.some(a=>a.toLowerCase().includes('castellana')||a.toLowerCase().includes('lcl'));
+    const esMat    = santActivo ? (santModalidad==='mat'||santModalidad==='ambas') : d.areas.some(a=>a.toLowerCase().includes('matem')||a.toLowerCase().includes('mat'));
     const tipo=sdaTipos[d.sdaTipo]||sdaTipos.producto;
-    const nivel=esInf?`Segundo Ciclo de Educación Infantil (${d.curso})`:`${d.curso} de Educación Primaria`;
+    // En modo Santillana usar el curso del selector Santillana
+    const _santCursoNum = santActivo ? (document.getElementById('santCurso')?.value||'') : '';
+    const _cursoLabels = {'1':'1º','2':'2º','3':'3º','4':'4º','5':'5º','6':'6º'};
+    const _cursoEfectivo = santActivo && _santCursoNum ? (_cursoLabels[_santCursoNum]||d.curso) : d.curso;
+    const nivel=esInf?`Segundo Ciclo de Educación Infantil (${_cursoEfectivo})`:`${_cursoEfectivo} de Educación Primaria`;
 
     let critsT='';
     Object.entries(d.critsPorArea).forEach(([area,crs])=>{critsT+=`  · ${area}:\n`;crs.forEach(c=>{critsT+=`    - [${c.codigo}] ${c.texto.replace(/^\w+\.\d[\d.]*\s*/,'')}\n`;});});
@@ -5021,35 +5061,80 @@ ${Object.entries(d.critsPorArea).flatMap(([area,cs])=>cs.map(c=>`     ───�
      Instrumento: [lista de cotejo / registro observación]`;
 
         actsT+=`
-▸ ACTIVIDAD ${i} — FASE: ${fase}
-  a) Título creativo: [TÍTULO DE LA ACTIVIDAD]
-  b) Sesiones que ocupa esta actividad: [decide cuántas según complejidad: 1, 2 o 3 sesiones]
-     Sesión inicio: [nº y fecha de la tabla] | Sesión fin: [nº y fecha de la tabla]
-  c) Descripción en una línea: "[qué hace el alumnado y qué produce]"
-     Saberes básicos trabajados: [códigos de la Orden 30/05/2023]
+▸ ACTIVIDAD ${i} — ${fase}
 
-  d) Desarrollo por sesiones — para CADA sesión de esta actividad:
-     • Sesión [N] — [fecha de la tabla] — [tipo: 📚/📖/🔢]:
-       ${_tiempoBloque(d.duracion,esLengua,esMat)}
-  e) Contexto de aplicación: ☐ Escolar  ☐ Social  ☐ Familiar  ☐ Personal
+  a) Título: [TÍTULO CREATIVO Y MOTIVADOR DE LA ACTIVIDAD]
 
-  f) Vinculación curricular:
-     Criterio(s): [código] — [descripción]
-     Cómo se evidencia: [conexión criterio-actividad]
-     ODS: [nº y nombre] | Competencia siglo XXI: [cuál]
+  b) Sesiones
+     Sesión inicio: Ses. [N] ([dd/mm/aaaa]) | Sesión fin: Ses. [N] ([dd/mm/aaaa])
+
+  c) Descripción y saberes básicos
+     [Una frase: qué hace el alumnado y qué produce en esta actividad]
+     Saberes básicos: [códigos y bloques de la Orden 30/05/2023]
+
+  d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión de esta actividad:
+
+${(()=>{
+  // Generate one session example per activity — the AI will replicate for all sessions
+  const dur = d.duracion || 60;
+  const lect = esLengua ? 30 : 0;
+  const rp = esMat ? 30 : 0;
+  const actMin = Math.max(10, dur - lect - rp);
+  const ini = Math.round(actMin * 0.15);
+  const dev = Math.round(actMin * 0.65);
+  const cie = Math.round(actMin * 0.20);
+  const total_check = lect + rp + ini + dev + cie;
+
+  let sesBlock = `     📖 Sesión [N] — [dd/mm/aaaa] ([Día de la semana])
+`;
+  if(esLengua){
+    sesBlock += `     | LECTURA PLANIFICADA 30' | Tipo de texto: [Periodístico/Literario/Multimodal/Discontinuo] — [título o descripción del texto elegido] • ANTES (5'): [activación: predicción, imagen, pregunta] • DURANTE (15'): [estrategia: subrayado, anotaciones, identificación de tipo] • DESPUÉS (10'): [síntesis oral o escrita + microtarea vinculada a la SdA] |
+     | --- | --- |
+`;
+  }
+  sesBlock += `     | INICIO (${ini}') | [Presentación, pregunta detonante, conexión con sesión anterior] |
+     | --- | --- |
+     | DESARROLLO (${dev}') | [Tarea principal cooperativa o individual — describir con detalle lo que hace el alumnado] |
+     | CIERRE (${cie}') | [Puesta en común, síntesis, recogida de evidencia] |
+     | TOTAL | ${lect>0?`${lect}' lectura + `:''}${ini}' inicio + ${dev}' desarrollo + ${cie}' cierre = ${dur} minutos ✔ |
+`;
+  if(esMat && rp > 0){
+    sesBlock += `
+     🔢 Si sesión con RP (${dur}' totales):
+     | RP 30' | Problema vinculado a la temática de la SdA. Fases: Comprensión → Planificación → Resolución → Verificación |
+     | --- | --- |
+     | Desarrollo (${dur-30}') | [Actividad principal de la sesión — ${dur-30} minutos] |
+     | TOTAL | ${rp}' RP + ${dur-rp}' actividad = ${dur} minutos ✔ |
+`;
+  }
+  return sesBlock;
+})()}
+  e) Contexto de aplicación
+     ☑ [Escolar / Social / Familiar / Personal — marca los que correspondan]
+
+  f) Vinculación curricular
+     Criterio(s): [código LCL/MAT/CMN...] — [descripción completa del criterio]
+     Cómo se evidencia: [qué hace/produce el alumnado que demuestra el criterio]
+     ODS: [nº] — [nombre] | Competencia siglo XXI: [Comunicación / Pensamiento crítico / Colaboración / Creatividad / Ciudadanía digital]
 
 ${evalBlock}
 
-  h) Atención a la diversidad (DUA v3.0):
-     • Pauta DUA: [elige una de: ${d.dua.length>0?d.dua.join(' / '):'las más adecuadas para esta fase'}]
-     • Estrategia concreta en ESTA actividad: [describe acción específica del docente o alumnado]
-     • Herramienta digital: [${d.herramientas.join(', ')||'Canva / Book Creator / Genially'}]
-     ${d.acneae.filter(a=>a!=='Ninguna').length>0?`• ACNEAE [${d.acneae.filter(a=>a!=='Ninguna').join(', ')}]: [medida ordinaria concreta diferente a otras actividades]`:''}
-     ${d.programas.some(p=>p.includes('refuerzo'))?'• Refuerzo: [andamiaje concreto para esta actividad]':''}
-     ${d.programas.some(p=>p.includes('profundizaci'))?'• Profundización: [reto adicional o ampliación]':''}
+  h) Atención a la diversidad — DUA v3.0
+     | Pauta DUA | [código y nombre — ej: 7.2 Relevancia y autenticidad / 3.3 Guiar el procesamiento] |
+     | --- | --- |
+     | Estrategia concreta | [acción específica del docente o alumnado en ESTA actividad — no genérica] |
+     | Herramienta digital | [${(d.herramientas||[]).join(', ')||'Canva / Book Creator / Genially'}] |
+     | Refuerzo / andamiaje | [medida concreta de acceso y apoyo${d.acneae&&d.acneae.filter(a=>a!=='Ninguna').length>0?' para '+d.acneae.filter(a=>a!=='Ninguna').join(', '):''}] |
+     ${d.programas&&d.programas.some(p=>p.includes('refuerzo'))?'| Programa refuerzo | [andamiaje concreto diferente al de otras actividades] |':''}
+     ${d.programas&&d.programas.some(p=>p.includes('profundizaci'))?'| Profundización | [reto adicional o ampliación para quien avanza más rápido] |':''}
 
-  i) 📝 OBSERVACIONES DEL TUTOR:
-     [Espacio para anotar reflexiones, incidencias y ajustes tras completar la actividad]
+  i) Observaciones del tutor/a
+     📝 Espacio para reflexiones, incidencias y ajustes tras completar la actividad:
+
+     ___________________________________________
+     ___________________________________________
+     ___________________________________________
+
 `;
     }
 
@@ -5174,19 +5259,54 @@ ${(()=>{
 ═══════════════════════════════════════════════════════════
 DATOS DE LA SdA
 ═══════════════════════════════════════════════════════════
-
+${(()=>{
+    // En modo Santillana, construir datos completos desde el mapa
+    if(santActivo){
+        const sCurso  = document.getElementById('santCurso')?.value||'';
+        const sTrim   = document.getElementById('santTrimestre')?.value||'';
+        const sSdaNum = document.getElementById('santSdaNum')?.value||'';
+        const sTrimData = SANTILLANA_MAP[sCurso]?.[sTrim];
+        const sSda = sTrimData?.sda?.find(s=>String(s.num)===String(sSdaNum));
+        const mod  = santModalidad||'ambas';
+        const cursoLabels={'1':'1º de Primaria','2':'2º de Primaria','3':'3º de Primaria','4':'4º de Primaria','5':'5º de Primaria','6':'6º de Primaria'};
+        const trimLabels={'1':'1er Trimestre','2':'2º Trimestre','3':'3er Trimestre'};
+        const modLabel = mod==='mat'?'Matemáticas':mod==='len'?'Lengua Castellana y Literatura':'Matemáticas + Lengua Castellana y Literatura';
+        const titulo = mod==='mat'?(sSda?.mat?.titulo||sSda?.nombre||''): mod==='len'?(sSda?.len?.titulo||sSda?.nombre||''):sSda?.nombre||'';
+        const centroInteres = document.getElementById('santCentro')?.value||'';
+        const productoFinal = document.getElementById('santProductoTexto')?.value||sSda?.producto||'';
+        const sd = getSantillanaData?.();
+        return `  Centro: CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía)
+  Tipo: ${tipo.emoji} ${tipo.nombre} — Resultado: ${tipo.resultado}
+  Etapa / Nivel: Educación Primaria — ${cursoLabels[sCurso]||sCurso+'º de Primaria'}
+  Curso: ${cursoLabels[sCurso]||sCurso+'º de Primaria'}
+  Trimestre: ${trimLabels[sTrim]||'Trimestre '+sTrim}
+  Mes de la SdA: ${sSda?.mes||'—'}
+  Área(s): ${modLabel}
+  Proyecto Santillana: "${sTrimData?.sdaNombre||''}"
+  SdA Nº: ${sSdaNum} — ${titulo}
+  Reto del proyecto: ${sTrimData?.reto||''}
+  Producto/Reto final: ${productoFinal}
+  ${centroInteres?`Centro de interés del tutor: "${centroInteres}"`:''}
+  Duración: ${d.semanas} semanas | Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
+${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
+  Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
+  Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
+  Otras herramientas: ${d.herramientas.join(', ')||'a criterio'}`;
+    }
+    // Modo normal
+    return `  Centro: CEIP Capitulaciones de Santa Fe (Santa Fe, Granada, Andalucía)
   Tipo: ${tipo.emoji} ${tipo.nombre} — Resultado: ${tipo.resultado}
   Etapa / Nivel: ${d.nombreEtapa} — ${nivel}
+  Curso: ${d.curso} | Trimestre: ${d.trimestre}
   Área(s): ${areasT}${esMulti?' [INTERDISCIPLINAR]':''}
   Título: "${d.titSda||d.tematica}"
   SdA Nº: ${d.sdaNum} | Trimestre: ${d.trimestre} | Duración: ${d.semanas} semanas
   Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
-${tablaT?'\n'+tablaT:''}
-${tablaT?'\n'+tablaT:''}
-  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
+${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
   Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
   Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
-  Otras herramientas: ${d.herramientas.join(', ')||'a criterio'}
+  Otras herramientas: ${d.herramientas.join(', ')||'a criterio'}`;
+})()}
 
 ═══════════════════════════════════════════════════════════
 SABERES BÁSICOS (Orden 30/05/2023)
@@ -5471,19 +5591,55 @@ FIN ANEXO — repite la estructura completa para CADA uno de los programas lista
     | Proceso de aprendizaje: motivación y transferencia | Cuestionario al alumnado (Google Forms) |
 
 ═══════════════════════════════════════════════════════════
-FORMATO DE ENTREGA
+FORMATO DE ENTREGA — REQUISITOS OBLIGATORIOS
 ═══════════════════════════════════════════════════════════
-✅ Los 7 apartados de la estructura oficial, numerados con formato "N — TÍTULO" (sin la palabra BLOQUE)
-✅ ${d.sesiones} actividades evaluables (una por sesión) con todos los apartados a-i
+⚠️ NO preguntes nada. Genera la SdA completa directamente.
+
+ESTRUCTURA OBLIGATORIA — 7 APARTADOS:
+✅ 1 — IDENTIFICACIÓN (tabla con todos los campos: curso, título, trimestre, fechas, sesiones, pregunta motriz, tipo, metodología, apps, planes)
+✅ 2 — JUSTIFICACIÓN (2.1 objetivos etapa · 2.2 principios pedagógicos tabla · 2.3 conexión con entorno)
+✅ 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (tabla con nº producto, nombre, descripción, sesiones)
+✅ 4 — CONCRECIÓN CURRICULAR:
+   · 4.1 Objetivos didácticos — tabla con columnas Ses./Fecha/Objetivo (UNO por cada sesión con su fecha exacta del calendario)
+   · 4.2 Vinculación ODS — tabla
+   · 4.3 Transversalidad — tabla
+   · 4.4 Saberes eventuales y efemérides — tabla con fecha/efeméride/integración
+   · 4.5 Lectura Planificada — tabla ANTES/DURANTE/DESPUÉS + tipos de texto por sesión
+✅ 5 — SECUENCIA DIDÁCTICA — ${d.sesiones>0?Math.max(2,Math.round(d.sesiones*0.6)):6} actividades con los apartados a-i COMPLETOS:
+   · a) Título de la actividad
+   · b) Sesión inicio y fin con fecha exacta (dd/mm/aaaa)
+   · c) Descripción y saberes básicos
+   · d) Desarrollo por sesiones — OBLIGATORIO: tabla con LECTURA 30' (si LCL) + INICIO + DESARROLLO + CIERRE + TOTAL = ${d.duracion||60}' ✔ para CADA sesión
+   · e) Contexto de aplicación
+   · f) Vinculación curricular (criterio + cómo se evidencia + ODS + competencia siglo XXI)
+   · g) Evaluación intermedia (tabla código/criterio/instrumento/evidencia del alumnado)
+   · h) DUA v3.0 (tabla pauta/estrategia/herramienta/andamiaje)
+   · i) Observaciones del tutor — 3 líneas de guiones vacías para escribir a mano: ___________ / ___________ / ___________
+✅ 6 — MEDIDAS ATENCIÓN DIVERSIDAD:
+   · 6.1 Medidas generales Decreto 101/2023 — tabla medida/aplicación
+   · 6.2 DUA por sesión — tabla completa con TODAS las sesiones (fecha, pauta, estrategia, herramienta)
+   · 6.3 ACNEAE presentes en el aula
+   · 6.4 Programas de atención a la diversidad
+✅ 7 — VALORACIÓN DE LO APRENDIDO:
+   · 7.1 Tabla de instrumentos con escala numérica (Insuf.1-4 / Sufic.5-6 / Bien 6-7 / Notable 7-8 / Sobres. 9-10) por cada criterio
+   · 7.2 Escalas de dominio — qué sabrá hacer el alumnado
+   · 7.3 Tabla competencial VACÍA para rellenar (CCL/CP/CMCTI/CD/CPSAA/CC/CE/CCEC con campos ___)
+   · 7.4 Evaluación de la práctica docente — tabla indicadores
 ${(()=>{ const _a=recopilarACI(); return _a.length>0 ? construirSeccionACI(_a,d) : ""; })()}
-✅ Tabla de evaluación con escala numérica en cada actividad (Insuf./Suf./Bien/Notable/Sobres.)
-✅ Vinculación explícita criterio ↔ actividad en cada una
-✅ Apps del CEIP Capitulaciones integradas donde corresponda
-✅ Apartado Observaciones en cada actividad
-✅ Referencias exactas: Orden 30/05/2023, Decreto 101/2023, RD 157/2022
-✅ Lenguaje profesional docente aplicable directamente en ${nivel}
-✅ Coherencia total entre todos los bloques
-${d.programas.length>0?`✅ ${d.programas.length} ANEXO/S AL FINAL: ${d.programas.join(' + ')} — con actividades adaptadas para CADA sesión (todos los alumnos del programa trabajan lo mismo)`:''}`;
+${d.programas&&d.programas.length>0?`✅ ANEXOS DE REFUERZO (${d.programas.length} anexo/s):
+   Para CADA programa: 1.Alumnado destinatario · 2.Objetivos específicos · 3.Tabla actividades adaptadas sesión a sesión · 4.Orientaciones metodológicas · 5.Seguimiento y evaluación`:''}
+
+REGLAS ADICIONALES:
+✅ Las fechas exactas de CADA sesión deben aparecer en 4.1, en b) de cada actividad y en d) desarrollo
+✅ Los apartados i) Observaciones deben tener 3 líneas de guiones físicos para escribir: ___________ / ___________ / ___________
+✅ La tabla 7.3 debe estar VACÍA con ___ en cada celda para que el docente la rellene
+✅ Lenguaje profesional docente, aplicable directamente en ${nivel}
+✅ Coherencia total: mismo criterio, misma fecha, mismo instrumento en todos los bloques
+
+⚠️ IMPORTANTE: No me preguntes el formato de salida ni nada más. Genera la SdA completa directamente, sin preámbulos.
+
+Genera la SdA completa, detallada y lista para entregar a inspección educativa.
+`;
 
 }
 
@@ -6708,6 +6864,8 @@ ESTRUCTURA DE LOS 7 APARTADOS (desarrolla TODOS):
 5. EVALUACIÓN (criterios, indicadores, instrumentos, tabla de rúbrica con 4 niveles)
 6. ATENCIÓN A LA DIVERSIDAD Y DUA (medidas ordinarias, medidas de apoyo, principios DUA desarrollados)
 7. RECURSOS Y MATERIALES (materiales físicos, digitales, apps, webs)
+
+⚠️ IMPORTANTE: No me preguntes el formato de salida ni nada más. Genera la SdA completa directamente, sin preámbulos.
 
 Genera la SdA completa, detallada y lista para entregar a inspección educativa.
 ═════════════════════════════════════════════════════════
