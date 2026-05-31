@@ -1233,6 +1233,9 @@
         </div>
     </div>
 
+    <!-- ── Banner de estado de configuración ─────────────── -->
+    <div id="sesConfigStatus" style="margin-top:.75rem;border-radius:12px;padding:.85rem 1.1rem;font-size:.83rem;font-weight:600;display:none"></div>
+
     <div class="btn-container">
         <div></div>
         <button class="btn btn-primary" onclick="nextStep()">Siguiente →</button>
@@ -5977,6 +5980,38 @@ function generarTablaSesiones(){
     if(nRP>0) info+=` · 🔢 ${nRP} con RP (30')`;
     info+=` · 📊 La IA decide cuándo evaluar según criterios`;
     document.getElementById('sesTotalInfo').innerHTML=info;
+
+    // Actualizar banner de estado de configuración
+    _actualizarBannerEstado();
+}
+
+function _actualizarBannerEstado(){
+    const banner = document.getElementById('sesConfigStatus');
+    if(!banner) return;
+    const ini = document.getElementById('fechaInicio').value;
+    const fin = document.getElementById('fechaFin').value;
+    const nSes = sesionesData.length;
+    const hayMat = areasSeleccionadas.some(a=>a.toLowerCase().includes('matem'));
+    const nRP = sesionesData.filter(s=>s.tipo==='rp'||s.tipo==='lectura-rp').length;
+
+    if(!ini || !fin){
+        banner.style.display='block';
+        banner.style.background='#fef3c7'; banner.style.border='1.5px solid #f59e0b'; banner.style.color='#92400e';
+        banner.innerHTML='⚠️ <strong>Falta la fecha de inicio y/o fin</strong> — Rellena las fechas para que la app calcule las sesiones reales.';
+    } else if(nSes===0){
+        banner.style.display='block';
+        banner.style.background='#fef3c7'; banner.style.border='1.5px solid #f59e0b'; banner.style.color='#92400e';
+        banner.innerHTML='⚠️ <strong>No hay días de clase marcados</strong> — Selecciona los días de la semana de cada área para generar la tabla de sesiones.';
+    } else if(hayMat && nRP===0){
+        banner.style.display='block';
+        banner.style.background='#fef3c7'; banner.style.border='1.5px solid #f59e0b'; banner.style.color='#92400e';
+        banner.innerHTML='⚠️ <strong>Sin días de RP marcados</strong> — Marca qué días de Matemáticas son de Resolución de Problemas (mínimo 3/semana).';
+    } else {
+        banner.style.display='block';
+        banner.style.background='#d1fae5'; banner.style.border='1.5px solid #059669'; banner.style.color='#065f46';
+        const rpInfo = hayMat ? ` · 🔢 ${nRP} sesiones con RP` : '';
+        banner.innerHTML=`✅ <strong>Configuración correcta</strong> — ${nSes} sesiones calculadas${rpInfo}. El prompt incluirá todas las fechas reales.`;
+    }
 }
 
 function _toggleInstr(idx, val){
@@ -6023,14 +6058,134 @@ function mostrarResumenSda(){
     cont.forEach(c=>{c.innerHTML=html;});
 }
 
-function generarPrompt(){const d=recopilarDatos();document.getElementById('promptContent').textContent=construirPrompt(d);document.getElementById('promptSesLbl').textContent=d.sesiones;showToast('✅ Prompt generado');}
+function _validarSesionesAntesDeGenerar(){
+    // Comprueba si hay fechas configuradas y sesiones reales calculadas
+    const ini = document.getElementById('fechaInicio').value;
+    const fin = document.getElementById('fechaFin').value;
+    const nSes = sesionesData.length;
+    const esMat = sesionesData.length > 0
+        ? sesionesData.some(s => s.tipo === 'rp' || s.tipo === 'normal')
+        : (areasSeleccionadas.some(a => a.toLowerCase().includes('matem')));
+
+    // Si no hay fechas configuradas
+    if (!ini || !fin) {
+        _mostrarWarningConfiguracion(
+            '⚠️ Faltan fechas de la SdA',
+            'No has indicado la fecha de inicio y fin de la SdA.<br><br>' +
+            '📅 Ve al <strong>Paso 4 (Temporalización)</strong> y rellena las fechas de inicio y fin.<br>' +
+            'Sin fechas, la IA genera las sesiones con fecha "sin fecha" y no puede planificar correctamente.'
+        );
+        return false;
+    }
+
+    // Si hay fechas pero no se han marcado días (sesionesData vacío)
+    if (nSes === 0) {
+        _mostrarWarningConfiguracion(
+            '⚠️ No hay sesiones configuradas',
+            'Has puesto fechas pero no has marcado los <strong>días de clase</strong> de cada área.<br><br>' +
+            '📅 Ve al <strong>Paso 4</strong> y selecciona los días de la semana en los que impartes cada área (L, M, X, J, V).<br>' +
+            'La tabla de sesiones se genera automáticamente y la IA sabrá exactamente cuántas sesiones tiene la SdA.'
+        );
+        return false;
+    }
+
+    // Si es Matemáticas y no hay ningún día RP marcado
+    const nRP = sesionesData.filter(s => s.tipo === 'rp' || s.tipo === 'lectura-rp').length;
+    const hayMat = areasSeleccionadas.some(a => a.toLowerCase().includes('matem'));
+    if (hayMat && nRP === 0) {
+        _mostrarWarningConfiguracion(
+            '⚠️ No hay sesiones de Resolución de Problemas',
+            'La SdA incluye <strong>Matemáticas</strong> pero no has marcado ningún día como <strong>RP (Resolución de Problemas)</strong>.<br><br>' +
+            '📅 Ve al <strong>Paso 4</strong>, selecciona los días de Matemáticas y marca cuáles son de RP (mínimo 3/semana según las Instrucciones de la Junta).<br>' +
+            'Sin esto, la IA no sabe qué sesiones llevan bloque de RP de 30 minutos.',
+            true // advertencia no bloqueante — se puede continuar
+        );
+        // No bloqueamos, solo avisamos
+    }
+
+    return true;
+}
+
+function _mostrarWarningConfiguracion(titulo, mensaje, soloAviso = false){
+    // Crea o reutiliza el modal de aviso
+    let overlay = document.getElementById('configWarningOverlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'configWarningOverlay';
+        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem';
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:20px;padding:2rem;max-width:480px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,0.25);font-family:Poppins,sans-serif">
+                <div id="cwIcon" style="font-size:2.4rem;text-align:center;margin-bottom:.5rem">⚠️</div>
+                <h3 id="cwTitulo" style="color:#92400e;text-align:center;margin-bottom:1rem;font-size:1.05rem"></h3>
+                <div id="cwMensaje" style="color:#374151;font-size:.88rem;line-height:1.65;margin-bottom:1.5rem"></div>
+                <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+                    <button id="cwBtnVolver" style="background:#f59e0b;color:white;border:none;padding:.65rem 1.4rem;border-radius:10px;font-weight:700;cursor:pointer;font-family:Poppins,sans-serif;font-size:.88rem">
+                        📅 Ir al Paso 4
+                    </button>
+                    <button id="cwBtnContinuar" style="display:none;background:#6b7280;color:white;border:none;padding:.65rem 1.4rem;border-radius:10px;font-weight:600;cursor:pointer;font-family:Poppins,sans-serif;font-size:.88rem">
+                        Continuar de todas formas
+                    </button>
+                    <button id="cwBtnCerrar" style="background:white;color:#374151;border:1.5px solid #d1d5db;padding:.65rem 1.4rem;border-radius:10px;font-weight:600;cursor:pointer;font-family:Poppins,sans-serif;font-size:.88rem">
+                        Cancelar
+                    </button>
+                </div>
+            </div>`;
+        document.body.appendChild(overlay);
+        document.getElementById('cwBtnVolver').onclick = () => {
+            overlay.style.display = 'none';
+            // Ir al paso 4
+            const pasos = document.querySelectorAll('.card');
+            pasos.forEach(p => p.classList.remove('active'));
+            const paso4 = document.getElementById('step4');
+            if (paso4) { paso4.classList.add('active'); paso4.scrollIntoView({behavior:'smooth'}); }
+        };
+        document.getElementById('cwBtnCerrar').onclick = () => { overlay.style.display = 'none'; };
+    }
+
+    document.getElementById('cwTitulo').textContent = titulo;
+    document.getElementById('cwMensaje').innerHTML = mensaje;
+    const btnCont = document.getElementById('cwBtnContinuar');
+    if (soloAviso) {
+        btnCont.style.display = 'inline-flex';
+        btnCont.onclick = () => { overlay.style.display = 'none'; _ejecutarGeneracion(); };
+    } else {
+        btnCont.style.display = 'none';
+    }
+    overlay.style.display = 'flex';
+}
+
+// Bandera para ejecución tras aviso
+let _pendingGeneracion = null;
+function _ejecutarGeneracion(){ if(_pendingGeneracion){ _pendingGeneracion(); _pendingGeneracion=null; } }
+
+function generarPrompt(){
+    if(!_validarSesionesAntesDeGenerar()) return;
+    const d=recopilarDatos();
+    document.getElementById('promptContent').textContent=construirPrompt(d);
+    document.getElementById('promptSesLbl').textContent=d.sesiones;
+    showToast('✅ Prompt generado — ' + d.sesiones + ' sesiones');
+}
 async function generarYAbrir(){
+    if(!_validarSesionesAntesDeGenerar()){
+        // Si es solo aviso (RP no configurado), encolar la ejecución real
+        _pendingGeneracion = async () => {
+            const d=recopilarDatos(),p=construirPrompt(d);
+            document.getElementById('promptContent').textContent=p;
+            document.getElementById('promptSesLbl').textContent=d.sesiones;
+            const ia=getIA();
+            try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}
+            document.getElementById('pasteIAName').textContent=iaNames[ia];
+            document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';
+            document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};
+            document.getElementById('pasteOverlay').classList.add('show');
+        };
+        return;
+    }
     const d=recopilarDatos(),p=construirPrompt(d);
     document.getElementById('promptContent').textContent=p;
     document.getElementById('promptSesLbl').textContent=d.sesiones;
     const ia=getIA();
     try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}
-    // Mostrar modal de recordatorio antes de abrir la IA
     document.getElementById('pasteIAName').textContent=iaNames[ia];
     document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';
     document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};
