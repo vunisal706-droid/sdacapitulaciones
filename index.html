@@ -450,6 +450,13 @@
         .step.skipped .sn{background:rgba(156,163,175,.15);border-color:rgba(156,163,175,.3);color:#9ca3af}
         .step.skipped .sl{color:#9ca3af;text-decoration:line-through;font-style:italic}
         .step.skipped{opacity:.5;pointer-events:none}
+        /* ===== Nada puede ensanchar la página ===== */
+        html{overflow-x:hidden}
+        body{overflow-x:hidden;max-width:100%}
+        img,svg,canvas,video,iframe,table,pre{max-width:100%}
+        pre{white-space:pre-wrap;overflow-wrap:anywhere}
+        .container{max-width:min(840px,100%)}
+
         ::-webkit-scrollbar{width:6px;height:6px}
         ::-webkit-scrollbar-track{background:rgba(99,102,241,0.05)}
         ::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.3);border-radius:3px}
@@ -463,6 +470,10 @@
             .btn-launch,.btn-rlaunce{justify-content:center}
             .sn{width:28px;height:28px;font-size:.7rem}
             .json-panel{padding:1.2rem}
+            /* 16px evita el zoom automático del navegador al enfocar un campo */
+            input,select,textarea{font-size:16px}
+            .ses-table-wrap,.tabla-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+            .chip-tooltip{max-width:min(260px,80vw)}
         }
     
         /* ── Tooltip herramientas ─────────────────────────── */
@@ -529,8 +540,12 @@
             .h-actions{width:100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.25rem;scrollbar-width:none}
             .h-actions::-webkit-scrollbar{display:none}
             .h-actions .btn-foto,.h-actions .btn-foto-step2{flex-shrink:0;font-size:.68rem;padding:.38rem .75rem}
-            /* Mostrar la etiqueta del paso activo (antes los números no decían nada) */
-            .step.active .sl{display:block;font-size:.58rem;white-space:nowrap}
+            /* Etiqueta del paso activo: flotante, para que no ensanche la fila */
+            .prog-wrap{padding:.85rem .6rem 1.4rem}
+            .prog-steps{max-width:100%}
+            .step{min-width:0}
+            .step.active .sl{display:block;font-size:.58rem;white-space:nowrap;
+                position:absolute;top:34px;left:50%;transform:translateX(-50%);max-width:none}
             /* Rendimiento móvil: menos blur y sin animación de fondo */
             .card,.prog-wrap,.header,.modo-wrap{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
             body::before{animation:none}
