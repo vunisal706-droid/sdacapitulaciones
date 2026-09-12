@@ -14248,7 +14248,10 @@ function _autoRellenarPasosSantInfantil(curso, trim, sdaNum){
     if(temEl && !temEl.value) temEl.value = sda.nombre;
     const pmEl = document.getElementById('preguntaMotriz');
     if(pmEl && !pmEl.value && productoTexto){
-        pmEl.value = `¿Cómo podemos ${productoTexto.charAt(0).toLowerCase()+productoTexto.slice(1)}?`;
+        let pt = productoTexto.split(/producto final\s*\d*\s*:?/i).filter(Boolean)[0] || productoTexto;
+        pt = pt.replace(/^[\s:.\-]+/,'').split(/[.;]/)[0].trim();
+        if(pt.length>70) pt = pt.slice(0,70).trim();
+        pmEl.value = pt ? `¿Cómo podemos ${pt.charAt(0).toLowerCase()+pt.slice(1)}?` : '';
     }
     updProg();
 }
@@ -14547,7 +14550,7 @@ IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de activ
 
 GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos: "1 — IDENTIFICACIÓN", etc.):
 1 — IDENTIFICACIÓN: tabla con curso, título, trimestre, fechas, nº de sesiones, tipo, metodología y planes del centro asociados.
-2 — JUSTIFICACIÓN: objetivos de etapa (Decreto 101/2023), principios pedagógicos y justificación de la conexión con el entorno del alumnado de ${d.curso}.
+2 — JUSTIFICACIÓN: objetivos de etapa (${esInf?'Decreto 100/2023 Infantil':'Decreto 101/2023'}), principios pedagógicos y justificación de la conexión con el entorno del alumnado de ${d.curso}.
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL: el producto/tarea final de la fuente y sus productos parciales por fase.
 4 — CONCRECIÓN CURRICULAR: tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
 5 — SECUENCIA DIDÁCTICA: agrupa las ${d.sesiones} sesiones en actividades por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar). El producto final ocupa la última actividad.
@@ -14701,7 +14704,7 @@ ${(()=>{
 
   let sesBlock = `     📖 Sesión [N] — [dd/mm/aaaa] ([Día de la semana])
      [Esta estructura es OBLIGATORIA en TODAS las áreas — Lengua, Matemáticas, CMN, EAR, EFI, inglés…]
-     | SABER BÁSICO | [CÓDIGO de la Orden 30/05/2023] — [concreción BREVE en lenguaje de aula, máx. 6 palabras: «Propiedad conmutativa de la suma», «Estimación de sumas y restas». NUNCA copies el texto oficial completo del saber ni dejes solo el código. UN saber principal por sesión, vinculado al criterio de esa sesión] |
+     | SABER BÁSICO | [${esInf?'Área y bloque de la Orden 30/05/2023 (p. ej. «Crecimiento en Armonía · Bloque A»)':'CÓDIGO de la Orden 30/05/2023'} — concreción BREVE en lenguaje de aula, máx. 6 palabras. NUNCA copies el texto oficial completo del saber. UN saber principal por sesión, vinculado al criterio de esa sesión] |
      | --- | --- |
 `;
   if(esLengua){
@@ -14731,7 +14734,7 @@ ${(()=>{
      ☑ [Escolar / Social / Familiar / Personal — marca los que correspondan]
 
   f) Vinculación curricular
-     Criterio(s): [código LCL/MAT/CMN...] — [descripción completa del criterio]
+     Criterio(s): [${esInf?'código del criterio de la Orden 30/05/2023 para Infantil, p. ej. 1.1., 2.3., 4.2.':'código LCL/MAT/CMN…'}] — [descripción completa del criterio]
      Cómo se evidencia: [qué hace/produce el alumnado que demuestra el criterio]
      ODS: [nº] — [nombre] | Competencia siglo XXI: [Comunicación / Pensamiento crítico / Colaboración / Creatividad / Ciudadanía digital]
 
@@ -14768,8 +14771,9 @@ Actúas como docente experto en ${d.nombreEtapa}, especialista en ${esMulti?'las
 Normativa de referencia:
 • LOMLOE (Ley Orgánica 3/2022, 29 diciembre)
 • Orden de 30 de mayo de 2023 — currículo ${d.nombreEtapa} en Andalucía
-• Decreto 101/2023 — ordenación de la Educación Primaria en Andalucía
-• RD 157/2022 — ordenación básica de la Educación Primaria (art. 6 principios pedagógicos)
+${esInf?`• Real Decreto 95/2022 — ordenación y enseñanzas mínimas de la Educación Infantil
+• Decreto 100/2023, de 9 de mayo — ordenación y currículo de la Educación Infantil en Andalucía`:`• Real Decreto 157/2022 — ordenación y enseñanzas mínimas de la Educación Primaria
+• Decreto 101/2023 — ordenación y currículo de la Educación Primaria en Andalucía`}
 
 ⚠️ CRÍTICO: Genera la SdA con EXACTAMENTE los 7 apartados de la estructura oficial. No omitas ninguno.
 ⚠️ INFANTIL: la evaluación es cualitativa y se hace por observación directa. Usa SIEMPRE No iniciado (NI) /
@@ -15094,11 +15098,11 @@ INSTRUCCIONES: 7 APARTADOS OFICIALES DE LA SdA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 2 — JUSTIFICACIÓN Y CONTEXTO DE APLICACIÓN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-2.1 Objetivos de etapa (artículo 5 del Decreto 101/2023):
-    [Cita los objetivos de etapa de Educación Primaria que se trabajan con esta SdA]
+2.1 Objetivos ${esInf?'generales de etapa (Educación Infantil — RD 95/2022 y Decreto 100/2023, de 9 de mayo)':'de etapa (art. 5 del Decreto 101/2023)'}:
+    [Cita los objetivos de ${esInf?'la Educación Infantil':'etapa de Educación Primaria'} que se trabajan con esta SdA]
 
-2.2 Principios pedagógicos (art. 6 del RD 157/2022 y art. 6 del Decreto 101/2023):
-    [Explica cómo los principios pedagógicos andaluces se aplican en esta SdA]
+2.2 Principios pedagógicos ${esInf?'(RD 95/2022 y Decreto 100/2023, de 9 de mayo)':'(art. 6 del RD 157/2022 y art. 6 del Decreto 101/2023)'}:
+    [Explica cómo los principios pedagógicos ${esInf?'de la Educación Infantil en Andalucía':'andaluces de Primaria'} se aplican en esta SdA]
 
 2.3 Justificación de la relevancia y conexión con el entorno del alumnado de ${nivel}
 
@@ -15390,7 +15394,7 @@ ${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (el usuario t
 
 ESTRUCTURA OBLIGATORIA — 7 APARTADOS:
 ✅ 1 — IDENTIFICACIÓN (tabla con todos los campos: curso, título, trimestre, fechas, sesiones, pregunta motriz, tipo, metodología, apps, planes)
-✅ 2 — JUSTIFICACIÓN (2.1 objetivos etapa · 2.2 principios pedagógicos tabla · 2.3 conexión con entorno)
+✅ 2 — JUSTIFICACIÓN (2.1 objetivos de etapa · 2.2 principios pedagógicos — ${esInf?'RD 95/2022 y Decreto 100/2023':'RD 157/2022 y Decreto 101/2023'} · 2.3 conexión con entorno)
 ✅ 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (tabla con nº producto, nombre, descripción, sesiones)
 ✅ 4 — CONCRECIÓN CURRICULAR:
    · 4.1 Concreción curricular por sesión — tabla Sesión / Fecha / Saber básico / Pág. libro / Criterio(s) / Evaluación, una fila por sesión con su fecha exacta
