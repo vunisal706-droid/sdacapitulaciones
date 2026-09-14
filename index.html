@@ -439,7 +439,8 @@
         .sant-panel.collapsed > *:not(#santResumenBar){display:none!important}
         #santResumenBar{display:none;align-items:center;gap:.7rem;flex-wrap:wrap;background:rgba(255,245,245,0.95);border:1.5px solid rgba(239,68,68,0.25);border-radius:12px;padding:.7rem 1rem}
         .sant-panel.collapsed #santResumenBar{display:flex}
-        .sant-panel.collapsed > #planifTemporal{display:block!important;background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.07);border-radius:12px;padding:.85rem 1rem .35rem;margin-top:.7rem}
+        #planifTemporal.planif-destacado{background:rgba(245,158,11,.06);border:1.5px solid rgba(245,158,11,.35);border-radius:14px;padding:1rem 1.1rem .4rem;margin-bottom:.9rem}
+        #planifTemporal.planif-destacado .planif-head{color:#92400e}
         #santResumenBar .srb-info{flex:1;min-width:180px;font-size:.85rem;color:#1e1b4b;line-height:1.35}
         #santResumenBar .srb-info b{color:#991b1b}
         #santResumenBar .srb-edit{background:#fff;border:1.5px solid rgba(239,68,68,0.4);color:#991b1b;font-weight:700;font-size:.8rem;border-radius:9px;padding:.5rem .9rem;cursor:pointer;transition:all .2s;white-space:nowrap}
@@ -3835,8 +3836,9 @@ function validar(step){
     if(santActivo && _SANT_SKIP.includes(step)) return true;
     const modoLibro = anayaActivo || santActivo;
     if(step===1&&areasSeleccionadas.length===0&&!modoLibro){showToast('⚠️ Selecciona al menos un área');return false;}
-    // En modo libro también saltamos validación de fechas y campos auto-rellenados
-    const camposBypassModo=['etapa','curso','trimestre','fechaInicio','fechaFin'];
+    // En modo libro saltamos los campos auto-rellenados desde el libro,
+    // pero NUNCA las fechas: sin ellas la generación final se bloquea.
+    const camposBypassModo=['etapa','curso','trimestre'];
     if(step===2&&!sdaTipo){
         // En modo libro intentar autoseleccionar antes de bloquear
         if(santActivo||anayaActivo){
@@ -3857,6 +3859,9 @@ function validar(step){
         else{f.style.borderColor='';f.classList.remove('campo-error');}
     });
     if(primerInvalido){
+        if(primerInvalido.id==='fechaInicio'||primerInvalido.id==='fechaFin'){
+            showToast('📅 Indica la fecha de inicio y de fin de la SdA antes de continuar');
+        }
         primerInvalido.scrollIntoView({behavior:'smooth',block:'center'});
         setTimeout(()=>{try{primerInvalido.focus({preventScroll:true});}catch(e){}},350);
     }
@@ -14065,17 +14070,12 @@ function collapseSantPanel(){
     const panel=document.getElementById('santPanel');
     if(!panel) return;
     _actualizarResumenSant();
-    // La planificación temporal NO debe ocultarse al colapsar: la sacamos como hijo directo
-    const plan=document.getElementById('planifTemporal');
-    if(plan && panel.contains(plan)) panel.appendChild(plan);
     panel.classList.add('collapsed');
 }
 function expandSantPanel(){
     const panel=document.getElementById('santPanel');
     if(!panel) return;
     panel.classList.remove('collapsed');
-    // Devolver la planificación temporal a su hueco dentro del panel
-    if(typeof _actualizarModoUI==='function') _actualizarModoUI();
 }
 function _actualizarResumenSant(){
     const cont=document.getElementById('santResumenTexto');
@@ -15943,24 +15943,8 @@ function _validarSesionesAntesDeGenerar(){
 }
 
 function _irATemporalizacion(){
-    // El bloque de fechas y sesiones vive en el Paso 1, pero en modo libro
-    // se traslada dentro del panel Capitulaciones/Anaya. Lo buscamos en el DOM.
-    // Si ese panel está colapsado, lo expandimos: si no, el scroll iría a un elemento oculto.
-    const _sp = document.getElementById('santPanel');
-    const _plan = document.getElementById('planifTemporal');
-    if(_sp && _plan && _sp.contains(_plan) && _sp.classList.contains('collapsed')){
-        _sp.classList.remove('collapsed');
-    }
-    const campo = document.getElementById('fechaInicio');
-    const bloque = document.getElementById('planifTemporal') || campo;
-    const card = (bloque||campo)?.closest('.card');
-    try{
-        if(card && card.id && /^step\d+$/.test(card.id)){
-            irAPaso(parseInt(card.id.replace('step',''),10));
-        }else{
-            irAPaso(1);
-        }
-    }catch(e){ try{ irAPaso(1); }catch(e2){} }
+    // La planificación temporal vive siempre en el Paso 1.
+    try{ irAPaso(1); }catch(e){}
     setTimeout(()=>{
         const b = document.getElementById('planifTemporal') || document.getElementById('fechaInicio');
         if(b) b.scrollIntoView({behavior:'smooth',block:'center'});
@@ -16252,11 +16236,11 @@ function _actualizarModoUI(){
     // Mover la planificación temporal (fechas, duración, nº SdA, semanas) al panel activo
     const plan=document.getElementById('planifTemporal');
     if(plan){
-        if(anayaActivo){ document.getElementById('anayaPlanifSlot')?.appendChild(plan); }
-        else if(santActivo && santEtapaModo==='infantil'){ document.getElementById('santPlanifSlotInf')?.appendChild(plan); }
-        else if(santActivo){ document.getElementById('santPlanifSlot')?.appendChild(plan); }
-        else if(pdfActivo){ document.getElementById('pdfPlanifSlot')?.appendChild(plan); }
-        else { const h=document.getElementById('planifHome'); if(h&&h.parentNode) h.parentNode.insertBefore(plan,h); }
+        // Se queda SIEMPRE en el Paso 1 (antes se movía dentro de los paneles de libro,
+        // y al colapsar el panel desaparecía y no se podían poner las fechas).
+        const h=document.getElementById('planifHome');
+        if(h&&h.parentNode&&plan.nextElementSibling!==h) h.parentNode.insertBefore(plan,h);
+        plan.classList.toggle('planif-destacado', anayaActivo||santActivo||pdfActivo);
     }
     // Ocultar en el paso 1 lo que ya resuelve el panel del libro (etapa/curso/trimestre y áreas)
     document.body.classList.toggle('modo-libro', anayaActivo||santActivo||pdfActivo);
@@ -16278,7 +16262,7 @@ function _mostrarBannerModo(){
     if(!b||!t) return;
     if(anayaActivo||santActivo){
         b.style.display='flex';
-        t.textContent='✅ Modo libro activo: etapa, curso, trimestre y áreas se rellenan automáticamente desde el libro. Las fechas y sesiones se configuran en el panel superior.';
+        t.textContent='✅ Modo libro activo: etapa, curso, trimestre y áreas se rellenan automáticamente desde el libro. Las fechas de inicio y fin las pones aquí abajo, en 📅 Planificación temporal (obligatorio).';
     } else {
         if(!b.style.display||b.style.display==='none') return; // dejar como está
     }
