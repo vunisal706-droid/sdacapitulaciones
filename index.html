@@ -2122,21 +2122,21 @@
     <p class="card-sub">Medidas ordinarias de atención a la diversidad — sin ACS</p>
 
     <div class="fg">
-        <label for="acneae">ACNEAE en el aula</label>
-        <select id="acneae" multiple size="4">
-            <option value="Ninguna" selected>Ninguna específica</option>
-            <option value="TDAH">TDAH</option>
-            <option value="Dislexia">Dislexia</option>
-            <option value="Discapacidad intelectual">Discapacidad intelectual</option>
-            <option value="Altas capacidades">Altas capacidades</option>
-            <option value="TEA">TEA (Autismo)</option>
-            <option value="Discapacidad motora">Discapacidad motora</option>
-            <option value="Discapacidad visual">Discapacidad visual</option>
-            <option value="Discapacidad auditiva">Discapacidad auditiva</option>
-            <option value="Trastorno del lenguaje">Trastorno del lenguaje</option>
-            <option value="Síndrome de Down">Síndrome de Down</option>
-        </select>
-        <small>Ctrl/Cmd para seleccionar varias</small>
+        <label>ACNEAE en el aula</label>
+        <div class="cbg" id="acneaeGroup">
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_0" value="Ninguna" checked onchange="_onAcneaeChange(this)"><label for="acn_0">Ninguna específica</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_1" value="TDAH" onchange="_onAcneaeChange(this)"><label for="acn_1">TDAH</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_2" value="Dislexia" onchange="_onAcneaeChange(this)"><label for="acn_2">Dislexia</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_3" value="Discapacidad intelectual" onchange="_onAcneaeChange(this)"><label for="acn_3">Discapacidad intelectual</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_4" value="Altas capacidades" onchange="_onAcneaeChange(this)"><label for="acn_4">Altas capacidades</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_5" value="TEA" onchange="_onAcneaeChange(this)"><label for="acn_5">TEA (Autismo)</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_6" value="Discapacidad motora" onchange="_onAcneaeChange(this)"><label for="acn_6">Discapacidad motora</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_7" value="Discapacidad visual" onchange="_onAcneaeChange(this)"><label for="acn_7">Discapacidad visual</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_8" value="Discapacidad auditiva" onchange="_onAcneaeChange(this)"><label for="acn_8">Discapacidad auditiva</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_9" value="Trastorno del lenguaje" onchange="_onAcneaeChange(this)"><label for="acn_9">Trastorno del lenguaje</label></div>
+            <div class="cbi"><input type="checkbox" class="acneae-cb" id="acn_10" value="Síndrome de Down" onchange="_onAcneaeChange(this)"><label for="acn_10">Síndrome de Down</label></div>
+        </div>
+        <small>Marca todas las que haya en el aula — puedes seleccionar varias</small>
     </div>
 
     <div class="fg">
@@ -4161,7 +4161,7 @@ function recopilarDatos(){
         herramientas:Array.from(document.querySelectorAll('#herramientas .chip.selected')).map(c=>c.textContent),
         sabersPorArea:sabers, saberesManual:document.getElementById('saberesManual').value,
         critsPorArea:crits, criteriosManual:document.getElementById('criteriosManual').value,
-        acneae:Array.from(document.getElementById('acneae').selectedOptions).map(o=>o.value),
+        acneae:Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb:checked')).map(c=>c.value),
         sesionesData:[...sesionesData],
         medidasGenerales:Array.from(document.querySelectorAll('#step7 input[id^=mg_]:checked')).map(c=>c.value),
         dua:Array.from(document.querySelectorAll('#step7 input[id^=dua]:checked')).map(c=>c.value),
@@ -13930,6 +13930,7 @@ function onAnayaSdaNumChange(){
 function _cargarTarjetaAnaya(curso, trim, sdaNum, mod){
     const sda=ANAYA_MAP[curso]?.[trim]?.sda?.find(s=>String(s.num)===String(sdaNum));
     if(!sda) return;
+    _autoFechasSda(sda, false);
     anayaModalidad=mod;
     ['mat','len','ambas'].forEach(m=>{
         const b=document.getElementById('anayaModBtn_'+m);
@@ -14179,6 +14180,7 @@ function _cargarTarjetaSantInfantil(curso, trim, sdaNum){
     const trimData=INFANTIL_MAP[curso]?.[trim];
     const sda=trimData?.sda?.find(s=>String(s.num)===String(sdaNum));
     if(!sda) return;
+    _autoFechasSda(sda, true);
     const trimLbl={'1':'Primer','2':'Segundo','3':'Tercer'}[trim]+' trimestre';
     document.getElementById('santCardInfTrim').textContent=`🧸 Capitulaciones Infantil — ${curso} años — ${trimLbl}`;
     document.getElementById('santCardInfNombre').textContent=`"${sda.nombre}"`;
@@ -14356,6 +14358,7 @@ function _cargarTarjetaSant(curso, trim, sdaNum, mod){
     const trimData=SANTILLANA_MAP[curso]?.[trim];
     const sda=trimData?.sda?.find(s=>String(s.num)===String(sdaNum));
     if(!sda) return;
+    _autoFechasSda(sda, false);
     santModalidad=mod;
     // Mostrar/ocultar cajas según asignatura
     document.getElementById('santCardMatBox').style.display=mod==='len'?'none':'block';
@@ -15898,6 +15901,9 @@ function _validarSesionesAntesDeGenerar(){
     // Comprueba si hay fechas configuradas y sesiones reales calculadas
     const ini = document.getElementById('fechaInicio').value;
     const fin = document.getElementById('fechaFin').value;
+    // Si hay fechas pero la tabla de sesiones no se ha calculado todavía, calcularla ahora
+    // (antes bloqueaba la generación aunque la temporalización estuviera completa).
+    if (ini && fin && sesionesData.length === 0) { try{ generarTablaSesiones(); }catch(e){} }
     const nSes = sesionesData.length;
     const esMat = sesionesData.length > 0
         ? sesionesData.some(s => s.tipo === 'rp' || s.tipo === 'normal')
@@ -15918,9 +15924,9 @@ function _validarSesionesAntesDeGenerar(){
     if (nSes === 0) {
         _mostrarWarningConfiguracion(
             '⚠️ No hay sesiones configuradas',
-            'Has puesto fechas pero no has marcado los <strong>días de clase</strong> de cada área.<br><br>' +
-            '📅 Pulsa el botón de abajo y selecciona los días de la semana en los que impartes cada área (L, M, X, J, V).<br>' +
-            'La tabla de sesiones se genera automáticamente y la IA sabrá exactamente cuántas sesiones tiene la SdA.'
+            'Has puesto fechas pero no se ha podido calcular ninguna sesión.<br><br>' +
+            '📅 Pulsa el botón de abajo para ir al <strong>Paso 4</strong> y marcar los días de la semana en los que impartes cada área (L, M, X, J, V).',
+            false, 4
         );
         return false;
     }
@@ -15934,12 +15940,65 @@ function _validarSesionesAntesDeGenerar(){
             'La SdA incluye <strong>Matemáticas</strong> pero no has marcado ningún día como <strong>RP (Resolución de Problemas)</strong>.<br><br>' +
             '📅 Pulsa el botón de abajo, selecciona los días de Matemáticas y marca cuáles son de RP (mínimo 3/semana según las Instrucciones de la Junta).<br>' +
             'Sin esto, la IA no sabe qué sesiones llevan bloque de RP de 30 minutos.',
-            true // advertencia no bloqueante — se puede continuar
+            true, 4 // advertencia no bloqueante — se puede continuar
         );
         // No bloqueamos, solo avisamos
     }
 
     return true;
+}
+
+const _MES_FECHAS = {
+    'SEPTIEMBRE':[2026,9], 'OCTUBRE':[2026,10], 'NOVIEMBRE':[2026,11], 'DICIEMBRE':[2026,12],
+    'ENERO':[2027,1], 'FEBRERO':[2027,2], 'MARZO':[2027,3],
+    'ABRIL':[2027,4], 'MAYO':[2027,5], 'JUNIO':[2027,6]
+};
+// Rellena fecha inicio/fin de la SdA automáticamente.
+// - Infantil: usa las fechas reales de la SdA del centro.
+// - Primaria (Capitulaciones/Anaya): propone el mes completo de la SdA.
+function _autoFechasSda(sda, forzar){
+    const fi=document.getElementById('fechaInicio');
+    const ff=document.getElementById('fechaFin');
+    if(!fi||!ff||!sda) return false;
+    if(!forzar && fi.value && ff.value) return false;
+    let ini=sda.fechaInicio||'', fin=sda.fechaFin||'';
+    if((!ini||!fin) && sda.mes){
+        const m=_MES_FECHAS[String(sda.mes).toUpperCase().trim()];
+        if(m){
+            const [y,mm]=m;
+            const pad=n=>String(n).padStart(2,'0');
+            const ultimo=new Date(y,mm,0).getDate();
+            ini=`${y}-${pad(mm)}-01`;
+            fin=`${y}-${pad(mm)}-${pad(ultimo)}`;
+        }
+    }
+    if(!ini||!fin) return false;
+    fi.value=ini; ff.value=fin;
+    try{ calcularSemanas(); }catch(e){}
+    try{ generarTablaSesiones(); }catch(e){}
+    try{ showToast('📅 Fechas de la SdA rellenadas automáticamente — ajústalas si lo necesitas'); }catch(e){}
+    return true;
+}
+
+let _cwDestino = 1;
+function _irASesiones(){
+    try{ irAPaso(4); }catch(e){}
+    setTimeout(()=>{
+        const b = document.getElementById('diasAreasContainer');
+        if(b) b.scrollIntoView({behavior:'smooth',block:'center'});
+    },300);
+}
+// ACNEAE: "Ninguna específica" es excluyente con el resto
+function _onAcneaeChange(cb){
+    const todos=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb'));
+    const ninguna=todos.find(c=>c.value==='Ninguna');
+    if(!ninguna) return;
+    if(cb.value==='Ninguna'){
+        if(cb.checked) todos.forEach(c=>{ if(c!==cb) c.checked=false; });
+    }else if(cb.checked){
+        ninguna.checked=false;
+    }
+    if(!todos.some(c=>c.checked)) ninguna.checked=true;
 }
 
 function _irATemporalizacion(){
@@ -15955,7 +16014,8 @@ function _irATemporalizacion(){
         }
     },260);
 }
-function _mostrarWarningConfiguracion(titulo, mensaje, soloAviso = false){
+function _mostrarWarningConfiguracion(titulo, mensaje, soloAviso = false, destino = 1){
+    _cwDestino = destino;
     // Crea o reutiliza el modal de aviso
     let overlay = document.getElementById('configWarningOverlay');
     if (!overlay) {
@@ -15982,11 +16042,13 @@ function _mostrarWarningConfiguracion(titulo, mensaje, soloAviso = false){
         document.body.appendChild(overlay);
         document.getElementById('cwBtnVolver').onclick = () => {
             overlay.style.display = 'none';
-            _irATemporalizacion();
+            if(_cwDestino === 4){ _irASesiones(); } else { _irATemporalizacion(); }
         };
         document.getElementById('cwBtnCerrar').onclick = () => { overlay.style.display = 'none'; };
     }
 
+    const _bv = document.getElementById('cwBtnVolver');
+    if(_bv) _bv.textContent = (destino === 4) ? '🗓️ Ir a Días y sesiones (Paso 4)' : '📅 Ir a Temporalización (Paso 1)';
     document.getElementById('cwTitulo').textContent = titulo;
     document.getElementById('cwMensaje').innerHTML = mensaje;
     const btnCont = document.getElementById('cwBtnContinuar');
