@@ -439,6 +439,7 @@
         .sant-panel.collapsed > *:not(#santResumenBar){display:none!important}
         #santResumenBar{display:none;align-items:center;gap:.7rem;flex-wrap:wrap;background:rgba(255,245,245,0.95);border:1.5px solid rgba(239,68,68,0.25);border-radius:12px;padding:.7rem 1rem}
         .sant-panel.collapsed #santResumenBar{display:flex}
+        .sant-panel.collapsed > #planifTemporal{display:block!important;background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.07);border-radius:12px;padding:.85rem 1rem .35rem;margin-top:.7rem}
         #santResumenBar .srb-info{flex:1;min-width:180px;font-size:.85rem;color:#1e1b4b;line-height:1.35}
         #santResumenBar .srb-info b{color:#991b1b}
         #santResumenBar .srb-edit{background:#fff;border:1.5px solid rgba(239,68,68,0.4);color:#991b1b;font-weight:700;font-size:.8rem;border-radius:9px;padding:.5rem .9rem;cursor:pointer;transition:all .2s;white-space:nowrap}
@@ -14064,11 +14065,17 @@ function collapseSantPanel(){
     const panel=document.getElementById('santPanel');
     if(!panel) return;
     _actualizarResumenSant();
+    // La planificación temporal NO debe ocultarse al colapsar: la sacamos como hijo directo
+    const plan=document.getElementById('planifTemporal');
+    if(plan && panel.contains(plan)) panel.appendChild(plan);
     panel.classList.add('collapsed');
 }
 function expandSantPanel(){
     const panel=document.getElementById('santPanel');
-    if(panel) panel.classList.remove('collapsed');
+    if(!panel) return;
+    panel.classList.remove('collapsed');
+    // Devolver la planificación temporal a su hueco dentro del panel
+    if(typeof _actualizarModoUI==='function') _actualizarModoUI();
 }
 function _actualizarResumenSant(){
     const cont=document.getElementById('santResumenTexto');
@@ -15938,6 +15945,12 @@ function _validarSesionesAntesDeGenerar(){
 function _irATemporalizacion(){
     // El bloque de fechas y sesiones vive en el Paso 1, pero en modo libro
     // se traslada dentro del panel Capitulaciones/Anaya. Lo buscamos en el DOM.
+    // Si ese panel está colapsado, lo expandimos: si no, el scroll iría a un elemento oculto.
+    const _sp = document.getElementById('santPanel');
+    const _plan = document.getElementById('planifTemporal');
+    if(_sp && _plan && _sp.contains(_plan) && _sp.classList.contains('collapsed')){
+        _sp.classList.remove('collapsed');
+    }
     const campo = document.getElementById('fechaInicio');
     const bloque = document.getElementById('planifTemporal') || campo;
     const card = (bloque||campo)?.closest('.card');
