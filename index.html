@@ -2374,7 +2374,7 @@
                 <input type="radio" name="formatoSalida" value="free" checked onchange="_fmtUI()">
                 <span class="fmt-card">
                     <span class="fmt-t">Cuenta gratuita <span class="fmt-tag">recomendado</span></span>
-                    <span class="fmt-d">Artefacto HTML con botones de imprimir y descargar en Word. Gasta menos y sale de una vez.</span>
+                    <span class="fmt-d">Claude te muestra la SdA en pantalla. Para pasarla a Word: pulsa <strong>📋 Copiar para Word</strong>, abre un Word en blanco y pulsa <strong>Ctrl+V</strong>.</span>
                 </span>
             </label>
             <label class="fmt-opt">
@@ -14574,7 +14574,7 @@ GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos:
 7 — VALORACIÓN DE LO APRENDIDO: una rúbrica por CADA criterio con los CUATRO niveles de logro del apartado E.2 del Proyecto Educativo del CEIP Capitulaciones (1 No conseguido · 2 En proceso · 3 Conseguido · 4 Conseguido con destreza). NO uses escala numérica de 1 a 10 ni porcentajes. Cada criterio se evalúa en DOS momentos y con DOS instrumentos distintos; la prueba escrita nunca es el único instrumento. Conversión final: 1 Insuficiente · 2 Suficiente o Bien · 3 Notable · 4 Sobresaliente.
 
 ⚠️ BREVEDAD: la SdA debe ser lo MÁS CORTA posible cumpliendo los 7 apartados. Todo en tablas, una frase corta por celda, sin párrafos largos ni repetir información entre apartados. Extensión orientativa: 8–12 páginas A4.
-${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, dos botones ocultos al imprimir (@media print{.noprint{display:none}}): 🖨️ Imprimir (window.print()) y 📥 Descargar en Word (Blob 'application/msword'). Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
+${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, ocultos al imprimir (@media print{.noprint{display:none}}): un botón grande 📋 Copiar para Word (escucha el evento 'copy' y mete en clipboardData 'text/html' un clon limpio del contenido: sin style ni class, tablas con width="100%" border="1" y style width:100%;border-collapse:collapse;table-layout:fixed, celdas con borde y word-wrap:break-word, NUNCA anchos en px; luego selecciona el contenido con Range+Selection y document.execCommand('copy'); al terminar muestra «✅ Copiado. Abre Word y pulsa Ctrl+V»), un botón 🖨️ Imprimir (window.print()) y debajo el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V». NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas. Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
 ⚠️ No preguntes nada ni añadas preámbulos. Genera la SdA completa directamente, lista para inspección educativa.
 
 ═══════ SdA FUENTE (contenido del PDF) ═══════
@@ -15384,7 +15384,13 @@ ${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (el usuario t
      NO generes .docx ni PDF: solo el artefacto, en una sola respuesta y sin preámbulos.
    · Arriba, dos botones fijos, ocultos al imprimir con @media print{.noprint{display:none}}:
      🖨️ Imprimir → window.print()
-     📥 Descargar en Word → Blob 'application/msword', archivo SdA_[título]_[curso].doc
+     📋 Copiar para Word (botón grande) → escucha el evento 'copy' y mete en clipboardData 'text/html' un clon limpio
+       del contenido: sin style ni class, tablas con width="100%" border="1" y style width:100%;border-collapse:collapse;
+       table-layout:fixed, celdas con borde y word-wrap:break-word, NUNCA anchos en px. Luego selecciona el contenido
+       (Range + Selection) y document.execCommand('copy');
+       al terminar muestra «✅ Copiado. Abre Word y pulsa Ctrl+V».
+   · Debajo, el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V».
+   · NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas.
    · Estilo claro: fondo blanco, texto oscuro, tipografía de sistema, tablas de borde fino con cabecera suave.
      NUNCA modo oscuro. Para imprimir en A4 VERTICAL: @page{size:A4 portrait;margin:14mm}.
    · table{page-break-inside:avoid}. No dejes páginas en blanco al final.
@@ -17114,7 +17120,7 @@ sesiones a repaso y evaluación inicial. La casilla «Pág. ______» va siempre 
 ⚠️ BREVEDAD: la SdA debe ser lo MÁS CORTA posible cumpliendo los 7 apartados. Todo en tablas, una frase corta por
 celda, sin párrafos largos ni información repetida entre apartados. Extensión orientativa: 8–12 páginas A4.
 
-${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, dos botones ocultos al imprimir (@media print{.noprint{display:none}}): 🖨️ Imprimir (window.print()) y 📥 Descargar en Word (Blob 'application/msword'). Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
+${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, ocultos al imprimir (@media print{.noprint{display:none}}): un botón grande 📋 Copiar para Word (escucha el evento 'copy' y mete en clipboardData 'text/html' un clon limpio del contenido: sin style ni class, tablas con width="100%" border="1" y style width:100%;border-collapse:collapse;table-layout:fixed, celdas con borde y word-wrap:break-word, NUNCA anchos en px; luego selecciona el contenido con Range+Selection y document.execCommand('copy'); al terminar muestra «✅ Copiado. Abre Word y pulsa Ctrl+V»), un botón 🖨️ Imprimir (window.print()) y debajo el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V». NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas. Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
 
 ⚠️ IMPORTANTE: No me preguntes el formato de salida ni nada más. Genera la SdA completa directamente, sin preámbulos.
 
