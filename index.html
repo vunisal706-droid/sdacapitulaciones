@@ -15762,6 +15762,7 @@ function construirPromptRubricas(){
     const _actsSda = sda ? new Set((sda.match(/ACTIVIDAD\s+(\d+)/gi)||[]).map(x=>x.replace(/\D/g,''))).size : 0;
     const nRub = _actsSda || null;
     const nRubTxt = nRub ? String(nRub) : 'tantas como actividades tenga la SdA';
+    const cursoTxt = (sda||!d.curso) ? 'el curso de la SdA' : d.curso;
     const tipos=Array.from(document.querySelectorAll('#tipoRubrica .chip.selected')).map(c=>c.textContent);
     const tipo=sdaTipos[d.sdaTipo]||sdaTipos.producto;
     let critsT='';
@@ -15786,7 +15787,7 @@ function construirPromptRubricas(){
     const escRowReg = esInf ? '| N | | | | | |' : '| N | | | | | | |';
     const filasReg = Array.from({length:25},(_,i)=> (esInf?`| ${i+1} | | | | | |`:`| ${i+1} | | | | | | |`)).join('\n');
     const minExig = esInf ? '"En proceso (EP)" = el niño/a lo hace con ayuda; "Conseguido (C)" = lo hace de forma autónoma'
-                          : '"2 En proceso" = lo hace con ayuda; "3 Conseguido" = mínimo exigible al alumnado de '+(d.curso||'su curso')+' de forma autónoma; "4 Conseguido con destreza" = lo hace con soltura y lo explica';
+                          : '"2 En proceso" = lo hace con ayuda; "3 Conseguido" = mínimo exigible al alumnado de '+cursoTxt+' de forma autónoma; "4 Conseguido con destreza" = lo hace con soltura y lo explica';
     const instrTipico = esInf ? 'Observación directa y sistemática, diario de aula, anecdotario, portfolio'
                               : 'Prueba escrita y Rúbrica / Registro anecdótico y Rúbrica';
     const marcaReg = esInf
@@ -15850,7 +15851,7 @@ Escalas de dominio (desempeños):
 Adaptación ACNEAE — ${sda?'[las ACNEAE que indique la SdA; si no hay, «Ninguna»]':d.acneae.join(', ')} (medida ordinaria, sin modificar el criterio):
 [Ajuste en descriptores o en la forma de obtener la evidencia]
 
-${tipos.includes('Co-evaluación alumnado')?`\nVERSIÓN COEVALUACIÓN: lenguaje simplificado para ${d.curso}, 2ª persona, emojis/iconos\n`:''}${tipos.includes('Autoevaluación del alumno')?`\nVERSIÓN AUTOEVALUACIÓN: 1ª persona "Yo soy capaz de…", nivel ${d.curso}\n`:''}${tipos.includes('Formato tabla Word')?`\nFORMATO WORD: indica cómo copiar la tabla manteniendo el formato\n`:''}
+${tipos.includes('Co-evaluación alumnado')?`\nVERSIÓN COEVALUACIÓN (para que un compañero/a valore): tabla corta con 3-4 frases en 2ª persona («Has respetado el turno»), lenguaje muy sencillo para ${cursoTxt}, y 3 caritas para marcar: 🙁 Todavía no · 😐 Casi · 😀 ¡Sí!\n`:''}${tipos.includes('Autoevaluación del alumno')?`\nVERSIÓN AUTOEVALUACIÓN (para el propio alumno/a): tabla corta con 3-4 frases en 1ª persona («Yo sé…», «Yo he…»), lenguaje muy sencillo para ${cursoTxt}, y 3 caritas para marcar: 🙁 Todavía no · 😐 Casi · 😀 ¡Sí!\n`:''}${tipos.includes('Formato tabla Word')?`\nFORMATO WORD: entrega TODO en un documento Word (.docx) A4, con cada rúbrica en una página y su tabla de registro en la página siguiente, filas altas para escribir a mano.\n`:''}
 NOTA FINAL — Hecho observado (registro anecdótico):
 "Se debe indicar el alumno/a, la sesión y la tarea en la que se localiza el hecho observado, además del criterio de evaluación al que afecta."
 
