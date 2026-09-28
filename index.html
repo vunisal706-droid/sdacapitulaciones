@@ -1852,7 +1852,7 @@
     <!-- Bloque extra visible solo en modo Capitulaciones: campos del paso 3 que se saltan -->
     <div id="step4SantExtras" style="display:none;background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(99,102,241,.04));border:1.5px solid rgba(239,68,68,.2);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem">
         <div style="font-size:.78rem;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.7rem">📕 Modo Capitulaciones — datos opcionales para enriquecer la SdA</div>
-        <div class="fg" style="margin-bottom:.65rem">
+        <div class="fg" style="display:none">
             <label for="titSdaSant" style="font-size:.8rem">Título personalizado de la SdA <span style="color:#9ca3af;font-weight:400">(opcional — si lo dejas vacío se usa el título del libro)</span></label>
             <input type="text" id="titSdaSant" placeholder="Ej: El Universo y sus secretos, La ciudad que queremos…" oninput="document.getElementById('titSda').value=this.value">
         </div>
@@ -4308,7 +4308,7 @@ function recopilarDatos(){
         fechaFin:document.getElementById('fechaFin').value,
         areas:areasSeleccionadas,
         sdaTipo,
-        titSda:document.getElementById('titSda').value,
+        titSda:(santActivo&&window._santTituloApp)?window._santTituloApp:document.getElementById('titSda').value,
         planesProyectos:document.getElementById('planesProyectos').value,
         efemérides:document.getElementById('efemérides').value,
         transversalidad:document.getElementById('transversalidad').value,
@@ -13038,7 +13038,7 @@ const SANTILLANA_MAP = {
   // ── 2º DE PRIMARIA — DATOS REALES LENGUA Y MATEMÁTICAS ──────────
   '2': {
     '1': { sdaNombre:'Primer trimestre', reto:'SdA mensuales T1', sda:[
-      { num:'1A', nombre:'DISTANCIAS — ORDENAR INFORMACIÓN / TEXTO DESCRIPTIVO DE UNA PERSONA', mes:'SEPTIEMBRE',
+      { num:'1A', nombre:'DISTANCIAS — ORDENAR INFORMACIÓN / TEXTO DESCRIPTIVO DE UNA PERSONA', mes:'OCTUBRE',
         mat:{ titulo:'VAMOS DE EXCURSION — Ordenar distancias y organizar informacion',
               criterios:'1.1.b, 1.2.b, 2.2.b, 3.1.b, 3.2.b, 4.1.b, 6.1.b, 6.2.b',
               saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.4., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.D.1.1., MAT.1.D.3.3.',
@@ -13048,7 +13048,7 @@ const SANTILLANA_MAP = {
               saberes:'LCL.1.B.1.1., LCL.1.B.2.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.3., LCL.1.B.3.4., LCL.1.B.3.5.',
               tarea:'El alumnado elaborará un texto descriptivo sobre una persona de su entorno, usando adjetivos calificativos, el orden lógico de la descripción y las normas ortográficas trabajadas.' },
         producto:'Texto descriptivo de una persona + clasificación de distancias ordenadas' },
-      { num:'1B', nombre:'PUNTUACIONES DE VIDEOJUEGO — CLASIFICACIÓN / ELABORACIÓN DE UN CÓMIC', mes:'OCTUBRE',
+      { num:'1B', nombre:'PUNTUACIONES DE VIDEOJUEGO — CLASIFICACIÓN / ELABORACIÓN DE UN CÓMIC', mes:'NOVIEMBRE',
         mat:{ titulo:'UNA CARRERA CICLISTA — Clasificacion de puntuaciones',
               criterios:'1.1.b, 1.2.b, 2.1.b, 2.2.b, 3.2.b, 4.1.b, 6.1.b, 6.2.b',
               saberes:'MAT.1.A.1.2., MAT.1.A.2.2., MAT.1.A.2.3., MAT.1.A.2.5., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.D.1.1., MAT.1.D.2.2., MAT.1.D.2.4., MAT.1.D.3.3.',
@@ -13058,7 +13058,7 @@ const SANTILLANA_MAP = {
               saberes:'LCL.1.A.1., LCL.1.B.1.1., LCL.1.B.2.2., LCL.1.B.2.3., LCL.1.B.3.1., LCL.1.B.3.2., LCL.1.B.3.4., LCL.1.B.3.5., LCL.1.C.2., LCL.1.D.3., LCL.1.D.6.',
               tarea:'Describir a una persona especial indicando aspecto fisico, personalidad, gustos y rasgos, para que los demas puedan imaginarsela' },
         producto:'Cómic elaborado + clasificación de puntuaciones del videojuego' },
-      { num:'1C', nombre:'COMPARAR CAPACIDAD DE RECIPIENTES / TEXTO DESCRIPTIVO DE UN OBJETO', mes:'NOVIEMBRE',
+      { num:'1C', nombre:'COMPARAR CAPACIDAD DE RECIPIENTES / TEXTO DESCRIPTIVO DE UN OBJETO', mes:'DICIEMBRE',
         mat:{ titulo:'UNA VISITA AL ACUARIO — Comparar recipientes por capacidad',
               criterios:'1.1.b, 1.2.b, 2.1.b, 3.2.b, 4.1.b, 5.2.b, 6.1.b, 6.2.b',
               saberes:'MAT.1.A.2.2., MAT.1.A.3.1., MAT.1.A.3.2., MAT.1.A.3.3., MAT.1.A.4.2., MAT.1.A.4.3., MAT.1.B.1.1., MAT.1.B.1.2., MAT.1.B.1.3., MAT.1.B.2.3., MAT.1.D.2.4., MAT.1.E.1.2.',
@@ -14615,8 +14615,9 @@ function _cargarTarjetaSant(curso, trim, sdaNum, mod){
     if(typeof renderDiaSelectors==='function') renderDiaSelectors();
     if(typeof generarTablaSesiones==='function') generarTablaSesiones();
     // Título
+    window._santTituloApp=nombreSda;
     const titEl=document.getElementById('titSda');
-    if(titEl&&!titEl.value) titEl.value=nombreSda;
+    if(titEl) titEl.value=nombreSda;
     const temEl=document.getElementById('tematica');
     if(temEl&&!temEl.value) temEl.value=nombreSda;
     _actualizarSantBypasses();
