@@ -2594,30 +2594,38 @@
     <h2>📐 Rúbricas de Evaluación</h2>
     <p class="card-sub" id="rubSubtitulo">Genera las rúbricas con los cuatro niveles de logro del Proyecto Educativo: No conseguido · En proceso · Conseguido · Conseguido con destreza</p>
 
-    <div class="rub-intro">
-        <h3>📋 Flujo de trabajo</h3>
-        <ol>
-            <li>Lleva el prompt del paso 8 a tu IA y obtén la SdA completa</li>
-            <li>Copia el texto completo que te devolvió la IA</li>
-            <li>Pégalo en el cuadro de abajo</li>
-            <li>Pulsa <strong>"Generar y Abrir IA"</strong> para obtener las rúbricas con escala numérica</li>
-        </ol>
-    </div>
+    <div class="p8-guia">
+        <div class="p8-head">📐 Haz las rúbricas en 6 pasos:</div>
 
-    <div class="fg">
-        <label for="sdaPegada">📄 Pega aquí tu SdA completa generada por la IA *</label>
-        <textarea id="sdaPegada" class="sda-paste" style="min-height:180px" placeholder="Pega aquí el texto completo de la SdA que generó la IA…"></textarea>
-        <div class="sda-tools">
-            <button class="btn btn-sm sda-tool-lomloe" onclick="validarLOMLOE()">✅ Comprobar LOMLOE</button>
-            <button class="btn btn-sm sda-tool-word" onclick="descargarWordSdA()">📄 Descargar en Word</button>
-            <button class="btn btn-sm sda-tool-bib" onclick="guardarTextoEnBiblioteca()">📚 Guardar en Mis SdAs</button>
+        <div class="p8">
+            <div class="p8-n">1</div>
+            <div class="p8-b">
+                <div class="p8-t">Copia la SdA que te ha hecho la IA</div>
+                <p class="p8-d">En la IA, pulsa su botón de <strong>copiar</strong> debajo de la respuesta. Si no lo tiene, selecciona todo el texto de la SdA y pulsa <kbd>Ctrl</kbd> + <kbd>C</kbd>. Si la tienes en Word, ábrela, pulsa <kbd>Ctrl</kbd> + <kbd>E</kbd> para seleccionarlo todo y <kbd>Ctrl</kbd> + <kbd>C</kbd>.</p>
+            </div>
         </div>
-        <div class="lomloe-result" id="lomloeResult" style="display:none"></div>
-    </div>
 
-    <div class="fg">
-        <label>¿Con qué IA vas a generar las rúbricas?</label>
-        <div class="ia-chips" id="iaChipsRubrica">
+        <div class="p8">
+            <div class="p8-n">2</div>
+            <div class="p8-b">
+                <div class="p8-t">Pégala en este cuadro</div>
+                <p class="p8-d">Haz clic dentro del cuadro y pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> (en el móvil: mantén el dedo pulsado → <strong>Pegar</strong>).</p>
+                <textarea id="sdaPegada" class="sda-paste" style="min-height:160px" placeholder="Pega aquí el texto completo de la SdA…"></textarea>
+                <p class="p8-d" style="margin-top:.6rem">Si quieres, antes de seguir puedes:</p>
+                <div class="sda-tools">
+                    <button class="btn btn-sm sda-tool-lomloe" onclick="validarLOMLOE()">✅ Comprobar que cumple la LOMLOE</button>
+                    <button class="btn btn-sm sda-tool-word" onclick="descargarWordSdA()">📄 Descargar la SdA en Word</button>
+                    <button class="btn btn-sm sda-tool-bib" onclick="guardarTextoEnBiblioteca()">📚 Guardarla en Mis SdAs</button>
+                </div>
+                <div class="lomloe-result" id="lomloeResult" style="display:none"></div>
+            </div>
+        </div>
+
+        <div class="p8">
+            <div class="p8-n">3</div>
+            <div class="p8-b">
+                <div class="p8-t">Elige la IA que vas a usar</div>
+                <div class="ia-chips" id="iaChipsRubrica">
             <div class="ia-chip selected" data-ia="claude" onclick="selIARubrica(this)">🟠 Claude</div>
             <div class="ia-chip" data-ia="gemini" onclick="selIARubrica(this)">🔵 Gemini</div>
             <div class="ia-chip" data-ia="chatgpt" onclick="selIARubrica(this)">🟢 ChatGPT</div>
@@ -2625,35 +2633,54 @@
             <div class="ia-chip" data-ia="kimi" onclick="selIARubrica(this)">🔷 Kimi 2.5</div>
         </div>
         <span class="ia-status" id="iaStatusRubrica">🟠 Se abrirá <strong>Claude</strong> — el prompt se copiará al portapapeles.</span>
-    </div>
+            </div>
+        </div>
 
-    <div class="fg">
-        <label>Tipo de rúbricas adicionales:</label>
-        <div class="chips" id="tipoRubrica">
+        <div class="p8">
+            <div class="p8-n">4</div>
+            <div class="p8-b">
+                <div class="p8-t">¿Quieres algo más? <span style="font-weight:600;color:#6b7280;font-size:.95rem">(opcional)</span></div>
+                <p class="p8-d">Las dos primeras ya vienen marcadas. Toca las demás si también las quieres.</p>
+                <div class="chips" id="tipoRubrica">
             <div class="chip selected" onclick="toggleChip(this)">Analítica (por criterios)</div>
             <div class="chip selected" onclick="toggleChip(this)">Con descriptores detallados</div>
             <div class="chip" onclick="toggleChip(this)">Formato tabla Word</div>
             <div class="chip" onclick="toggleChip(this)">Co-evaluación alumnado</div>
             <div class="chip" onclick="toggleChip(this)">Autoevaluación del alumno</div>
         </div>
-    </div>
-
-    <div class="prev-box" style="margin-top:1rem">
-        <div class="prev-actions">
-            <button class="btn btn-success btn-sm" onclick="copiarRubrica()">📋 Copiar prompt rúbrica</button>
-            <button class="btn btn-primary btn-sm" onclick="descargarRubrica()">💾 Descargar</button>
-        </div>
-        <div id="rubricContent">El prompt de rúbricas aparecerá aquí…</div>
-    </div>
-
-    <div class="final-actions">
-        <div class="far">
-            <button class="btn btn-secondary" onclick="prevStep()">← Volver</button>
-            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
-                <button class="btn btn-purple" onclick="generarPromptRubricas()">📐 Generar Prompt Rúbricas</button>
-                <button class="btn-rlaunce" onclick="generarYAbrirRubricas()">🚀 Generar y Abrir IA</button>
             </div>
         </div>
+
+        <div class="p8">
+            <div class="p8-n">5</div>
+            <div class="p8-b">
+                <div class="p8-t">Pulsa el botón naranja</div>
+                <p class="p8-d">La app prepara las rúbricas, las copia y te abre la IA en otra pestaña.</p>
+                <button class="btn-launch p8-big" onclick="generarYAbrirRubricas()">🚀 Generar rúbricas y abrir la IA</button>
+            </div>
+        </div>
+
+        <div class="p8">
+            <div class="p8-n">6</div>
+            <div class="p8-b">
+                <div class="p8-t">En la IA: pega y envía</div>
+                <p class="p8-d">Haz clic en el cuadro donde se escribe, pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> y dale a <strong>enviar</strong>. Espera a que termine: saldrá una rúbrica y una tabla de registro por cada actividad.</p>
+            </div>
+        </div>
+    </div>
+
+    <details class="p8-mas">
+        <summary>⚙️ Otras opciones (solo si las necesitas): ver, copiar o descargar el prompt</summary>
+        <div class="p8-mas-btns">
+            <button class="btn btn-success btn-sm" onclick="generarPromptRubricas()">✨ Ver el prompt</button>
+            <button class="btn btn-success btn-sm" onclick="copiarRubrica()">📋 Copiar</button>
+            <button class="btn btn-primary btn-sm" onclick="descargarRubrica()">💾 Descargar</button>
+        </div>
+        <div id="rubricContent" class="p8-prompt">El prompt aparecerá aquí al pulsar «Ver el prompt»…</div>
+    </details>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Volver</button>
     </div>
 </div>
 
@@ -16386,8 +16413,8 @@ function descargarTXT(){const c=document.getElementById('promptContent').textCon
 async function compartirPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}if(navigator.share){try{await navigator.share({title:'SDA Capitulaciones',text:c.substring(0,200)+'...',url:window.location.href});}catch(e){}}else showToast('⚠️ Compartir no disponible');}
 function generarPromptRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}document.getElementById('rubricContent').textContent=construirPromptRubricas();showToast('📐 Prompt de rúbricas generado');}
 async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;const ia=getIARubrica();try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}document.getElementById('pasteIAName').textContent=iaNames[ia];document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};document.getElementById('pasteOverlay').classList.add('show');}
-async function copiarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Copiado');}catch(e){showToast('⚠️ Selecciona manualmente');}}
-function descargarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}descargar(c,`SDA_Rubricas_${recopilarDatos().tematica.replace(/\s+/g,'_')}.txt`);}
+async function copiarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Copiado');}catch(e){showToast('⚠️ Selecciona manualmente');}}
+function descargarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}descargar(c,`SDA_Rubricas_${recopilarDatos().tematica.replace(/\s+/g,'_')}.txt`);}
 function descargar(cont,nom){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([cont],{type:'text/plain;charset=utf-8'}));a.download=nom;a.click();showToast('💾 Descargado');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 function instalarPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast('✅ App instalada');document.getElementById('installBtn').classList.remove('show');}deferredPrompt=null;});}}
