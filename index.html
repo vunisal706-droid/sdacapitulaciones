@@ -507,6 +507,23 @@
         .anaya-prod-item input[type=radio]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
 
         /* ── PREVIEW BOX ── */
+        .p8-guia{background:#fff;border:2px solid #e0e7ff;border-radius:18px;padding:1.2rem;margin:1.2rem 0}
+        .p8-head{font-size:1.3rem;font-weight:800;color:#1e1b4b;margin-bottom:.9rem}
+        .p8{display:flex;gap:1rem;padding:1rem 0;border-top:1.5px dashed #e5e7eb}
+        .p8:first-of-type{border-top:none}
+        .p8-n{flex:0 0 auto;width:48px;height:48px;border-radius:50%;background:#4f46e5;color:#fff;font-size:1.5rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+        .p8-b{flex:1;min-width:0}
+        .p8-t{font-size:1.2rem;font-weight:800;color:#111827;margin:.55rem 0 .4rem}
+        .p8-d{font-size:1rem;color:#374151;line-height:1.5;margin:.2rem 0 .6rem}
+        .p8-foto{background:#ecfdf5;border-radius:10px;padding:.5rem .7rem;color:#065f46}
+        .p8 kbd{background:#f3f4f6;border:1px solid #d1d5db;border-bottom-width:3px;border-radius:6px;padding:.05rem .4rem;font-family:inherit;font-weight:700}
+        .btn-launch.p8-big{font-size:1.25rem;padding:1.05rem 2rem;border-radius:14px}
+        .btn.p8-big2{font-size:1.1rem;padding:.9rem 1.6rem;border-radius:14px}
+        .p8-mas{margin:.5rem 0 1rem;border:1.5px solid #e5e7eb;border-radius:14px;background:#fff;padding:.7rem 1rem}
+        .p8-mas summary{cursor:pointer;font-weight:700;color:#4b5563;font-size:.95rem}
+        .p8-mas-btns{display:flex;gap:.45rem;flex-wrap:wrap;margin:.8rem 0}
+        .p8-prompt{background:#f8fafc;color:#1f2937;border:1px solid #e5e7eb;border-radius:12px;padding:1rem;font-family:'Courier New',monospace;font-size:.8rem;line-height:1.6;white-space:pre-wrap;max-height:420px;overflow:auto}
+        @media (max-width:600px){.p8-n{width:40px;height:40px;font-size:1.25rem}.p8-big,.p8-big2{width:100%;justify-content:center}}
         .prev-box{background:#1e293b;color:#cbd5e1;padding:1.3rem;border-radius:14px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.8;white-space:pre-wrap;overflow-x:auto;max-height:500px;overflow-y:auto;border:1px solid rgba(255,255,255,0.06)}
         .prev-actions{position:sticky;top:0;background:#1e293b;padding-bottom:.85rem;margin-bottom:.85rem;border-bottom:1px solid #334155;display:flex;gap:.42rem;flex-wrap:wrap}
 
@@ -2509,9 +2526,15 @@
         <div id="resumenContenido" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.45rem .9rem;font-size:.83rem"></div>
     </div>
 
-    <div class="fg">
-        <label>¿Con qué IA vas a trabajar?</label>
-        <div class="ia-chips">
+    <!-- ══ PASOS FINALES NUMERADOS ══ -->
+    <div class="p8-guia">
+        <div class="p8-head">✅ Ya casi está. Sigue estos 4 pasos:</div>
+
+        <div class="p8">
+            <div class="p8-n">1</div>
+            <div class="p8-b">
+                <div class="p8-t">Elige la IA que vas a usar</div>
+                <div class="ia-chips">
             <div class="ia-chip selected" data-ia="claude" data-url="https://claude.ai" onclick="selIA(this)">🟠 Claude <span style="font-size:.65rem;background:#fef3c7;color:#92400e;border-radius:8px;padding:.1rem .4rem;margin-left:.2rem;font-weight:700">⭐ Recomendada</span></div>
             <div class="ia-chip" data-ia="gemini" data-url="https://gemini.google.com" onclick="selIA(this)">🔵 Gemini <span style="font-size:.65rem;background:#dbeafe;color:#1e40af;border-radius:8px;padding:.1rem .4rem;margin-left:.2rem;font-weight:700">2ª opción</span></div>
             <div class="ia-chip" data-ia="chatgpt" data-url="https://chat.openai.com" onclick="selIA(this)">🟢 ChatGPT</div>
@@ -2519,28 +2542,50 @@
             <div class="ia-chip" data-ia="kimi" data-url="https://kimi.ai" onclick="selIA(this)">🔷 Kimi 2.5</div>
         </div>
         <span class="ia-status" id="iaStatus">⭐ Se abrirá <strong>Claude</strong> — el prompt se copiará al portapapeles.</span>
+            </div>
+        </div>
+
+        <div class="p8">
+            <div class="p8-n">2</div>
+            <div class="p8-b">
+                <div class="p8-t">Pulsa el botón naranja</div>
+                <p class="p8-d">La app copia todo lo necesario y te abre la IA en otra pestaña.</p>
+                <button class="btn-launch p8-big" onclick="generarYAbrir()">🚀 Generar y abrir la IA</button>
+            </div>
+        </div>
+
+        <div class="p8">
+            <div class="p8-n">3</div>
+            <div class="p8-b">
+                <div class="p8-t">En la IA: pega y envía</div>
+                <p class="p8-d">Haz clic en el cuadro donde se escribe y pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> (en el móvil: mantén el dedo pulsado → <strong>Pegar</strong>). Después pulsa <strong>enviar</strong> y espera a que termine de escribir la SdA.</p>
+                <p class="p8-d p8-foto" id="p8Foto" style="display:none">📸 Si has elegido el índice del libro y no has escrito el texto, <strong>adjunta también la foto</strong> del índice antes de enviar.</p>
+            </div>
+        </div>
+
+        <div class="p8">
+            <div class="p8-n">4</div>
+            <div class="p8-b">
+                <div class="p8-t">¿Ya tienes la SdA? Haz las rúbricas</div>
+                <p class="p8-d">Cuando la IA termine, vuelve aquí y pulsa este botón.</p>
+                <button class="btn btn-purple p8-big2" onclick="irARubricas()">📐 Crear las rúbricas</button>
+            </div>
+        </div>
     </div>
 
-    <div class="prev-box">
-        <div class="prev-actions">
+    <details class="p8-mas">
+        <summary>⚙️ Otras opciones (solo si las necesitas): ver, copiar o descargar el prompt</summary>
+        <div class="p8-mas-btns">
+            <button class="btn btn-success btn-sm" onclick="generarPrompt()">✨ Ver el prompt</button>
             <button class="btn btn-success btn-sm" onclick="copiarPrompt()">📋 Copiar</button>
             <button class="btn btn-primary btn-sm" onclick="descargarTXT()">💾 Descargar</button>
             <button class="btn btn-secondary btn-sm" onclick="compartirPrompt()">📤 Compartir</button>
         </div>
-        <div id="promptContent">Pulsa "Generar Prompt" para ver el resultado aquí…</div>
-    </div>
+        <div id="promptContent" class="p8-prompt">Pulsa «Ver el prompt» para verlo aquí…</div>
+    </details>
 
-    <div class="final-actions">
-        <div class="far">
-            <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
-            <div style="display:flex;gap:.65rem;flex-wrap:wrap;align-items:center">
-                <button class="btn btn-success" onclick="generarPrompt()">✨ Generar Prompt</button>
-                <button class="btn-launch" onclick="generarYAbrir()">🚀 Generar y Abrir IA</button>
-            </div>
-        </div>
-        <div style="text-align:right">
-            <button class="btn btn-purple" onclick="irARubricas()">📐 Ya tengo la SdA → Crear Rúbricas</button>
-        </div>
+    <div class="btn-container">
+        <button class="btn btn-secondary" onclick="prevStep()">← Anterior</button>
     </div>
 </div>
 
@@ -14713,7 +14758,7 @@ function setModoSesiones(v){
     try{ localStorage.setItem('sdaModoSesiones',_modoSesiones); }catch(e){}
     document.querySelectorAll('input[name="modoSesiones"],input[name="modoSesionesPack"]').forEach(r=>{ r.checked=(r.value===_modoSesiones); });
     const pc=document.getElementById('promptContent');
-    if(pc && pc.textContent && !pc.textContent.startsWith('Pulsa')) showToast('🔄 Cambiado. Pulsa «Generar Prompt» otra vez para aplicarlo');
+    if(pc && pc.textContent && !pc.textContent.startsWith('Pulsa')) showToast('🔄 Cambiado. Se aplicará al pulsar «Generar y abrir la IA»');
     else showToast(_modoSesiones==='boli'?'✍️ Las sesiones saldrán en blanco para rellenar a mano':_modoSesiones==='indice'?'📸 Las sesiones seguirán el índice del libro':'🤖 La IA propondrá una actividad por sesión');
     _indiceUI();
 }
@@ -14722,6 +14767,7 @@ document.addEventListener('DOMContentLoaded',()=>{ document.querySelectorAll('in
 // ── MODO ÍNDICE DEL LIBRO: foto → texto (OCR) → prompt ─────────────
 function _indiceUI(){
     const p=document.getElementById('indicePanel'); if(p) p.style.display=(_modoSesiones==='indice')?'block':'none';
+    const f=document.getElementById('p8Foto'); if(f) f.style.display=(_modoSesiones==='indice')?'block':'none';
 }
 function _guardarIndice(){ try{ localStorage.setItem('sdaIndiceTexto',document.getElementById('indiceTexto').value); }catch(e){} }
 function _cargarTesseract(){
@@ -16324,9 +16370,9 @@ async function generarYAbrir(){
     document.getElementById('pasteOverlay').classList.add('show');
 }
 function cerrarPasteModal(){document.getElementById('pasteOverlay').classList.remove('show');}
-async function copiarPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera el prompt');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Prompt copiado');}catch(e){showToast('⚠️ Selecciona el texto manualmente');}}
-function descargarTXT(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera');return;}const d=recopilarDatos();descargar(c,`SDA_Capitulaciones_${d.areas.map(a=>a.substring(0,3)).join('_')}_${(d.titSda||d.tematica).replace(/\s+/g,'_')}.txt`);}
-async function compartirPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero genera');return;}if(navigator.share){try{await navigator.share({title:'SDA Capitulaciones',text:c.substring(0,200)+'...',url:window.location.href});}catch(e){}}else showToast('⚠️ Compartir no disponible');}
+async function copiarPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Prompt copiado');}catch(e){showToast('⚠️ Selecciona el texto manualmente');}}
+function descargarTXT(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}const d=recopilarDatos();descargar(c,`SDA_Capitulaciones_${d.areas.map(a=>a.substring(0,3)).join('_')}_${(d.titSda||d.tematica).replace(/\s+/g,'_')}.txt`);}
+async function compartirPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}if(navigator.share){try{await navigator.share({title:'SDA Capitulaciones',text:c.substring(0,200)+'...',url:window.location.href});}catch(e){}}else showToast('⚠️ Compartir no disponible');}
 function generarPromptRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}document.getElementById('rubricContent').textContent=construirPromptRubricas();showToast('📐 Prompt de rúbricas generado');}
 async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;const ia=getIARubrica();try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}document.getElementById('pasteIAName').textContent=iaNames[ia];document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};document.getElementById('pasteOverlay').classList.add('show');}
 async function copiarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero genera');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Copiado');}catch(e){showToast('⚠️ Selecciona manualmente');}}
