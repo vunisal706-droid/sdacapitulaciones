@@ -275,6 +275,36 @@
         /* ── MODO DE TRABAJO (selector superior) ── */
         .modo-wrap{background:rgba(255,255,255,0.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(99,102,241,0.15);padding:1rem 1.5rem}
         .modo-inner{max-width:1000px;margin:0 auto}
+        /* ── Elección: sesiones por IA o a bolígrafo ───────────── */
+        .modo-ses-box{border:2px solid #c7d2fe;border-radius:18px;padding:1.2rem 1.2rem 1.3rem;margin:1.1rem 0 1.3rem;background:linear-gradient(135deg,#eef2ff,#fff7ed)}
+        .modo-ses-q{font-size:1.35rem;font-weight:800;color:#1e1b4b;line-height:1.25;display:flex;align-items:center;gap:.5rem}
+        .modo-ses-sub{font-size:.98rem;color:#4b5563;margin:.35rem 0 1rem}
+        .modo-ses-opts{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        @media (max-width:700px){.modo-ses-opts{grid-template-columns:1fr}}
+        .modo-ses-opt{display:block;cursor:pointer;height:100%;position:relative}
+        .modo-ses-opt input{position:absolute;opacity:0;width:0;height:0}
+        .modo-ses-card{display:flex;flex-direction:column;gap:.5rem;height:100%;padding:1.1rem 1.1rem 1.2rem;border:3px solid #e5e7eb;border-radius:16px;background:#fff;transition:border-color .18s,box-shadow .18s,transform .18s}
+        .modo-ses-opt:hover .modo-ses-card{border-color:#a5b4fc;transform:translateY(-2px)}
+        .modo-ses-opt input:checked + .modo-ses-card{border-color:#4f46e5;box-shadow:0 8px 22px rgba(79,70,229,.18);background:#fff}
+        .modo-ses-opt.boli input:checked + .modo-ses-card{border-color:#ea580c;box-shadow:0 8px 22px rgba(234,88,12,.18)}
+        .modo-ses-opt input:focus-visible + .modo-ses-card{outline:4px solid rgba(79,70,229,.35);outline-offset:3px}
+        .ms-top{display:flex;align-items:center;gap:.7rem}
+        .ms-ico{font-size:2.6rem;line-height:1}
+        .ms-t{font-size:1.2rem;font-weight:800;color:#111827;line-height:1.2}
+        .ms-d{font-size:1rem;color:#374151;line-height:1.45;font-weight:500}
+        .ms-check{display:none;align-self:flex-start;font-size:.85rem;font-weight:800;border-radius:999px;padding:.2rem .7rem;background:#4f46e5;color:#fff}
+        .modo-ses-opt.boli .ms-check{background:#ea580c}
+        .modo-ses-opt input:checked + .modo-ses-card .ms-check{display:inline-block}
+        .ms-mini{font-weight:400;margin-top:auto;border:1.5px dashed #d1d5db;border-radius:10px;padding:.6rem .7rem;background:#f9fafb;font-size:.85rem;color:#374151;line-height:1.5}
+        .ms-mini table{width:100%;border-collapse:collapse;font-size:.85rem}
+        .ms-mini th,.ms-mini td{border:1px solid #d1d5db;padding:.2rem .3rem;text-align:center;background:#fff}
+        .ms-mini th{background:#fff7ed;font-weight:700}
+        .ms-mini .hand{font-family:"Comic Sans MS","Segoe Print",cursive;color:#1d4ed8;font-size:.95rem}
+        .modo-ses-box.compact{padding:.9rem;margin:.8rem 0}
+        .modo-ses-box.compact .modo-ses-q{font-size:1.1rem}
+        .modo-ses-box.compact .ms-ico{font-size:2rem}
+        .modo-ses-box.compact .ms-t{font-size:1.02rem}
+        .modo-ses-box.compact .ms-d{font-size:.9rem}
         .fmt-box{border:1.5px solid #e5e7eb;border-radius:14px;padding:.9rem 1rem;margin:1.1rem 0;background:#fff}
         .fmt-head{font-size:.75rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.7rem}
         .fmt-opts{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
@@ -833,13 +863,6 @@
                     <span class="mb-sub">Rellena manualmente todos los campos</span>
                 </span>
             </button>
-            <button class="modo-btn" id="modoBtnAnaya" onclick="setModoTrabajo('anaya')">
-                <span class="mb-icon">📙</span>
-                <span class="mb-text">
-                    <span class="mb-title">Modo Anaya</span>
-                    <span class="mb-sub">Genera desde el libro Anaya</span>
-                </span>
-            </button>
             <button class="modo-btn" id="modoBtnSant" onclick="setModoTrabajo('sant')">
                 <span class="mb-icon">📗</span>
                 <span class="mb-text">
@@ -972,13 +995,12 @@
 <div class="pack-overlay" id="packOverlay" onclick="if(event.target===this)cerrarPackModal()">
     <div class="pack-panel" onclick="event.stopPropagation()">
         <h3>📦 Pack Trimestral — Generación masiva de prompts</h3>
-        <p style="color:#6b7280;font-size:.8rem;margin-bottom:.9rem">Genera todos los prompts de un trimestre en un ZIP (un .txt por SdA). Solo disponible para modos Anaya y Capitulaciones.</p>
+        <p style="color:#6b7280;font-size:.8rem;margin-bottom:.9rem">Genera todos los prompts de un trimestre en un ZIP (un .txt por SdA). Basado en el Modo Capitulaciones.</p>
         
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem">
             <div>
                 <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:.3rem">Editorial</div>
                 <div style="display:flex;gap:.4rem">
-                    <div class="pack-opt" id="packOptAnaya" onclick="selPackEditorial('anaya')">📖 Anaya</div>
                     <div class="pack-opt" id="packOptSant" onclick="selPackEditorial('sant')">📗 Capitulaciones</div>
                 </div>
             </div>
@@ -1078,6 +1100,33 @@
             <div style="font-size:.72rem;font-weight:700;color:#6b7280;text-transform:uppercase;margin-bottom:.3rem">SdAs incluidas en el pack</div>
             <div class="pack-sda-list" id="packSdaList"></div>
         </div>
+
+
+    <!-- ══ ¿SESIONES POR IA O A BOLÍGRAFO? ══ -->
+    <div class="modo-ses-box compact" role="radiogroup" aria-label="Cómo se rellenan las sesiones">
+        <div class="modo-ses-q">📖 ¿Cómo quieres las sesiones?</div>
+        <p class="modo-ses-sub">El libro de texto manda. Elige cómo se rellena lo que se hace cada día.</p>
+        <div class="modo-ses-opts">
+            <label class="modo-ses-opt ia">
+                <input type="radio" name="modoSesionesPack" value="ia" checked onchange="setModoSesiones(this.value)">
+                <span class="modo-ses-card">
+                    <span class="ms-top"><span class="ms-ico">🤖</span><span class="ms-t">La IA me propone una actividad para cada sesión</span></span>
+                    <span class="ms-d">Cada sesión viene escrita, con un hueco para poner la página del libro.</span>
+                    <span class="ms-check">✔ Elegido</span>
+                    <span class="ms-mini"><strong>Sesión 3 · 14/10</strong><br>Actividad: juego de la tienda con monedas…<br>En el libro: pág. ______</span>
+                </span>
+            </label>
+            <label class="modo-ses-opt boli">
+                <input type="radio" name="modoSesionesPack" value="boli" onchange="setModoSesiones(this.value)">
+                <span class="modo-ses-card">
+                    <span class="ms-top"><span class="ms-ico">✍️</span><span class="ms-t">Lo relleno yo a mano con bolígrafo</span></span>
+                    <span class="ms-d">Sale una tabla en blanco: escribes la página del libro y marcas lo que trabajas cada día.</span>
+                    <span class="ms-check">✔ Elegido</span>
+                    <span class="ms-mini"><table><tr><th>Sesión</th><th>Pág.</th><th>Sumar</th><th>Restar</th></tr><tr><td>1</td><td class="hand">34</td><td class="hand">✔</td><td>☐</td></tr><tr><td>2</td><td>___</td><td>☐</td><td>☐</td></tr></table></span>
+                </span>
+            </label>
+        </div>
+    </div>
 
         <div class="pack-progress" id="packProgress"></div>
 
@@ -2366,6 +2415,32 @@
     <h2>🚀 Generar SdA Completa</h2>
     <p class="card-sub">Prompt con los <strong>7 bloques oficiales</strong> + <strong id="promptSesLbl">4</strong> actividades evaluables con rúbrica del Proyecto Educativo</p>
 
+    <!-- ══ ¿SESIONES POR IA O A BOLÍGRAFO? ══ -->
+    <div class="modo-ses-box" role="radiogroup" aria-label="Cómo se rellenan las sesiones">
+        <div class="modo-ses-q">📖 ¿Cómo quieres las sesiones?</div>
+        <p class="modo-ses-sub">El libro de texto manda. Elige cómo se rellena lo que se hace cada día.</p>
+        <div class="modo-ses-opts">
+            <label class="modo-ses-opt ia">
+                <input type="radio" name="modoSesiones" value="ia" checked onchange="setModoSesiones(this.value)">
+                <span class="modo-ses-card">
+                    <span class="ms-top"><span class="ms-ico">🤖</span><span class="ms-t">La IA me propone una actividad para cada sesión</span></span>
+                    <span class="ms-d">Cada sesión viene escrita, con un hueco para poner la página del libro.</span>
+                    <span class="ms-check">✔ Elegido</span>
+                    <span class="ms-mini"><strong>Sesión 3 · 14/10</strong><br>Actividad: juego de la tienda con monedas…<br>En el libro: pág. ______</span>
+                </span>
+            </label>
+            <label class="modo-ses-opt boli">
+                <input type="radio" name="modoSesiones" value="boli" onchange="setModoSesiones(this.value)">
+                <span class="modo-ses-card">
+                    <span class="ms-top"><span class="ms-ico">✍️</span><span class="ms-t">Lo relleno yo a mano con bolígrafo</span></span>
+                    <span class="ms-d">Sale una tabla en blanco: escribes la página del libro y marcas lo que trabajas cada día.</span>
+                    <span class="ms-check">✔ Elegido</span>
+                    <span class="ms-mini"><table><tr><th>Sesión</th><th>Pág.</th><th>Sumar</th><th>Restar</th></tr><tr><td>1</td><td class="hand">34</td><td class="hand">✔</td><td>☐</td></tr><tr><td>2</td><td>___</td><td>☐</td><td>☐</td></tr></table></span>
+                </span>
+            </label>
+        </div>
+    </div>
+
     <!-- ══ FORMATO DE SALIDA (cuenta gratuita / cuenta de pago) ══ -->
     <div class="fmt-box">
         <div class="fmt-head">📄 ¿Cómo quieres que te entregue la SdA?</div>
@@ -2528,7 +2603,7 @@
                 </select>
                 <select id="bibFModo" onchange="renderBib()" aria-label="Filtrar por modo">
                     <option value="">Todos los modos</option>
-                    <option value="libre">✍️ Libre</option><option value="anaya">📙 Anaya</option>
+                    <option value="libre">✍️ Libre</option>
                     <option value="sant">📗 Capitulaciones</option><option value="pack">📦 Pack</option>
                 </select>
                 <input type="search" id="bibFTxt" placeholder="Buscar por título…" oninput="_bibDebounce()" aria-label="Buscar SdA por título">
@@ -13830,6 +13905,7 @@ function _calcularSesionesMesSant(mes, modalidad, cfg){
 // MODO LIBRO ANAYA — FUNCIONES
 // ═══════════════════════════════════════════════════════════════════
 function toggleAnaya(){
+    if(!anayaActivo) return; // Modo Anaya retirado: solo permite desactivarlo
     if(santActivo){ toggleSantillana(); }
     anayaActivo = !anayaActivo;
     document.getElementById('anayaToggle').classList.toggle('active', anayaActivo);
@@ -14564,12 +14640,15 @@ GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos:
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL: el producto/tarea final de la fuente y sus productos parciales por fase.
 4 — CONCRECIÓN CURRICULAR: tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
 5 — SECUENCIA DIDÁCTICA: agrupa las ${d.sesiones} sesiones en actividades por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar). El producto final ocupa la última actividad.
-   Para CADA sesión, esta estructura EXACTA:
+${getModoSesiones()==='boli'?`   ✍️ MODO BOLÍGRAFO: NO propongas actividades por sesión. En cada actividad, solo esta tabla (una fila por sesión):
+   | Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] |
+   | Ses. [N] | [dd/mm/aa] | ______ | ☐ | ☐ |
+   «Páginas del libro» siempre «______» y casillas siempre vacías: las rellena el maestro a mano.`:`   Para CADA sesión, esta estructura EXACTA:
    | SABER BÁSICO | [código de la Orden 30/05/2023] — [concreción breve en lenguaje de aula, máx. 6 palabras] |
    | INICIO (…') | [enganche — SIN página de libro] |
    | DESARROLLO (…') | **Propuesta de la app:** [tarea del saber básico] · **En el libro: Pág. ______** (la rellena el maestro) · *Ambas trabajan el mismo saber básico.* |
    | CIERRE (…') | [síntesis y evidencia — SIN página de libro] |
-   | TOTAL | los minutos deben sumar EXACTAMENTE ${d.duracion} |
+   | TOTAL | los minutos deben sumar EXACTAMENTE ${d.duracion} |`}
 6 — MEDIDAS DE ATENCIÓN A LA DIVERSIDAD (DUA): por sesión/actividad, pauta DUA + estrategia concreta + herramienta digital + andamiaje. Medidas ORDINARIAS (no ACS).
 7 — VALORACIÓN DE LO APRENDIDO: una rúbrica por CADA criterio con los CUATRO niveles de logro del apartado E.2 del Proyecto Educativo del CEIP Capitulaciones (1 No conseguido · 2 En proceso · 3 Conseguido · 4 Conseguido con destreza). NO uses escala numérica de 1 a 10 ni porcentajes. Cada criterio se evalúa en DOS momentos y con DOS instrumentos distintos; la prueba escrita nunca es el único instrumento. Conversión final: 1 Insuficiente · 2 Suficiente o Bien · 3 Notable · 4 Sobresaliente.
 
@@ -14586,6 +14665,33 @@ ${fuente}${notaCorte}
 }
 
 function _fmtUI(){ /* el estilo del seleccionado lo aplica el CSS con input:checked */ }
+// ── Modo de sesiones: 'ia' (la IA propone actividad por sesión) | 'boli' (tabla en blanco para bolígrafo)
+let _modoSesiones='ia';
+try{ const m=localStorage.getItem('sdaModoSesiones'); if(m==='ia'||m==='boli') _modoSesiones=m; }catch(e){}
+function getModoSesiones(){ return _modoSesiones; }
+function setModoSesiones(v){
+    _modoSesiones = v==='boli'?'boli':'ia';
+    try{ localStorage.setItem('sdaModoSesiones',_modoSesiones); }catch(e){}
+    document.querySelectorAll('input[name="modoSesiones"],input[name="modoSesionesPack"]').forEach(r=>{ r.checked=(r.value===_modoSesiones); });
+    const pc=document.getElementById('promptContent');
+    if(pc && pc.textContent && !pc.textContent.startsWith('Pulsa')) showToast('🔄 Cambiado. Pulsa «Generar Prompt» otra vez para aplicarlo');
+    else showToast(_modoSesiones==='boli'?'✍️ Las sesiones saldrán en blanco para rellenar a mano':'🤖 La IA propondrá una actividad por sesión');
+}
+document.addEventListener('DOMContentLoaded',()=>{ document.querySelectorAll('input[name="modoSesiones"],input[name="modoSesionesPack"]').forEach(r=>{ r.checked=(r.value===_modoSesiones); }); });
+// Instrucciones del apartado d) cuando el tutor elige rellenar a mano
+function _bloqueSesionesBoli(esLengua,esMat){
+    return `  d) Sesiones de esta actividad — SE RELLENAN A MANO CON BOLÍGRAFO (lo ha elegido el tutor/a):
+     ⚠️ NO propongas actividades, tareas ni desarrollo por sesión. El maestro sigue el libro y marca a mano.
+     Genera SOLO esta tabla, con una fila por cada sesión de esta actividad y su fecha real de la tabla de sesiones:
+     | Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] | [Saber 3 …] |
+     | --- | --- | --- | :-: | :-: | :-: |
+     | Ses. [N] | [dd/mm/aa] | ______ | ☐ | ☐ | ☐ |
+     · Una columna por cada saber básico del apartado c), en lenguaje de aula (máx. 6 palabras) y el código entre paréntesis. Nunca solo siglas ni la palabra «contenido».
+     · «Páginas del libro» SIEMPRE «______» y todas las casillas SIEMPRE vacías (☐): las rellena el maestro con bolígrafo.
+     · Deja la tabla con celdas amplias para poder escribir a mano al imprimir.
+${esLengua?`     · Debajo de la tabla, UNA sola línea: «Lectura 30' en cada sesión: tipo de texto [..] · estrategia [..] — *(ampliar con Ágora)*».\n`:''}${esMat?`     · Debajo de la tabla, UNA sola línea: «RP 30' (sesiones marcadas RP): bloque A/B/C · tipología del mes · estrategia — *(ampliar con Ágora)*».\n`:''}
+`;
+}
 function getFormatoSalida(){
     const r=document.querySelector('input[name="formatoSalida"]:checked');
     return r?r.value:'free';
@@ -14699,7 +14805,7 @@ ${Object.entries(d.critsPorArea).flatMap(([area,cs])=>cs.map(c=>`     ───�
      [Una frase: qué hace el alumnado y qué produce en esta actividad]
      Saberes básicos: [códigos y bloques de la Orden 30/05/2023]
 
-  d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión de esta actividad:
+${getModoSesiones()==='boli'?_bloqueSesionesBoli(esLengua,esMat):`  d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión de esta actividad:
 
 ${(()=>{
   // Generate one session example per activity — the AI will replicate for all sessions
@@ -14740,7 +14846,7 @@ ${(()=>{
   }
   return sesBlock;
 })()}
-  e) Contexto de aplicación
+`}  e) Contexto de aplicación
      ☑ [Escolar / Social / Familiar / Personal — marca los que correspondan]
 
   f) Vinculación curricular
@@ -15129,7 +15235,12 @@ ${d.sesiones>3?'• Producto 4: [descripción del resultado final / presentació
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 4 — CONCRECIÓN CURRICULAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-4.1 Concreción curricular por sesión:
+${getModoSesiones()==='boli'?`4.1 Saberes y criterios de la SdA (las sesiones se marcan a mano en el apartado 5):
+    | Saber básico (código — concreción breve) | Criterio/s asociado/s | Se evalúa en (actividad y fecha dd/mm/aa) |
+    |---|---|---|
+    [Una fila por saber básico, en lenguaje de aula. NO asignes saberes ni criterios a sesiones concretas:
+     lo hace el maestro con bolígrafo según la página del libro de cada día.]
+`:`4.1 Concreción curricular por sesión:
     Genera una tabla con este formato EXACTO:
 
     | Sesión | Fecha | Saber básico | Pág. libro | Criterio/s | Evaluación |
@@ -15138,7 +15249,7 @@ ${d.sesiones>3?'• Producto 4: [descripción del resultado final / presentació
      Pág. libro: escribe SIEMPRE "______" — columna en blanco que rellena el maestro a mano.
      Lectura y RP no llevan página: la página corresponde al DESARROLLO de la SdA.]
     [Para CADA sesión de la tabla de fechas: pon la fecha en formato dd/mm/aa, indica el/los código/s de criterio que se trabajan en esa sesión, y en la columna Evaluación escribe "Sí — [fecha dd/mm/aa]" SOLO en la ÚLTIMA sesión que trabaje cada criterio (es decir, cuando ese criterio se cierra y se evalúa); en el resto escribe "—"]
-
+`}
 4.2 Vinculación ODS: [ODS nº X — nombre] · [Una frase de conexión directa con la SdA]
 
 4.3 Transversalidad: ${d.transversalidad||'[Indica los ejes transversales: igualdad, sostenibilidad, salud, paz…]'}
@@ -15401,15 +15512,17 @@ ${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (el usuario t
    · No preguntes nada: entrega el documento terminado.`}
 ⚠️ NO preguntes nada. Genera la SdA completa directamente.
 ⚠️ BREVEDAD: respeta la regla de SdA breve indicada arriba. Mejor una tabla escueta que un párrafo.
-⚠️ LIBRO DE TEXTO: en CADA sesión, la fila DESARROLLO lleva la propuesta de la app Y la casilla "Pág. ______"
-   en blanco, indicando que ambas trabajan el mismo saber básico. Inicio, cierre, lectura y RP NO llevan página.
+${getModoSesiones()==='boli'?`⚠️ LIBRO DE TEXTO — MODO BOLÍGRAFO: NO propongas actividades por sesión. En el apartado 5, cada actividad lleva
+   solo la tabla de sesiones con «Páginas del libro ______» y una casilla ☐ vacía por saber básico, para rellenar a mano.
+   Lectura y RP: una línea con *(ampliar con Ágora)*.`:`⚠️ LIBRO DE TEXTO: en CADA sesión, la fila DESARROLLO lleva la propuesta de la app Y la casilla "Pág. ______"
+   en blanco, indicando que ambas trabajan el mismo saber básico. Inicio, cierre, lectura y RP NO llevan página.`}
 
 ESTRUCTURA OBLIGATORIA — 7 APARTADOS:
 ✅ 1 — IDENTIFICACIÓN (tabla con todos los campos: curso, título, trimestre, fechas, sesiones, pregunta motriz, tipo, metodología, apps, planes)
 ✅ 2 — JUSTIFICACIÓN (2.1 objetivos de etapa · 2.2 principios pedagógicos — ${esInf?'RD 95/2022 y Decreto 100/2023':'RD 157/2022 y Decreto 101/2023'} · 2.3 conexión con entorno)
 ✅ 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (tabla con nº producto, nombre, descripción, sesiones)
 ✅ 4 — CONCRECIÓN CURRICULAR:
-   · 4.1 Concreción curricular por sesión — tabla Sesión / Fecha / Saber básico / Pág. libro / Criterio(s) / Evaluación, una fila por sesión con su fecha exacta
+${getModoSesiones()==='boli'?'   · 4.1 Saberes y criterios de la SdA — tabla Saber básico / Criterio(s) / Se evalúa en (sin asignar saberes a sesiones)':'   · 4.1 Concreción curricular por sesión — tabla Sesión / Fecha / Saber básico / Pág. libro / Criterio(s) / Evaluación, una fila por sesión con su fecha exacta'}
    · 4.2 Vinculación ODS — tabla
    · 4.3 Transversalidad — tabla
    · 4.4 Saberes eventuales y efemérides — tabla con fecha/efeméride/integración
@@ -15418,7 +15531,7 @@ ESTRUCTURA OBLIGATORIA — 7 APARTADOS:
    · a) Título de la actividad
    · b) Sesión inicio y fin con fecha exacta (dd/mm/aaaa)
    · c) Descripción y saberes básicos
-   · d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión: SABER BÁSICO + ${esLengua?"LECTURA 30' + ":''}${esMat?"RP 30' (solo en las sesiones marcadas RP) + ":''}INICIO + DESARROLLO (con la casilla «Pág. ______») + CIERRE + TOTAL = ${d.duracion||60}' ✔ — los minutos deben sumar exactamente ese total
+${getModoSesiones()==='boli'?'   · d) Tabla de sesiones para rellenar a mano: Sesión / Fecha / Páginas del libro ______ / una columna ☐ por saber básico — SIN actividades por sesión':`   · d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión: SABER BÁSICO + ${esLengua?"LECTURA 30' + ":''}${esMat?"RP 30' (solo en las sesiones marcadas RP) + ":''}INICIO + DESARROLLO (con la casilla «Pág. ______») + CIERRE + TOTAL = ${d.duracion||60}' ✔ — los minutos deben sumar exactamente ese total`}
    · e) Contexto de aplicación
    · f) Vinculación curricular (criterio + cómo se evidencia + ODS + competencia siglo XXI)
    · g) Evaluación intermedia (tabla código/criterio/instrumento/evidencia del alumnado)
@@ -16118,6 +16231,7 @@ function instalarPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt
 // SELECTOR DE MODO DE TRABAJO (top)
 // ═══════════════════════════════════════════════════════════════════
 function setModoTrabajo(modo){
+    if(modo==='anaya') modo='libre'; // Modo Anaya retirado
     if(modo==='anaya'){
         if(!anayaActivo){ toggleAnaya(); }
         if(santActivo){ toggleSantillana(); }
@@ -16789,6 +16903,7 @@ async function abrirClaudeLP(){
 
 
 function selPackEditorial(ed){
+    ed='sant'; // Modo Anaya retirado
     packEditorial=ed;
     ['anaya','sant'].forEach(e=>{
         const el=document.getElementById('packOpt'+e[0].toUpperCase()+e.slice(1));
@@ -17094,7 +17209,15 @@ ESTRUCTURA OBLIGATORIA — LOS 7 APARTADOS DE LA PLANTILLA DEL CEIP CAPITULACION
 6 — MEDIDAS DE ATENCIÓN A LA DIVERSIDAD (medidas generales · DUA por sesión · ACNEAE · programas)
 7 — VALORACIÓN DE LO APRENDIDO (rúbricas · escalas de dominio · práctica docente)
 
-⚠️ TABLA 4.1 — formato exacto:
+${getModoSesiones()==='boli'?`⚠️ TABLA 4.1 — Saberes y criterios de la SdA (sin asignarlos a sesiones):
+| Saber básico (código — concreción breve) | Criterio/s asociado/s | Se evalúa en (actividad y fecha) |
+
+⚠️ MODO BOLÍGRAFO — el tutor rellena las sesiones a mano. NO propongas actividades por sesión.
+En cada actividad del apartado 5, solo esta tabla (una fila por sesión):
+| Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] |
+| Ses. [N] | [dd/mm/aa] | ______ | ☐ | ☐ |
+«Páginas del libro» siempre «______» y casillas siempre vacías.
+${esLen?"Debajo: una línea «Lectura 30': tipo de texto · estrategia — *(ampliar con Ágora)*».\n":''}${esMat?"Debajo: una línea «RP 30': bloque A/B/C · tipología del mes · estrategia — *(ampliar con Ágora)*».\n":''}`:`⚠️ TABLA 4.1 — formato exacto:
 | Sesión | Fecha | Saber básico | Pág. libro | Criterio/s | Evaluación |
 El saber básico es el código de la Orden 30/05/2023 más una concreción breve en lenguaje de aula (máx. 6 palabras).
 En "Pág. libro" escribe SIEMPRE "______": es una casilla en blanco que rellena el maestro a mano.
@@ -17104,7 +17227,7 @@ En "Pág. libro" escribe SIEMPRE "______": es una casilla en blanco que rellena 
 ${esLen?"| LECTURA 30' | tipo de texto y los tres momentos — SIN página de libro — *(ampliar con Ágora)* |\n":''}${esMat?"| RP 30' | bloque A/B/C · tipología del mes · estrategia · contexto de la SdA — SIN página de libro — *(ampliar con Ágora)* |\n":''}| INICIO (…') | [enganche — SIN página de libro] |
 | DESARROLLO (…') | **Propuesta de la app:** [tarea del saber básico] · **En el libro: Pág. ______** · *Ambas trabajan el mismo saber básico.* |
 | CIERRE (…') | [síntesis y evidencia — SIN página de libro] |
-| TOTAL | los minutos deben sumar EXACTAMENTE la duración de la sesión |
+| TOTAL | los minutos deben sumar EXACTAMENTE la duración de la sesión |`}
 
 ⚠️ ÁGORA CAPITULACIONES es la única fuente de las fichas de lectura y de problemas: aquí solo se programa el bloque y se cierra con *(ampliar con Ágora)*. Nunca inventes textos ni desarrolles la ficha.
 
