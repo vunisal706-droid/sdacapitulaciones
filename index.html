@@ -14748,11 +14748,11 @@ function construirPrompt(d){
             tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | ${s.nota||''} |\n`;
         });
         tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración: ${d.duracion} min/sesión\n`;
-        tablaT+=`⚠️ EVALUACIÓN — LA DECIDES TÚ: Una vez asignados los criterios a cada sesión, marca la evaluación en la ÚLTIMA sesión que trabaje cada criterio (o grupo de criterios relacionados). No evalúes en cada sesión — solo cuando se cierra un criterio. Refleja las fechas de evaluación en la tabla del punto 4.1.\n`;
+        tablaT+=`${getModoSesiones()==='boli'?'⚠️ EVALUACIÓN — LA DECIDES TÚ: evalúa cada criterio al CERRAR la actividad que lo trabaja (última sesión de esa actividad). No asignes criterios a sesiones sueltas. Refleja las fechas en la tabla del punto 4.1.':'⚠️ EVALUACIÓN — LA DECIDES TÚ: Una vez asignados los criterios a cada sesión, marca la evaluación en la ÚLTIMA sesión que trabaje cada criterio (o grupo de criterios relacionados). No evalúes en cada sesión — solo cuando se cierra un criterio. Refleja las fechas de evaluación en la tabla del punto 4.1.'}\n`;
     }
 
     // Activities: IA decides how many sessions each activity takes
-    const numActs=Math.max(2,Math.min(d.sesiones,Math.round(d.sesiones*0.6)));
+    const numActs=getModoSesiones()==='boli'?Math.max(4,Math.min(6,Math.round(d.sesiones/4))):Math.max(2,Math.min(d.sesiones,Math.round(d.sesiones*0.6)));
     let actsT='';
     for(let i=1;i<=numActs;i++){
         const isFirst=i===1, isLast=i===numActs;
@@ -15297,8 +15297,8 @@ ${esLengua?`
     NO inventes textos, títulos, autores ni preguntas de comprensión: eso lo genera Ágora.
     Cierra siempre con la mención *(ampliar con Ágora)*. El bloque de lectura NUNCA lleva página del libro.
 
-    En la tabla de la secuencia didáctica marca CADA sesión con [📖 LECTURA 30'] al inicio.
-    En el apartado h) de CADA actividad indica el tipo de texto y los 3 momentos en una línea.
+${getModoSesiones()==='boli'?`    En el apartado d) de CADA actividad, debajo de la tabla, UNA línea con el tipo de texto y la estrategia.`:`    En la tabla de la secuencia didáctica marca CADA sesión con [📖 LECTURA 30'] al inicio.
+    En el apartado h) de CADA actividad indica el tipo de texto y los 3 momentos en una línea.`}
 `:''}
 ${esMat?`
 4.5 🔢 RESOLUCIÓN DE PROBLEMAS (Instrucciones Junta de Andalucía)
@@ -15340,8 +15340,8 @@ ${(()=>{
     el bloque: tipo A/B/C, tipología del mes, estrategia y contexto de la SdA. No desarrolles la ficha completa.
     Cierra siempre con la mención *(ampliar con Ágora)*. El bloque de RP NUNCA lleva página del libro.
 
-    En la tabla de la secuencia didáctica marca estas 3 sesiones con [RESOLUCIÓN PROBLEMAS].
-    En el apartado h) de esas actividades indica: tipología del mes, estrategia de resolución y contexto de la SdA.
+${getModoSesiones()==='boli'?`    En el apartado d) de CADA actividad, debajo de la tabla, UNA línea con bloque, tipología del mes y estrategia.`:`    En la tabla de la secuencia didáctica marca estas 3 sesiones con [RESOLUCIÓN PROBLEMAS].
+    En el apartado h) de esas actividades indica: tipología del mes, estrategia de resolución y contexto de la SdA.`}
 `:''}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -15375,8 +15375,8 @@ ${actsT}
 6.2 Principios DUA v3.0 seleccionados:
     ${d.dua.length>0?d.dua.join(' | '):'(ninguno seleccionado)'}
 
-    → INSTRUCCIÓN OBLIGATORIA: Para cada una de las ${d.sesiones} sesiones, en el apartado h),
-      desarrolla las 3 capas del DUA de forma CONCRETA y DIFERENTE entre sesiones:
+    → INSTRUCCIÓN OBLIGATORIA: Para cada ${getModoSesiones()==='boli'?'ACTIVIDAD':'una de las '+d.sesiones+' sesiones'}, en el apartado h),
+      desarrolla las 3 capas del DUA de forma CONCRETA y DIFERENTE entre ${getModoSesiones()==='boli'?'actividades':'sesiones'}:
 
       CAPA 1 — PAUTA: Cita el número y nombre exacto de la pauta aplicada en esa sesión.
         Rota entre las pautas marcadas; no repitas la misma pauta en sesiones consecutivas.
@@ -15527,7 +15527,7 @@ ${getModoSesiones()==='boli'?'   · 4.1 Saberes y criterios de la SdA — tabla 
    · 4.3 Transversalidad — tabla
    · 4.4 Saberes eventuales y efemérides — tabla con fecha/efeméride/integración
    · 4.5 ${(esLengua&&esMat)?'Lectura Planificada (tabla ANTES/DURANTE/DESPUÉS) y Resolución de Problemas (tabla por semanas)':esLengua?'Lectura Planificada — tabla ANTES/DURANTE/DESPUÉS + tipos de texto por sesión':esMat?'Resolución de Problemas — tabla por semanas con tipología, bloque A/B/C, estrategia y contexto':'(no aplica en esta área: omite el 4.5)'}
-✅ 5 — SECUENCIA DIDÁCTICA — ${d.sesiones>0?Math.max(2,Math.round(d.sesiones*0.6)):6} actividades con los apartados a-i COMPLETOS:
+✅ 5 — SECUENCIA DIDÁCTICA — ${getModoSesiones()==='boli'?Math.max(4,Math.min(6,Math.round(d.sesiones/4))):(d.sesiones>0?Math.max(2,Math.round(d.sesiones*0.6)):6)} actividades con los apartados a-i COMPLETOS:
    · a) Título de la actividad
    · b) Sesión inicio y fin con fecha exacta (dd/mm/aaaa)
    · c) Descripción y saberes básicos
@@ -15539,7 +15539,7 @@ ${getModoSesiones()==='boli'?'   · d) Tabla de sesiones para rellenar a mano: S
    · i) Observaciones del tutor — 3 líneas de guiones vacías para escribir a mano: ___________ / ___________ / ___________
 ✅ 6 — MEDIDAS ATENCIÓN DIVERSIDAD:
    · 6.1 Medidas generales Decreto 101/2023 — tabla medida/aplicación
-   · 6.2 DUA por sesión — tabla completa con TODAS las sesiones (fecha, pauta, estrategia, herramienta)
+${getModoSesiones()==='boli'?'   · 6.2 DUA por actividad — tabla con TODAS las actividades (sesiones, pauta, estrategia, herramienta)':'   · 6.2 DUA por sesión — tabla completa con TODAS las sesiones (fecha, pauta, estrategia, herramienta)'}
    · 6.3 ACNEAE presentes en el aula
    · 6.4 Programas de atención a la diversidad
 ✅ 7 — VALORACIÓN DE LO APRENDIDO:
@@ -15551,7 +15551,7 @@ ${d.programas&&d.programas.length>0?`✅ ANEXOS DE REFUERZO (${d.programas.lengt
    Para CADA programa: 1.Alumnado destinatario · 2.Objetivos específicos · 3.Tabla actividades adaptadas sesión a sesión · 4.Orientaciones metodológicas · 5.Seguimiento y evaluación`:''}
 
 REGLAS ADICIONALES:
-✅ Las fechas exactas de CADA sesión deben aparecer en 4.1, en b) de cada actividad y en d) desarrollo
+${getModoSesiones()==='boli'?'✅ Las fechas exactas de CADA sesión deben aparecer en b) de cada actividad y en la tabla d) para rellenar a mano':'✅ Las fechas exactas de CADA sesión deben aparecer en 4.1, en b) de cada actividad y en d) desarrollo'}
 ✅ Los apartados i) Observaciones deben tener 3 líneas de guiones físicos para escribir: ___________ / ___________ / ___________
 ✅ Lenguaje profesional docente, aplicable directamente en ${nivel}
 ✅ Coherencia total: mismo criterio, misma fecha, mismo instrumento en todos los bloques
