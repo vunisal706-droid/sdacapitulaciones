@@ -14722,7 +14722,7 @@ GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos:
 1 — IDENTIFICACIÓN: tabla con curso, título, trimestre, fechas, nº de sesiones, tipo, metodología y planes del centro asociados.
 2 — JUSTIFICACIÓN: objetivos de etapa (${esInf?'Decreto 100/2023 Infantil':'Decreto 101/2023'}), principios pedagógicos y justificación de la conexión con el entorno del alumnado de ${d.curso}.
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL: el producto/tarea final de la fuente y sus productos parciales por fase.
-4 — CONCRECIÓN CURRICULAR: tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
+4 — CONCRECIÓN CURRICULAR: tabla de competencias específicas con sus descriptores operativos del Perfil de salida; tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
 5 — SECUENCIA DIDÁCTICA: agrupa las ${d.sesiones} sesiones en actividades por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar). El producto final ocupa la última actividad.
 ${_modoNoIA()?`   ✍️ MODO BOLÍGRAFO: NO propongas actividades por sesión. En cada actividad, solo esta tabla (una fila por sesión):
    | Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] |
@@ -15384,6 +15384,11 @@ ${d.sesiones>3?'• Producto 4: [descripción del resultado final / presentació
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 4 — CONCRECIÓN CURRICULAR
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4.0 Competencias específicas y descriptores operativos del Perfil de salida:
+    | Competencia específica (código — frase breve) | Descriptores operativos (p. ej. CCL1, STEM2, CPSAA3) |
+    |---|---|
+    [Solo las competencias específicas a las que pertenecen los criterios de esta SdA; una fila por competencia.]
+
 ${getModoSesiones()==='indice'?`4.1 Concreción curricular por sesión (según el índice del libro):
     | Sesión | Fecha | Páginas del libro | Saber básico (concreción breve y código) | Criterio/s | Evaluación |
     |---|---|---|---|---|---|
@@ -15673,10 +15678,11 @@ ${getModoSesiones()==='indice'?`⚠️ LIBRO DE TEXTO — SEGÚN EL ÍNDICE: cad
    en blanco, indicando que ambas trabajan el mismo saber básico. Inicio, cierre, lectura y RP NO llevan página.`}
 
 ESTRUCTURA OBLIGATORIA — 7 APARTADOS:
-✅ 1 — IDENTIFICACIÓN (tabla con todos los campos: curso, título, trimestre, fechas, sesiones, pregunta motriz, tipo, metodología, apps, planes)
+✅ 1 — IDENTIFICACIÓN (tabla con todos los campos: curso, título, trimestre, fechas, sesiones, pregunta motriz, tipo, metodología, recursos y materiales, apps, planes)
 ✅ 2 — JUSTIFICACIÓN (2.1 objetivos de etapa · 2.2 principios pedagógicos — ${esInf?'RD 95/2022 y Decreto 100/2023':'RD 157/2022 y Decreto 101/2023'} · 2.3 conexión con entorno)
 ✅ 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (tabla con nº producto, nombre, descripción, sesiones)
 ✅ 4 — CONCRECIÓN CURRICULAR:
+   · 4.0 Competencias específicas y descriptores operativos del Perfil de salida — tabla
 ${getModoSesiones()==='indice'?'   · 4.1 Concreción por sesión — tabla Sesión / Fecha / Páginas del libro / Saber básico / Criterio(s) / Evaluación, según el índice':_modoNoIA()?'   · 4.1 Saberes y criterios de la SdA — tabla Saber básico / Criterio(s) / Se evalúa en (sin asignar saberes a sesiones)':'   · 4.1 Concreción curricular por sesión — tabla Sesión / Fecha / Saber básico / Pág. libro / Criterio(s) / Evaluación, una fila por sesión con su fecha exacta'}
    · 4.2 Vinculación ODS — tabla
    · 4.3 Transversalidad — tabla
@@ -15725,6 +15731,10 @@ function construirPromptRubricas(){
     const d=recopilarDatos();
     const esInf=d.etapa==='infantil';
     const sda=document.getElementById('sdaPegada').value.trim();
+    // Nº de actividades: se cuenta en la SdA pegada (no son las sesiones)
+    const _actsSda = sda ? new Set((sda.match(/ACTIVIDAD\s+(\d+)/gi)||[]).map(x=>x.replace(/\D/g,''))).size : 0;
+    const nRub = _actsSda || null;
+    const nRubTxt = nRub ? String(nRub) : 'tantas como actividades tenga la SdA';
     const tipos=Array.from(document.querySelectorAll('#tipoRubrica .chip.selected')).map(c=>c.textContent);
     const tipo=sdaTipos[d.sdaTipo]||sdaTipos.producto;
     let critsT='';
@@ -15749,7 +15759,7 @@ function construirPromptRubricas(){
     const escRowReg = esInf ? '| N | | | | | |' : '| N | | | | | | |';
     const filasReg = Array.from({length:25},(_,i)=> (esInf?`| ${i+1} | | | | | |`:`| ${i+1} | | | | | | |`)).join('\n');
     const minExig = esInf ? '"En proceso (EP)" = el niño/a lo hace con ayuda; "Conseguido (C)" = lo hace de forma autónoma'
-                          : '"2 En proceso" = lo hace con ayuda; "3 Conseguido" = mínimo exigible al alumnado de '+d.curso+' de forma autónoma; "4 Conseguido con destreza" = lo hace con soltura y lo explica';
+                          : '"2 En proceso" = lo hace con ayuda; "3 Conseguido" = mínimo exigible al alumnado de '+(d.curso||'su curso')+' de forma autónoma; "4 Conseguido con destreza" = lo hace con soltura y lo explica';
     const instrTipico = esInf ? 'Observación directa y sistemática, diario de aula, anecdotario, portfolio'
                               : 'Prueba escrita y Rúbrica / Registro anecdótico y Rúbrica';
     const marcaReg = esInf
@@ -15768,15 +15778,19 @@ ${esInf?'En Educación Infantil la evaluación es continua, formativa, GLOBALIZA
 ═══════════════════════════════════════════════════════════
 DATOS
 ═══════════════════════════════════════════════════════════
+${sda?`⚠️ LA SdA PEGADA ABAJO MANDA: toma de ella el curso, el área, el título, las actividades, los criterios,
+   las fechas de evaluación, los instrumentos y las ACNEAE. No uses ningún dato que no esté en la SdA.
+• Nº de rúbricas: ${nRubTxt} (una por ACTIVIDAD de la SdA, NO por sesión)
+`:`DATOS
+═══════════════════════════════════════════════════════════
 • Tipo SdA: ${tipo.emoji} ${tipo.nombre}
 • Nivel: ${d.nombreEtapa} — ${d.curso}
 • Áreas: ${d.areas.join(', ')}
 • Temática: ${d.titSda||d.tematica}
-• Nº ${esInf?'jornadas/actividades':'actividades'}: ${d.sesiones}
 • ACNEAE: ${d.acneae.join(', ')}
 • DUA: ${d.dua.join(', ')}
 Criterios: ${critsT||'(Ver SdA adjunta)'}
-
+`}
 ═══════════════════════════════════════════════════════════
 SdA GENERADA (BASE PARA LAS RÚBRICAS)
 ═══════════════════════════════════════════════════════════
@@ -15806,7 +15820,7 @@ Descriptor: [descripción del desempeño evaluado]
 Escalas de dominio (desempeños):
 "Al terminar ${esInf?'este bloque del reto':'esta actividad'}, el alumnado sabrá/será capaz de…"
 
-Adaptación ACNEAE — ${d.acneae.join(', ')} (medida ordinaria, sin modificar el criterio):
+Adaptación ACNEAE — ${sda?'[las ACNEAE que indique la SdA; si no hay, «Ninguna»]':d.acneae.join(', ')} (medida ordinaria, sin modificar el criterio):
 [Ajuste en descriptores o en la forma de obtener la evidencia]
 
 ${tipos.includes('Co-evaluación alumnado')?`\nVERSIÓN COEVALUACIÓN: lenguaje simplificado para ${d.curso}, 2ª persona, emojis/iconos\n`:''}${tipos.includes('Autoevaluación del alumno')?`\nVERSIÓN AUTOEVALUACIÓN: 1ª persona "Yo soy capaz de…", nivel ${d.curso}\n`:''}${tipos.includes('Formato tabla Word')?`\nFORMATO WORD: indica cómo copiar la tabla manteniendo el formato\n`:''}
@@ -15821,16 +15835,12 @@ El maestro/a marcará el nivel alcanzado por cada alumno/a.
 
 Formato EXACTO (tabla Markdown, 25 filas de alumnos + cabecera):
 
-${escHeadReg}
-${escSepReg}
-${filasReg}
-
-${marcaReg}
-Repite esta tabla para CADA una de las ${d.sesiones} rúbricas.
+${esInf?`${escHeadReg}\n${escSepReg}\n${filasReg}\n\n${marcaReg}`:`| Nº | Alumno/a | [código criterio 1] | [código criterio 2] | … | Observaciones |\n|---|---|:---:|:---:|:---:|---|\n${Array.from({length:25},(_,i)=>`| ${i+1} | | | | | |`).join('\n')}\n\nUna columna por CADA criterio de esa rúbrica. El maestro/a escribe en cada casilla el nivel alcanzado (1, 2, 3 o 4).`}
+Repite esta tabla después de CADA rúbrica (${nRubTxt}).
 
 REQUISITOS:
-✅ ${d.sesiones} rúbricas completas con escala ${esInf?'cualitativa (NI/EP/C)':'numérica'} oficial
-✅ ${d.sesiones} tablas de registro (una por rúbrica) con 25 filas de alumnos
+✅ ${nRubTxt} rúbricas completas (una por actividad) con escala ${esInf?'cualitativa (NI/EP/C)':'numérica'} oficial
+✅ Una tabla de registro por rúbrica, con 25 filas de alumnos
 ✅ Descriptores observables y diferenciados entre niveles
 ✅ ${minExig}
 ✅ Adaptación ACNEAE visible en cada rúbrica
@@ -17359,7 +17369,7 @@ ESTRUCTURA OBLIGATORIA — LOS 7 APARTADOS DE LA PLANTILLA DEL CEIP CAPITULACION
 1 — IDENTIFICACIÓN Y LOCALIZACIÓN DE UN CENTRO DE INTERÉS (tabla: curso, título, trimestre, fechas, sesiones, tipo, pregunta motriz, metodologías, planes del centro)
 2 — JUSTIFICACIÓN Y CONTEXTO DE APLICACIÓN (objetivos de etapa del Decreto 101/2023 · principios pedagógicos · conexión con el entorno)
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (productos parciales por fase + producto final)
-4 — CONCRECIÓN CURRICULAR (4.1 tabla por sesión · 4.2 ODS · 4.3 transversalidad · 4.4 efemérides · 4.5 ${esMat?'Resolución de Problemas':''}${esAmbas?' y ':''}${esLen?'Lectura Planificada':''})
+4 — CONCRECIÓN CURRICULAR (4.0 competencias específicas y descriptores operativos · 4.1 tabla por sesión · 4.2 ODS · 4.3 transversalidad · 4.4 efemérides · 4.5 ${esMat?'Resolución de Problemas':''}${esAmbas?' y ':''}${esLen?'Lectura Planificada':''})
 5 — SECUENCIA DIDÁCTICA por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar), con los apartados a–i
 6 — MEDIDAS DE ATENCIÓN A LA DIVERSIDAD (medidas generales · DUA por sesión · ACNEAE · programas)
 7 — VALORACIÓN DE LO APRENDIDO (rúbricas · escalas de dominio · práctica docente)
@@ -17609,7 +17619,7 @@ const LOMLOE_CHECKS=[
  {n:'Justificación / contextualización',  re:/(justificacion|contextualizacion|vinculacion con el contexto)/, ob:true},
  {n:'Competencias específicas',           re:/competencias? especificas?/, ob:true},
  {n:'Descriptores operativos (Perfil de salida)', re:/(descriptores? operativos?|perfil de salida|ccl\d|stem\d|cd\d|cpsaa\d|ce\d\.)/, ob:true},
- {n:'Criterios de evaluación',            re:/criterios? de evaluacion/, ob:true},
+ {n:'Criterios de evaluación',            re:/(criterios? de evaluacion|\b(lcl|mat|cmn|efi|eai|ing|lea|rel|fla|pln|mus)\.\d+\.\d+)/, ob:true},
  {n:'Saberes básicos',                    re:/saberes basicos/, ob:true},
  {n:'Metodología',                        re:/(metodologia|aprendizaje basado|abp|aprendizaje cooperativo|trabajo cooperativo)/, ob:true},
  {n:'Secuencia de sesiones / temporalización', re:/(sesion 1|sesion 2|temporalizacion|secuencia didactica|secuencia de actividades|desarrollo de las sesiones)/, ob:true},
