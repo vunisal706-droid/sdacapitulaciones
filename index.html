@@ -2151,7 +2151,7 @@
             <div class="chips" id="herramientas">
                 <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Genially</div><button class="chip-info" onclick="showTip(this,'🎨','Presentaciones interactivas y gamificadas. Ideal para productos finales visuales y animados.')" onblur="hideTip(this)" aria-label="Info Genially">?</button><div class="chip-tooltip"></div></div>
                 <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Canva</div><button class="chip-info" onclick="showTip(this,'✏️','Diseño gráfico sencillo. Infografías, carteles, presentaciones y contenido visual para el alumnado.')" onblur="hideTip(this)" aria-label="Info Canva">?</button><div class="chip-tooltip"></div></div>
-                <div class="chip-wrap"><div class="chip selected" onclick="toggleChip(this)">Wordwall</div><button class="chip-info" onclick="showTip(this,'🎮','Actividades interactivas (quiz, ruleta, crucigrama…). Muy útil para práctica y repaso.')" onblur="hideTip(this)" aria-label="Info Wordwall">?</button><div class="chip-tooltip"></div></div>
+                <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Wordwall</div><button class="chip-info" onclick="showTip(this,'🎮','Actividades interactivas (quiz, ruleta, crucigrama…). Muy útil para práctica y repaso.')" onblur="hideTip(this)" aria-label="Info Wordwall">?</button><div class="chip-tooltip"></div></div>
                 <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Kahoot</div><button class="chip-info" onclick="showTip(this,'🏆','Quiz competitivo en tiempo real. Motivador para activación de conocimientos y evaluación formativa.')" onblur="hideTip(this)" aria-label="Info Kahoot">?</button><div class="chip-tooltip"></div></div>
                 <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Educaplay</div><button class="chip-info" onclick="showTip(this,'📝','Actividades educativas (sopa de letras, dictado, video quiz…). En español, con muchos recursos hechos.')" onblur="hideTip(this)" aria-label="Info Educaplay">?</button><div class="chip-tooltip"></div></div>
                 <div class="chip-wrap"><div class="chip" onclick="toggleChip(this)">Quizizz</div><button class="chip-info" onclick="showTip(this,'⚡','Quiz autoevaluable con memes y feedback inmediato. Funciona en casa a ritmo propio.')" onblur="hideTip(this)" aria-label="Info Quizizz">?</button><div class="chip-tooltip"></div></div>
@@ -2499,7 +2499,7 @@
         <p class="modo-ses-sub">El libro de texto manda. Elige cómo se rellena lo que se hace cada día.</p>
         <div class="modo-ses-opts">
             <label class="modo-ses-opt ia">
-                <input type="radio" name="modoSesiones" value="ia" checked onchange="setModoSesiones(this.value)">
+                <input type="radio" name="modoSesiones" value="ia" onchange="setModoSesiones(this.value)">
                 <span class="modo-ses-card">
                     <span class="ms-top"><span class="ms-ico">🤖</span><span class="ms-t">La IA me propone las actividades</span></span>
                     <span class="ms-d">Cada sesión viene escrita, con un hueco para poner la página del libro.</span>
@@ -2526,7 +2526,7 @@
                 </span>
             </label>
             <label class="modo-ses-opt paginas">
-                <input type="radio" name="modoSesiones" value="paginas" onchange="setModoSesiones(this.value)">
+                <input type="radio" name="modoSesiones" value="paginas" checked onchange="setModoSesiones(this.value)">
                 <span class="modo-ses-card">
                     <span class="ms-top"><span class="ms-ico">📝</span><span class="ms-t">Escribo qué se trabaja en cada página</span></span>
                     <span class="ms-d">Una línea por página del libro. Cada sesión sale ya con su página y lo que se trabaja.</span>
@@ -14923,8 +14923,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     setDuaModo(_duaModo);
 });
 // ── Modo de sesiones: 'ia' (la IA propone actividad por sesión) | 'boli' (tabla en blanco para bolígrafo)
-let _modoSesiones='ia';
-try{ const m=localStorage.getItem('sdaModoSesiones'); if(m==='ia'||m==='boli'||m==='indice'||m==='paginas') _modoSesiones=m; }catch(e){}
+let _modoSesiones='paginas';
+try{ if(localStorage.getItem('sdaModoVer')!=='2'){ localStorage.setItem('sdaModoVer','2'); localStorage.setItem('sdaModoSesiones','paginas'); } const m=localStorage.getItem('sdaModoSesiones'); if(m==='ia'||m==='boli'||m==='indice'||m==='paginas') _modoSesiones=m; }catch(e){}
 function getModoSesiones(){ return _modoSesiones; }
 function _modoNoIA(){ return _modoSesiones!=='ia'; }
 function _modoLibro(){ return _modoSesiones==='indice'||_modoSesiones==='paginas'; }
