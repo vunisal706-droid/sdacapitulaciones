@@ -301,7 +301,7 @@
         .ms-mini th,.ms-mini td{border:1px solid #d1d5db;padding:.2rem .3rem;text-align:center;background:#fff}
         .ms-mini th{background:#fff7ed;font-weight:700}
         .ms-mini .hand{font-family:"Comic Sans MS","Segoe Print",cursive;color:#1d4ed8;font-size:.95rem}
-        #step8 .modo-ses-opts{grid-template-columns:repeat(3,1fr)}
+        #step8 .modo-ses-opts{grid-template-columns:repeat(2,1fr)}
         #step8 .ms-mini th,#step8 .ms-mini td{padding:.15rem .2rem;font-size:.76rem}
         @media (max-width:900px){#step8 .modo-ses-opts{grid-template-columns:1fr}}
         .modo-ses-opt.indice input:checked + .modo-ses-card{border-color:#059669;box-shadow:0 8px 22px rgba(5,150,105,.18)}
@@ -318,6 +318,18 @@
         #indiceTexto{width:100%;font-size:1rem;font-family:inherit;border:1.5px solid #d1d5db;border-radius:12px;padding:.7rem .8rem;line-height:1.5}
         #indiceTexto:focus{outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.15)}
         .ind-nota{font-size:.88rem;color:#6b7280;margin-top:.4rem}
+        .modo-ses-opt.paginas input:checked + .modo-ses-card{border-color:#7c3aed;box-shadow:0 8px 22px rgba(124,58,237,.18)}
+        .modo-ses-opt.paginas .ms-check{background:#7c3aed}
+        .pag-panel{border-color:#ddd6fe}.pag-panel .ind-t{color:#5b21b6}
+        #paginasTexto{width:100%;font-size:1rem;font-family:inherit;border:1.5px solid #d1d5db;border-radius:12px;padding:.7rem .8rem;line-height:1.5}
+        #paginasTexto:focus{outline:none;border-color:#7c3aed;box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+        .pag-pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.2rem 0 .9rem}
+        @media (max-width:700px){.pag-pasos{grid-template-columns:1fr}}
+        .pag-paso{background:#f5f3ff;border-radius:12px;padding:.6rem .7rem;font-size:.92rem;color:#374151;line-height:1.4}
+        .pag-paso b{display:block;color:#5b21b6;font-size:1rem;margin-bottom:.15rem}
+        .pag-cont{font-size:.92rem;font-weight:700;color:#5b21b6;margin-top:.4rem}
+        .ind-extra{margin-top:.8rem;background:#f5f3ff;border-radius:12px;padding:.6rem .8rem;font-size:.92rem;color:#4c1d95}
+        .ind-extra a{color:#6d28d9;font-weight:800;cursor:pointer;text-decoration:underline}
         .modo-ses-box.compact{padding:.9rem;margin:.8rem 0}
         .modo-ses-box.compact .modo-ses-q{font-size:1.1rem}
         .modo-ses-box.compact .ms-ico{font-size:2rem}
@@ -2476,23 +2488,44 @@
             <label class="modo-ses-opt indice">
                 <input type="radio" name="modoSesiones" value="indice" onchange="setModoSesiones(this.value)">
                 <span class="modo-ses-card">
-                    <span class="ms-top"><span class="ms-ico">📸</span><span class="ms-t">Sigo el índice del libro</span></span>
-                    <span class="ms-d">Haces una foto al índice de la unidad y cada sesión sale con sus páginas y lo que trabaja el libro.</span>
+                    <span class="ms-top"><span class="ms-ico">📸</span><span class="ms-t">Hago una foto a la ficha de la unidad</span></span>
+                    <span class="ms-d">La página de la unidad con «Saberes relacionados». Las sesiones siguen esos saberes en orden; la página la pones tú a mano.</span>
                     <span class="ms-check">✔ Elegido</span>
-                    <span class="ms-mini"><table><tr><th>Ses.</th><th>Pág.</th><th>En el libro</th></tr><tr><td>1</td><td>34–35</td><td>Sumas llevando</td></tr><tr><td>2</td><td>36–37</td><td>Problemas de sumar</td></tr></table></span>
+                    <span class="ms-mini"><table><tr><th>Ses.</th><th>Pág.</th><th>En el libro</th></tr><tr><td>1</td><td class="hand">___</td><td>Las vocales</td></tr><tr><td>2</td><td class="hand">___</td><td>La letra p</td></tr></table></span>
+                </span>
+            </label>
+            <label class="modo-ses-opt paginas">
+                <input type="radio" name="modoSesiones" value="paginas" onchange="setModoSesiones(this.value)">
+                <span class="modo-ses-card">
+                    <span class="ms-top"><span class="ms-ico">📝</span><span class="ms-t">Escribo qué se trabaja en cada página</span></span>
+                    <span class="ms-d">Una línea por página del libro. Cada sesión sale ya con su página y lo que se trabaja.</span>
+                    <span class="ms-check">✔ Elegido</span>
+                    <span class="ms-mini"><table><tr><th>Ses.</th><th>Pág.</th><th>En el libro</th></tr><tr><td>1</td><td>8–9</td><td>Vocales a, e</td></tr><tr><td>2</td><td>10</td><td>La letra p</td></tr></table></span>
                 </span>
             </label>
         </div>
         <div id="indicePanel" class="ind-panel" style="display:none">
-            <div class="ind-t">📸 Índice del libro</div>
-            <p class="ind-d">Haz una foto a la página del índice de la unidad (o unidades) de esta SdA. La app la lee y pasa el texto aquí abajo. Revísalo, sobre todo los números de página.</p>
+            <div class="ind-t">📸 Foto de la ficha de la unidad</div>
+            <p class="ind-d">Haz una foto a la página de la unidad donde salen <strong>«Situación de aprendizaje»</strong>, <strong>«Saberes relacionados»</strong>, <strong>«Competencias»</strong> y <strong>«Recursos»</strong>. No hace falta índice. La app lee la foto y pone el texto aquí abajo: revisa sobre todo la lista de <strong>Saberes relacionados</strong>, porque las sesiones siguen ese orden.</p>
             <label class="ind-btn">📷 Hacer foto o elegir imagen
                 <input type="file" accept="image/*" capture="environment" multiple onchange="leerIndiceFotos(this)" hidden>
             </label>
             <div id="indicePrev" class="ind-prev"></div>
             <div id="indiceEstado" class="ind-estado"></div>
-            <textarea id="indiceTexto" rows="7" oninput="_guardarIndice()" placeholder="Ejemplo:&#10;Unidad 2. El mercadillo&#10;Sumas llevando ........ 34&#10;Problemas de sumar .... 36&#10;Restas llevando ....... 38&#10;Repaso ................ 42"></textarea>
-            <p class="ind-nota">Si prefieres, déjalo vacío y adjunta la foto del índice directamente en la IA junto al prompt.</p>
+            <textarea id="indiceTexto" rows="8" oninput="_guardarIndice()" placeholder="Ejemplo (lo rellena la foto):&#10;Saberes relacionados&#10;- Comprensión de la animación Los piratas en el Polo&#10;- Presentación personal en público&#10;- Normas básicas de cortesía lingüística&#10;- Las vocales. Las letras y, p, m, l&#10;- Escritura de palabras y oraciones"></textarea>
+            <p class="ind-nota">Si la foto sale mal, déjalo vacío y adjunta la foto directamente en la IA junto al prompt. Las páginas saldrán en blanco (<strong>pág. ____</strong>) para escribirlas a mano.</p>
+            <div class="ind-extra">¿Prefieres que las páginas salgan ya puestas? <a onclick="setModoSesiones('paginas');document.getElementById('paginasTexto').focus()">Usa «📝 Escribo qué se trabaja en cada página»</a>.</div>
+        </div>
+        <div id="paginasPanel" class="ind-panel pag-panel" style="display:none">
+            <div class="ind-t">📝 Qué se trabaja en cada página del libro</div>
+            <div class="pag-pasos">
+                <div class="pag-paso"><b>1. Una línea por página</b>O por grupo de páginas (8–9). En el orden del libro.</div>
+                <div class="pag-paso"><b>2. Número y qué se trabaja</b>Primero la página, luego un guion y lo que se hace.</div>
+                <div class="pag-paso"><b>3. La IA lo reparte</b>Asigna las líneas a las sesiones en orden y pone esa página en cada día.</div>
+            </div>
+            <textarea id="paginasTexto" rows="9" oninput="_guardarPaginas()" placeholder="Ejemplo:&#10;6-7 - Animación Los piratas en el Polo&#10;8 - Presentación personal&#10;9 - Normas de cortesía&#10;10-11 - Las vocales&#10;12 - La letra p (2 días)&#10;14 - La letra m&#10;16 - Lectura de una viñeta&#10;Producto final - Normas de los piratas"></textarea>
+            <div class="pag-cont" id="paginasCont"></div>
+            <p class="ind-nota">Consejos: si una página necesita más de un día, pon «(2 días)». Repaso, evaluación o producto final pueden ir sin número. La lectura y la RP no se escriben aquí: salen de Ágora.</p>
         </div>
     </div>
 
@@ -2559,7 +2592,7 @@
             <div class="p8-b">
                 <div class="p8-t">En la IA: pega y envía</div>
                 <p class="p8-d">Haz clic en el cuadro donde se escribe y pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> (en el móvil: mantén el dedo pulsado → <strong>Pegar</strong>). Después pulsa <strong>enviar</strong> y espera a que termine de escribir la SdA.</p>
-                <p class="p8-d p8-foto" id="p8Foto" style="display:none">📸 Si has elegido el índice del libro y no has escrito el texto, <strong>adjunta también la foto</strong> del índice antes de enviar.</p>
+                <p class="p8-d p8-foto" id="p8Foto" style="display:none">📸 Si has elegido la foto de la ficha y el cuadro de texto está vacío, <strong>adjunta también la foto</strong> de la ficha antes de enviar.</p>
             </div>
         </div>
 
@@ -14751,7 +14784,9 @@ GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos:
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL: el producto/tarea final de la fuente y sus productos parciales por fase.
 4 — CONCRECIÓN CURRICULAR: tabla de competencias específicas con sus descriptores operativos del Perfil de salida; tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
 5 — SECUENCIA DIDÁCTICA: agrupa las ${d.sesiones} sesiones en actividades por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar). El producto final ocupa la última actividad.
-${_modoNoIA()?`   ✍️ MODO BOLÍGRAFO: NO propongas actividades por sesión. En cada actividad, solo esta tabla (una fila por sesión):
+${_modoLibro()?`   📖 MODO LIBRO: NO propongas actividades ajenas al libro. En cada actividad, solo esta tabla (una fila por sesión):
+   | Sesión | Fecha | Páginas del libro | Apartado del libro | Saber básico (concreción breve y código) | ✔ |
+   ${getModoSesiones()==='indice'?'Sigue el orden de los «Saberes relacionados» de la ficha; páginas siempre «pág. ____».':'Sigue el orden y las páginas EXACTAS de la lista del tutor/a.'}`:_modoNoIA()?`   ✍️ MODO BOLÍGRAFO: NO propongas actividades por sesión. En cada actividad, solo esta tabla (una fila por sesión):
    | Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] |
    | Ses. [N] | [dd/mm/aa] | ______ | ☐ | ☐ |
    «Páginas del libro» siempre «______» y casillas siempre vacías: las rellena el maestro a mano.`:`   Para CADA sesión, esta estructura EXACTA:
@@ -14778,26 +14813,31 @@ ${fuente}${notaCorte}
 function _fmtUI(){ /* el estilo del seleccionado lo aplica el CSS con input:checked */ }
 // ── Modo de sesiones: 'ia' (la IA propone actividad por sesión) | 'boli' (tabla en blanco para bolígrafo)
 let _modoSesiones='ia';
-try{ const m=localStorage.getItem('sdaModoSesiones'); if(m==='ia'||m==='boli'||m==='indice') _modoSesiones=m; }catch(e){}
+try{ const m=localStorage.getItem('sdaModoSesiones'); if(m==='ia'||m==='boli'||m==='indice'||m==='paginas') _modoSesiones=m; }catch(e){}
 function getModoSesiones(){ return _modoSesiones; }
 function _modoNoIA(){ return _modoSesiones!=='ia'; }
+function _modoLibro(){ return _modoSesiones==='indice'||_modoSesiones==='paginas'; }
 function setModoSesiones(v){
-    _modoSesiones = (v==='boli'||v==='indice')?v:'ia';
+    _modoSesiones = (v==='boli'||v==='indice'||v==='paginas')?v:'ia';
     try{ localStorage.setItem('sdaModoSesiones',_modoSesiones); }catch(e){}
     document.querySelectorAll('input[name="modoSesiones"],input[name="modoSesionesPack"]').forEach(r=>{ r.checked=(r.value===_modoSesiones); });
     const pc=document.getElementById('promptContent');
     if(pc && pc.textContent && !pc.textContent.startsWith('Pulsa')) showToast('🔄 Cambiado. Se aplicará al pulsar «Generar y abrir la IA»');
-    else showToast(_modoSesiones==='boli'?'✍️ Las sesiones saldrán en blanco para rellenar a mano':_modoSesiones==='indice'?'📸 Las sesiones seguirán el índice del libro':'🤖 La IA propondrá una actividad por sesión');
+    else showToast(_modoSesiones==='boli'?'✍️ Las sesiones saldrán en blanco para rellenar a mano':_modoSesiones==='indice'?'📸 Las sesiones seguirán los saberes de la ficha de la unidad':_modoSesiones==='paginas'?'📝 Las sesiones seguirán las páginas que escribas':'🤖 La IA propondrá una actividad por sesión');
     _indiceUI();
 }
-document.addEventListener('DOMContentLoaded',()=>{ document.querySelectorAll('input[name="modoSesiones"],input[name="modoSesionesPack"]').forEach(r=>{ r.checked=(r.value===_modoSesiones); }); try{ const t=localStorage.getItem('sdaIndiceTexto'); if(t) document.getElementById('indiceTexto').value=t; }catch(e){} _indiceUI(); });
+document.addEventListener('DOMContentLoaded',()=>{ document.querySelectorAll('input[name="modoSesiones"],input[name="modoSesionesPack"]').forEach(r=>{ r.checked=(r.value===_modoSesiones); }); try{ const t=localStorage.getItem('sdaIndiceTexto'); if(t) document.getElementById('indiceTexto').value=t; const q=localStorage.getItem('sdaPaginasTexto'); if(q) document.getElementById('paginasTexto').value=q; }catch(e){} _indiceUI(); _contarPaginas(); });
 
 // ── MODO ÍNDICE DEL LIBRO: foto → texto (OCR) → prompt ─────────────
 function _indiceUI(){
     const p=document.getElementById('indicePanel'); if(p) p.style.display=(_modoSesiones==='indice')?'block':'none';
+    const q=document.getElementById('paginasPanel'); if(q) q.style.display=(_modoSesiones==='paginas')?'block':'none';
     const f=document.getElementById('p8Foto'); if(f) f.style.display=(_modoSesiones==='indice')?'block':'none';
 }
 function _guardarIndice(){ try{ localStorage.setItem('sdaIndiceTexto',document.getElementById('indiceTexto').value); }catch(e){} }
+function _lineasPaginas(){ return (document.getElementById('paginasTexto')?.value||'').split('\n').map(l=>l.trim()).filter(Boolean); }
+function _contarPaginas(){ const c=document.getElementById('paginasCont'); if(!c) return; const n=_lineasPaginas().length; c.textContent=n?`📄 ${n} línea${n>1?'s':''} escrita${n>1?'s':''}. La IA las repartirá entre las sesiones de la SdA.`:''; }
+function _guardarPaginas(){ try{ localStorage.setItem('sdaPaginasTexto',document.getElementById('paginasTexto').value); }catch(e){} _contarPaginas(); }
 function _cargarTesseract(){
     if(window.Tesseract) return Promise.resolve();
     return new Promise((ok,ko)=>{ const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'; sc.onload=ok; sc.onerror=()=>ko(new Error('No se pudo cargar el lector de fotos')); document.head.appendChild(sc); });
@@ -14817,37 +14857,67 @@ async function leerIndiceFotos(input){
         }
         ta.value=(ta.value.trim()?ta.value.trim()+'\n':'')+txt;
         _guardarIndice();
-        st.className='ind-estado ok'; st.textContent='✅ Listo. Revisa el texto y corrige lo que esté mal (sobre todo los números de página).';
+        st.className='ind-estado ok'; st.textContent='✅ Listo. Revisa el texto, sobre todo la lista de «Saberes relacionados». Lo que salga raro (texto que se transparenta de la otra cara) puedes borrarlo.';
     }catch(e){
-        st.className='ind-estado err'; st.textContent='⚠️ No se ha podido leer la foto. Escribe el índice a mano o adjunta la foto en la IA.';
+        st.className='ind-estado err'; st.textContent='⚠️ No se ha podido leer la foto. Escribe los saberes a mano o adjunta la foto en la IA.';
     }
     input.value='';
 }
 function _bloqueIndiceLibro(){
-    if(_modoSesiones!=='indice') return '';
-    const t=(document.getElementById('indiceTexto')?.value||'').trim();
-    const cuerpo=t?`"""\n${t}\n"""`:'⚠️ El índice va en la FOTO que adjunto a este mensaje. Léela con atención (apartados y números de página).';
-    return `
+    if(_modoSesiones==='paginas'){
+        const t=_lineasPaginas().join('\n');
+        const cuerpo=t?`"""\n${t}\n"""`:'⚠️ El tutor/a no ha escrito las páginas: deja «pág. ____» en blanco y reparte los saberes del libro.';
+        return `
 ═══════════════════════════════════════════════════════════
-📸 ÍNDICE DEL LIBRO DE TEXTO (lo aporta el tutor/a) — FUENTE PRINCIPAL DE LAS SESIONES
+📝 PÁGINAS DEL LIBRO Y LO QUE SE TRABAJA EN CADA UNA (lo escribe el tutor/a) — FUENTE PRINCIPAL DE LAS SESIONES
 ═══════════════════════════════════════════════════════════
 ${cuerpo}
-⚠️ REGLAS DEL ÍNDICE:
-   · El libro manda: las sesiones siguen el ORDEN del índice y cubren TODOS sus apartados, sin saltarse ninguno.
-   · Reparte las páginas de forma equilibrada entre las sesiones de la tabla (puede haber varias páginas por sesión).
-   · Cada apartado del libro se asocia a su saber básico de la Orden 30/05/2023 (código + concreción breve en lenguaje de aula).
-     Si el libro trabaja saberes que NO están en la lista precargada, inclúyelos igualmente: la SdA recoge TODO lo que hace el libro.
-   · Si el texto del índice tiene errores de lectura (letras o números raros), interprétalos con sentido común.
+⚠️ REGLAS DE LA LISTA DE PÁGINAS:
+   · Cada línea = una página o grupo de páginas + lo que se trabaja. El libro manda: respeta el ORDEN y usa TODAS las líneas.
+   · Reparte las líneas entre las sesiones de la tabla de sesiones en ese orden. Si hay más sesiones que líneas, da 2 sesiones
+     a las líneas más densas (o a las marcadas «(2 días)»); si hay menos, agrupa varias líneas en una sesión.
+   · En «Páginas del libro» escribe EXACTAMENTE la página de la línea. NO inventes páginas ni cambies los números.
+   · Las líneas sin número (repaso, evaluación, producto final) van sin página.
+   · Cada línea se asocia a su saber básico de la Orden 30/05/2023 (código + concreción breve en lenguaje de aula).
+     Si el libro trabaja saberes que NO están en la lista precargada, inclúyelos igualmente.
+   · NO inventes actividades ajenas al libro. Lectura y RP no llevan página: *(ampliar con Ágora)*.
+`;
+    }
+    if(_modoSesiones!=='indice') return '';
+    const t=(document.getElementById('indiceTexto')?.value||'').trim();
+    const cuerpo=t?`"""\n${t}\n"""`:'⚠️ La ficha de la unidad va en la FOTO que adjunto a este mensaje. Léela con atención (sobre todo «Saberes relacionados»).';
+    return `
+═══════════════════════════════════════════════════════════
+📸 FICHA DE LA UNIDAD DEL LIBRO (foto que aporta el tutor/a) — FUENTE PRINCIPAL DE LAS SESIONES
+═══════════════════════════════════════════════════════════
+${cuerpo}
+⚠️ CÓMO ES LA FICHA: es la página de presentación de la unidad de la guía del libro, NO un índice. Suele traer:
+   «Situación de aprendizaje» (centro de interés), «Saberes relacionados», «Desarrollo de las competencias específicas»,
+   «Recursos» / «Recursos digitales» y «Temporalización». NO trae números de página.
+⚠️ REGLAS DE LA FICHA:
+   · «Saberes relacionados» manda: las sesiones siguen ese ORDEN y cubren TODOS los saberes de la lista, sin saltarse ninguno.
+   · Reparte las sesiones según la carga de cada saber (p. ej. cada letra o grupo de letras necesita más sesiones que una
+     presentación oral). Las últimas sesiones son siempre para el producto final.
+   · Páginas: la ficha no las trae. En «Páginas del libro» escribe SIEMPRE «pág. ____» para que el maestro la rellene a mano.
+     NUNCA inventes números de página.
+   · En «Apartado del libro» usa el nombre del saber relacionado de la ficha (breve).
+   · Cada saber relacionado se asocia a su saber básico de la Orden 30/05/2023 (código + concreción breve en lenguaje de aula).
+     Si la ficha trabaja saberes que NO están en la lista precargada, inclúyelos igualmente.
+   · «Desarrollo de las competencias específicas» → tradúcelo a las competencias específicas y criterios andaluces del apartado 4.0.
+   · «Situación de aprendizaje» → úsala en la justificación (2.3). «Recursos» y «Recursos digitales» → apartado 1.
+   · Si el texto tiene errores de lectura o frases sueltas que se transparentan de la otra cara de la hoja, ignóralas.
    · NO inventes actividades ajenas al libro. Lectura y RP no llevan página: *(ampliar con Ágora)*.
 `;
 }
 function _bloqueSesionesIndice(esLengua,esMat){
-    return `  d) Sesiones de esta actividad — SEGÚN EL ÍNDICE DEL LIBRO (lo ha elegido el tutor/a):
-     ⚠️ NO propongas actividades ajenas al libro. Cada sesión = las páginas y el apartado del índice que le tocan, en orden.
+    const fich=_modoSesiones==='indice';
+    return `  d) Sesiones de esta actividad — ${fich?'SEGÚN LA FICHA DE LA UNIDAD (saberes relacionados)':'SEGÚN LAS PÁGINAS QUE HA ESCRITO EL TUTOR/A'}:
+     ⚠️ NO propongas actividades ajenas al libro. Cada sesión = ${fich?'el saber relacionado de la ficha que le toca, en orden':'la página (o páginas) y lo que se trabaja según la lista, en orden'}.
      Genera SOLO esta tabla, con una fila por cada sesión de esta actividad y su fecha real de la tabla de sesiones:
      | Sesión | Fecha | Páginas del libro | Apartado del libro | Saber básico (concreción breve y código) | ✔ |
      | --- | --- | --- | --- | --- | :-: |
-     | Ses. [N] | [dd/mm/aa] | [pág. X–Y] | [título del apartado del índice] | [concreción (código)] | ☐ |
+     | Ses. [N] | [dd/mm/aa] | ${fich?'pág. ____':'[pág. de la lista]'} | [${fich?'saber relacionado de la ficha':'lo que se trabaja en esa página'}] | [concreción (código)] | ☐ |
+     · ${fich?'«Páginas del libro» SIEMPRE «pág. ____»: la rellena el maestro a mano.':'«Páginas del libro»: EXACTAMENTE la de la lista del tutor/a, sin inventar.'}
      · La columna ✔ va vacía (☐): el maestro la marca a mano cuando da esa parte del libro.
      · Si una sesión cierra la actividad o el producto final, puede no llevar página: escribe «Producto final» en Apartado.
      · En «Saber básico» usa lenguaje de aula (máx. 6 palabras) y el código entre paréntesis. Nunca solo siglas ni la palabra «contenido».
@@ -14981,7 +15051,7 @@ ${Object.entries(d.critsPorArea).flatMap(([area,cs])=>cs.map(c=>`     ───�
      [Una frase: qué hace el alumnado y qué produce en esta actividad]
      Saberes básicos: [códigos y bloques de la Orden 30/05/2023]
 
-${getModoSesiones()==='indice'?_bloqueSesionesIndice(esLengua,esMat):_modoNoIA()?_bloqueSesionesBoli(esLengua,esMat):`  d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión de esta actividad:
+${_modoLibro()?_bloqueSesionesIndice(esLengua,esMat):_modoNoIA()?_bloqueSesionesBoli(esLengua,esMat):`  d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión de esta actividad:
 
 ${(()=>{
   // Generate one session example per activity — the AI will replicate for all sessions
@@ -15077,7 +15147,7 @@ ${esInf?`• Real Decreto 95/2022 — ordenación y enseñanzas mínimas de la E
    Aun así, GENERA SIEMPRE LA SdA COMPLETA con todos sus apartados y todas las sesiones de la tabla, también en
    septiembre. NUNCA la dejes sin hacer, sin sesiones o reducida a «repaso». Si la SdA cae en septiembre, añade una
    sola línea en el apartado 1 indicando que el tutor puede dedicar las primeras sesiones a repaso y evaluación
-   inicial y retomar la SdA después. ${getModoSesiones()==='indice'?'Las páginas salen del índice del libro que se adjunta.':'La casilla «Pág. ______» va en blanco siempre: la rellena el maestro.'}
+   inicial y retomar la SdA después. ${getModoSesiones()==='indice'?'Las sesiones siguen la ficha de la unidad; la página la pone el maestro.':getModoSesiones()==='paginas'?'Las páginas salen de la lista que escribe el tutor/a.':'La casilla «Pág. ______» va en blanco siempre: la rellena el maestro.'}
    Ajústate SIEMPRE a las fechas y sesiones reales de la tabla de sesiones: no inventes ni elimines sesiones.
 ⚠️ SdA BREVE — REGLA PRIORITARIA: la SdA debe ser lo MÁS CORTA posible cumpliendo los 7 apartados.
    · Los apartados 1 y 2 caben juntos en UNA página A4; el 3, el 4, el 6 y el 7, en una página cada uno.
@@ -15416,7 +15486,7 @@ ${d.sesiones>3?'• Producto 4: [descripción del resultado final / presentació
     |---|---|
     [Solo las competencias específicas a las que pertenecen los criterios de esta SdA; una fila por competencia.]
 
-${getModoSesiones()==='indice'?`4.1 Concreción curricular por sesión (según el índice del libro):
+${_modoLibro()?`4.1 Concreción curricular por sesión (según el libro):
     | Sesión | Fecha | Páginas del libro | Saber básico (concreción breve y código) | Criterio/s | Evaluación |
     |---|---|---|---|---|---|
     [Una fila por sesión: las MISMAS páginas y el MISMO saber que en el apartado 5 d). En Evaluación escribe
@@ -15698,8 +15768,7 @@ ${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (el usuario t
    · No preguntes nada: entrega el documento terminado.`}
 ⚠️ NO preguntes nada. Genera la SdA completa directamente.
 ⚠️ BREVEDAD: respeta la regla de SdA breve indicada arriba. Mejor una tabla escueta que un párrafo.
-${getModoSesiones()==='indice'?`⚠️ LIBRO DE TEXTO — SEGÚN EL ÍNDICE: cada sesión lleva las páginas y el apartado del libro que le tocan, en el orden
-   del índice y sin saltarse ninguno. NO propongas actividades ajenas al libro. Lectura y RP: una línea con *(ampliar con Ágora)*.`:_modoNoIA()?`⚠️ LIBRO DE TEXTO — MODO BOLÍGRAFO: NO propongas actividades por sesión. En el apartado 5, cada actividad lleva
+${_modoLibro()?`⚠️ LIBRO DE TEXTO — ${getModoSesiones()==='indice'?'SEGÚN LA FICHA DE LA UNIDAD: cada sesión lleva el saber relacionado que le toca, en orden y sin saltarse\n   ninguno, con «pág. ____» en blanco':'SEGÚN LAS PÁGINAS DEL TUTOR/A: cada sesión lleva su página y lo que se trabaja, en el orden\n   de la lista y sin saltarse ninguna línea'}. NO propongas actividades ajenas al libro. Lectura y RP: una línea con *(ampliar con Ágora)*.`:_modoNoIA()?`⚠️ LIBRO DE TEXTO — MODO BOLÍGRAFO: NO propongas actividades por sesión. En el apartado 5, cada actividad lleva
    solo la tabla de sesiones con «Páginas del libro ______» y una casilla ☐ vacía por saber básico, para rellenar a mano.
    Lectura y RP: una línea con *(ampliar con Ágora)*.`:`⚠️ LIBRO DE TEXTO: en CADA sesión, la fila DESARROLLO lleva la propuesta de la app Y la casilla "Pág. ______"
    en blanco, indicando que ambas trabajan el mismo saber básico. Inicio, cierre, lectura y RP NO llevan página.`}
@@ -15710,7 +15779,7 @@ ESTRUCTURA OBLIGATORIA — 7 APARTADOS:
 ✅ 3 — DESCRIPCIÓN DEL PRODUCTO FINAL (tabla con nº producto, nombre, descripción, sesiones)
 ✅ 4 — CONCRECIÓN CURRICULAR:
    · 4.0 Competencias específicas y descriptores operativos del Perfil de salida — tabla
-${getModoSesiones()==='indice'?'   · 4.1 Concreción por sesión — tabla Sesión / Fecha / Páginas del libro / Saber básico / Criterio(s) / Evaluación, según el índice':_modoNoIA()?'   · 4.1 Saberes y criterios de la SdA — tabla Saber básico / Criterio(s) / Se evalúa en (sin asignar saberes a sesiones)':'   · 4.1 Concreción curricular por sesión — tabla Sesión / Fecha / Saber básico / Pág. libro / Criterio(s) / Evaluación, una fila por sesión con su fecha exacta'}
+${_modoLibro()?'   · 4.1 Concreción por sesión — tabla Sesión / Fecha / Páginas del libro / Saber básico / Criterio(s) / Evaluación, según el libro':_modoNoIA()?'   · 4.1 Saberes y criterios de la SdA — tabla Saber básico / Criterio(s) / Se evalúa en (sin asignar saberes a sesiones)':'   · 4.1 Concreción curricular por sesión — tabla Sesión / Fecha / Saber básico / Pág. libro / Criterio(s) / Evaluación, una fila por sesión con su fecha exacta'}
    · 4.2 Vinculación ODS — tabla
    · 4.3 Transversalidad — tabla
    · 4.4 Saberes eventuales y efemérides — tabla con fecha/efeméride/integración
@@ -15719,7 +15788,7 @@ ${getModoSesiones()==='indice'?'   · 4.1 Concreción por sesión — tabla Sesi
    · a) Título de la actividad
    · b) Sesión inicio y fin con fecha exacta (dd/mm/aaaa)
    · c) Descripción y saberes básicos
-${getModoSesiones()==='indice'?'   · d) Tabla de sesiones según el índice del libro: Sesión / Fecha / Páginas / Apartado del libro / Saber básico / ✔ — SIN actividades ajenas al libro':_modoNoIA()?'   · d) Tabla de sesiones para rellenar a mano: Sesión / Fecha / Páginas del libro ______ / una columna ☐ por saber básico — SIN actividades por sesión':`   · d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión: SABER BÁSICO + ${esLengua?"LECTURA 30' + ":''}${esMat?"RP 30' (solo en las sesiones marcadas RP) + ":''}INICIO + DESARROLLO (con la casilla «Pág. ______») + CIERRE + TOTAL = ${d.duracion||60}' ✔ — los minutos deben sumar exactamente ese total`}
+${_modoLibro()?'   · d) Tabla de sesiones según el libro: Sesión / Fecha / Páginas / Apartado del libro / Saber básico / ✔ — SIN actividades ajenas al libro':_modoNoIA()?'   · d) Tabla de sesiones para rellenar a mano: Sesión / Fecha / Páginas del libro ______ / una columna ☐ por saber básico — SIN actividades por sesión':`   · d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión: SABER BÁSICO + ${esLengua?"LECTURA 30' + ":''}${esMat?"RP 30' (solo en las sesiones marcadas RP) + ":''}INICIO + DESARROLLO (con la casilla «Pág. ______») + CIERRE + TOTAL = ${d.duracion||60}' ✔ — los minutos deben sumar exactamente ese total`}
    · e) Contexto de aplicación
    · f) Vinculación curricular (criterio + cómo se evidencia + ODS + competencia siglo XXI)
    · g) Evaluación intermedia (tabla código/criterio/instrumento/evidencia del alumnado)
