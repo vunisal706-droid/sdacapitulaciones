@@ -368,6 +368,25 @@
         .ex-atras,.ex-sig{font:inherit;font-weight:800;font-size:1.05rem;border-radius:14px;padding:.8rem 1.3rem;cursor:pointer;border:none}
         .ex-atras{background:#f3f4f6;color:#374151}.ex-sig{background:#f97316;color:#fff;margin-left:auto}
         .ex-sig.fin{background:#16a34a}
+        .p8-lista{margin:.3rem 0 .8rem 1.2rem;padding:0;font-size:.98rem;line-height:1.55;color:#374151}.p8-lista li{margin-bottom:.25rem}
+        .folio-box{margin-top:1rem;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:14px;padding:.8rem .95rem}
+        .folio-t{font-weight:800;color:#1e40af;font-size:1.05rem}.folio-d{font-size:.9rem;color:#374151;margin:.2rem 0 .6rem}
+        .folio-btns{display:flex;flex-wrap:wrap;gap:.5rem}
+        .folio-btns button{font:inherit;font-weight:800;font-size:.95rem;border:none;border-radius:12px;padding:.65rem 1rem;background:#2563eb;color:#fff;cursor:pointer;min-height:44px}
+        .folio-btns button:last-child{background:#fff;color:#1d4ed8;border:2px solid #2563eb}
+        .exc-box:empty{display:none}
+        .exc-box{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:14px;padding:.8rem .95rem;margin:.9rem 0}
+        .exc-t{font-weight:800;color:#166534;font-size:1rem}
+        .exc-d{font-size:.88rem;color:#374151;margin:.2rem 0 .55rem}
+        .exc-lista{display:grid;gap:.35rem;margin-bottom:.55rem}
+        .exc-it{display:flex;align-items:center;gap:.5rem;background:#fff;border:1px solid #dcfce7;border-radius:10px;padding:.45rem .65rem;font-size:.92rem}
+        .exc-it b{color:#15803d;min-width:78px}.exc-it span{flex:1}.exc-it em{font-style:normal;font-size:.78rem;color:#6b7280}
+        .exc-it button{border:none;background:#fee2e2;color:#b91c1c;border-radius:8px;padding:.25rem .55rem;cursor:pointer;font-weight:700}
+        .exc-add{display:grid;grid-template-columns:auto 1fr auto auto;gap:.45rem;align-items:center}
+        @media (max-width:600px){.exc-add{grid-template-columns:1fr 1fr}}
+        .exc-add input,.exc-add select{font:inherit;font-size:.95rem;border:1.5px solid #d1d5db;border-radius:10px;padding:.5rem .6rem;min-height:44px}
+        .exc-add button{font:inherit;font-weight:800;border:none;border-radius:10px;padding:.55rem .9rem;background:#16a34a;color:#fff;cursor:pointer;min-height:44px}
+        .exc-no{font-size:.88rem;color:#166534;font-weight:600}
         .apps-curso-box{background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:14px;padding:.75rem .9rem;margin:.3rem 0 .9rem;font-size:.92rem;color:#065f46}
         .apps-curso-box:empty{display:none}
         .apps-curso-box b{font-size:1rem}
@@ -984,6 +1003,7 @@
     <div class="ex-pant" id="exP2">
       <h2>🏫 Tu clase</h2>
       <div id="exDias"></div>
+      <div class="exc-box" id="excBoxExpres"></div>
       <div class="ex-q">¿Hay alumnado con necesidades (ACNEAE)?</div>
       <div class="ex-chips" id="exAcn"></div>
       <label class="ex-sw"><input type="checkbox" id="exApps" checked> 🎮 Incluir los juegos del cole para este curso</label>
@@ -1812,6 +1832,7 @@
 
     <!-- ── Selectores de días por área (dinámico) ───────── -->
     <div id="diasAreasContainer"></div>
+    <div class="exc-box" id="excBoxPaso4"></div>
 
     <!-- ── Tabla de sesiones (preview) ──────────────────── -->
     <div id="tablaSesionesWrap" style="display:none;margin-top:.8rem">
@@ -2682,7 +2703,7 @@
 
     <!-- ══ PASOS FINALES NUMERADOS ══ -->
     <div class="p8-guia">
-        <div class="p8-head">✅ Ya casi está. Sigue estos 4 pasos:</div>
+        <div class="p8-head">✅ Ya casi está. Sigue estos 3 pasos:</div>
 
         <div class="p8">
             <div class="p8-n">1</div>
@@ -2702,8 +2723,13 @@
         <div class="p8">
             <div class="p8-n">2</div>
             <div class="p8-b">
-                <div class="p8-t">Pulsa el botón naranja</div>
-                <p class="p8-d">La app copia todo lo necesario y te abre la IA en otra pestaña.</p>
+                <div class="p8-t">Pulsa el botón naranja y pega en la IA</div>
+                <ol class="p8-lista">
+                    <li>Pulsa el botón: la app copia todo y abre la IA en otra pestaña.</li>
+                    <li>En la IA, haz clic en el cuadro donde se escribe y pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> (en el móvil: mantén el dedo pulsado → <strong>Pegar</strong>).</li>
+                    <li>Pulsa <strong>enviar</strong> y espera a que termine de escribir la SdA.</li>
+                </ol>
+                <p class="p8-d p8-foto" id="p8Foto" style="display:none">📸 Si has elegido la foto de la ficha y el cuadro de texto está vacío, <strong>adjunta también la foto</strong> de la ficha antes de enviar.</p>
                 <button class="btn-launch p8-big" onclick="generarYAbrir()">🚀 Generar y abrir la IA</button>
             </div>
         </div>
@@ -2711,18 +2737,18 @@
         <div class="p8">
             <div class="p8-n">3</div>
             <div class="p8-b">
-                <div class="p8-t">En la IA: pega y envía</div>
-                <p class="p8-d">Haz clic en el cuadro donde se escribe y pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> (en el móvil: mantén el dedo pulsado → <strong>Pegar</strong>). Después pulsa <strong>enviar</strong> y espera a que termine de escribir la SdA.</p>
-                <p class="p8-d p8-foto" id="p8Foto" style="display:none">📸 Si has elegido la foto de la ficha y el cuadro de texto está vacío, <strong>adjunta también la foto</strong> de la ficha antes de enviar.</p>
-            </div>
-        </div>
-
-        <div class="p8">
-            <div class="p8-n">4</div>
-            <div class="p8-b">
                 <div class="p8-t">¿Ya tienes la SdA? Haz las rúbricas</div>
                 <p class="p8-d">Cuando la IA termine, vuelve aquí y pulsa este botón.</p>
                 <button class="btn btn-purple p8-big2" onclick="irARubricas()">📐 Crear las rúbricas</button>
+            </div>
+        </div>
+
+        <div class="folio-box">
+            <div class="folio-t">🗓️ Extra: programación del mes en un folio</div>
+            <p class="folio-d">Calendario en A4 horizontal con lo que se trabaja cada día. Lo hace la app sola: no usa la IA ni alarga el prompt.</p>
+            <div class="folio-btns">
+                <button type="button" onclick="verFolioMes(false)">📄 Todo el mes en 1 folio</button>
+                <button type="button" onclick="verFolioMes(true)">📄📄 En 2 folios (quincenas)</button>
             </div>
         </div>
     </div>
@@ -2948,6 +2974,12 @@
                 <div><label style="display:block;font-size:.7rem;font-weight:700;color:#92400e;margin-bottom:.2rem">Motivo</label><input type="text" id="calNlTexto" placeholder="Ej: Fiesta local de Santa Fe"></div>
                 <button style="background:linear-gradient(135deg,#f59e0b,#d97706)" onclick="calAddDia('locales')">➕ Añadir</button>
             </div>
+        </div>
+
+        <div class="cal-sec" style="background:#f0fdf4;border-color:rgba(22,163,74,.3)">
+            <h4 style="color:#15803d">🚌 Excursiones y actividades sin clase</h4>
+            <p style="font-size:.74rem;color:#166534;margin:-.3rem 0 .6rem">Son días lectivos, pero ese curso no tiene sesión normal. La app los quita de la tabla de sesiones de ese curso.</p>
+            <div id="excBoxCal"></div>
         </div>
 
         <button class="btn-json-close" style="width:100%;margin-top:.4rem" onclick="cerrarCalendario()">Cerrar</button>
@@ -13843,7 +13875,11 @@ const CAL_SEMILLA = {
                 { d:'2027-03-22', h:'2027-03-28', t:'Vacaciones de Semana Santa' },
                 { d:'2027-05-28', t:'Día no lectivo provincial' }
             ],
-            locales: []
+            locales: [
+                { d:'2027-04-19', t:'Día de libre disposición (Santa Fe)' },
+                { d:'2027-05-03', t:'Día de libre disposición (Santa Fe)' }
+            ],
+            excursiones: []
         }
     }
 };
@@ -13888,8 +13924,18 @@ function _calActivo(){
 }
 
 // Recalcula el set de días no lectivos y los días lectivos por mes
+function _calMigrar(c){
+    if(!c) return;
+    if(!Array.isArray(c.excursiones)) c.excursiones=[];
+    if(!Array.isArray(c.locales)) c.locales=[];
+    if((CALENDARIOS.activo==='2026-2027'||String(c.inicio||'').startsWith('2026-09')) && !c._ldSantaFe){
+        ['2027-04-19','2027-05-03'].forEach(d=>{ if(!c.locales.some(f=>f.d===d)) c.locales.push({d,t:'Día de libre disposición (Santa Fe)'}); });
+        c._ldSantaFe=true; _calGuardar();
+    }
+}
 function aplicarCalendarioActivo(){
     CURSO_ESCOLAR = _calActivo();
+    _calMigrar(CURSO_ESCOLAR);
     FESTIVOS_ACTIVOS = new Set();
     [...(CURSO_ESCOLAR.festivos||[]), ...(CURSO_ESCOLAR.locales||[])].forEach(f=>{
         if(!f || !f.d) return;
@@ -13965,6 +14011,7 @@ function renderCalendario(){
     // Listas
     _calRenderLista('festivos','calListaFest','#4f46e5');
     _calRenderLista('locales','calListaLoc','#b45309');
+    try{ renderExcursiones('excBoxCal',true); }catch(e){}
     // KPIs
     const total = aplicarCalendarioActivo();
     const kpis = document.getElementById('calKpis');
@@ -14935,6 +14982,159 @@ function _fmtUI(){ /* el estilo del seleccionado lo aplica el CSS con input:chec
 
 
 
+
+
+// ══ PROGRAMACIÓN MENSUAL EN UN FOLIO (A4 horizontal) ══════════════════
+const FOLIO_EFEM={'10-02':'Día de la No Violencia','10-05':'Día de los Docentes','10-16':'Día de la Alimentación','10-17':'Erradicación de la Pobreza','11-20':'Derechos de la Infancia','11-25':'Contra la Violencia de Género','12-01':'Día del SIDA','12-03':'Personas con Discapacidad','12-10':'Derechos Humanos','01-30':'Día de la Paz','02-04':'Día contra el Cáncer','03-08':'Día de la Mujer','03-22':'Día del Agua','04-22':'Día de la Tierra','05-17':'Contra la LGTBIfobia','06-05':'Día del Medio Ambiente'};
+function _folioEsc(t){ return String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function _folioLineas(){
+    return _lineasPaginas().map(l=>{
+        const m=l.match(/\((\d+)\s*d[ií]as?\)/i), w=m?Math.max(1,+m[1]):1;
+        const txt=l.replace(/\(\d+\s*d[ií]as?\)/i,'').trim();
+        const mm=txt.match(/^(p[áa]g\.?\s*)?([\d]+(\s*[-–y,]\s*\d+)*)\s*[-–:·.]\s*(.+)$/i);
+        return mm?{pag:mm[2].replace(/\s/g,''),txt:mm[4].trim(),w}:{pag:'',txt,w};
+    });
+}
+// Reparte las líneas de páginas entre las sesiones, en orden
+function _folioRepartir(lin,n){
+    const out=Array.from({length:n},()=>[]);
+    if(!lin.length||!n) return out;
+    if(n<lin.length){ lin.forEach((l,i)=>out[Math.min(n-1,Math.floor(i*n/lin.length))].push({...l})); return out; }
+    const W=lin.reduce((a,l)=>a+l.w,0); let cnt=lin.map(l=>Math.max(1,Math.floor(l.w*n/W)));
+    let sum=cnt.reduce((a,b)=>a+b,0), i=0;
+    const ord=lin.map((l,j)=>j).sort((a,b)=>lin[b].w-lin[a].w||a-b);
+    while(sum<n){ cnt[ord[i%ord.length]]++; sum++; i++; }
+    while(sum>n){ const j=cnt.indexOf(Math.max(...cnt)); cnt[j]--; sum--; }
+    let k=0; lin.forEach((l,li)=>{ for(let r=0;r<cnt[li];r++){ out[k++].push({...l,parte:cnt[li]>1?`${r+1}/${cnt[li]}`:''}); } });
+    return out;
+}
+function _folioNoLectivo(iso){
+    const c=_calActivo(); let r='';
+    [...(c.festivos||[]),...(c.locales||[])].forEach(f=>{ if(!f||!f.d) return; const h=f.h||f.d; if(iso>=f.d&&iso<=h) r=f.t||'No lectivo'; });
+    return r;
+}
+function verFolioMes(quincenas){
+    try{ generarTablaSesiones(); }catch(e){}
+    const ini=document.getElementById('fechaInicio').value, fin=document.getElementById('fechaFin').value;
+    if(!ini||!fin||!sesionesData.length){ showToast('⚠️ Primero pon las fechas y los días de clase'); return; }
+    const d=recopilarDatos();
+    const reparto=_folioRepartir(_folioLineas(),sesionesData.length);
+    const porFecha={}; sesionesData.forEach((s,i)=>{ porFecha[_calIso(s.fecha)]={s,items:reparto[i]}; });
+    const cu=_cursoActualExc(), exc={}; _excLista().forEach(e=>{ if(_excAfecta(e,cu)) exc[e.d]=e.t; });
+    const areasTxt=(d.areas||[]).map(a=>/matem/i.test(a)?'Matemáticas':/castellana/i.test(a)?'Lengua':a).join(' + ');
+    const titulo=d.titSda||'Situación de aprendizaje', producto=document.getElementById('santProductoTexto')?.value||'';
+    let mesTxt=_calFecha(ini).toLocaleDateString('es-ES',{month:'long',year:'numeric'}); mesTxt=mesTxt.charAt(0).toUpperCase()+mesTxt.slice(1);
+    // Semanas (lunes a viernes)
+    const semanas=[]; let cur=_calFecha(ini); cur.setDate(cur.getDate()-((cur.getDay()+6)%7));
+    const finD=_calFecha(fin);
+    while(cur<=finD){ const sem=[]; for(let k=0;k<5;k++){ const x=new Date(cur); x.setDate(cur.getDate()+k); sem.push(x); } semanas.push(sem); cur.setDate(cur.getDate()+7); }
+    const celda=f=>{
+        const iso=_calIso(f), fuera=iso<ini||iso>fin, num=f.getDate();
+        const ef=FOLIO_EFEM[iso.slice(5)];
+        const efH=ef?`<div class="ef">🎗️ ${_folioEsc(ef)}</div>`:'';
+        if(fuera) return `<td class="fuera"><div class="dn">${num}</div></td>`;
+        const nl=_folioNoLectivo(iso); if(nl) return `<td class="nolec"><div class="dn">${num}</div><div class="motivo">🚫 ${_folioEsc(nl)}</div>${efH}</td>`;
+        if(exc[iso]) return `<td class="exc"><div class="dn">${num}</div><div class="motivo">🚌 ${_folioEsc(exc[iso])}</div>${efH}</td>`;
+        const x=porFecha[iso]; if(!x) return `<td class="libre"><div class="dn">${num}</div><div class="sin">Sin sesión</div>${efH}</td>`;
+        const t=x.s.tipo, ic=(t==='lectura'||t==='lectura-rp'?'<span class="tg l">📖 Lectura 30′</span>':'')+(t==='rp'||t==='lectura-rp'?'<span class="tg r">🧩 RP 30′</span>':'');
+        const it=x.items.length?x.items.map(i=>`<div class="pg">${i.pag?'pág. '+_folioEsc(i.pag):''}${i.parte?` <em>(${i.parte})</em>`:''}</div><div class="tx">${_folioEsc(i.txt)}</div>`).join(''):`<div class="pg">pág. ______</div><div class="tx linea"></div>`;
+        return `<td><div class="cab"><span class="dn">${num}</span><span class="sn">Ses. ${x.s.num}</span><span class="ck">☐</span></div>${it}<div class="tgs">${ic}</div>${efH}</td>`;
+    };
+    const hoja=(sems,sub)=>`<section class="hoja">
+      <header><div><div class="cole">CEIP Capitulaciones de Santa Fe · ${_folioEsc(d.curso||'')} Primaria · ${_folioEsc(areasTxt)}</div>
+      <h1>${_folioEsc(titulo)}</h1></div><div class="mes">${_folioEsc(mesTxt)}${sub?`<br><small>${sub}</small>`:''}</div></header>
+      ${producto?`<div class="prod">🎯 <b>Producto final:</b> ${_folioEsc(producto)}</div>`:''}
+      <table><thead><tr><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th></tr></thead>
+      <tbody>${sems.map(w=>`<tr>${w.map(celda).join('')}</tr>`).join('')}</tbody></table>
+      <footer>☐ Marca la sesión cuando la des · 📖 Lectura planificada · 🧩 Resolución de problemas · 🚫 No lectivo · 🚌 Excursión · 🎗️ Efeméride · ${sesionesData.length} sesiones</footer></section>`;
+    let cuerpo;
+    if(quincenas){
+        const q1=semanas.filter(w=>_calIso(w[0])<=ini.slice(0,8)+'14'), q2=semanas.filter(w=>_calIso(w[0])>ini.slice(0,8)+'14');
+        cuerpo=hoja(q1.length?q1:semanas.slice(0,Math.ceil(semanas.length/2)),'1.ª quincena')+hoja(q2.length?q2:semanas.slice(Math.ceil(semanas.length/2)),'2.ª quincena');
+    } else cuerpo=hoja(semanas,'');
+    const filas=quincenas?3:semanas.length;
+    const html=`<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programación ${_folioEsc(mesTxt)}</title><style>
+    @page{size:A4 landscape;margin:8mm}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#1f2937;background:#f3f4f6}
+    .bar{position:sticky;top:0;display:flex;gap:.6rem;align-items:center;padding:.7rem 1rem;background:#fff;border-bottom:1px solid #e5e7eb}
+    .bar button{font:inherit;font-weight:700;font-size:1rem;border:none;border-radius:10px;padding:.6rem 1.1rem;background:#2563eb;color:#fff;cursor:pointer}
+    .bar span{color:#4b5563;font-size:.9rem}
+    .hoja{width:281mm;height:190mm;margin:10px auto;background:#fff;padding:5mm;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(0,0,0,.1);page-break-after:always;break-after:page}
+    .hoja:last-child{page-break-after:auto;break-after:auto}
+    header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #1e3a8a;padding-bottom:2mm}
+    .cole{font-size:9pt;color:#4b5563}h1{margin:1mm 0 0;font-size:15pt;color:#1e3a8a}
+    .mes{font-size:15pt;font-weight:800;color:#1e3a8a;text-align:right}.mes small{font-size:10pt;color:#6b7280}
+    .prod{font-size:9.5pt;margin:2mm 0;background:#fff7ed;border-radius:2mm;padding:1.5mm 3mm}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;flex:1}
+    th{background:#dbeafe;color:#1e3a8a;font-size:10pt;padding:1.5mm;border:1px solid #93c5fd}
+    td{border:1px solid #cbd5e1;vertical-align:top;padding:1.2mm 1.6mm;height:calc((190mm - 54mm)/${filas});overflow:hidden;font-size:8.5pt}
+    .cab{display:flex;align-items:center;gap:1.5mm}.dn{font-weight:800;font-size:11pt;color:#1e3a8a}.sn{font-size:8pt;font-weight:700;background:#eef2ff;border-radius:1.5mm;padding:.3mm 1.2mm}.ck{margin-left:auto;font-size:11pt}
+    .pg{font-weight:700;color:#b45309;margin-top:.8mm}.pg em{font-weight:400;color:#6b7280}.tx{line-height:1.25}
+    .linea{border-bottom:1px solid #9ca3af;height:4mm}
+    .tgs{margin-top:.8mm}.tg{display:inline-block;font-size:7pt;border-radius:1.5mm;padding:.2mm 1mm;margin:.3mm .6mm 0 0}.tg.l{background:#dcfce7;color:#166534}.tg.r{background:#dbeafe;color:#1e40af}
+    .ef{margin-top:.8mm;font-size:7.5pt;color:#9d174d}
+    .nolec{background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 2mm,#fff 2mm,#fff 4mm)}.exc{background:#f0fdf4}
+    .motivo{font-weight:700;margin-top:1mm;color:#374151}.fuera{background:#fafafa;color:#d1d5db}.fuera .dn{color:#d1d5db}.libre .sin{color:#9ca3af;margin-top:1mm}
+    footer{font-size:7.5pt;color:#6b7280;margin-top:1.5mm}
+    @media print{body{background:#fff}.bar{display:none}.hoja{margin:0;box-shadow:none;width:auto;height:190mm;padding:2mm}}
+    </style></head><body><div class="bar"><button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button><span>Se imprime en A4 horizontal.</span></div>${cuerpo}</body></html>`;
+    const w=window.open('','_blank'); if(!w){ showToast('⚠️ Permite las ventanas emergentes para ver el folio'); return; }
+    w.document.open(); w.document.write(html); w.document.close();
+}
+// ══ EXCURSIONES DEL CENTRO (se guardan en el calendario escolar) ══════
+function _cursoActualExc(){
+    const et=(document.getElementById('etapa')?.value||'').toLowerCase();
+    if(et.includes('infantil')) return 'Inf';
+    const n=parseInt(document.getElementById('curso')?.value||'')||parseInt(document.getElementById('santCurso')?.value||'');
+    return isNaN(n)?'':String(n);
+}
+function _excLista(){ const c=_calActivo(); if(!Array.isArray(c.excursiones)) c.excursiones=[]; return c.excursiones; }
+function _excAfecta(e,curso){ return !e.cursos||!e.cursos.length||e.cursos.includes('todos')||(curso&&e.cursos.includes(curso)); }
+function _esExcursion(fecha){
+    const iso=(fecha instanceof Date)?_calIso(fecha):fecha, cu=_cursoActualExc();
+    return _excLista().some(e=>e.d===iso&&_excAfecta(e,cu));
+}
+function _excursionesEnRango(){
+    const i=document.getElementById('fechaInicio')?.value, f=document.getElementById('fechaFin')?.value, cu=_cursoActualExc();
+    return _excLista().filter(e=>(!i||e.d>=i)&&(!f||e.d<=f)&&_excAfecta(e,cu)).sort((a,b)=>a.d.localeCompare(b.d));
+}
+function _excFechaCorta(iso){ const [y,m,d]=iso.split('-'); return `${d}/${m}`; }
+function _excNomCursos(e){ if(!e.cursos||!e.cursos.length||e.cursos.includes('todos')) return 'Todo el cole'; return e.cursos.map(c=>c==='Inf'?'Infantil':c+'.º').join(', '); }
+function renderExcursiones(id,todas){
+    const box=document.getElementById(id); if(!box) return;
+    const i=document.getElementById('fechaInicio')?.value, f=document.getElementById('fechaFin')?.value, cu=_cursoActualExc();
+    if(!todas && (!i||!f)){ box.innerHTML=''; return; }
+    const lista=todas?_excLista().slice().sort((a,b)=>a.d.localeCompare(b.d)):_excursionesEnRango();
+    const mes=i?_calFecha(i).toLocaleDateString('es-ES',{month:'long'}):'';
+    const opts=`<option value="${cu||'todos'}">${cu?(cu==='Inf'?'Solo Infantil':'Solo '+cu+'.º'):'Todo el cole'}</option>${cu?'<option value="todos">Todo el cole</option>':''}`;
+    box.innerHTML=`${todas?'':`<div class="exc-t">🚌 ¿Hay alguna excursión o actividad sin clase en ${mes}?</div>
+        <div class="exc-d">Esos días no tendrán sesión. Se guardan en el calendario del centro y sirven para todas las SdA.</div>`}
+        ${lista.length?`<div class="exc-lista">${lista.map(e=>`<div class="exc-it"><b>${_excFechaCorta(e.d)}</b><span>${(e.t||'Excursión').replace(/</g,'&lt;')}</span><em>${_excNomCursos(e)}</em><button type="button" onclick="borrarExcursion('${e.id}')" aria-label="Quitar">✕</button></div>`).join('')}</div>`:(todas?'<div class="exc-no">No hay excursiones guardadas.</div>':'<div class="exc-no">✔ Ninguna por ahora. Si surge alguna, añádela aquí.</div>')}
+        <div class="exc-add">
+          <input type="date" id="${id}_f" ${!todas&&i?`min="${i}" max="${f}"`:''} aria-label="Fecha">
+          <input type="text" id="${id}_t" placeholder="Ej: Excursión a la granja" aria-label="Motivo">
+          <select id="${id}_c" aria-label="Para quién">${opts}</select>
+          <button type="button" onclick="addExcursion('${id}',${todas?'true':'false'})">➕ Añadir</button>
+        </div>`;
+}
+function _excRefrescar(){
+    ['excBoxPaso4','excBoxExpres'].forEach(id=>renderExcursiones(id,false)); renderExcursiones('excBoxCal',true);
+    try{ generarTablaSesiones(); }catch(e){}
+}
+function addExcursion(id){
+    const d=document.getElementById(id+'_f').value, t=document.getElementById(id+'_t').value.trim()||'Excursión', c=document.getElementById(id+'_c').value;
+    if(!d){ showToast('⚠️ Pon la fecha de la excursión'); return; }
+    const dow=_calFecha(d).getDay(); if(dow===0||dow===6){ showToast('⚠️ Esa fecha es fin de semana'); return; }
+    _excLista().push({id:'ex'+Date.now(),d,t,cursos:[c]}); _calGuardar(); _excRefrescar();
+    showToast(`🚌 Añadida: ${_excFechaCorta(d)} ${t}. Ese día no habrá sesión.`);
+}
+function borrarExcursion(xid){
+    const l=_excLista(), i=l.findIndex(e=>e.id===xid); if(i>=0){ l.splice(i,1); _calGuardar(); _excRefrescar(); }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    ['fechaInicio','fechaFin','curso'].forEach(id=>document.getElementById(id)?.addEventListener('change',()=>['excBoxPaso4','excBoxExpres'].forEach(x=>renderExcursiones(x,false))));
+    if(typeof irAPaso==='function'){ const _ir2=irAPaso; irAPaso=function(n){ const r=_ir2.apply(this,arguments); if(n===4) setTimeout(()=>renderExcursiones('excBoxPaso4',false),120); return r; }; }
+});
 // ══ MODO EXPRÉS: 3 pantallas que rellenan el Modo Capitulaciones ══════
 const EX={p:1,mod:'',curso:'',sda:null,trim:'',dias:{},acn:new Set(['Ninguna'])};
 const EX_AREAS={len:['Lengua Castellana y Literatura'],mat:['Matemáticas'],ambas:['Lengua Castellana y Literatura','Matemáticas']};
@@ -15011,7 +15211,7 @@ function exIr(p){
     document.getElementById('exAtras').style.visibility=p===1?'hidden':'visible';
     const sig=document.getElementById('exSig'); sig.textContent=p===3?'🚀 Generar y abrir la IA':'Siguiente →'; sig.classList.toggle('fin',p===3);
     if(p===1){ _exSel('exMod',EX.mod); _exSel('exCurso',EX.curso); _exListaSda(); }
-    if(p===2) _exPintarDias();
+    if(p===2){ _exPintarDias(); renderExcursiones('excBoxExpres',false); }
     if(p===3) _exResumen();
     document.querySelector('.ex-box').scrollIntoView({block:'start'});
 }
@@ -15315,6 +15515,7 @@ function construirPrompt(d){
             tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | ${s.nota||''} |\n`;
         });
         tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración: ${d.duracion} min/sesión\n`;
+        { const ex=_excursionesEnRango(); if(ex.length) tablaT+=`🚌 Excursiones/actividades sin clase en estas fechas (ya descontadas, no hay sesión): ${ex.map(e=>_excFechaCorta(e.d)+' '+e.t).join(' · ')}. Si encaja, relaciónalas con la SdA en 4.4.\n`; }
         tablaT+=`${_modoNoIA()?'⚠️ EVALUACIÓN — LA DECIDES TÚ: evalúa cada criterio al CERRAR la actividad que lo trabaja (última sesión de esa actividad). No asignes criterios a sesiones sueltas. Refleja las fechas en la tabla del punto 4.1.':'⚠️ EVALUACIÓN — LA DECIDES TÚ: Una vez asignados los criterios a cada sesión, marca la evaluación en la ÚLTIMA sesión que trabaje cada criterio (o grupo de criterios relacionados). No evalúes en cada sesión — solo cuando se cierra un criterio. Refleja las fechas de evaluación en la tabla del punto 4.1.'}\n`;
     }
 
@@ -16452,7 +16653,7 @@ function generarTablaSesiones(){
         const dow=cur.getDay();
         const diaNum=dow===0?7:dow;
         // Saltar festivos y vacaciones del calendario escolar 2026/27 de Granada
-        if(diasSesiones.includes(diaNum) && esNoLectivo(cur)){ nSaltados++; cur.setDate(cur.getDate()+1); continue; }
+        if(diasSesiones.includes(diaNum) && (esNoLectivo(cur) || _esExcursion(cur))){ nSaltados++; cur.setDate(cur.getDate()+1); continue; }
         if(diasSesiones.includes(diaNum)){
             // Determine session type
             const esL  = esLenguaArea && (diasPorArea[_areaKey('Lengua Castellana y Literatura')]?.dias||[]).includes(diaNum);
