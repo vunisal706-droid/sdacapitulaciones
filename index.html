@@ -328,6 +328,46 @@
         .dua-ayuda{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;margin:.2rem 0 .4rem;font-size:.85rem;color:#4b5563}
         .dua-sug{font:inherit;font-weight:700;font-size:.92rem;color:#fff;background:#4f46e5;border:none;border-radius:10px;padding:.5rem .9rem;cursor:pointer}
         .dua-sug:hover{background:#4338ca}
+        .ex-lanzar{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;font:inherit;cursor:pointer;margin:.3rem 0 .8rem;padding:.9rem 1.1rem;border:none;border-radius:16px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;box-shadow:0 6px 18px rgba(249,115,22,.3)}
+        .ex-lanzar:hover{filter:brightness(1.05)}
+        .ex-l-ico{font-size:2rem}.ex-l-t{display:block;font-size:1.2rem;font-weight:800}.ex-l-s{display:block;font-size:.92rem;opacity:.95}
+        .ex-l-go{margin-left:auto;background:#fff;color:#c2410c;font-weight:800;border-radius:12px;padding:.5rem .9rem;white-space:nowrap}
+        .ex-ov{display:none;position:fixed;inset:0;z-index:9999;background:rgba(30,41,59,.45);padding:1rem;overflow:auto}
+        .ex-ov.show{display:flex;align-items:flex-start;justify-content:center}
+        .ex-box{background:#fff;border-radius:20px;width:100%;max-width:760px;margin:auto;padding:1.2rem 1.4rem;box-shadow:0 20px 50px rgba(0,0,0,.2)}
+        .ex-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+        .ex-dots{display:flex;align-items:center;gap:.3rem}.ex-dots i{width:28px;height:3px;background:#e5e7eb;border-radius:2px}
+        .ex-dots span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:#f3f4f6;color:#6b7280}
+        .ex-dots span.on{background:#f97316;color:#fff}.ex-dots span.ok{background:#fed7aa;color:#9a3412}
+        .ex-x{border:none;background:#f3f4f6;border-radius:50%;width:40px;height:40px;font-size:1.1rem;cursor:pointer}
+        .ex-pant{display:none}.ex-pant.on{display:block}
+        .ex-pant h2{font-size:1.45rem;color:#1f2937;margin:.3rem 0 .6rem}
+        .ex-q{font-weight:800;color:#374151;margin:1rem 0 .45rem;font-size:1.02rem}.ex-q small{font-weight:500;color:#6b7280}
+        .ex-opts{display:grid;gap:.5rem}.ex-3{grid-template-columns:repeat(3,1fr)}.ex-6{grid-template-columns:repeat(6,1fr)}
+        @media (max-width:600px){.ex-6{grid-template-columns:repeat(3,1fr)}}
+        .ex-opts button,.ex-lista button,.ex-dia,.ex-chip{font:inherit;cursor:pointer;border:2px solid #e5e7eb;background:#fff;border-radius:14px;color:#374151}
+        .ex-opts button{padding:.8rem .4rem;font-size:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.2rem;min-height:56px}
+        .ex-opts button b{font-size:1rem}
+        .ex-opts button.sel,.ex-lista button.sel,.ex-dia.sel,.ex-chip.sel{border-color:#f97316;background:#fff7ed;color:#9a3412}
+        .ex-lista{display:grid;gap:.45rem}.ex-lista button{text-align:left;padding:.7rem .9rem;font-size:.98rem}
+        .ex-lista button b{display:inline-block;min-width:105px;color:#c2410c}
+        .ex-vacio{color:#6b7280;font-size:.95rem}
+        .ex-area{background:#f9fafb;border-radius:14px;padding:.7rem .9rem;margin-top:.6rem}
+        .ex-area-t{font-weight:800;margin-bottom:.4rem}
+        .ex-dias{display:flex;gap:.4rem;flex-wrap:wrap}.ex-dia{width:52px;height:48px;font-weight:800;font-size:1rem}
+        .ex-dia.rp.sel{border-color:#2563eb;background:#eff6ff;color:#1d4ed8}
+        .ex-sub{font-size:.9rem;color:#4b5563;margin:.55rem 0 .3rem}
+        .ex-chips{display:flex;flex-wrap:wrap;gap:.4rem}.ex-chip{padding:.5rem .8rem;font-size:.92rem}
+        .ex-sw{display:flex;align-items:center;gap:.5rem;margin-top:1rem;font-weight:700;color:#374151;cursor:pointer}
+        .ex-sw input{width:22px;height:22px;accent-color:#f97316}
+        .ex-in{width:100%;font:inherit;font-size:1rem;border:1.5px solid #d1d5db;border-radius:12px;padding:.7rem .8rem;line-height:1.5}
+        .ex-in:focus{outline:none;border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.15)}
+        .ex-ayuda{font-size:.98rem;color:#374151;line-height:1.5;margin-bottom:.6rem}
+        .ex-resumen{margin-top:.7rem;background:#fff7ed;border-radius:12px;padding:.6rem .8rem;font-size:.92rem;color:#7c2d12;line-height:1.5}
+        .ex-foot{display:flex;justify-content:space-between;gap:.6rem;margin-top:1.2rem}
+        .ex-atras,.ex-sig{font:inherit;font-weight:800;font-size:1.05rem;border-radius:14px;padding:.8rem 1.3rem;cursor:pointer;border:none}
+        .ex-atras{background:#f3f4f6;color:#374151}.ex-sig{background:#f97316;color:#fff;margin-left:auto}
+        .ex-sig.fin{background:#16a34a}
         .apps-curso-box{background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:14px;padding:.75rem .9rem;margin:.3rem 0 .9rem;font-size:.92rem;color:#065f46}
         .apps-curso-box:empty{display:none}
         .apps-curso-box b{font-size:1rem}
@@ -918,10 +958,60 @@
     </div>
 </div>
 
+<!-- ══ MODO EXPRÉS ═══════════════════════════════════════════════════ -->
+<div id="exOverlay" class="ex-ov" role="dialog" aria-modal="true" aria-labelledby="exTitulo">
+  <div class="ex-box">
+    <div class="ex-head">
+      <div class="ex-dots"><span data-p="1">1</span><i></i><span data-p="2">2</span><i></i><span data-p="3">3</span></div>
+      <button type="button" class="ex-x" onclick="cerrarExpres()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="ex-pant" id="exP1">
+      <h2 id="exTitulo">⚡ ¿Qué SdA vas a hacer?</h2>
+      <div class="ex-q">Asignatura</div>
+      <div class="ex-opts ex-3" id="exMod">
+        <button type="button" data-v="len">📖<b>Lengua</b></button>
+        <button type="button" data-v="mat">📐<b>Matemáticas</b></button>
+        <button type="button" data-v="ambas">🔗<b>Las dos</b></button>
+      </div>
+      <div class="ex-q">Curso</div>
+      <div class="ex-opts ex-6" id="exCurso">
+        <button type="button" data-v="1"><b>1.º</b></button><button type="button" data-v="2"><b>2.º</b></button><button type="button" data-v="3"><b>3.º</b></button>
+        <button type="button" data-v="4"><b>4.º</b></button><button type="button" data-v="5"><b>5.º</b></button><button type="button" data-v="6"><b>6.º</b></button>
+      </div>
+      <div class="ex-q">Mes y SdA del libro</div>
+      <div class="ex-lista" id="exSda"><p class="ex-vacio">Elige antes la asignatura y el curso.</p></div>
+    </div>
+    <div class="ex-pant" id="exP2">
+      <h2>🏫 Tu clase</h2>
+      <div id="exDias"></div>
+      <div class="ex-q">¿Hay alumnado con necesidades (ACNEAE)?</div>
+      <div class="ex-chips" id="exAcn"></div>
+      <label class="ex-sw"><input type="checkbox" id="exApps" checked> 🎮 Incluir los juegos del cole para este curso</label>
+      <div class="ex-q">Producto final <small>(viene del libro; cámbialo si quieres)</small></div>
+      <input type="text" id="exProducto" class="ex-in">
+    </div>
+    <div class="ex-pant" id="exP3">
+      <h2>📝 ¿Qué se trabaja en cada página?</h2>
+      <p class="ex-ayuda">Una línea por página o grupo de páginas, en el orden del libro: <b>número - lo que se trabaja</b>. Si lo dejas vacío, las páginas saldrán en blanco para escribirlas a mano.</p>
+      <textarea id="exPaginas" rows="9" class="ex-in" placeholder="6-7 - Animación Los piratas en el Polo&#10;8 - Presentación personal&#10;10-11 - Las vocales&#10;12 - La letra p (2 días)&#10;Producto final - Normas de los piratas"></textarea>
+      <div class="ex-resumen" id="exResumen"></div>
+    </div>
+    <div class="ex-foot">
+      <button type="button" class="ex-atras" id="exAtras" onclick="exMover(-1)">← Atrás</button>
+      <button type="button" class="ex-sig" id="exSig" onclick="exMover(1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ SELECTOR MODO DE TRABAJO ══════════════════════════════════════ -->
 <div class="modo-wrap">
     <div class="modo-inner">
         <div class="modo-label">⚡ Modo de trabajo — selecciona cómo quieres generar la SdA</div>
+        <button type="button" class="ex-lanzar" onclick="abrirExpres()">
+            <span class="ex-l-ico">⚡</span>
+            <span><span class="ex-l-t">Modo exprés · 3 pasos</span><span class="ex-l-s">Curso, días y páginas del libro. La app rellena el resto.</span></span>
+            <span class="ex-l-go">Empezar →</span>
+        </button>
         <div class="modo-btns">
             <button class="modo-btn active-libre" id="modoBtnLibre" onclick="setModoTrabajo('libre')">
                 <span class="mb-icon">✍️</span>
@@ -14844,6 +14934,126 @@ ${fuente}${notaCorte}
 function _fmtUI(){ /* el estilo del seleccionado lo aplica el CSS con input:checked */ }
 
 
+
+// ══ MODO EXPRÉS: 3 pantallas que rellenan el Modo Capitulaciones ══════
+const EX={p:1,mod:'',curso:'',sda:null,trim:'',dias:{},acn:new Set(['Ninguna'])};
+const EX_AREAS={len:['Lengua Castellana y Literatura'],mat:['Matemáticas'],ambas:['Lengua Castellana y Literatura','Matemáticas']};
+const EX_MESES=['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+function abrirExpres(){
+    document.getElementById('exOverlay').classList.add('show'); document.body.style.overflow='hidden';
+    const pt=document.getElementById('paginasTexto'); if(pt) document.getElementById('exPaginas').value=pt.value;
+    exIr(1);
+}
+function cerrarExpres(){ document.getElementById('exOverlay').classList.remove('show'); document.body.style.overflow=''; }
+function _exSel(cont,v){ document.querySelectorAll('#'+cont+' button').forEach(b=>b.classList.toggle('sel',b.dataset.v===String(v))); }
+function _exListaSda(){
+    const box=document.getElementById('exSda');
+    if(!EX.mod||!EX.curso){ box.innerHTML='<p class="ex-vacio">Elige antes la asignatura y el curso.</p>'; return; }
+    const cur=SANTILLANA_MAP[EX.curso]||{}; let html='', lista=[];
+    ['1','2','3'].forEach(t=>(cur[t]?.sda||[]).forEach(s=>lista.push({t,s})));
+    if(!lista.length){ box.innerHTML='<p class="ex-vacio">Este curso aún no tiene SdA precargadas. Usa el Modo Capitulaciones o el Modo Libre.</p>'; return; }
+    if(!EX.sda){ const hoy=EX_MESES[new Date().getMonth()]; const f=lista.find(x=>String(x.s.mes).toUpperCase().includes(hoy)); if(f){EX.sda=f.s;EX.trim=f.t;} }
+    lista.forEach(({t,s})=>{
+        const tit=EX.mod==='mat'?(s.mat?.titulo||s.nombre):EX.mod==='len'?(s.len?.titulo||s.nombre):s.nombre;
+        const on=EX.sda&&EX.sda.num===s.num;
+        html+=`<button type="button" class="${on?'sel':''}" data-num="${s.num}" data-t="${t}"><b>${s.mes}</b> ${String(tit).replace(/</g,'&lt;')}</button>`;
+    });
+    box.innerHTML=html;
+    box.querySelectorAll('button').forEach(b=>b.onclick=()=>{ const t=b.dataset.t; EX.trim=t; EX.sda=(SANTILLANA_MAP[EX.curso][t].sda).find(s=>s.num===b.dataset.num); _exListaSda(); });
+}
+function _exPintarDias(){
+    const box=document.getElementById('exDias'), L=['','L','M','X','J','V']; let h='';
+    EX_AREAS[EX.mod].forEach(a=>{
+        const k=_areaKey(a), esMat=/matem/i.test(a);
+        if(!EX.dias[k]) EX.dias[k]={dias:[1,2,3,4,5],rpDias:esMat?[1,3,5]:[]};
+        const d=EX.dias[k];
+        h+=`<div class="ex-area"><div class="ex-area-t">${esMat?'📐':'📖'} ¿Qué días das ${esMat?'Matemáticas':'Lengua'}?</div><div class="ex-dias">`+
+          [1,2,3,4,5].map(n=>`<button type="button" class="ex-dia ${d.dias.includes(n)?'sel':''}" onclick="exDia('${k}',${n},false)">${L[n]}</button>`).join('')+`</div>`;
+        if(esMat) h+=`<div class="ex-sub">¿Qué días hacéis Resolución de Problemas? (mínimo 3)</div><div class="ex-dias">`+
+          [1,2,3,4,5].map(n=>`<button type="button" class="ex-dia rp ${d.rpDias.includes(n)?'sel':''}" ${d.dias.includes(n)?'':'disabled style="opacity:.3"'} onclick="exDia('${k}',${n},true)">${L[n]}</button>`).join('')+`</div>`;
+        h+=`</div>`;
+    });
+    box.innerHTML=h;
+    const acn=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb')).map(c=>c.value);
+    document.getElementById('exAcn').innerHTML=acn.map(v=>`<button type="button" class="ex-chip ${EX.acn.has(v)?'sel':''}" data-v="${v}">${v==='Ninguna'?'Ninguna':v}</button>`).join('');
+    document.querySelectorAll('#exAcn .ex-chip').forEach(b=>b.onclick=()=>{
+        const v=b.dataset.v;
+        if(v==='Ninguna'){ EX.acn=new Set(['Ninguna']); }
+        else { EX.acn.delete('Ninguna'); EX.acn.has(v)?EX.acn.delete(v):EX.acn.add(v); if(!EX.acn.size) EX.acn.add('Ninguna'); }
+        _exPintarDias();
+    });
+}
+function exDia(k,n,rp){
+    const d=EX.dias[k], arr=rp?d.rpDias:d.dias, i=arr.indexOf(n);
+    if(i>=0) arr.splice(i,1); else arr.push(n); arr.sort();
+    if(!rp) d.rpDias=d.rpDias.filter(x=>d.dias.includes(x));
+    _exPintarDias();
+}
+function _exAplicarLibro(){
+    setModoTrabajo('sant');
+    setSantModalidadPrimero(EX.mod);
+    const c=document.getElementById('santCurso'); c.value=EX.curso; onSantCursoChange();
+    const t=document.getElementById('santTrimestre'); t.value=EX.trim; onSantTrimestreChange();
+    const n=document.getElementById('santSdaNum'); n.value=EX.sda.num; onSantSdaNumChange();
+    _autoFechasSda(EX.sda,true);
+    const pr=document.getElementById('santProductoTexto'); document.getElementById('exProducto').value=pr?pr.value:'';
+}
+function _exResumen(){
+    const a=EX.mod==='len'?'Lengua':EX.mod==='mat'?'Matemáticas':'Lengua + Matemáticas';
+    const n=_lineasPaginas? (document.getElementById('exPaginas').value.split('\n').filter(l=>l.trim()).length):0;
+    document.getElementById('exResumen').innerHTML=`<b>Resumen:</b> ${a} · ${EX.curso}.º Primaria · ${EX.sda.mes} — ${EX.mod==='mat'?(EX.sda.mat?.titulo||EX.sda.nombre):EX.mod==='len'?(EX.sda.len?.titulo||EX.sda.nombre):EX.sda.nombre}<br>`+
+      `${n?`📄 ${n} línea${n>1?'s':''} de páginas.`:'📄 Sin páginas: saldrán «pág. ____» para escribir a mano.'} La IA elige las pautas DUA. Al pulsar, se copia el prompt y se abre la IA.`;
+}
+function exIr(p){
+    EX.p=p;
+    document.querySelectorAll('.ex-pant').forEach((e,i)=>e.classList.toggle('on',i+1===p));
+    document.querySelectorAll('.ex-dots span').forEach(s=>{ const n=+s.dataset.p; s.className=n===p?'on':(n<p?'ok':''); });
+    document.getElementById('exAtras').style.visibility=p===1?'hidden':'visible';
+    const sig=document.getElementById('exSig'); sig.textContent=p===3?'🚀 Generar y abrir la IA':'Siguiente →'; sig.classList.toggle('fin',p===3);
+    if(p===1){ _exSel('exMod',EX.mod); _exSel('exCurso',EX.curso); _exListaSda(); }
+    if(p===2) _exPintarDias();
+    if(p===3) _exResumen();
+    document.querySelector('.ex-box').scrollIntoView({block:'start'});
+}
+function exMover(dir){
+    if(dir<0) return exIr(EX.p-1);
+    if(EX.p===1){
+        if(!EX.mod||!EX.curso||!EX.sda){ showToast('⚠️ Elige asignatura, curso y SdA'); return; }
+        try{ _exAplicarLibro(); }catch(e){ console.error(e); showToast('⚠️ No se pudo cargar la SdA del libro'); return; }
+        return exIr(2);
+    }
+    if(EX.p===2){
+        for(const k in EX.dias){ if(!EX.dias[k].dias.length){ showToast('⚠️ Marca al menos un día de clase'); return; } }
+        return exIr(3);
+    }
+    exGenerar();
+}
+function exGenerar(){
+    // Días por área
+    EX_AREAS[EX.mod].forEach(a=>{ const k=_areaKey(a); diasPorArea[k]={dias:[...EX.dias[k].dias],rpDias:[...EX.dias[k].rpDias]}; });
+    // ACNEAE
+    const cbs=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb'));
+    cbs.forEach(cb=>{ const q=EX.acn.has(cb.value); if(cb.value!=='Ninguna'&&cb.checked!==q){ cb.checked=q; _onAcneaeChange(cb); } });
+    const nin=cbs.find(c=>c.value==='Ninguna'); if(nin&&EX.acn.has('Ninguna')&&!nin.checked){ nin.checked=true; _onAcneaeChange(nin); }
+    // Producto final
+    const pr=document.getElementById('santProductoTexto'); if(pr) pr.value=document.getElementById('exProducto').value;
+    // Páginas, DUA, apps
+    const pt=document.getElementById('paginasTexto'); if(pt){ pt.value=document.getElementById('exPaginas').value; _guardarPaginas(); }
+    setModoSesiones('paginas'); setDuaModo('ia');
+    document.querySelectorAll('.app-chip.selected').forEach(ch=>{ ch.classList.remove('selected'); ch.querySelector('input').checked=false; });
+    appsPorCurso(); if(document.getElementById('exApps').checked) marcarAppsRecomendadas();
+    try{ renderDiaSelectors(); }catch(e){}
+    try{ generarTablaSesiones(); }catch(e){}
+    cerrarExpres();
+    irAPaso(8);
+    setTimeout(()=>generarYAbrir(),250);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('#exMod button').forEach(b=>b.onclick=()=>{ if(EX.mod!==b.dataset.v){ EX.mod=b.dataset.v; EX.dias={}; } _exSel('exMod',EX.mod); _exListaSda(); });
+    document.querySelectorAll('#exCurso button').forEach(b=>b.onclick=()=>{ if(EX.curso!==b.dataset.v){ EX.curso=b.dataset.v; EX.sda=null; } _exSel('exCurso',EX.curso); _exListaSda(); });
+    document.getElementById('exPaginas').addEventListener('input',()=>{ if(EX.p===3) _exResumen(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('exOverlay').classList.contains('show')) cerrarExpres(); });
+});
 // ── APPS DEL CENTRO SEGÚN EL CURSO ───────────────────────────────────
 function _rangoApp(chip){
     const t=(chip.querySelector('.app-area-tag')?.textContent||'').split('·').pop().trim();
