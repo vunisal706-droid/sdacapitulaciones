@@ -318,6 +318,26 @@
         #indiceTexto{width:100%;font-size:1rem;font-family:inherit;border:1.5px solid #d1d5db;border-radius:12px;padding:.7rem .8rem;line-height:1.5}
         #indiceTexto:focus{outline:none;border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.15)}
         .ind-nota{font-size:.88rem;color:#6b7280;margin-top:.4rem}
+        .dua-modo{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.5rem 0 .7rem}
+        @media (max-width:700px){.dua-modo{grid-template-columns:1fr}.dua-grid{grid-template-columns:1fr!important}}
+        .dua-op{display:block;cursor:pointer}.dua-op input{position:absolute;opacity:0}
+        .dua-op span{display:block;border:2px solid #e5e7eb;border-radius:14px;padding:.7rem .9rem;background:#fff;height:100%}
+        .dua-op b{display:block;font-size:1.02rem;color:#1f2937}.dua-op em{display:block;font-style:normal;font-size:.88rem;color:#4b5563;margin-top:.2rem}
+        .dua-op input:checked + span{border-color:#4f46e5;background:#eef2ff;box-shadow:0 4px 14px rgba(79,70,229,.15)}
+        .dua-op input:focus-visible + span{outline:3px solid #a5b4fc}
+        .dua-ayuda{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .8rem;margin:.2rem 0 .4rem;font-size:.85rem;color:#4b5563}
+        .dua-sug{font:inherit;font-weight:700;font-size:.92rem;color:#fff;background:#4f46e5;border:none;border-radius:10px;padding:.5rem .9rem;cursor:pointer}
+        .dua-sug:hover{background:#4338ca}
+        .apps-curso-box{background:#ecfdf5;border:1.5px solid #a7f3d0;border-radius:14px;padding:.75rem .9rem;margin:.3rem 0 .9rem;font-size:.92rem;color:#065f46}
+        .apps-curso-box:empty{display:none}
+        .apps-curso-box b{font-size:1rem}
+        .apps-curso-box .acb-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.55rem}
+        .apps-curso-box button{font:inherit;font-weight:700;font-size:.88rem;border-radius:10px;padding:.45rem .85rem;cursor:pointer;border:1.5px solid #059669;background:#fff;color:#047857}
+        .apps-curso-box button.pri{background:#059669;color:#fff}
+        .app-chip.fuera-curso{display:none}
+        .apps-todas .app-chip.fuera-curso{display:flex;opacity:.5}
+        .app-chip .tu-curso{display:inline-block;margin-left:.3rem;font-size:.63rem;font-weight:800;color:#047857;background:#d1fae5;border-radius:8px;padding:.1rem .38rem}
+        .dua-grid label .dua-cod{display:inline-block;font-size:.72rem;font-weight:800;color:#6b7280;margin-right:.3rem}
         .modo-ses-opt.paginas input:checked + .modo-ses-card{border-color:#7c3aed;box-shadow:0 8px 22px rgba(124,58,237,.18)}
         .modo-ses-opt.paginas .ms-check{background:#7c3aed}
         .pag-panel{border-color:#ddd6fe}.pag-panel .ind-t{color:#5b21b6}
@@ -1911,6 +1931,7 @@
     <div class="fg">
         <label>🎮 Apps del CEIP Capitulaciones <span class="badge badge-green">Juegos propios del centro</span></label>
         <small style="margin-bottom:.7rem">Principalmente para actividades de <strong>refuerzo o ampliación</strong>. Selecciona las apps de vuestro portal que se usarán en esta SdA.</small>
+        <div id="appsCursoBox" class="apps-curso-box"></div>
 
         <div class="apps-section">
             <div class="apps-area-label">📐 Matemáticas</div>
@@ -2251,9 +2272,18 @@
 
     <div class="fg">
         <label>Principios DUA v3.0 <span class="badge badge-blue">Diseño Universal para el Aprendizaje</span></label>
-        <small style="margin-bottom:.6rem">Selecciona los que se aplicarán en esta SdA. La IA asignará a cada sesión: pauta + estrategia concreta + herramienta digital.</small>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.38rem;margin-top:.4rem">
-            <div style="background:#eff6ff;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#1e40af;display:block;margin-bottom:.3rem">🧠 REPRESENTACIÓN</strong>
+        <small style="margin-bottom:.6rem">Son formas de que <strong>todo el grupo</strong> pueda aprender. Si no sabes cuáles elegir, deja que las elija la IA.</small>
+        <div class="dua-modo" role="radiogroup" aria-label="Quién elige las pautas DUA">
+            <label class="dua-op"><input type="radio" name="duaModo" value="ia" onchange="setDuaModo(this.value)"><span><b>✨ Que las elija la IA</b><em>Recomendado. Elige 2 o 3 según tu alumnado y la actividad.</em></span></label>
+            <label class="dua-op"><input type="radio" name="duaModo" value="yo" onchange="setDuaModo(this.value)"><span><b>✋ Las elijo yo</b><em>Explicadas con palabras sencillas y ejemplos.</em></span></label>
+        </div>
+        <div id="duaManual">
+        <div class="dua-ayuda">
+            <button type="button" class="dua-sug" onclick="sugerirDUA()">💡 Marcar las recomendadas para mi alumnado</button>
+            <span>Se basan en las ACNEAE que has marcado arriba. Con 2 o 3 es suficiente.</span>
+        </div>
+        <div class="dua-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.38rem;margin-top:.4rem">
+            <div style="background:#eff6ff;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#1e40af;display:block;margin-bottom:.3rem">🧠 CÓMO LES PRESENTO LA INFORMACIÓN</strong>
                 <div class="cbi"><input type="checkbox" id="dua1" value="1.1 Opciones de personalización de la presentación"><label for="dua1">1.1 Personalización presentación</label></div>
                 <div class="cbi"><input type="checkbox" id="dua2" value="1.2 Opciones para el lenguaje y los símbolos"><label for="dua2">1.2 Lenguaje y símbolos</label></div>
                 <div class="cbi"><input type="checkbox" id="dua3" value="1.3 Opciones para la comprensión"><label for="dua3">1.3 Comprensión</label></div>
@@ -2264,7 +2294,7 @@
                 <div class="cbi"><input type="checkbox" id="dua8" value="3.3 Guiar el procesamiento de la información" checked><label for="dua8">3.3 Procesar información</label></div>
                 <div class="cbi"><input type="checkbox" id="dua9" value="3.4 Maximizar la transferencia y la generalización"><label for="dua9">3.4 Transferencia</label></div>
             </div>
-            <div style="background:#f0fdf4;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#166534;display:block;margin-bottom:.3rem">✋ ACCIÓN Y EXPRESIÓN</strong>
+            <div style="background:#f0fdf4;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#166534;display:block;margin-bottom:.3rem">✋ CÓMO RESPONDEN Y SE EXPRESAN</strong>
                 <div class="cbi"><input type="checkbox" id="dua10" value="4.1 Variedad en los métodos de respuesta y navegación"><label for="dua10">4.1 Métodos de respuesta</label></div>
                 <div class="cbi"><input type="checkbox" id="dua11" value="4.2 Optimizar el acceso a herramientas y tecnologías de apoyo"><label for="dua11">4.2 Acceso a herramientas</label></div>
                 <div class="cbi"><input type="checkbox" id="dua12" value="5.1 Uso de múltiples medios de comunicación"><label for="dua12">5.1 Múltiples medios</label></div>
@@ -2275,7 +2305,7 @@
                 <div class="cbi"><input type="checkbox" id="dua17" value="6.3 Facilitar la gestión de información y recursos"><label for="dua17">6.3 Gestión información</label></div>
                 <div class="cbi"><input type="checkbox" id="dua18" value="6.4 Mejorar la capacidad de seguimiento del progreso"><label for="dua18">6.4 Seguimiento progreso</label></div>
             </div>
-            <div style="background:#fef9c3;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#854d0e;display:block;margin-bottom:.3rem">💛 IMPLICACIÓN</strong>
+            <div style="background:#fef9c3;border-radius:8px;padding:.5rem .7rem"><strong style="font-size:.72rem;color:#854d0e;display:block;margin-bottom:.3rem">💛 CÓMO LES MOTIVO</strong>
                 <div class="cbi"><input type="checkbox" id="dua19" value="7.1 Optimizar elecciones individuales y la autonomía"><label for="dua19">7.1 Autonomía y elección</label></div>
                 <div class="cbi"><input type="checkbox" id="dua20" value="7.2 Optimizar la relevancia, el valor y la autenticidad" checked><label for="dua20">7.2 Relevancia y autenticidad</label></div>
                 <div class="cbi"><input type="checkbox" id="dua21" value="7.3 Minimizar la sensación de inseguridad y las distracciones"><label for="dua21">7.3 Minimizar inseguridad</label></div>
@@ -2287,6 +2317,7 @@
                 <div class="cbi"><input type="checkbox" id="dua27" value="9.2 Facilitar estrategias y habilidades de afrontamiento"><label for="dua27">9.2 Estrategias afrontamiento</label></div>
                 <div class="cbi"><input type="checkbox" id="dua28" value="9.3 Desarrollar la autoevaluación y la reflexión"><label for="dua28">9.3 Autoevaluación</label></div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -4382,7 +4413,7 @@ function recopilarDatos(){
         acneae:Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb:checked')).map(c=>c.value),
         sesionesData:[...sesionesData],
         medidasGenerales:Array.from(document.querySelectorAll('#step7 input[id^=mg_]:checked')).map(c=>c.value),
-        dua:Array.from(document.querySelectorAll('#step7 input[id^=dua]:checked')).map(c=>c.value),
+        dua:(_duaModo==='ia'?['ELIGE TÚ (IA) 2 o 3 pautas DUA v3.0 adecuadas a las ACNEAE, al curso y a las actividades; cita su número y nombre oficial']:Array.from(document.querySelectorAll('#step7 input[id^=dua]:checked')).map(c=>c.value)),
         programas:Array.from(document.querySelectorAll('#step7 input[id^=prf]:checked,#step7 input[id^=pro]:checked')).map(c=>c.value)
     };
 }
@@ -14811,6 +14842,86 @@ ${fuente}${notaCorte}
 }
 
 function _fmtUI(){ /* el estilo del seleccionado lo aplica el CSS con input:checked */ }
+
+
+// ── APPS DEL CENTRO SEGÚN EL CURSO ───────────────────────────────────
+function _rangoApp(chip){
+    const t=(chip.querySelector('.app-area-tag')?.textContent||'').split('·').pop().trim();
+    if(/todos/i.test(t)) return [0,6];
+    const p=t.split('-').map(x=>/inf/i.test(x)?0:parseInt(x));
+    return [isNaN(p[0])?0:p[0], isNaN(p[p.length-1])?6:p[p.length-1]];
+}
+function _cursoNumApps(){
+    const et=(document.getElementById('etapa')?.value||'').toLowerCase();
+    if(et.includes('infantil')) return 0;
+    const n=parseInt(document.getElementById('curso')?.value||''); return isNaN(n)?null:n;
+}
+function _areaSeccionApps(sec){
+    const l=(sec.querySelector('.apps-area-label')?.textContent||'').toLowerCase();
+    const ar=(typeof areasSeleccionadas!=='undefined'?areasSeleccionadas:[]).join(' ').toLowerCase();
+    if(l.includes('matem')) return /matem|mat\b/.test(ar);
+    if(l.includes('lengua')) return /lengua|lcl/.test(ar);
+    if(l.includes('ciencias')) return /natural|cmn|cono/.test(ar);
+    return false;
+}
+function appsPorCurso(){
+    const box=document.getElementById('appsCursoBox'); if(!box) return;
+    const c=_cursoNumApps();
+    const secs=Array.from(document.querySelectorAll('.apps-section'));
+    let ok=0, rec=0;
+    secs.forEach(sec=>{
+        let vis=0; const deArea=_areaSeccionApps(sec);
+        sec.querySelectorAll('.app-chip').forEach(ch=>{
+            const [a,b]=_rangoApp(ch), sirve=(c===null)||(c>=a&&c<=b);
+            ch.classList.toggle('fuera-curso',!sirve && !ch.classList.contains('selected'));
+            ch.dataset.rec=(sirve&&deArea)?'1':'';
+            ch.querySelector('.tu-curso')?.remove();
+            if(sirve&&c!==null){ ok++; vis++; const tag=ch.querySelector('.app-area-tag'); if(tag) tag.insertAdjacentHTML('afterend','<span class="tu-curso">✔ Tu curso</span>'); }
+            if(sirve&&deArea) rec++;
+        });
+        sec.classList.toggle('sec-vacia',vis===0);
+    });
+    const wrap=box.parentElement;
+    wrap.classList.toggle('apps-todas', c===null || !!window._appsVerTodas);
+    if(c===null){ box.innerHTML=''; return; }
+    const nom=c===0?'Infantil':c+'.º de Primaria';
+    box.innerHTML=`<b>🎯 ${nom}: ${ok} apps del cole sirven para este curso.</b> Solo se muestran esas.${rec?` ${rec} son de tu área.`:''}
+      <div class="acb-btns">${rec?'<button type="button" class="pri" onclick="marcarAppsRecomendadas()">✅ Marcar las de mi curso y área</button>':''}
+      <button type="button" onclick="verTodasApps(this)">${wrap.classList.contains('apps-todas')?'Ocultar las de otros cursos':'Ver también las de otros cursos'}</button></div>`;
+    document.querySelectorAll('.apps-section').forEach(sec=>{ sec.style.display=(sec.classList.contains('sec-vacia')&&!wrap.classList.contains('apps-todas'))?'none':''; });
+}
+function marcarAppsRecomendadas(){
+    let n=0; document.querySelectorAll('.app-chip').forEach(ch=>{ if(ch.dataset.rec==='1'){ ch.querySelector('input').checked=true; ch.classList.add('selected'); n++; } });
+    if(typeof showToast==='function') showToast(`✅ ${n} apps marcadas. Puedes quitar las que no uses.`);
+}
+function verTodasApps(btn){ window._appsVerTodas=!window._appsVerTodas; appsPorCurso(); }
+document.addEventListener('DOMContentLoaded',()=>{
+    ['curso','etapa'].forEach(id=>document.getElementById(id)?.addEventListener('change',appsPorCurso));
+    if(typeof irAPaso==='function'){ const _ir=irAPaso; irAPaso=function(n){ const r=_ir.apply(this,arguments); try{ appsPorCurso(); }catch(e){} return r; }; }
+    appsPorCurso();
+});
+// ── DUA en lenguaje sencillo: la IA elige o elijo yo ─────────────────
+const DUA_FACIL={'1.1':'Cambio tamaño, color o formato del material','1.2':'Explico palabras difíciles con dibujos o pictogramas','1.3':'Uso ejemplos y apoyos para que entiendan','2.1':'Lo que se oye, también se ve (texto, subtítulos)','2.2':'Lo que se ve, también se oye (lo leo en voz alta)','3.1':'Parto de lo que ya saben','3.2':'Resalto lo importante (colores, flechas)','3.3':'Voy paso a paso, con guiones o esquemas','3.4':'Lo usan en otra situación real','4.1':'Responden como puedan: hablando, señalando, escribiendo','4.2':'Uso apoyos o tecnología para acceder (tablet, lector)','5.1':'Muestran lo aprendido con dibujo, audio o vídeo','5.2':'Les doy plantillas o material manipulativo','5.3':'Mucha ayuda al principio y la retiro poco a poco','6.1':'Les digo claro qué vamos a conseguir','6.2':'Les ayudo a planificar (pasos, checklist)','6.3':'Les ayudo a organizarse (tablas, agenda)','6.4':'Ven cómo avanzan (registro, semáforo)','7.1':'Pueden elegir tarea, material u orden','7.2':'La tarea tiene sentido y conecta con su vida','7.3':'Rutinas, calma y sin miedo a equivocarse','8.1':'Les digo enseguida cómo mejorar','8.2':'Retos a su nivel (fácil, medio, difícil)','8.3':'Trabajan en equipo con roles','8.4':'Valoro el esfuerzo y la superación','9.1':'Les digo que confío en que pueden','9.2':'Les enseño a calmarse ante las dificultades','9.3':'Se autoevalúan (diana, semáforo)'};
+const DUA_ACNEAE={'Ninguna':['3.3','7.2','8.3'],'TDAH':['3.3','6.2','7.3','8.1'],'Dislexia':['2.2','4.1','5.1'],'Discapacidad intelectual':['1.3','3.3','5.3'],'Altas capacidades':['7.1','8.2','3.4'],'TEA':['1.2','7.3','6.2'],'Discapacidad motora':['4.1','4.2'],'Discapacidad visual':['2.2','4.2'],'Discapacidad auditiva':['2.1','1.2'],'Trastorno del lenguaje':['1.2','4.1','3.3'],'Síndrome de Down':['1.2','1.3','5.3']};
+let _duaModo='ia'; try{ const m=localStorage.getItem('sdaDuaModo'); if(m==='ia'||m==='yo') _duaModo=m; }catch(e){}
+function setDuaModo(v){
+    _duaModo=(v==='yo')?'yo':'ia'; try{ localStorage.setItem('sdaDuaModo',_duaModo); }catch(e){}
+    document.querySelectorAll('input[name="duaModo"]').forEach(r=>{ r.checked=(r.value===_duaModo); });
+    const m=document.getElementById('duaManual'); if(m) m.style.display=(_duaModo==='yo')?'block':'none';
+}
+function sugerirDUA(){
+    const ac=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb:checked')).map(c=>c.value);
+    const set=new Set(); (ac.length?ac:['Ninguna']).forEach(a=>(DUA_ACNEAE[a]||DUA_ACNEAE['Ninguna']).forEach(c=>set.add(c)));
+    document.querySelectorAll('#step7 input[id^=dua]').forEach(cb=>{ cb.checked=set.has(cb.value.split(' ')[0]); });
+    if(typeof showToast==='function') showToast(`💡 Marcadas ${set.size} pautas. Puedes quitar o añadir las que quieras.`);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('#step7 input[id^=dua]').forEach(cb=>{
+        const cod=cb.value.split(' ')[0], lb=document.querySelector(`label[for="${cb.id}"]`);
+        if(lb && DUA_FACIL[cod]){ lb.innerHTML=`<span class="dua-cod">${cod}</span>${DUA_FACIL[cod]}`; lb.title=cb.value; }
+    });
+    setDuaModo(_duaModo);
+});
 // ── Modo de sesiones: 'ia' (la IA propone actividad por sesión) | 'boli' (tabla en blanco para bolígrafo)
 let _modoSesiones='ia';
 try{ const m=localStorage.getItem('sdaModoSesiones'); if(m==='ia'||m==='boli'||m==='indice'||m==='paginas') _modoSesiones=m; }catch(e){}
