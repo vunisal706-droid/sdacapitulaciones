@@ -2990,6 +2990,24 @@
 <button class="install-btn" id="installBtn" onclick="instalarPWA()">📲 Instalar App</button>
 
 <script>
+// Código fijo para los botones Imprimir / Copiar para Word de los artefactos
+const _JS_BOTONES_ARTEFACTO = `function hx(c){var m=(c||'').match(/[0-9.]+/g);if(!m)return '';return '#'+m.slice(0,3).map(function(v){return ('0'+Math.round(+v).toString(16)).slice(-2)}).join('')}
+function vis(c){return c&&c!=='transparent'&&c.indexOf('rgba(0, 0, 0, 0)')<0}
+function prepWord(){var s=document.getElementById('sda'),c=s.cloneNode(true),o=s.querySelectorAll('*'),n=c.querySelectorAll('*');
+for(var i=0;i<o.length;i++){var k=getComputedStyle(o[i]),e=n[i],t=e.tagName,st='font-family:Calibri,Arial,sans-serif;font-size:'+Math.round(parseFloat(k.fontSize)*0.7)+'pt;color:'+hx(k.color)+';font-weight:'+k.fontWeight+';font-style:'+k.fontStyle+';';
+if(vis(k.backgroundColor)){st+='background:'+hx(k.backgroundColor)+';';if(t==='TD'||t==='TH')e.setAttribute('bgcolor',hx(k.backgroundColor));}
+if(parseFloat(k.borderLeftWidth)>2&&t!=='TD'&&t!=='TH')st+='border-left:'+Math.round(parseFloat(k.borderLeftWidth)*0.75)+'pt solid '+hx(k.borderLeftColor)+';padding:4pt 8pt;';
+if(t==='TABLE'){e.setAttribute('width','100%');e.setAttribute('border','1');e.setAttribute('cellpadding','5');st+='width:100%;border-collapse:collapse;';}
+if(t==='TD'||t==='TH')st+='border:1px solid '+(hx(k.borderTopColor)||'#999')+';padding:4pt 6pt;vertical-align:top;';
+e.setAttribute('style',st);e.removeAttribute('class');}
+return c;}
+var _h=null;
+document.addEventListener('copy',function(ev){if(!_h)return;ev.clipboardData.setData('text/html',_h);ev.clipboardData.setData('text/plain',document.getElementById('sda').innerText);ev.preventDefault();_h=null;});
+function copiarWord(){_h='<html><head><meta charset="utf-8"></head><body>'+prepWord().outerHTML+'</body></html>';var r=document.createRange();r.selectNodeContents(document.getElementById('sda'));var g=getSelection();g.removeAllRanges();g.addRange(r);var ok=document.execCommand('copy');g.removeAllRanges();document.getElementById('msg').textContent=ok?'✅ Copiado. Abre Word y pulsa Ctrl+V':'⚠️ No se pudo copiar';}
+function imprimir(){if(window.self===window.top){window.print();return;}
+var css=[].map.call(document.querySelectorAll('style'),function(x){return x.textContent}).join('');
+var w=window.open('','_blank');if(!w){document.getElementById('msg').textContent='⚠️ Ventana bloqueada: usa Copiar para Word e imprime desde Word';return;}
+w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+document.title+'</title><style>'+css+'</style></head><body>'+document.getElementById('sda').outerHTML+'</body></html>');w.document.close();w.focus();setTimeout(function(){w.print()},600);}`;
 // ═══════════════════════════════════════════════════════════════════
 // ESTADO GLOBAL
 // ═══════════════════════════════════════════════════════════════════
@@ -14967,7 +14985,7 @@ ${_modoLibro()?`   📖 MODO LIBRO: NO propongas actividades ajenas al libro. En
 7 — VALORACIÓN DE LO APRENDIDO: una rúbrica por CADA criterio con los CUATRO niveles de logro del apartado E.2 del Proyecto Educativo del CEIP Capitulaciones (1 No conseguido · 2 En proceso · 3 Conseguido · 4 Conseguido con destreza). NO uses escala numérica de 1 a 10 ni porcentajes. Cada criterio se evalúa en DOS momentos y con DOS instrumentos distintos; la prueba escrita nunca es el único instrumento. Conversión final: 1 Insuficiente · 2 Suficiente o Bien · 3 Notable · 4 Sobresaliente.
 
 ⚠️ BREVEDAD: la SdA debe ser lo MÁS CORTA posible cumpliendo los 7 apartados. Todo en tablas, una frase corta por celda, sin párrafos largos ni repetir información entre apartados. Extensión orientativa: 8–12 páginas A4.
-${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, ocultos al imprimir (@media print{.noprint{display:none}}): un botón grande 📋 Copiar para Word (escucha el evento 'copy' y mete en clipboardData 'text/html' un clon limpio del contenido: sin style ni class, tablas con width="100%" border="1" y style width:100%;border-collapse:collapse;table-layout:fixed, celdas con borde y word-wrap:break-word, NUNCA anchos en px; luego selecciona el contenido con Range+Selection y document.execCommand('copy'); al terminar muestra «✅ Copiado. Abre Word y pulsa Ctrl+V»), un botón 🖨️ Imprimir (window.print()) y debajo el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V». NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas. Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
+${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, ocultos al imprimir (@media print{.noprint{display:none}}): un botón grande 📋 Copiar para Word (onclick="copiarWord()") y un botón 🖨️ Imprimir (onclick="imprimir()"), un <span id="msg"></span> para mensajes, y debajo el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V». TODO el contenido de la SdA va dentro de <div id="sda">…</div> (los botones fuera). Al final incluye, COPIADO LITERALMENTE y sin cambiar nada, este JavaScript dentro de una etiqueta script: ${_JS_BOTONES_ARTEFACTO} . Colores en el CSS (cabeceras de apartado con fondo azul claro y barra izquierda azul, primera columna de tablas sombreada): el botón Copiar los pasa a Word tal cual. En el CSS añade *{-webkit-print-color-adjust:exact;print-color-adjust:exact}. NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas. Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
 ⚠️ No preguntes nada ni añadas preámbulos. Genera la SdA completa directamente, lista para inspección educativa.
 
 ═══════ SdA FUENTE (contenido del PDF) ═══════
@@ -16272,13 +16290,15 @@ ${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (el usuario t
    · Genera UN ÚNICO artefacto HTML autocontenido con toda la SdA. NO ejecutes código, NO uses Python,
      NO generes .docx ni PDF: solo el artefacto, en una sola respuesta y sin preámbulos.
    · Arriba, dos botones fijos, ocultos al imprimir con @media print{.noprint{display:none}}:
-     🖨️ Imprimir → window.print()
-     📋 Copiar para Word (botón grande) → escucha el evento 'copy' y mete en clipboardData 'text/html' un clon limpio
-       del contenido: sin style ni class, tablas con width="100%" border="1" y style width:100%;border-collapse:collapse;
-       table-layout:fixed, celdas con borde y word-wrap:break-word, NUNCA anchos en px. Luego selecciona el contenido
-       (Range + Selection) y document.execCommand('copy');
-       al terminar muestra «✅ Copiado. Abre Word y pulsa Ctrl+V».
-   · Debajo, el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V».
+     🖨️ Imprimir → onclick="imprimir()"
+     📋 Copiar para Word (botón grande) → onclick="copiarWord()"
+     y un <span id="msg"></span> para los mensajes.
+   · TODO el contenido de la SdA va dentro de <div id="sda">…</div> (los botones fuera).
+   · Al final incluye, COPIADO LITERALMENTE y sin cambiar nada, este JavaScript dentro de una etiqueta script:
+${_JS_BOTONES_ARTEFACTO}
+   · Usa colores en el CSS (cabeceras de apartado con fondo azul claro y barra izquierda azul, primera columna de tablas
+     sombreada): el botón Copiar los pasa a Word tal cual. Añade *{-webkit-print-color-adjust:exact;print-color-adjust:exact}.
+   · Debajo de los botones, el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V».
    · NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas.
    · Estilo claro: fondo blanco, texto oscuro, tipografía de sistema, tablas de borde fino con cabecera suave.
      NUNCA modo oscuro. Para imprimir en A4 VERTICAL: @page{size:A4 portrait;margin:14mm}.
@@ -18027,7 +18047,7 @@ sesiones a repaso y evaluación inicial. La casilla «Pág. ______» va siempre 
 ⚠️ BREVEDAD: la SdA debe ser lo MÁS CORTA posible cumpliendo los 7 apartados. Todo en tablas, una frase corta por
 celda, sin párrafos largos ni información repetida entre apartados. Extensión orientativa: 8–12 páginas A4.
 
-${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, ocultos al imprimir (@media print{.noprint{display:none}}): un botón grande 📋 Copiar para Word (escucha el evento 'copy' y mete en clipboardData 'text/html' un clon limpio del contenido: sin style ni class, tablas con width="100%" border="1" y style width:100%;border-collapse:collapse;table-layout:fixed, celdas con borde y word-wrap:break-word, NUNCA anchos en px; luego selecciona el contenido con Range+Selection y document.execCommand('copy'); al terminar muestra «✅ Copiado. Abre Word y pulsa Ctrl+V»), un botón 🖨️ Imprimir (window.print()) y debajo el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V». NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas. Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
+${getFormatoSalida()==='free'?`⚠️ ENTREGA EN UN ARTEFACTO HTML (cuenta gratuita — ahorra tokens): un único artefacto autocontenido, sin ejecutar código ni generar .docx/PDF. Arriba, ocultos al imprimir (@media print{.noprint{display:none}}): un botón grande 📋 Copiar para Word (onclick="copiarWord()") y un botón 🖨️ Imprimir (onclick="imprimir()"), un <span id="msg"></span> para mensajes, y debajo el texto «Para Word: pulsa Copiar y pega en Word con Ctrl+V». TODO el contenido de la SdA va dentro de <div id="sda">…</div> (los botones fuera). Al final incluye, COPIADO LITERALMENTE y sin cambiar nada, este JavaScript dentro de una etiqueta script: ${_JS_BOTONES_ARTEFACTO} . Colores en el CSS (cabeceras de apartado con fondo azul claro y barra izquierda azul, primera columna de tablas sombreada): el botón Copiar los pasa a Word tal cual. En el CSS añade *{-webkit-print-color-adjust:exact;print-color-adjust:exact}. NO uses Blob ni descargas: están bloqueadas en cuentas gratuitas. Fondo blanco, nunca modo oscuro, A4 vertical (@page{size:A4 portrait;margin:14mm}), table{page-break-inside:avoid}.`:`⚠️ ENTREGA EN DOCUMENTO WORD (.docx) descargable, A4 vertical, tablas con cabecera sombreada, nunca modo oscuro.`}
 
 ⚠️ IMPORTANTE: No me preguntes el formato de salida ni nada más. Genera la SdA completa directamente, sin preámbulos.
 
