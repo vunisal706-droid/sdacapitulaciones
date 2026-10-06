@@ -368,6 +368,13 @@
         .ex-atras,.ex-sig{font:inherit;font-weight:800;font-size:1.05rem;border-radius:14px;padding:.8rem 1.3rem;cursor:pointer;border:none}
         .ex-atras{background:#f3f4f6;color:#374151}.ex-sig{background:#f97316;color:#fff;margin-left:auto}
         .ex-sig.fin{background:#16a34a}
+        .px-pant{display:none}.px-pant.on{display:block}
+        .px-pant h2{font-size:1.45rem;color:#1f2937;margin:.3rem 0 .6rem}
+        #pxOverlay .sant-info,#pxOverlay #pdfPlanifSlot{display:none}
+        #pxOverlay #pdfPanel{display:block;margin:0}
+        .px-fechas{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+        .px-fechas label{font-size:.85rem;font-weight:700;color:#4b5563;display:block;margin-bottom:.2rem}
+        .px-dur button{width:auto;padding:0 1rem}
         .p8-lista{margin:.3rem 0 .8rem 1.2rem;padding:0;font-size:.98rem;line-height:1.55;color:#374151}.p8-lista li{margin-bottom:.25rem}
         .folio-box{margin-top:1rem;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:14px;padding:.8rem .95rem}
         .folio-t{font-weight:800;color:#1e40af;font-size:1.05rem}.folio-d{font-size:.9rem;color:#374151;margin:.2rem 0 .6rem}
@@ -1023,6 +1030,42 @@
   </div>
 </div>
 
+<!-- ══ MODO EXPRÉS DESDE PDF ═══════════════════════════════════════════ -->
+<div id="pxOverlay" class="ex-ov" role="dialog" aria-modal="true" aria-labelledby="pxTitulo">
+  <div class="ex-box" id="pxBox">
+    <div class="ex-head">
+      <div class="ex-dots" id="pxDots"><span data-p="1">1</span><i></i><span data-p="2">2</span><i></i><span data-p="3">3</span></div>
+      <button type="button" class="ex-x" onclick="cerrarExpresPDF()" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="px-pant" id="pxP1">
+      <h2 id="pxTitulo">📄 Sube el PDF de la SdA</h2>
+      <p class="ex-ayuda">Vale el informe de Séneca de Educación Física o una SdA de inglés. La app detecta curso, área y título.</p>
+      <div id="pxSlot"></div>
+    </div>
+    <div class="px-pant" id="pxP2">
+      <h2>🏫 Tu clase</h2>
+      <div class="ex-q">Fechas de la SdA <small id="pxMesInfo"></small></div>
+      <div class="px-fechas">
+        <div><label for="pxIni">Inicio</label><input type="date" id="pxIni" class="ex-in"></div>
+        <div><label for="pxFin">Fin</label><input type="date" id="pxFin" class="ex-in"></div>
+      </div>
+      <div class="ex-area"><div class="ex-area-t" id="pxDiasT">¿Qué días das el área?</div><div class="ex-dias" id="pxDias"></div></div>
+      <div class="ex-q">Duración de cada sesión</div>
+      <div class="ex-dias px-dur" id="pxDur"></div>
+      <div class="ex-q">¿Hay alumnado con necesidades (ACNEAE)?</div>
+      <div class="ex-chips" id="pxAcn"></div>
+    </div>
+    <div class="px-pant" id="pxP3">
+      <h2>✅ Todo listo</h2>
+      <div class="ex-resumen" id="pxResumen"></div>
+    </div>
+    <div class="ex-foot">
+      <button type="button" class="ex-atras" id="pxAtras" onclick="pxMover(-1)">← Atrás</button>
+      <button type="button" class="ex-sig" id="pxSig" onclick="pxMover(1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ SELECTOR MODO DE TRABAJO ══════════════════════════════════════ -->
 <div class="modo-wrap">
     <div class="modo-inner">
@@ -1047,11 +1090,11 @@
                     <span class="mb-sub">Construyendo Mundos · datos precargados</span>
                 </span>
             </button>
-            <button class="modo-btn" id="modoBtnPDF" onclick="setModoTrabajo('pdf')">
+            <button class="modo-btn" id="modoBtnPDF" onclick="abrirExpresPDF()">
                 <span class="mb-icon">📄</span>
                 <span class="mb-text">
                     <span class="mb-title">Desde PDF</span>
-                    <span class="mb-sub">Sube una SdA (inglés…) y genérala en la plantilla</span>
+                    <span class="mb-sub">⚡ Exprés · Sube el PDF (Séneca EF, inglés…) en 3 pasos</span>
                 </span>
             </button>
         </div>
@@ -1758,7 +1801,7 @@
         <!-- ── MODO DESDE PDF ── -->
         <div class="sant-panel" id="pdfPanel" style="background:rgba(238,242,255,0.9);border-color:rgba(99,102,241,0.25)">
             <div style="margin-bottom:1rem">
-                <label style="color:#3730a3;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. Sube el PDF de la SdA (inglés u otra) *</label>
+                <label style="color:#3730a3;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. Sube el PDF de la SdA (inglés, Educación Física de Séneca u otra) *</label>
                 <div id="pdfDropZone" onclick="document.getElementById('pdfFileInput').click()"
                      style="border:2px dashed rgba(99,102,241,0.4);border-radius:12px;padding:1.4rem 1rem;text-align:center;cursor:pointer;background:rgba(255,255,255,0.6);transition:all .2s">
                     <div style="font-size:1.8rem;margin-bottom:.3rem">📄⬆️</div>
@@ -1809,7 +1852,7 @@
 
             <div id="pdfPlanifSlot"></div>
             <div class="sant-info" style="background:rgba(99,102,241,0.06);border-color:rgba(99,102,241,0.2)">
-                💡 <strong>Cómo funciona:</strong> Sube el PDF de una SdA ya hecha (por ejemplo de inglés). La app lee su contenido y genera una SdA nueva con <strong>los mismos apartados de la plantilla del inspector de Primaria</strong>, reutilizando sus criterios (LE.01…), saberes, tarea final y secuenciación. Luego la exportas a Word.
+                💡 <strong>Cómo funciona:</strong> Sube el PDF de una SdA ya hecha (inglés, o el informe de Séneca de Educación Física). La app lee su contenido y genera una SdA nueva con <strong>los mismos apartados de la plantilla del inspector de Primaria</strong>, reutilizando sus criterios (LE.01…, EFI.1.1.1…), saberes, tarea final y secuenciación. Luego la exportas a Word.
             </div>
         </div>
         <!-- ── FIN MODO DESDE PDF ── -->
@@ -14933,6 +14976,7 @@ function _actualizarSantBypasses(){
 // ═══════════════════════════════════════════════════════════════════
 function _construirPromptPDF(d){
     const pdf = (typeof getPdfData==='function') ? getPdfData() : null;
+    const esInf = false;
     const fmtD=v=>{const dt=(v instanceof Date)?v:new Date(v+'T12:00:00');if(!dt||isNaN(dt.getTime()))return '(sin fecha)';const dd=String(dt.getDate()).padStart(2,'0');const mm=String(dt.getMonth()+1).padStart(2,'0');const yy=String(dt.getFullYear()).slice(-2);return `${dd}/${mm}/${yy}`;};
     // Tabla de sesiones compacta
     let tabla='';
@@ -14947,7 +14991,10 @@ function _construirPromptPDF(d){
     let idxCorte=-1;
     cortes.forEach(rx=>{const m=fuente.search(rx); if(m>=0 && (idxCorte<0||m<idxCorte)) idxCorte=m;});
     if(idxCorte>200){ fuente=fuente.slice(0,idxCorte).trim(); notaCorte='\n[Se omiten aquí las rúbricas del apartado 7 y la autoevaluación docente del PDF; genéralas tú en el apartado 7.]'; }
-    const TOPE=9000;
+    const esSen=/^\[PDF EXPORTADO DE SÉNECA/.test(fuente);
+    const esEF=_pdfEsEF(fuente) || /f[íi]sica/i.test(pdf?.area||'');
+    const sesSen=esSen?((fuente.match(/Sesiones previstas en Séneca: (\d+)/)||[])[1]||''):'';
+    const TOPE=esSen?15000:9000;
     if(fuente.length>TOPE){ fuente=fuente.slice(0,TOPE).trim()+'\n[…recortado por longitud…]'; }
 
     const area = pdf?.area || 'Inglés (1ª Lengua Extranjera)';
@@ -14964,15 +15011,15 @@ DATOS:
 • Fechas: ${d.fechaInicio||'—'} a ${d.fechaFin||'—'} (${d.semanas} semanas) · ${d.sesiones} sesiones de ${d.duracion} min
 • Tipo: ${(sdaTipos[d.sdaTipo]||sdaTipos.producto).nombre}
 ${tabla}
-IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.
-
+${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':'IDIOMA: todo en español.'}
+${esEF?_pdfBloqueEF(d,sesSen):''}
 GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos: "1 — IDENTIFICACIÓN", etc.):
 1 — IDENTIFICACIÓN: tabla con curso, título, trimestre, fechas, nº de sesiones, tipo, metodología y planes del centro asociados.
 2 — JUSTIFICACIÓN: objetivos de etapa (${esInf?'Decreto 100/2023 Infantil':'Decreto 101/2023'}), principios pedagógicos y justificación de la conexión con el entorno del alumnado de ${d.curso}.
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL: el producto/tarea final de la fuente y sus productos parciales por fase.
 4 — CONCRECIÓN CURRICULAR: tabla de competencias específicas con sus descriptores operativos del Perfil de salida; tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
 5 — SECUENCIA DIDÁCTICA: agrupa las ${d.sesiones} sesiones en actividades por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar). El producto final ocupa la última actividad.
-${_modoLibro()?`   📖 MODO LIBRO: NO propongas actividades ajenas al libro. En cada actividad, solo esta tabla (una fila por sesión):
+${(esEF&&!_modoNoIA())?`   🏃 Para CADA sesión usa la estructura de Educación Física indicada arriba (CALENTAMIENTO · PARTE PRINCIPAL · VUELTA A LA CALMA Y ASEO), sin páginas de libro.`:_modoLibro()?`   📖 MODO LIBRO: NO propongas actividades ajenas al libro. En cada actividad, solo esta tabla (una fila por sesión):
    | Sesión | Fecha | Páginas del libro | Apartado del libro | Saber básico (concreción breve y código) | ✔ |
    ${getModoSesiones()==='indice'?'Sigue el orden de los «Saberes relacionados» de la ficha; páginas siempre «pág. ____».':'Sigue el orden y las páginas EXACTAS de la lista del tutor/a.'}`:_modoNoIA()?`   ✍️ MODO BOLÍGRAFO: NO propongas actividades por sesión. En cada actividad, solo esta tabla (una fila por sesión):
    | Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] |
@@ -15274,6 +15321,116 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('exPaginas').addEventListener('input',()=>{ if(EX.p===3) _exResumen(); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('exOverlay').classList.contains('show')) cerrarExpres(); });
 });
+
+// ══ MODO EXPRÉS DESDE PDF: 3 pantallas (PDF · clase · generar) ══════
+const PX={p:1,dias:[],dur:0,acn:new Set(['Ninguna'])};
+function abrirExpresPDF(){
+    setModoTrabajo('pdf');
+    const panel=document.getElementById('pdfPanel'); if(panel){ document.getElementById('pxSlot').appendChild(panel); panel.classList.add('show'); }
+    document.getElementById('pxOverlay').classList.add('show'); document.body.style.overflow='hidden';
+    pxIr(1);
+}
+function cerrarExpresPDF(){
+    document.getElementById('pxOverlay').classList.remove('show'); document.body.style.overflow='';
+    try{ _actualizarModoUI(); }catch(e){}
+}
+function _pxArea(){
+    const a=document.getElementById('pdfArea')?.value||'';
+    const n=s=>(s||'').toLowerCase().replace(/\(.*?\)/g,'').trim();
+    return (typeof areasSeleccionadas!=='undefined' && areasSeleccionadas.find(x=>n(x).includes(n(a))||n(a).includes(n(x)))) || a;
+}
+function _pxFechasAuto(){
+    const ini=document.getElementById('pxIni'), fin=document.getElementById('pxFin');
+    const txt=document.getElementById('pdfTextoOculto')?.value||pdfSdaTexto||'';
+    const m=(txt.match(/TEMPORALIZACIÓN \(Séneca\): (\w+)/)||[])[1]||'';
+    document.getElementById('pxMesInfo').textContent=m?`(Séneca: ${m})`:'';
+    if(ini.value&&fin.value) return;
+    const fi=document.getElementById('fechaInicio'), ff=document.getElementById('fechaFin');
+    if(fi?.value&&ff?.value){ ini.value=fi.value; fin.value=ff.value; return; }
+    const mes=(m||EX_MESES[new Date().getMonth()]).toUpperCase();
+    const f=_MES_FECHAS[mes]; if(!f) return;
+    const [y,mm]=f, pad=n=>String(n).padStart(2,'0');
+    ini.value=`${y}-${pad(mm)}-01`; fin.value=`${y}-${pad(mm)}-${pad(new Date(y,mm,0).getDate())}`;
+}
+function _pxPintar(){
+    const L=['','L','M','X','J','V'];
+    const area=_pxArea();
+    document.getElementById('pxDiasT').textContent=`${(typeof AREA_ICONS!=='undefined'&&AREA_ICONS[area])||'📅'} ¿Qué días das ${area||'el área'}?`;
+    document.getElementById('pxDias').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="ex-dia ${PX.dias.includes(n)?'sel':''}" onclick="pxDia(${n})">${L[n]}</button>`).join('');
+    if(!PX.dur) PX.dur=parseInt(document.getElementById('duracion')?.value)||45;
+    document.getElementById('pxDur').innerHTML=[45,60,90].map(v=>`<button type="button" class="ex-dia ${PX.dur===v?'sel':''}" onclick="PX.dur=${v};_pxPintar()">${v}'</button>`).join('');
+    const acn=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb')).map(c=>c.value);
+    document.getElementById('pxAcn').innerHTML=acn.map(v=>`<button type="button" class="ex-chip ${PX.acn.has(v)?'sel':''}" data-v="${v}">${v}</button>`).join('');
+    document.querySelectorAll('#pxAcn .ex-chip').forEach(b=>b.onclick=()=>{
+        const v=b.dataset.v;
+        if(v==='Ninguna'){ PX.acn=new Set(['Ninguna']); }
+        else { PX.acn.delete('Ninguna'); PX.acn.has(v)?PX.acn.delete(v):PX.acn.add(v); if(!PX.acn.size) PX.acn.add('Ninguna'); }
+        _pxPintar();
+    });
+}
+function pxDia(n){ const i=PX.dias.indexOf(n); if(i>=0) PX.dias.splice(i,1); else PX.dias.push(n); PX.dias.sort(); _pxPintar(); }
+function _pxAplicar(){
+    const area=_pxArea();
+    document.getElementById('fechaInicio').value=document.getElementById('pxIni').value;
+    document.getElementById('fechaFin').value=document.getElementById('pxFin').value;
+    document.getElementById('duracion').value=PX.dur;
+    diasPorArea={}; diasPorArea[_areaKey(area)]={dias:[...PX.dias],rpDias:[]};
+    const cbs=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb'));
+    cbs.forEach(cb=>{ const q=PX.acn.has(cb.value); if(cb.value!=='Ninguna'&&cb.checked!==q){ cb.checked=q; _onAcneaeChange(cb); } });
+    const nin=cbs.find(c=>c.value==='Ninguna'); if(nin&&PX.acn.has('Ninguna')&&!nin.checked){ nin.checked=true; _onAcneaeChange(nin); }
+    try{ calcularSemanas(); }catch(e){}
+    try{ renderDiaSelectors(); }catch(e){}
+    diasPorArea[_areaKey(area)]={dias:[...PX.dias],rpDias:[]};
+    try{ generarTablaSesiones(); }catch(e){}
+}
+function _pxResumen(){
+    const d=s=>s?s.split('-').reverse().join('/'):'—';
+    const nom=['','L','M','X','J','V'];
+    const tit=document.getElementById('pdfTitulo')?.value||'(sin título)';
+    const acn=[...PX.acn].join(', ');
+    document.getElementById('pxResumen').innerHTML=`<b>${tit.replace(/</g,'&lt;')}</b><br>
+      ${_pxArea()} · ${document.getElementById('pdfCurso')?.value||''} Primaria<br>
+      📅 ${d(document.getElementById('pxIni').value)} → ${d(document.getElementById('pxFin').value)} · días ${PX.dias.map(n=>nom[n]).join('-')} · ${PX.dur}'<br>
+      🗓️ <b>${sesionesData.length} sesiones</b> (sin festivos ni excursiones)<br>
+      🧩 ACNEAE: ${acn} · la IA elige las pautas DUA.<br><br>
+      Al pulsar, se copia el prompt y se abre la IA. Saldrá la SdA completa en la plantilla del inspector.`;
+}
+function pxIr(p){
+    PX.p=p;
+    document.querySelectorAll('.px-pant').forEach((e,i)=>e.classList.toggle('on',i+1===p));
+    document.querySelectorAll('#pxDots span').forEach(s=>{ const n=+s.dataset.p; s.className=n===p?'on':(n<p?'ok':''); });
+    document.getElementById('pxAtras').style.visibility=p===1?'hidden':'visible';
+    const sig=document.getElementById('pxSig'); sig.textContent=p===3?'🚀 Generar y abrir la IA':'Siguiente →'; sig.classList.toggle('fin',p===3);
+    if(p===2){ _pxFechasAuto(); _pxPintar(); }
+    if(p===3) _pxResumen();
+    document.getElementById('pxBox').scrollIntoView({block:'start'});
+}
+function pxMover(dir){
+    if(dir<0) return pxIr(PX.p-1);
+    if(PX.p===1){
+        const pdf=getPdfData();
+        if(!pdf||!pdf.texto){ showToast('⚠️ Sube el PDF (o pega su texto)'); return; }
+        if(!pdf.curso){ showToast('⚠️ Indica el curso'); return; }
+        _pdfSyncCampos();
+        return setTimeout(()=>pxIr(2),80);
+    }
+    if(PX.p===2){
+        if(!document.getElementById('pxIni').value||!document.getElementById('pxFin').value){ showToast('⚠️ Pon las fechas de inicio y fin'); return; }
+        if(document.getElementById('pxFin').value<=document.getElementById('pxIni').value){ showToast('⚠️ La fecha de fin debe ser posterior'); return; }
+        if(!PX.dias.length){ showToast('⚠️ Marca al menos un día de clase'); return; }
+        _pxAplicar();
+        if(!sesionesData.length){ showToast('⚠️ No sale ninguna sesión en esas fechas'); return; }
+        return pxIr(3);
+    }
+    try{ setDuaModo('ia'); }catch(e){}
+    const pdf=getPdfData();
+    const t=document.getElementById('titSda'); if(t&&pdf.titulo) t.value=pdf.titulo;
+    const tm=document.getElementById('tematica'); if(tm&&pdf.titulo) tm.value=pdf.titulo;
+    cerrarExpresPDF();
+    irAPaso(8);
+    setTimeout(()=>generarYAbrir(),250);
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('pxOverlay')?.classList.contains('show')) cerrarExpresPDF(); });
 // ── APPS DEL CENTRO SEGÚN EL CURSO ───────────────────────────────────
 function _rangoApp(chip){
     const t=(chip.querySelector('.app-area-tag')?.textContent||'').split('·').pop().trim();
@@ -15868,9 +16025,11 @@ ${(()=>{
     let idxCorte = -1;
     cortes.forEach(rx=>{ const m=fuente.search(rx); if(m>=0 && (idxCorte<0 || m<idxCorte)) idxCorte=m; });
     let notaCorte='';
-    if(idxCorte>200){ fuente = fuente.slice(0, idxCorte).trim(); notaCorte='\n[Nota: se ha omitido aquí la tabla de rúbricas del apartado 7 y la autoevaluación docente del PDF original; genéralas tú en el apartado 7 con la escala numérica de Primaria.]'; }
+    if(idxCorte>200){ fuente = fuente.slice(0, idxCorte).trim(); notaCorte='\n[Nota: se ha omitido aquí la tabla de rúbricas del apartado 7 y la autoevaluación docente del PDF original; genéralas tú en el apartado 7 con los 4 niveles de logro del centro.]'; }
     // Tope de seguridad para no exceder límites de pegado
-    const TOPE=9000;
+    const esSen=/^\[PDF EXPORTADO DE SÉNECA/.test(fuente);
+    const esEF=_pdfEsEF(fuente) || /f[íi]sica/i.test(pdf.area||'');
+    const TOPE=esSen?15000:9000;
     if(fuente.length>TOPE){ fuente = fuente.slice(0,TOPE).trim()+'\n[…texto fuente recortado por longitud…]'; }
     return `
 ⚠️ MODO DESDE PDF — SdA FUENTE (contenido real ya elaborado):
@@ -15881,8 +16040,8 @@ A continuación tienes el CONTENIDO de una Situación de Aprendizaje ya elaborad
 INSTRUCCIONES CLAVE — MODO DESDE PDF:
 1. NO inventes criterios ni saberes: usa EXACTAMENTE los que aparecen en la fuente (códigos LE.01.A.x, competencias específicas, descriptores…). Si un dato falta, complétalo coherente con la Orden 30/05/2023, sin contradecir la fuente.
 2. Respeta título, temática, tarea/producto final, temporalización y secuenciación de la fuente.
-3. Redáctalo siguiendo la plantilla de Primaria con TODOS los apartados que se detallan más abajo (1 a 7). Las rúbricas del apartado 7 y las tablas que la plantilla pide se generan según esas instrucciones, con la escala numérica de Primaria.
-4. SdA de lengua extranjera (${pdf.area}): mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan; el resto en español.
+3. Redáctalo siguiendo la plantilla de Primaria con TODOS los apartados que se detallan más abajo (1 a 7). Las rúbricas del apartado 7 y las tablas que la plantilla pide se generan según esas instrucciones, con los 4 niveles de logro del centro.
+4. ${/ingl|franc|extranjera/i.test(pdf.area)?`SdA de lengua extranjera (${pdf.area}): mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan; el resto en español.`:'Redacción en español.'}${esEF?_pdfBloqueEF(d,((fuente.match(/Sesiones previstas en Séneca: (\d+)/)||[])[1]||'')):''}
 5. Usa las fechas del apartado de planificación de la app (más abajo) para la temporalización.
 
 ═══════ TEXTO FUENTE DE LA SdA (PDF) ═══════
@@ -17064,6 +17223,124 @@ function setModoTrabajo(modo){
 // ═══════════════════════════════════════════════════════════════════
 // MODO DESDE PDF
 // ═══════════════════════════════════════════════════════════════════
+// ═══ PDF de Séneca (Informe de Programación · Situación de Aprendizaje) ═══
+function _pdfEsSeneca(texto){
+    return /INFORME\s+DE\s+PROGRAMACI[ÓO]N\s*\(\s*SITUACI[ÓO]N\s+DE\s+APRENDIZAJE/i.test(texto||'') || /InfProSitApre/i.test(texto||'');
+}
+function _pdfEsEF(texto){
+    const t=texto||'';
+    return /\bEFI\.\d\.\d/.test(t) || /CONCRECI[ÓO]N\s+CURRICULAR\s+Educaci[óo]n\s+F[íi]sica/i.test(t.replace(/\s+/g,' '));
+}
+function _pdfSenecaParse(texto){
+    const MESES='Septiembre|Octubre|Noviembre|Diciembre|Enero|Febrero|Marzo|Abril|Mayo|Junio';
+    let t=(texto||'')
+        .replace(/Ref\.Doc\.:\s*\S+\s*C[óo]d\.Centro:\s*\d+\s*Fecha de generaci[óo]n:\s*[\d\/]+\s*[\d:]+/g,' ')
+        .replace(/Consejer[íi]a de Desarrollo Educativo y F\.P\./g,' ')
+        .replace(/P[áa]g\.:\s*\d+\s*\/\s*\d+/g,' ')
+        .replace(/(^|\n)\s*¿\s+(?=¿)/g,'$1• ')
+        .replace(/¿\s*([^¿?\n]{1,60}?)\s*¿/g,'«$1»')
+        .replace(/¿\)/g,')')
+        .replace(/\.{3,}/g,'…');
+    const flat=s=>s.replace(/\s+/g,' ').trim();
+    const F=flat(t);
+    const out={};
+    out.titulo=(F.match(/T[íi]tulo:\s*(.+?)\s+Justificaci[óo]n:/i)||[])[1]||'';
+    const mc=F.match(/([1-6])\s*º\s*de\s+Educ/i); out.curso=mc?mc[1]+'º':'';
+    const mm=F.match(new RegExp('\\b('+MESES+')\\b','i')); out.temporalizacion=mm?mm[1]:'';
+    out.justificacion=(F.match(/Justificaci[óo]n:\s*(.+?)\s+CONCRECI[ÓO]N CURRICULAR/i)||[])[1]||'';
+    const iCon=F.search(/CONCRECI[ÓO]N CURRICULAR/i), iSec=F.search(/SECUENCIACI[ÓO]N DID[ÁA]CTICA/i);
+    let iEval=F.search(/EVALUACI[ÓO]N DE LA PR[ÁA]CTICA DOCENTE/i); if(iEval<0) iEval=F.length;
+    const con=(iCon>=0 && iSec>iCon)?F.slice(iCon,iSec):'';
+    out.area=(con.match(/CONCRECI[ÓO]N CURRICULAR\s+(.+?)\s+COMPETENCIAS ESPEC/i)||[])[1]||'';
+    // Elementos curriculares con código
+    const COD='([A-ZÑ]{2,5}\\.\\d\\.(?:\\d\\.\\d|\\d|[A-H]\\.\\d(?:\\.\\d)?)|(?:CCL|CP|STEM|CD|CPSAA|CC|CE|CCEC)\\d)';
+    const LBL='COMPETENCIAS ESPEC[ÍI]FICAS|CRITERIOS DE EVALUACI[ÓO]N|SABERES B[ÁA]SICOS|DESCRIPTORES OPERATIVOS';
+    const rx=new RegExp(COD+'\\.\\s*(.+?)(?=\\s'+COD+'\\.|\\s(?:'+LBL+')\\b|$)','g');
+    const ce=[],cr=[],sb=[],desc=[];
+    let m; while((m=rx.exec(con))){
+        const c=m[1], txt=m[2].trim();
+        if(/^(CCL|CP|STEM|CD|CPSAA|CC|CE|CCEC)\d$/.test(c)) desc.push({c,t:txt});
+        else if(/\.[A-H]\./.test(c)) sb.push({c,t:txt});
+        else if(/^[A-ZÑ]+\.\d\.\d\.\d$/.test(c)) cr.push({c,t:txt});
+        else ce.push({c,t:txt});
+    }
+    out.ce=ce; out.criterios=cr; out.saberes=sb; out.descriptores=desc;
+    // Secuenciación: sustituir los textos largos repetidos de CE y criterios por su código
+    let seq=(iSec>=0)?F.slice(iSec,iEval):'';
+    [...ce,...cr].forEach(({c,t:tx})=>{
+        const full=c+'.'+tx;
+        seq=seq.split(full).join(c);
+        const w=tx.split(' ');
+        for(let k=w.length-1;k>=6;k--){ const pre=c+'.'+w.slice(0,k).join(' '); if(seq.includes(pre)){ seq=seq.split(pre).join(c); break; } }
+        for(let k=1;k<w.length-6;k++){ const suf=w.slice(k).join(' '); if(suf.length>=50 && seq.includes(suf)){ seq=seq.split(suf).join(''); break; } }
+    });
+    seq=seq.replace(/\b(TRAZABILIDAD|ARCHIVO ADJUNTO)\b/g,' ')
+           .replace(/\b(EJERCICIOS|METODOLOG[ÍI]A|TEMPORALIZACI[ÓO]N|RECURSOS|CRITERIOS|COMPETENCIAS ESPEC[ÍI]FICAS)(\s+\1)+/g,'$1')
+           .replace(/\s{2,}/g,' ');
+    // Quitar códigos repetidos seguidos
+    seq=seq.replace(new RegExp('('+COD+')((?:\\s+'+COD+')+)','g'),(all)=>[...new Set(all.split(/\s+/))].join(' '));
+    seq=seq.replace(/\s*\b(PRODUCTO FINAL:|EJERCICIOS|CALENTAMIENTO|PARTE PRINCIPAL|VUELTA A LA CALMA|METODOLOG[ÍI]A|TEMPORALIZACI[ÓO]N|COMPETENCIAS ESPEC[ÍI]FICAS|CRITERIOS|RECURSOS|T[ÍI]TULO DE LA ACTIVIDAD:)/g,'\n$1')
+           .replace(/\s+•\s*/g,'\n• ')
+           .replace(/\s(\d{1,2})\.\s(?=[A-ZÁÉÍÓÚ])/g,'\n$1. ')
+           .replace(/T[ÍI]TULO DE LA ACTIVIDAD:\s*(.+?)\s*\(\s*TIPO DE LA ACTIVIDAD:\s*(.+?)\)/g,'▶ ACTIVIDAD: $1 (tipo: $2)')
+           .replace(/^SECUENCIACI[ÓO]N DID[ÁA]CTICA\s*/i,'').trim();
+    out.producto=(seq.match(/PRODUCTO FINAL:\s*([^\n]+?)(?:\s+Se llevar|\n|$)/i)||[])[1]||'';
+    const acts=[]; const rA=/▶ ACTIVIDAD: (.+?) \(tipo: (.+?)\)/g; let a;
+    while((a=rA.exec(seq))){ const k=a[1].trim()+'|'+a[2].trim(); if(!acts.some(x=>x.k===k)) acts.push({k,titulo:a[1].trim(),tipo:a[2].trim()}); }
+    out.actividades=acts;
+    let ses=0; (seq.match(/(\d+)\s*sesi[óo]n(?:es)?/gi)||[]).forEach(s=>ses+=parseInt(s,10)||0); out.sesiones=ses;
+    out.secuencia=seq;
+    return out;
+}
+function _pdfSenecaCompacto(texto){
+    const p=_pdfSenecaParse(texto);
+    const L=a=>a.map(x=>`• ${x.c}. ${x.t}`).join('\n');
+    return `[PDF EXPORTADO DE SÉNECA — Informe de Programación (Situación de Aprendizaje). Texto reorganizado por la app.]
+TÍTULO: ${p.titulo}
+CURSO: ${p.curso} de Primaria · ÁREA: ${p.area} · TEMPORALIZACIÓN (Séneca): ${p.temporalizacion}${p.sesiones?` · Sesiones previstas en Séneca: ${p.sesiones}`:''}
+
+JUSTIFICACIÓN (Séneca):
+${p.justificacion}
+
+COMPETENCIAS ESPECÍFICAS:
+${L(p.ce)}
+
+CRITERIOS DE EVALUACIÓN:
+${L(p.criterios)}
+
+SABERES BÁSICOS:
+${L(p.saberes)}
+
+DESCRIPTORES OPERATIVOS: ${p.descriptores.map(x=>x.c).join(', ')}
+
+PRODUCTO FINAL: ${p.producto}
+ACTIVIDADES (orden y tipo de Séneca): ${p.actividades.map((x,i)=>`${i+1}) ${x.titulo} [${x.tipo}]`).join(' · ')}
+
+SECUENCIACIÓN DIDÁCTICA (tal como sale en Séneca; los bloques de ejercicios pueden aparecer antes de su «▶ ACTIVIDAD»):
+${p.secuencia}`;
+}
+
+function _pdfBloqueEF(d, sesSeneca){
+    return `
+🏃 SdA DE EDUCACIÓN FÍSICA EXPORTADA DE SÉNECA — CÓMO ADAPTARLA A LA PLANTILLA:
+• Correspondencia: Título y Temporalización de Séneca → 1 IDENTIFICACIÓN (conserva el código del título, p. ej. «EF1.1»). Justificación de Séneca (ODS, pregunta de reflexión, «Objetivo en acción», evaluación inicial y rutinas) → 2 JUSTIFICACIÓN. Producto final → 3 PRODUCTO FINAL (cada actividad de Séneca aporta un producto parcial). Competencias específicas, criterios, saberes y descriptores → 4 CONCRECIÓN CURRICULAR copiando EXACTAMENTE los códigos EFI de la fuente, sin añadir otros. Actividades de Séneca → 5 SECUENCIA DIDÁCTICA.
+• Fases: Motivación → Motivación · Activación → Activación · Exploración/Estructuración/Desarrollo → Desarrollo y Consolidación · Aplicación/Conclusión → Finalizar y Aplicar.
+• OJO al formato de Séneca: los títulos «▶ ACTIVIDAD» salen al PIE de cada página, DESPUÉS de sus ejercicios, y a veces dos actividades aparecen fusionadas en la misma página (etiquetas EJERCICIOS/METODOLOGÍA dobles y dos temporalizaciones, p. ej. «1 sesión 2 sesiones»). Asigna los bloques de ejercicios a las actividades POR ORDEN, respetando las sesiones de cada una.
+• Reparte los juegos de Séneca entre las ${d.sesiones} sesiones de la planificación${sesSeneca?` (Séneca preveía ${sesSeneca})`:''}. Si no coinciden, fusiona o desdobla sesiones con los MISMOS juegos; solo añade juegos nuevos si falta contenido, y que sean coherentes con los saberes.
+• Estructura de CADA sesión (en EF NO hay libro: no pongas páginas):
+   | SABER BÁSICO | [código EFI] — [concreción breve, máx. 6 palabras] |
+   | CALENTAMIENTO / ACTIVACIÓN (…') | [juego de activación de la fuente] |
+   | PARTE PRINCIPAL (…') | [juegos o postas de la fuente: organización (individual/parejas/grupos), espacio y material] |
+   | VUELTA A LA CALMA Y ASEO (…') | [juego de calma o estiramientos, reflexión breve, aseo e higiene] |
+   | TOTAL | los minutos deben sumar EXACTAMENTE ${d.duracion} |
+• Espacios y material: los de Séneca (pista polideportiva, aula, balones, conos…).
+• Si la fuente usa el circuito como evaluación inicial (p. ej. adaptación del TGMD-2), mantenlo: hoja de registro por postas (Lo hace / En proceso / No lo hace).
+• 6 DUA en EF: adaptación de distancias, tamaños de balón y tiempos; roles alternativos (árbitro, ayudante, encargado de material); normas con pictogramas; anticipación y rincón de calma para alumnado TEA; ajustes por condiciones de salud.
+• 7 Instrumentos de EF: observación sistemática (lista de control, registro anecdótico), hoja de registro del circuito, autoevaluación con caritas o diana y coevaluación sencilla. NO uses prueba escrita.
+• Redacción en español; nombres de juegos tal como vengan en la fuente.
+`;
+}
+
 function togglePDF(activar){
     pdfActivo = (activar!==undefined) ? activar : !pdfActivo;
     const panel=document.getElementById('pdfPanel');
@@ -17120,6 +17397,10 @@ function procesarSdaPDFTexto(texto, origen){
         if(status){ status.style.display='block'; status.textContent='⚠️ El texto es demasiado corto. Revisa el PDF o pega el texto completo.'; }
         return;
     }
+    let esSen=false, infoSen=null;
+    if(_pdfEsSeneca(texto)){
+        try{ infoSen=_pdfSenecaParse(texto); texto=_pdfSenecaCompacto(texto); esSen=true; }catch(e){ console.warn('Séneca parse',e); }
+    }
     pdfSdaTexto = texto;
     // Autodetección de curso, área y título
     const meta=_pdfDetectarMeta(texto);
@@ -17129,17 +17410,21 @@ function procesarSdaPDFTexto(texto, origen){
     document.getElementById('pdfCharCount').textContent=texto.length;
     document.getElementById('pdfTextoOculto').value=texto;
     document.getElementById('pdfCardPreview').style.display='block';
-    if(status){ status.style.display='block'; status.innerHTML=`✅ SdA leída correctamente${origen?` <span style="color:#6b7280">(${origen})</span>`:''}.`; }
+    if(status){ status.style.display='block'; status.innerHTML=`✅ SdA leída correctamente${origen?` <span style="color:#6b7280">(${origen})</span>`:''}.`+(esSen&&infoSen?`<br>📋 Formato Séneca${infoSen.area?' · '+infoSen.area:''}: ${infoSen.criterios.length} criterios, ${infoSen.saberes.length} saberes, ${infoSen.actividades.length} actividades${infoSen.sesiones?', '+infoSen.sesiones+' sesiones':''}.`:''); }
     _pdfSyncCampos();
 }
 
 function _pdfDetectarMeta(texto){
     const t=texto.replace(/\s+/g,' ');
+    const mSen=t.match(/^\[PDF EXPORTADO DE SÉNECA.*?TÍTULO: (.*?) CURSO: ([1-6]º).*?ÁREA: (.*?) · TEMPORALIZACIÓN/);
+    if(mSen) return {titulo:mSen[1].trim(), curso:mSen[2], area:mSen[3].trim()||(_pdfEsEF(texto)?'Educación Física':'')};
+    if(_pdfEsSeneca(texto)){ const p=_pdfSenecaParse(texto); return {titulo:p.titulo, curso:p.curso, area:p.area||(_pdfEsEF(texto)?'Educación Física':'')}; }
     let curso='';
-    const mCurso=t.match(/([123456])\s*º?\s*(?:DE\s+)?PRIMARIA/i) || t.match(/PRIMARIA\s*([123456])\s*º?/i);
+    const mCurso=t.match(/([123456])\s*º?\s*(?:DE\s+)?PRIMARIA/i) || t.match(/([123456])\s*º\s*de\s+Educ\.?\s*Prim/i) || t.match(/PRIMARIA\s*([123456])\s*º?/i);
     if(mCurso) curso=mCurso[1]+'º';
     let area='Inglés (1ª Lengua Extranjera)';
     if(/\bFRANC[ÉE]S\b/i.test(t)) area='Francés (2ª Lengua Extranjera)';
+    if(_pdfEsEF(texto)) area='Educación Física';
     let titulo='';
     const mTit=t.match(/T[ÍI]TULO\s*:?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ0-9'’!¡¿?&., ]{3,60}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
     if(mTit) titulo=mTit[1].trim().replace(/[.,;:]+$/,'');
@@ -17158,11 +17443,16 @@ function _pdfSyncCampos(){
     if(cursoEl && curso) cursoEl.value=curso;
     // Seleccionar el área de inglés/francés en el selector general (para que recopilarDatos la incluya)
     setTimeout(()=>{
-        document.querySelectorAll('.area-item').forEach(it=>{
+        const _norm=s=>(s||'').toLowerCase().replace(/\(.*?\)/g,'').trim();
+        const clave=_norm(area);
+        const items=[...document.querySelectorAll('.area-item')];
+        const hayExacta=items.some(it=>{const n=_norm(it.querySelector('.at')?.textContent); return n && (n===clave||n.includes(clave));});
+        items.forEach(it=>{
             const titEl=it.querySelector('.at'); if(!titEl) return;
             const nombre=titEl.textContent.trim();
             const cb=it.querySelector('input[type=checkbox]');
-            const debe = area && nombre.toLowerCase().includes(area.toLowerCase().split(' ')[0].toLowerCase());
+            const n=_norm(nombre);
+            const debe = area && (hayExacta ? (n===clave||n.includes(clave)) : nombre.toLowerCase().includes(area.toLowerCase().split(' ')[0].toLowerCase()));
             if(cb && debe && !cb.checked){ toggleArea(nombre,it); }
         });
     },40);
