@@ -924,6 +924,7 @@
             ↵ Pulsa <strong>Enter</strong> o el botón de enviar
         </div>
         <div class="paste-preview" id="pastePreview"></div>
+        <p class="paste-sub" style="margin-top:.6rem">🔁 Cuando la IA termine, vuelve a esta app: en el último paso podrás hacer las <strong>rúbricas</strong> y las <strong>fichas de lectura y problemas</strong>.</p>
         <button class="btn-paste-open" id="btnPasteOpen">
             🚀 Abrir <span id="pasteIAName">Gemini</span> — ya tengo el prompt copiado
         </button>
@@ -2780,9 +2781,12 @@
         <div class="p8">
             <div class="p8-n">3</div>
             <div class="p8-b">
-                <div class="p8-t">¿Ya tienes la SdA? Haz las rúbricas</div>
-                <p class="p8-d">Cuando la IA termine, vuelve aquí y pulsa este botón.</p>
-                <button class="btn btn-purple p8-big2" onclick="irARubricas()">📐 Crear las rúbricas</button>
+                <div class="p8-t">¿Ya tienes la SdA? Haz las rúbricas y las fichas</div>
+                <p class="p8-d">Cuando la IA termine, vuelve aquí y pulsa el botón que quieras. Pegarás la SdA una sola vez y te sirve para las dos cosas.</p>
+                <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+                    <button class="btn btn-purple p8-big2" onclick="irARubricas()">📐 Crear las rúbricas</button>
+                    <button class="btn p8-big2" style="background:#1B2C50;color:#fff" onclick="irAFichasAgora()">📖 Fichas de lectura y problemas</button>
+                </div>
             </div>
         </div>
 
@@ -2890,6 +2894,12 @@
                 <p class="p8-d">Haz clic en el cuadro donde se escribe, pulsa <kbd>Ctrl</kbd> + <kbd>V</kbd> y dale a <strong>enviar</strong>. Espera a que termine: saldrá una rúbrica y una tabla de registro por cada actividad.</p>
             </div>
         </div>
+    </div>
+
+    <div class="p8-guia" id="bloqueAgora" style="border-color:#bcd2f2;background:#f5f8ff">
+        <div class="p8-head">📖 Fichas de lectura y resolución de problemas</div>
+        <p class="p8-d">Con la <strong>misma SdA que has pegado arriba</strong>, Ágora prepara fichas de lectura y de problemas con su temática, vocabulario y producto final. Se abre Ágora con todo puesto: solo eliges cuántas fichas quieres y pulsas «Crear».</p>
+        <button class="btn p8-big2" style="background:#1B2C50;color:#fff" onclick="enviarAAgora()">📖 Abrir Ágora con esta SdA</button>
     </div>
 
     <details class="p8-mas">
@@ -4215,6 +4225,14 @@ function prevStep(){
     }
 }
 function irARubricas(){irAPaso(9);}
+function irAFichasAgora(){
+    irAPaso(9);
+    setTimeout(()=>{
+        const ta=document.getElementById('sdaPegada');
+        if(ta && !ta.value.trim()){ ta.scrollIntoView({behavior:'smooth',block:'center'}); try{ta.focus({preventScroll:true});}catch(e){} showToast('📋 Pega aquí la SdA y luego pulsa «Abrir Ágora con esta SdA»'); }
+        else { document.getElementById('bloqueAgora')?.scrollIntoView({behavior:'smooth',block:'center'}); }
+    },300);
+}
 
 // ── Auto-rellenar pasos saltados (2, 3, 5, 6) con datos Santillana ──
 function _autoRellenarPasosSant(curso, trim, sdaNum, mod){
@@ -18484,6 +18502,20 @@ function _bibPedirBorrar(id,btn){
     acc.appendChild(w);
 }
 
+
+/* ── Enviar la SdA a Ágora (fichas de lectura y resolución de problemas) ── */
+const AGORA_URL='https://vunisal706-droid.github.io/leoresuelvo/';
+function enviarAAgora(){
+    const t=document.getElementById('sdaPegada').value.trim();
+    if(!t){ showToast('⚠️ Pega primero el texto de tu SdA'); return; }
+    const curso=(document.getElementById('curso')?.value||'').replace(/\D/g,'');
+    const datos={texto:t,curso,titulo:document.getElementById('titSda')?.value||'',ts:Date.now()};
+    try{ localStorage.setItem('agora_sda_import',JSON.stringify(datos)); }catch(e){}
+    // Respaldo por si Ágora estuviera en otro dominio: el texto viaja en el enlace (recortado)
+    const corto=JSON.stringify({texto:t.slice(0,8000),curso,titulo:datos.titulo});
+    window.open(AGORA_URL+'?desde=sda#sda='+encodeURIComponent(corto),'_blank','noopener');
+    showToast('📖 SdA enviada a Ágora');
+}
 /* ── Adjuntar desde el paso 9 ──────────────────────────────────────── */
 function guardarTextoEnBiblioteca(){
     const t=document.getElementById('sdaPegada').value.trim();
