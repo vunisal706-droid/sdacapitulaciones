@@ -1865,6 +1865,12 @@
             </div>
 
             <div id="pdfPlanifSlot"></div>
+            <div style="background:#fff;border:2px solid #c4b5fd;border-radius:12px;padding:.9rem 1rem;margin-bottom:1rem">
+                <label for="pdfPaginas" style="color:#5b21b6;font-size:.9rem;font-weight:800;display:block;margin-bottom:.25rem">2. 📝 Qué se trabaja en cada página del libro <span style="font-weight:600;color:#7c3aed">(muy recomendable)</span></label>
+                <div style="font-size:.78rem;color:#4b5563;margin-bottom:.45rem;line-height:1.45">Una línea por página (o grupo de páginas), en el orden del libro: <b>número – lo que se trabaja</b>. Así cada sesión de la SdA sale con su página y con lo que de verdad hacéis en clase. Si una página necesita más de un día, pon «(2 días)».</div>
+                <textarea id="pdfPaginas" rows="7" oninput="_pdfPaginasInput()" placeholder="Ejemplo:&#10;4-5 - Unit 1 opener: vocabulary (family members)&#10;6 - Song: This is my family&#10;7 - Grammar: have got (2 días)&#10;8 - Story: The big family&#10;9 - Review&#10;Producto final - Family poster" style="width:100%;font-size:.95rem;font-family:inherit;border:1.5px solid #d1d5db;border-radius:10px;padding:.6rem .7rem;line-height:1.5"></textarea>
+                <div id="pdfPaginasCont" style="font-size:.75rem;color:#6d28d9;margin-top:.3rem"></div>
+            </div>
             <div class="sant-info" style="background:rgba(99,102,241,0.06);border-color:rgba(99,102,241,0.2)">
                 💡 <strong>Cómo funciona:</strong> Sube el PDF de una SdA ya hecha (inglés, o el informe de Séneca de Educación Física). La app lee su contenido y genera una SdA nueva con <strong>los mismos apartados de la plantilla del inspector de Primaria</strong>, reutilizando sus criterios (LE.01…, EFI.1.1.1…), saberes, tarea final y secuenciación. Luego la exportas a Word.
             </div>
@@ -15055,6 +15061,7 @@ DATOS:
 ${tabla}
 ${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':'IDIOMA: todo en español.'}
 ${esEF?_pdfBloqueEF(d,sesSen):''}
+${(!esEF&&_modoLibro())?_bloqueIndiceLibro():''}
 GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos: "1 — IDENTIFICACIÓN", etc.):
 1 — IDENTIFICACIÓN: tabla con curso, título, trimestre, fechas, nº de sesiones, tipo, metodología y planes del centro asociados.
 2 — JUSTIFICACIÓN: objetivos de etapa (${esInf?'Decreto 100/2023 Infantil':'Decreto 101/2023'}), principios pedagógicos y justificación de la conexión con el entorno del alumnado de ${d.curso}.
@@ -15603,6 +15610,15 @@ async function leerIndiceFotos(input){
     }
     input.value='';
 }
+function _pdfPaginasInput(){
+    const v=document.getElementById('pdfPaginas').value, pt=document.getElementById('paginasTexto');
+    if(pt){ pt.value=v; _guardarPaginas(); }
+    const n=v.split('\n').map(l=>l.trim()).filter(Boolean).length;
+    if(n && _modoSesiones!=='paginas') setModoSesiones('paginas');
+    const c=document.getElementById('pdfPaginasCont'); if(c) c.textContent=n?`✅ ${n} línea${n>1?'s':''}. Las sesiones seguirán estas páginas en orden.`:'';
+}
+function _pdfPaginasCargar(){ const a=document.getElementById('pdfPaginas'), pt=document.getElementById('paginasTexto'); if(a&&pt&&!a.value&&pt.value){ a.value=pt.value; _pdfPaginasInput(); } }
+document.addEventListener('DOMContentLoaded',()=>setTimeout(_pdfPaginasCargar,50));
 function _bloqueIndiceLibro(){
     if(_modoSesiones==='paginas'){
         const t=_lineasPaginas().join('\n');
@@ -19013,7 +19029,7 @@ else _cargar();
 <script>
 // ===== Novedades (salen una sola vez en cada dispositivo) =====
 (function(){
-  var ID='2026-10-13', K='novedades-sdacapitulaciones', ITEMS=["⬇️ Al generar el prompt sale el botón <b>«Descargar el prompt (.txt)»</b>. Si al pegarlo en la IA se corta o no se pega, adjunta ese archivo con el clip 📎. En Mac se descarga solo.", "🍎 En Mac, las instrucciones dicen <b>Cmd ⌘ + V</b> en lugar de Ctrl + V.", "⏱️ En la duración de las sesiones hay una opción nueva: <b>«No todas mis sesiones duran lo mismo»</b>. Pones los minutos de cada día (por ejemplo, martes 30', jueves 60') y la SdA ajusta cada sesión a sus minutos."];
+  var ID='2026-10-13b', K='novedades-sdacapitulaciones', ITEMS=["📄 En el modo <b>Desde PDF</b> hay un recuadro nuevo: <b>«Qué se trabaja en cada página del libro»</b>. Escribe una línea por página (número – lo que se trabaja) y las sesiones saldrán con su página y con lo que de verdad hacéis en clase.", "⬇️ Al generar el prompt sale el botón <b>«Descargar el prompt (.txt)»</b>. Si al pegarlo en la IA se corta o no se pega, adjunta ese archivo con el clip 📎. En Mac se descarga solo.", "🍎 En Mac, las instrucciones dicen <b>Cmd ⌘ + V</b> en lugar de Ctrl + V.", "⏱️ En la duración de las sesiones hay una opción nueva: <b>«No todas mis sesiones duran lo mismo»</b>. Pones los minutos de cada día (por ejemplo, martes 30', jueves 60') y la SdA ajusta cada sesión a sus minutos."];
   function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
     var d=document.createElement('div');
     d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
