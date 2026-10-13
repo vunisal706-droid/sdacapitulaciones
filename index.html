@@ -924,6 +924,8 @@
             ↵ Pulsa <strong>Enter</strong> o el botón de enviar
         </div>
         <div class="paste-preview" id="pastePreview"></div>
+        <button type="button" onclick="_descargarUltimoPrompt()" style="width:100%;margin-top:.6rem;background:#f1f5f9;border:2px solid #cbd5e1;color:#1e293b;border-radius:10px;padding:.65rem;font-weight:700;cursor:pointer;font-size:.92rem">⬇️ Descargar el prompt (.txt)</button>
+        <p class="paste-sub" style="margin-top:.35rem;font-size:.8rem">¿Se corta al pegar o no se pega? Descárgalo y <b>adjúntalo en la IA con el clip 📎</b> (o arrastra el archivo al chat), y escribe: «Sigue las instrucciones del archivo».</p>
         <p class="paste-sub" style="margin-top:.6rem">🔁 Cuando la IA termine, vuelve a esta app: en el último paso podrás hacer las <strong>rúbricas</strong> y las <strong>fichas de lectura y problemas</strong>.</p>
         <button class="btn-paste-open" id="btnPasteOpen">
             🚀 Abrir <span id="pasteIAName">Gemini</span> — ya tengo el prompt copiado
@@ -1436,7 +1438,18 @@
     <div class="row">
         <div class="fg">
             <label for="duracion">Duración por sesión (min) *</label>
-            <input type="number" id="duracion" min="10" max="300" value="60" step="10" required>
+            <input type="number" id="duracion" min="10" max="300" value="60" step="5" required onchange="if(typeof generarTablaSesiones==='function')generarTablaSesiones()">
+            <details id="durDiasBox" style="margin-top:.4rem;font-size:.85rem">
+                <summary style="cursor:pointer;color:#2563eb;font-weight:600">⏱️ No todas mis sesiones duran lo mismo</summary>
+                <div style="margin:.4rem 0 .2rem;color:#64748b">Pon los minutos de cada día. Deja en blanco los que duren lo de arriba.</div>
+                <div style="display:flex;gap:.35rem;flex-wrap:wrap">
+                    <label style="display:flex;flex-direction:column;align-items:center;font-weight:700">L<input type="number" id="durDia1" min="10" max="300" step="5" placeholder="—" style="width:58px;text-align:center" onchange="generarTablaSesiones()"></label>
+                    <label style="display:flex;flex-direction:column;align-items:center;font-weight:700">M<input type="number" id="durDia2" min="10" max="300" step="5" placeholder="—" style="width:58px;text-align:center" onchange="generarTablaSesiones()"></label>
+                    <label style="display:flex;flex-direction:column;align-items:center;font-weight:700">X<input type="number" id="durDia3" min="10" max="300" step="5" placeholder="—" style="width:58px;text-align:center" onchange="generarTablaSesiones()"></label>
+                    <label style="display:flex;flex-direction:column;align-items:center;font-weight:700">J<input type="number" id="durDia4" min="10" max="300" step="5" placeholder="—" style="width:58px;text-align:center" onchange="generarTablaSesiones()"></label>
+                    <label style="display:flex;flex-direction:column;align-items:center;font-weight:700">V<input type="number" id="durDia5" min="10" max="300" step="5" placeholder="—" style="width:58px;text-align:center" onchange="generarTablaSesiones()"></label>
+                </div>
+            </details>
         </div>
         <div class="fg">
             <label for="sdaNum">Nº SdA</label>
@@ -4598,6 +4611,7 @@ function recopilarDatos(){
         semanas:document.getElementById('semanas').value,
         sesiones:parseInt(document.getElementById('sesiones').value)||4,
         duracion:parseInt(document.getElementById('duracion').value)||60,
+        ..._durInfo(),
         fechaInicio:document.getElementById('fechaInicio').value,
         fechaFin:document.getElementById('fechaFin').value,
         areas:areasSeleccionadas,
@@ -4624,6 +4638,16 @@ function recopilarDatos(){
 // ═══════════════════════════════════════════════════════════════════
 // HELPER: bloque de tiempo por tipo de sesión
 // ═══════════════════════════════════════════════════════════════════
+// Duraciones distintas según el día
+function _durInfo(){
+    const ss=sesionesData||[], gen=parseInt(document.getElementById('duracion')?.value)||60;
+    const varia=ss.length>0 && ss.some(x=>x.durTotal!==ss[0].durTotal);
+    if(!varia) return {durVaria:false};
+    const porDia={}; ss.forEach(x=>{ porDia[x.diaN]=x.durTotal; });
+    const total=ss.reduce((a,x)=>a+(x.durTotal||gen),0);
+    return {durVaria:true, durResumen:Object.entries(porDia).map(([k,v])=>k+' '+v+"'").join(', '), durTotalMin:total};
+}
+function _durSuma(d,n){ return d&&d.durVaria ? `${n} en las sesiones de ${n}'; las sesiones de OTRA duración (mira la columna de minutos de la tabla de sesiones: ${d.durResumen}) reparten sus minutos en la misma proporción y su TOTAL es su propia duración` : n; }
 function _tiempoBloque(tiempoT, esLengua, esMat){
     const tiempoAN = Math.max(10, tiempoT - (esLengua ? 30 : 0));
     let out = 'Si sesión NORMAL (sin RP ni Lectura especial):\n' +
@@ -15000,7 +15024,7 @@ function _construirPromptPDF(d){
     let tabla='';
     if(d.sesionesData && d.sesionesData.length){
         tabla='\nTABLA DE SESIONES (usa estas fechas exactas):\n| Nº | Fecha | Día |\n|---|---|---|\n';
-        d.sesionesData.forEach(s=>{ tabla+=`| ${s.num} | ${fmtD(s.fecha)} | ${s.diaN} |\n`; });
+        d.sesionesData.forEach(s=>{ tabla+=`| ${s.num} | ${fmtD(s.fecha)} | ${s.diaN}${d.durVaria?` · ${s.durTotal}'`:''} |\n`; });
     }
     // Fuente recortada (quitar rúbricas del apartado 7 y autoevaluación docente: la plantilla los regenera)
     let fuente = (pdf && pdf.texto) ? pdf.texto : (pdfSdaTexto||'');
@@ -15026,7 +15050,7 @@ Genera una Situación de Aprendizaje COMPLETA con los 7 apartados de la plantill
 DATOS:
 • Curso: ${d.curso} · Área: ${area} · Trimestre: ${d.trimestre||'(según fechas)'}
 • Título: "${titulo}"
-• Fechas: ${d.fechaInicio||'—'} a ${d.fechaFin||'—'} (${d.semanas} semanas) · ${d.sesiones} sesiones de ${d.duracion} min
+• Fechas: ${d.fechaInicio||'—'} a ${d.fechaFin||'—'} (${d.semanas} semanas) · ${d.sesiones} sesiones ${d.durVaria?`de distinta duración (${d.durResumen})`:`de ${d.duracion} min`}
 • Tipo: ${(sdaTipos[d.sdaTipo]||sdaTipos.producto).nombre}
 ${tabla}
 ${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':'IDIOMA: todo en español.'}
@@ -15047,7 +15071,7 @@ ${(esEF&&!_modoNoIA())?`   🏃 Para CADA sesión usa la estructura de Educació
    | INICIO (…') | [enganche — SIN página de libro] |
    | DESARROLLO (…') | **Propuesta de la app:** [tarea del saber básico] · **En el libro: Pág. ______** (la rellena el maestro) · *Ambas trabajan el mismo saber básico.* |
    | CIERRE (…') | [síntesis y evidencia — SIN página de libro] |
-   | TOTAL | los minutos deben sumar EXACTAMENTE ${d.duracion} |`}
+   | TOTAL | los minutos deben sumar EXACTAMENTE ${_durSuma(d,d.duracion)} |`}
 6 — MEDIDAS DE ATENCIÓN A LA DIVERSIDAD (DUA): por sesión/actividad, pauta DUA + estrategia concreta + herramienta digital + andamiaje. Medidas ORDINARIAS (no ACS).
 7 — VALORACIÓN DE LO APRENDIDO: una rúbrica por CADA criterio con los CUATRO niveles de logro del apartado E.2 del Proyecto Educativo del CEIP Capitulaciones (1 No conseguido · 2 En proceso · 3 Conseguido · 4 Conseguido con destreza). NO uses escala numérica de 1 a 10 ni porcentajes. Cada criterio se evalúa en DOS momentos y con DOS instrumentos distintos; la prueba escrita nunca es el único instrumento. Conversión final: 1 Insuficiente · 2 Suficiente o Bien · 3 Notable · 4 Sobresaliente.
 
@@ -15376,7 +15400,7 @@ function _pxPintar(){
     document.getElementById('pxDiasT').textContent=`${(typeof AREA_ICONS!=='undefined'&&AREA_ICONS[area])||'📅'} ¿Qué días das ${area||'el área'}?`;
     document.getElementById('pxDias').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="ex-dia ${PX.dias.includes(n)?'sel':''}" onclick="pxDia(${n})">${L[n]}</button>`).join('');
     if(!PX.dur) PX.dur=parseInt(document.getElementById('duracion')?.value)||45;
-    document.getElementById('pxDur').innerHTML=[45,60,90].map(v=>`<button type="button" class="ex-dia ${PX.dur===v?'sel':''}" onclick="PX.dur=${v};_pxPintar()">${v}'</button>`).join('');
+    document.getElementById('pxDur').innerHTML=[30,45,60,90].map(v=>`<button type="button" class="ex-dia ${PX.dur===v?'sel':''}" onclick="PX.dur=${v};_pxPintar()">${v}'</button>`).join('');
     const acn=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb')).map(c=>c.value);
     document.getElementById('pxAcn').innerHTML=acn.map(v=>`<button type="button" class="ex-chip ${PX.acn.has(v)?'sel':''}" data-v="${v}">${v}</button>`).join('');
     document.querySelectorAll('#pxAcn .ex-chip').forEach(b=>b.onclick=()=>{
@@ -15707,9 +15731,9 @@ function construirPrompt(d){
         d.sesionesData.forEach(s=>{
             const f=fmtDate(s.fecha);
             const tp=s.tipo==='lectura'?'📖 Lectura (30min)':s.tipo==='rp'?'🔢 RP (30min)':s.tipo==='lectura-rp'?'📖🔢 Lect+RP':'📚 Normal';
-            tablaT+=`| ${s.num} | ${f} | ${s.diaN} | ${tp} | ${s.nota||''} |\n`;
+            tablaT+=`| ${s.num} | ${f} | ${s.diaN}${d.durVaria?` · ${s.durTotal}'`:''} | ${tp} | ${s.nota||''} |\n`;
         });
-        tablaT+=`Total: ${d.sesionesData.length} sesiones | Duración: ${d.duracion} min/sesión\n`;
+        tablaT+=d.durVaria?`Total: ${d.sesionesData.length} sesiones | ⏱️ NO todas duran lo mismo: ${d.durResumen} (cada sesión indica sus minutos en la tabla). Ajusta las actividades y los tiempos de CADA sesión a SUS minutos.\n`:`Total: ${d.sesionesData.length} sesiones | Duración: ${d.duracion} min/sesión\n`;
         { const ex=_excursionesEnRango(); if(ex.length) tablaT+=`🚌 Excursiones/actividades sin clase en estas fechas (ya descontadas, no hay sesión): ${ex.map(e=>_excFechaCorta(e.d)+' '+e.t).join(' · ')}. Si encaja, relaciónalas con la SdA en 4.4.\n`; }
         tablaT+=`${_modoNoIA()?'⚠️ EVALUACIÓN — LA DECIDES TÚ: evalúa cada criterio al CERRAR la actividad que lo trabaja (última sesión de esa actividad). No asignes criterios a sesiones sueltas. Refleja las fechas en la tabla del punto 4.1.':'⚠️ EVALUACIÓN — LA DECIDES TÚ: Una vez asignados los criterios a cada sesión, marca la evaluación en la ÚLTIMA sesión que trabaje cada criterio (o grupo de criterios relacionados). No evalúes en cada sesión — solo cuando se cierra un criterio. Refleja las fechas de evaluación en la tabla del punto 4.1.'}\n`;
     }
@@ -15794,7 +15818,7 @@ ${(()=>{
      | DESARROLLO (${dev}') | **Propuesta de la app:** [tarea principal que trabaja el saber básico de esta sesión] · **En el libro: Pág. ______** (la rellena el maestro) · *Ambas trabajan el mismo saber básico: usa una, la otra o las dos.* |
      | CIERRE (${cie}') | [Puesta en común, síntesis, recogida de evidencia — SIN página de libro] |
      | TOTAL | ${lect>0?`${lect}' lectura + `:''}${ini}' inicio + ${dev}' desarrollo + ${cie}' cierre = ${dur} minutos ✔ |
-     ⚠️ Los minutos deben sumar EXACTAMENTE ${dur}. Comprueba la suma antes de escribirla.
+     ⚠️ Los minutos deben sumar EXACTAMENTE ${_durSuma(d,dur)}. Comprueba la suma antes de escribirla.
 `;
   if(esMat && rp > 0){
     sesBlock += `
@@ -15804,7 +15828,7 @@ ${(()=>{
      | DESARROLLO (${Math.round((dur-30)*0.65)}') | **Propuesta de la app:** [tarea del saber básico] · **En el libro: Pág. ______** · *Ambas trabajan el mismo saber.* |
      | CIERRE (${(dur-30)-Math.round((dur-30)*0.15)-Math.round((dur-30)*0.65)}') | [Síntesis y recogida de evidencia — SIN página de libro] |
      | TOTAL | 30' RP + ${dur-30}' de SdA = ${dur} minutos ✔ |
-     ⚠️ Los minutos deben sumar EXACTAMENTE ${dur}. Comprueba la suma antes de escribirla.
+     ⚠️ Los minutos deben sumar EXACTAMENTE ${_durSuma(d,dur)}. Comprueba la suma antes de escribirla.
 `;
   }
   return sesBlock;
@@ -16093,7 +16117,7 @@ ${(()=>{
   Temporalización real: ${iSda?.temporalizacion||''}
   Producto/Reto final: ${iSda?.producto||'(no consta — propón uno coherente)'}
   ${centroInteres?`Centro de interés del tutor: "${centroInteres}"`:''}
-  Duración: ${d.semanas} semanas | Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
+  Duración: ${d.semanas} semanas | Sesiones: ${d.durVaria?`${d.sesiones} de distinta duración (${d.durResumen}) = ${d.durTotalMin} min totales`:`${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales`}
 ${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
   Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
   Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
@@ -16126,7 +16150,7 @@ ${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una ad
   Reto del proyecto: ${sTrimData?.reto||''}
   Producto/Reto final: ${productoFinal}
   ${centroInteres?`Centro de interés del tutor: "${centroInteres}"`:''}
-  Duración: ${d.semanas} semanas | Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
+  Duración: ${d.semanas} semanas | Sesiones: ${d.durVaria?`${d.sesiones} de distinta duración (${d.durResumen}) = ${d.durTotalMin} min totales`:`${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales`}
 ${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
   Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
   Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
@@ -16140,7 +16164,7 @@ ${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una ad
   Área(s): ${areasT}${esMulti?' [INTERDISCIPLINAR]':''}
   Título: "${d.titSda||d.tematica}"
   SdA Nº: ${d.sdaNum} | Trimestre: ${d.trimestre} | Duración: ${d.semanas} semanas
-  Sesiones: ${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales
+  Sesiones: ${d.durVaria?`${d.sesiones} de distinta duración (${d.durResumen}) = ${d.durTotalMin} min totales`:`${d.sesiones} × ${d.duracion} min = ${d.sesiones*d.duracion} min totales`}
 ${tablaT?'\n'+tablaT:''}  Pregunta motriz: "${d.preguntaMotriz||'(propón una adecuada al tipo '+tipo.nombre+')'}"
   Metodologías: ${d.metodologias.join(', ')||'activo y competencial'}
   Apps CEIP Capitulaciones: ${d.appsCapitulaciones.join(', ')||'(ninguna seleccionada)'}
@@ -16512,7 +16536,7 @@ ${_modoLibro()?'   · 4.1 Concreción por sesión — tabla Sesión / Fecha / P�
    · a) Título de la actividad
    · b) Sesión inicio y fin con fecha exacta (dd/mm/aaaa)
    · c) Descripción y saberes básicos
-${_modoLibro()?'   · d) Tabla de sesiones según el libro: Sesión / Fecha / Páginas / Apartado del libro / Saber básico / ✔ — SIN actividades ajenas al libro':_modoNoIA()?'   · d) Tabla de sesiones para rellenar a mano: Sesión / Fecha / Páginas del libro ______ / una columna ☐ por saber básico — SIN actividades por sesión':`   · d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión: SABER BÁSICO + ${esLengua?"LECTURA 30' + ":''}${esMat?"RP 30' (solo en las sesiones marcadas RP) + ":''}INICIO + DESARROLLO (con la casilla «Pág. ______») + CIERRE + TOTAL = ${d.duracion||60}' ✔ — los minutos deben sumar exactamente ese total`}
+${_modoLibro()?'   · d) Tabla de sesiones según el libro: Sesión / Fecha / Páginas / Apartado del libro / Saber básico / ✔ — SIN actividades ajenas al libro':_modoNoIA()?'   · d) Tabla de sesiones para rellenar a mano: Sesión / Fecha / Páginas del libro ______ / una columna ☐ por saber básico — SIN actividades por sesión':`   · d) Desarrollo por sesiones — OBLIGATORIO para CADA sesión: SABER BÁSICO + ${esLengua?"LECTURA 30' + ":''}${esMat?"RP 30' (solo en las sesiones marcadas RP) + ":''}INICIO + DESARROLLO (con la casilla «Pág. ______») + CIERRE + TOTAL = ${d.durVaria?`los minutos de ESA sesión (${d.durResumen})`:`${d.duracion||60}'`} ✔ — los minutos deben sumar exactamente ese total`}
    · e) Contexto de aplicación
    · f) Vinculación curricular (criterio + cómo se evidencia + ODS + competencia siglo XXI)
    · g) Evaluación intermedia (tabla código/criterio/instrumento/evidencia del alumnado)
@@ -16868,7 +16892,7 @@ function generarTablaSesiones(){
             else if(esRP) tipo='rp';
 
             // Time available for activity content
-            const durTotal = parseInt(document.getElementById('duracion').value)||60;
+            const durTotal = (parseInt(document.getElementById('durDia'+diaNum)?.value)>0 ? parseInt(document.getElementById('durDia'+diaNum).value) : 0) || parseInt(document.getElementById('duracion').value)||60;
             const minReservados = (esL?30:0)+(esRP?30:0);
             const durActividad = Math.max(10, durTotal - minReservados);
 
@@ -17184,7 +17208,7 @@ async function generarYAbrir(){
             const ia=getIA();
             try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}
             document.getElementById('pasteIAName').textContent=iaNames[ia];
-            document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';
+            document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';window._ultimoPrompt=p;if(_esMac())setTimeout(()=>_descargarUltimoPrompt(true),300);
             document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};
             document.getElementById('pasteOverlay').classList.add('show');
         };
@@ -17197,7 +17221,7 @@ async function generarYAbrir(){
     const ia=getIA();
     try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}
     document.getElementById('pasteIAName').textContent=iaNames[ia];
-    document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';
+    document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';window._ultimoPrompt=p;if(_esMac())setTimeout(()=>_descargarUltimoPrompt(true),300);
     document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};
     document.getElementById('pasteOverlay').classList.add('show');
 }
@@ -17206,9 +17230,11 @@ async function copiarPrompt(){const c=document.getElementById('promptContent').t
 function descargarTXT(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}const d=recopilarDatos();descargar(c,`SDA_Capitulaciones_${d.areas.map(a=>a.substring(0,3)).join('_')}_${(d.titSda||d.tematica).replace(/\s+/g,'_')}.txt`);}
 async function compartirPrompt(){const c=document.getElementById('promptContent').textContent;if(!c||c.startsWith('Pulsa')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}if(navigator.share){try{await navigator.share({title:'SDA Capitulaciones',text:c.substring(0,200)+'...',url:window.location.href});}catch(e){}}else showToast('⚠️ Compartir no disponible');}
 function generarPromptRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}document.getElementById('rubricContent').textContent=construirPromptRubricas();showToast('📐 Prompt de rúbricas generado');}
-async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;const ia=getIARubrica();try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}document.getElementById('pasteIAName').textContent=iaNames[ia];document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};document.getElementById('pasteOverlay').classList.add('show');}
+async function generarYAbrirRubricas(){if(!document.getElementById('sdaPegada').value.trim()){showToast('⚠️ Pega primero el texto de tu SdA');return;}const p=construirPromptRubricas();document.getElementById('rubricContent').textContent=p;const ia=getIARubrica();try{await navigator.clipboard.writeText(p);}catch(e){showToast('⚠️ Copia el prompt manualmente');}document.getElementById('pasteIAName').textContent=iaNames[ia];document.getElementById('pastePreview').textContent=p.substring(0,200)+'…';window._ultimoPrompt=p;if(_esMac())setTimeout(()=>_descargarUltimoPrompt(true),300);document.getElementById('btnPasteOpen').onclick=()=>{window.open(iaUrls[ia],'_blank');cerrarPasteModal();};document.getElementById('pasteOverlay').classList.add('show');}
 async function copiarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}try{await navigator.clipboard.writeText(c);showToast('📋 Copiado');}catch(e){showToast('⚠️ Selecciona manualmente');}}
 function descargarRubrica(){const c=document.getElementById('rubricContent').textContent;if(!c||c.startsWith('El prompt')){showToast('⚠️ Primero pulsa «Ver el prompt»');return;}descargar(c,`SDA_Rubricas_${recopilarDatos().tematica.replace(/\s+/g,'_')}.txt`);}
+function _esMac(){ return /Mac|iPhone|iPad/i.test(navigator.platform||'')||/Macintosh/i.test(navigator.userAgent||''); }
+function _descargarUltimoPrompt(auto){ const p=window._ultimoPrompt; if(!p){ showToast('⚠️ Primero genera el prompt'); return; } descargar(p,'Prompt_SdA_Capitulaciones.txt'); if(auto) showToast('💾 También te lo he descargado (por si al pegar se corta)'); }
 function descargar(cont,nom){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([cont],{type:'text/plain;charset=utf-8'}));a.download=nom;a.click();showToast('💾 Descargado');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 function instalarPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){showToast('✅ App instalada');document.getElementById('installBtn').classList.remove('show');}deferredPrompt=null;});}}
@@ -17350,7 +17376,7 @@ function _pdfBloqueEF(d, sesSeneca){
    | CALENTAMIENTO / ACTIVACIÓN (…') | [juego de activación de la fuente] |
    | PARTE PRINCIPAL (…') | [juegos o postas de la fuente: organización (individual/parejas/grupos), espacio y material] |
    | VUELTA A LA CALMA Y ASEO (…') | [juego de calma o estiramientos, reflexión breve, aseo e higiene] |
-   | TOTAL | los minutos deben sumar EXACTAMENTE ${d.duracion} |
+   | TOTAL | los minutos deben sumar EXACTAMENTE ${_durSuma(d,d.duracion)} |
 • Espacios y material: los de Séneca (pista polideportiva, aula, balones, conos…).
 • Si la fuente usa el circuito como evaluación inicial (p. ej. adaptación del TGMD-2), mantenlo: hoja de registro por postas (Lo hace / En proceso / No lo hace).
 • 6 DUA en EF: adaptación de distancias, tamaños de balón y tiempos; roles alternativos (árbitro, ayudante, encargado de material); normas con pictogramas; anticipación y rincón de calma para alumnado TEA; ajustes por condiciones de salud.
@@ -18976,5 +19002,31 @@ else _cargar();
 })();
 </script>
 
+<script>
+(function(){ if(!/Mac|iPhone|iPad/i.test(navigator.platform||'')&&!/Macintosh/i.test(navigator.userAgent||'')) return;
+  function cambiar(){ const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT); let n; const l=[];
+    while((n=w.nextNode())){ const p=n.parentNode; if(!p||/^(SCRIPT|STYLE|TEXTAREA|PRE)$/.test(p.nodeName)||p.id==='promptContent'||p.id==='rubricContent') continue; if(/Ctrl/.test(n.nodeValue)) l.push(n); }
+    l.forEach(n=>{ n.nodeValue=n.nodeValue.replace(/Ctrl/g,'Cmd ⌘'); }); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',cambiar); else cambiar();
+})();
+</script>
+<script>
+// ===== Novedades (salen una sola vez en cada dispositivo) =====
+(function(){
+  var ID='2026-10-13', K='novedades-sdacapitulaciones', ITEMS=["⬇️ Al generar el prompt sale el botón <b>«Descargar el prompt (.txt)»</b>. Si al pegarlo en la IA se corta o no se pega, adjunta ese archivo con el clip 📎. En Mac se descarga solo.", "🍎 En Mac, las instrucciones dicen <b>Cmd ⌘ + V</b> en lugar de Ctrl + V.", "⏱️ En la duración de las sesiones hay una opción nueva: <b>«No todas mis sesiones duran lo mismo»</b>. Pones los minutos de cada día (por ejemplo, martes 30', jueves 60') y la SdA ajusta cada sesión a sus minutos."];
+  function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
+    var d=document.createElement('div');
+    d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
+    d.innerHTML='<div role="dialog" aria-modal="true" style="background:#fff;border-radius:16px;max-width:440px;width:100%;max-height:88vh;overflow:auto;padding:22px 22px 18px;box-shadow:0 20px 60px rgba(0,0,0,.3);color:#1e293b">'+
+      '<div style="font-size:1.25rem;font-weight:800;margin-bottom:10px">✨ Novedades</div>'+
+      '<ul style="margin:0 0 16px;padding-left:20px;line-height:1.5;font-size:.95rem">'+ITEMS.map(function(i){return '<li style="margin-bottom:8px">'+i+'</li>';}).join('')+'</ul>'+
+      '<button type="button" style="width:100%;background:#2563eb;color:#fff;border:0;border-radius:10px;padding:12px;font-size:1rem;font-weight:700;cursor:pointer">¡Entendido!</button></div>';
+    function cerrar(){ try{ localStorage.setItem(K,ID); }catch(e){} d.remove(); }
+    d.querySelector('button').onclick=cerrar; d.addEventListener('click',function(e){ if(e.target===d) cerrar(); });
+    document.body.appendChild(d);
+  }
+  if (document.readyState==='complete') setTimeout(ver,800); else window.addEventListener('load',function(){ setTimeout(ver,800); });
+})();
+</script>
 </body>
 </html>
