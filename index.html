@@ -1061,6 +1061,14 @@
         <button type="button" data-v="Conocimiento del Medio Natural, Social y Cultural">🌿<b>Conocimiento del Medio</b></button>
         <button type="button" data-v="Educación Física">🏃<b>Educación Física</b></button>
       </div>
+      <div id="pxIdiomaBox" style="display:none">
+        <div class="ex-q">🌍 Idioma de la SdA <small>(Conocimiento del Medio bilingüe)</small></div>
+        <div class="ex-opts ex-3" id="pxIdiomaBtns">
+          <button type="button" data-v="es">🇪🇸<b>Todo en español</b></button>
+          <button type="button" data-v="bil">🇪🇸🇬🇧<b>Bilingüe</b></button>
+          <button type="button" data-v="en">🇬🇧<b>Todo en inglés</b></button>
+        </div>
+      </div>
       <div class="ex-q">2. Curso</div>
       <div class="ex-opts ex-6" id="pxCursoBtns">
         <button type="button" data-v="1º"><b>1.º</b></button><button type="button" data-v="2º"><b>2.º</b></button><button type="button" data-v="3º"><b>3.º</b></button>
@@ -15091,7 +15099,7 @@ DATOS:
 • Fechas: ${d.fechaInicio||'—'} a ${d.fechaFin||'—'} (${d.semanas} semanas) · ${d.sesiones} sesiones ${d.durVaria?`de distinta duración (${d.durResumen})`:`de ${d.duracion} min`}
 • Tipo: ${(sdaTipos[d.sdaTipo]||sdaTipos.producto).nombre}
 ${tabla}
-${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':'IDIOMA: todo en español.'}
+${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':(/conocimiento/i.test(area)&&PX.idioma==='en')?'IDIOMA: SdA de Conocimiento del Medio BILINGÜE redactada TODA EN INGLÉS (títulos de apartados, tablas, actividades y rúbricas). Los códigos curriculares (2.1.b, CMN.2.A.1.4…) se copian tal cual; el texto oficial de criterios y saberes puede ir en español entre paréntesis.':(/conocimiento/i.test(area)&&PX.idioma==='bil')?'IDIOMA: SdA de Conocimiento del Medio BILINGÜE: la redacción de la SdA en español, pero en la secuencia didáctica el vocabulario clave, las rutinas, las preguntas al alumnado y los títulos de las actividades van en INGLÉS (con su traducción al español entre paréntesis la primera vez). Añade en el apartado 1 una fila «Vocabulario clave en inglés» con 8-12 palabras del tema.':'IDIOMA: todo en español.'}
 ${esEF?_pdfBloqueEF(d,sesSen):''}
 ${/conocimiento/i.test(area)?_pdfBloqueCMN(d):''}
 ${(!esEF&&_modoLibro())?_bloqueIndiceLibro():''}
@@ -15405,7 +15413,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 // ══ MODO EXPRÉS DESDE PDF: 3 pantallas (PDF · clase · generar) ══════
-const PX={p:1,dias:[],durDia:{},acn:new Set(['Ninguna']),areaFija:false,cursoFijo:false};
+const PX={p:1,dias:[],durDia:{},acn:new Set(['Ninguna']),areaFija:false,cursoFijo:false,idioma:''};
+try{ const v=localStorage.getItem('sdaIdiomaCMN'); if(v) PX.idioma=v; }catch(e){}
+function pxElegirIdioma(v){ PX.idioma=v; try{ localStorage.setItem('sdaIdiomaCMN',v); }catch(e){} _pxPintarP1(); }
 const PX_DURS=[30,45,60,90];
 function abrirExpresPDF(){
     setModoTrabajo('pdf');
@@ -15425,6 +15435,8 @@ function _pxPintarP1(){
     const a=document.getElementById('pdfArea')?.value||'', c=document.getElementById('pdfCurso')?.value||'';
     document.querySelectorAll('#pxAreaBtns button').forEach(b=>b.classList.toggle('sel',PX.areaFija&&b.dataset.v===a));
     document.querySelectorAll('#pxCursoBtns button').forEach(b=>b.classList.toggle('sel',!!c&&b.dataset.v===c));
+    const ib=document.getElementById('pxIdiomaBox'); if(ib) ib.style.display=(PX.areaFija&&/conocimiento/i.test(a))?'block':'none';
+    document.querySelectorAll('#pxIdiomaBtns button').forEach(b=>b.classList.toggle('sel',b.dataset.v===PX.idioma));
     const ay=document.getElementById('pxAyudaArea');
     if(ay) ay.textContent=/f[íi]sica/i.test(a)?'Vale el informe de Séneca o la SdA en PDF con la plantilla del centro.':'Vale la SdA en PDF con la plantilla del centro. La app detecta el título.';
 }
@@ -15587,6 +15599,7 @@ function pxMover(dir){
         if(!PX.areaFija&&!(pdf&&pdf.texto)){ showToast('⚠️ Elige el área'); return; }
         if(!pdf||!pdf.texto){ showToast('⚠️ Sube el PDF (o pega su texto)'); return; }
         if(!pdf.curso){ showToast('⚠️ Elige el curso'); return; }
+        if(_pxEsCMN() && !PX.idioma){ showToast('⚠️ Elige el idioma de la SdA'); return; }
         _pdfSyncCampos();
         return setTimeout(()=>pxIr(2),80);
     }
@@ -15610,6 +15623,7 @@ function pxMover(dir){
 document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('#pxAreaBtns button').forEach(b=>b.onclick=()=>pxElegirArea(b.dataset.v));
     document.querySelectorAll('#pxCursoBtns button').forEach(b=>b.onclick=()=>pxElegirCurso(b.dataset.v));
+    document.querySelectorAll('#pxIdiomaBtns button').forEach(b=>b.onclick=()=>pxElegirIdioma(b.dataset.v));
     document.getElementById('pdfPaginas')?.addEventListener('input',()=>{ if(PX.p===3) _pxResumen(); });
 });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('pxOverlay')?.classList.contains('show')) cerrarExpresPDF(); });
@@ -17528,7 +17542,7 @@ function _pdfBloqueCMN(d){
    | DESARROLLO (…') | **Libro: págs. X** — [actividades de esas páginas] |
    | CIERRE (…') | [síntesis y evidencia] |
    | TOTAL | los minutos deben sumar EXACTAMENTE ${_durSuma(d,d.duracion)} |
-• Redacción en español, frases cortas y en tablas.
+• ${PX.idioma==='en'?'Redacción en inglés sencillo (nivel del curso)':'Redacción en español'}, frases cortas y en tablas.
 `;
 }
 
@@ -19199,7 +19213,7 @@ else _cargar();
 <script>
 // ===== Novedades (salen una sola vez en cada dispositivo) =====
 (function(){
-  var ID='2026-10-15', K='novedades-sdacapitulaciones', ITEMS=["🌿 <b>Desde PDF</b> ahora sirve para <b>Inglés, Francés, Conocimiento del Medio y Educación Física</b>: eliges el área y el <b>curso</b> con botones grandes.", "⏱️ En <b>Desde PDF</b> marcas los días de clase y <b>cuánto dura la sesión cada día</b> (30 min, 45 min, 1 h o 1 h 30).", "📖 Al final del asistente escribes las <b>páginas del libro y sus actividades</b>, o pulsas «Copiar las páginas que trae el PDF»."];
+  var ID='2026-10-15b', K='novedades-sdacapitulaciones', ITEMS=["🇬🇧 En Conocimiento del Medio la maestra elige el idioma de la SdA: <b>todo en español, bilingüe o todo en inglés</b>.", "🌿 <b>Desde PDF</b> ahora sirve para <b>Inglés, Francés, Conocimiento del Medio y Educación Física</b>: eliges el área y el <b>curso</b> con botones grandes.", "⏱️ En <b>Desde PDF</b> marcas los días de clase y <b>cuánto dura la sesión cada día</b> (30 min, 45 min, 1 h o 1 h 30).", "📖 Al final del asistente escribes las <b>páginas del libro y sus actividades</b>, o pulsas «Copiar las páginas que trae el PDF»."];
   function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
     var d=document.createElement('div');
     d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
