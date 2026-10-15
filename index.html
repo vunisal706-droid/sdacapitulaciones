@@ -379,6 +379,9 @@
         @media (max-width:600px){.px-4{grid-template-columns:repeat(2,1fr)}}
         .px-4 button b{font-size:.92rem;line-height:1.2;text-align:center}
         #pxOverlay .pdf-ca{display:none!important}
+        .px-idd{display:block;font-size:.8rem;font-weight:500;line-height:1.3;color:#4b5563;text-align:center;padding:0 .3rem}
+        #pxIdiomaBtns button{justify-content:flex-start}
+        @media (max-width:600px){#pxIdiomaBtns{grid-template-columns:1fr}}
         .px-diarow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.35rem 0;border-bottom:1px dashed #e5e7eb}
         .px-diarow:last-child{border-bottom:none}
         .px-dl{min-width:82px;font-weight:700;color:#374151}
@@ -1062,11 +1065,11 @@
         <button type="button" data-v="Educación Física">🏃<b>Educación Física</b></button>
       </div>
       <div id="pxIdiomaBox" style="display:none">
-        <div class="ex-q">🌍 Idioma de la SdA <small>(Conocimiento del Medio bilingüe)</small></div>
+        <div class="ex-q">🌍 ¿En qué idioma quieres la SdA? <small>(elige una opción)</small></div>
         <div class="ex-opts ex-3" id="pxIdiomaBtns">
-          <button type="button" data-v="es">🇪🇸<b>Todo en español</b></button>
-          <button type="button" data-v="bil">🇪🇸🇬🇧<b>Bilingüe</b></button>
-          <button type="button" data-v="en">🇬🇧<b>Todo en inglés</b></button>
+          <button type="button" data-v="es">🇪🇸<b>Todo en español</b><span class="px-idd">La SdA entera en español, también las actividades.</span></button>
+          <button type="button" data-v="bil">🇪🇸🇬🇧<b>Bilingüe</b><span class="px-idd">La SdA en español, pero el vocabulario, las preguntas y los títulos de las actividades en inglés.</span></button>
+          <button type="button" data-v="en">🇬🇧<b>Todo en inglés</b><span class="px-idd">La SdA entera en inglés. Los códigos del currículo se mantienen.</span></button>
         </div>
       </div>
       <div class="ex-q">2. Curso</div>
