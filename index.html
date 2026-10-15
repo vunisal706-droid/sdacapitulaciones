@@ -375,6 +375,18 @@
         .px-fechas{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
         .px-fechas label{font-size:.85rem;font-weight:700;color:#4b5563;display:block;margin-bottom:.2rem}
         .px-dur button{width:auto;padding:0 1rem}
+        .px-4{grid-template-columns:repeat(4,1fr)}
+        @media (max-width:600px){.px-4{grid-template-columns:repeat(2,1fr)}}
+        .px-4 button b{font-size:.92rem;line-height:1.2;text-align:center}
+        #pxOverlay .pdf-ca{display:none!important}
+        .px-diarow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.35rem 0;border-bottom:1px dashed #e5e7eb}
+        .px-diarow:last-child{border-bottom:none}
+        .px-dl{min-width:82px;font-weight:700;color:#374151}
+        .px-diarow.off .px-dl{color:#9ca3af}
+        .px-durs{display:flex;gap:.35rem;flex-wrap:wrap}
+        .px-durs button{font:inherit;cursor:pointer;border:2px solid #e5e7eb;background:#fff;border-radius:12px;padding:.45rem .75rem;font-weight:800;color:#374151;min-height:44px}
+        .px-durs button.sel{border-color:#0891b2;background:#ecfeff;color:#155e75}
+        .px-btn-pdf{font:inherit;font-weight:700;margin-top:.5rem;border:2px solid #7c3aed;background:#f5f3ff;color:#5b21b6;border-radius:12px;padding:.55rem .9rem;cursor:pointer;min-height:44px}
         .p8-lista{margin:.3rem 0 .8rem 1.2rem;padding:0;font-size:.98rem;line-height:1.55;color:#374151}.p8-lista li{margin-bottom:.25rem}
         .folio-box{margin-top:1rem;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:14px;padding:.8rem .95rem}
         .folio-t{font-weight:800;color:#1e40af;font-size:1.05rem}.folio-d{font-size:.9rem;color:#374151;margin:.2rem 0 .6rem}
@@ -1041,8 +1053,21 @@
       <button type="button" class="ex-x" onclick="cerrarExpresPDF()" aria-label="Cerrar">✕</button>
     </div>
     <div class="px-pant" id="pxP1">
-      <h2 id="pxTitulo">📄 Sube el PDF de la SdA</h2>
-      <p class="ex-ayuda">Vale el informe de Séneca de Educación Física o una SdA de inglés. La app detecta curso, área y título.</p>
+      <h2 id="pxTitulo">📄 SdA desde PDF</h2>
+      <div class="ex-q">1. ¿De qué área es la SdA?</div>
+      <div class="ex-opts px-4" id="pxAreaBtns">
+        <button type="button" data-v="Inglés (1ª Lengua Extranjera)">🌍<b>Inglés</b></button>
+        <button type="button" data-v="Francés (2ª Lengua Extranjera)">🇫🇷<b>Francés</b></button>
+        <button type="button" data-v="Conocimiento del Medio Natural, Social y Cultural">🌿<b>Conocimiento del Medio</b></button>
+        <button type="button" data-v="Educación Física">🏃<b>Educación Física</b></button>
+      </div>
+      <div class="ex-q">2. Curso</div>
+      <div class="ex-opts ex-6" id="pxCursoBtns">
+        <button type="button" data-v="1º"><b>1.º</b></button><button type="button" data-v="2º"><b>2.º</b></button><button type="button" data-v="3º"><b>3.º</b></button>
+        <button type="button" data-v="4º"><b>4.º</b></button><button type="button" data-v="5º"><b>5.º</b></button><button type="button" data-v="6º"><b>6.º</b></button>
+      </div>
+      <div class="ex-q">3. Sube el PDF de la SdA</div>
+      <p class="ex-ayuda" id="pxAyudaArea">Vale la SdA en PDF con la plantilla del centro o el informe de Séneca. La app detecta el título.</p>
       <div id="pxSlot"></div>
     </div>
     <div class="px-pant" id="pxP2">
@@ -1052,14 +1077,15 @@
         <div><label for="pxIni">Inicio</label><input type="date" id="pxIni" class="ex-in"></div>
         <div><label for="pxFin">Fin</label><input type="date" id="pxFin" class="ex-in"></div>
       </div>
-      <div class="ex-area"><div class="ex-area-t" id="pxDiasT">¿Qué días das el área?</div><div class="ex-dias" id="pxDias"></div></div>
-      <div class="ex-q">Duración de cada sesión</div>
-      <div class="ex-dias px-dur" id="pxDur"></div>
+      <div class="ex-area"><div class="ex-area-t" id="pxDiasT">¿Qué días das el área?</div>
+        <div class="ex-sub">Toca cada día que tienes clase y elige cuánto dura la sesión ese día.</div>
+        <div id="pxDias"></div></div>
       <div class="ex-q">¿Hay alumnado con necesidades (ACNEAE)?</div>
       <div class="ex-chips" id="pxAcn"></div>
     </div>
     <div class="px-pant" id="pxP3">
-      <h2>✅ Todo listo</h2>
+      <h2>✅ Casi listo</h2>
+      <div id="pxLibroSlot"></div>
       <div class="ex-resumen" id="pxResumen"></div>
     </div>
     <div class="ex-foot">
@@ -1097,7 +1123,7 @@
                 <span class="mb-icon">📄</span>
                 <span class="mb-text">
                     <span class="mb-title">Desde PDF</span>
-                    <span class="mb-sub">⚡ Exprés · Sube el PDF (Séneca EF, inglés…) en 3 pasos</span>
+                    <span class="mb-sub">⚡ Exprés · Inglés, Francés, C. del Medio o EF en 3 pasos</span>
                 </span>
             </button>
         </div>
@@ -1815,7 +1841,7 @@
         <!-- ── MODO DESDE PDF ── -->
         <div class="sant-panel" id="pdfPanel" style="background:rgba(238,242,255,0.9);border-color:rgba(99,102,241,0.25)">
             <div style="margin-bottom:1rem">
-                <label style="color:#3730a3;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. Sube el PDF de la SdA (inglés, Educación Física de Séneca u otra) *</label>
+                <label style="color:#3730a3;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. Sube el PDF de la SdA (Inglés, Francés, Conocimiento del Medio o Educación Física) *</label>
                 <div id="pdfDropZone" onclick="document.getElementById('pdfFileInput').click()"
                      style="border:2px dashed rgba(99,102,241,0.4);border-radius:12px;padding:1.4rem 1rem;text-align:center;cursor:pointer;background:rgba(255,255,255,0.6);transition:all .2s">
                     <div style="font-size:1.8rem;margin-bottom:.3rem">📄⬆️</div>
@@ -1829,14 +1855,14 @@
             <!-- Fallback: pegar texto -->
             <details style="margin-bottom:1rem">
                 <summary style="cursor:pointer;font-size:.78rem;color:#6366f1;font-weight:600">¿El PDF no se lee bien? Pega aquí el texto de la SdA</summary>
-                <textarea id="pdfTextoManual" placeholder="Pega aquí todo el texto de la SdA en inglés…" style="width:100%;min-height:120px;margin-top:.5rem;border:1.5px solid rgba(99,102,241,0.25);border-radius:10px;padding:.6rem;font-size:.82rem;font-family:inherit"></textarea>
+                <textarea id="pdfTextoManual" placeholder="Pega aquí todo el texto de la SdA…" style="width:100%;min-height:120px;margin-top:.5rem;border:1.5px solid rgba(99,102,241,0.25);border-radius:10px;padding:.6rem;font-size:.82rem;font-family:inherit"></textarea>
                 <button type="button" class="btn btn-sm" style="margin-top:.5rem;background:#6366f1;color:#fff" onclick="procesarSdaPDFTexto(document.getElementById('pdfTextoManual').value, 'texto pegado')">✅ Usar este texto</button>
             </details>
 
             <!-- Tarjeta de detección -->
             <div id="pdfCardPreview" style="display:none;background:rgba(255,255,255,0.9);border:2px solid rgba(99,102,241,0.4);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:1rem;animation:slideIn .3s ease">
                 <div style="font-size:.63rem;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem">📄 SdA detectada — revisa y ajusta si hace falta</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
+                <div class="pdf-ca" style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">
                     <div class="fg" style="margin:0">
                         <label style="color:#3730a3">Curso *</label>
                         <select id="pdfCurso" class="sant-temas-input" onchange="_pdfSyncCampos()">
@@ -1851,7 +1877,12 @@
                     </div>
                     <div class="fg" style="margin:0">
                         <label style="color:#3730a3">Área *</label>
-                        <input class="sant-temas-input" type="text" id="pdfArea" value="Inglés (1ª Lengua Extranjera)" oninput="_pdfSyncCampos()">
+                        <select class="sant-temas-input" id="pdfArea" onchange="_pdfSyncCampos()">
+                            <option value="Inglés (1ª Lengua Extranjera)">Inglés</option>
+                            <option value="Francés (2ª Lengua Extranjera)">Francés</option>
+                            <option value="Conocimiento del Medio Natural, Social y Cultural">Conocimiento del Medio</option>
+                            <option value="Educación Física">Educación Física</option>
+                        </select>
                     </div>
                 </div>
                 <div class="fg" style="margin:.7rem 0 0">
@@ -1865,14 +1896,15 @@
             </div>
 
             <div id="pdfPlanifSlot"></div>
-            <div style="background:#fff;border:2px solid #c4b5fd;border-radius:12px;padding:.9rem 1rem;margin-bottom:1rem">
-                <label for="pdfPaginas" style="color:#5b21b6;font-size:.9rem;font-weight:800;display:block;margin-bottom:.25rem">2. 📝 Qué se trabaja en cada página del libro <span style="font-weight:600;color:#7c3aed">(muy recomendable)</span></label>
+            <div id="pdfPagBox" style="background:#fff;border:2px solid #c4b5fd;border-radius:12px;padding:.9rem 1rem;margin-bottom:1rem">
+                <label for="pdfPaginas" style="color:#5b21b6;font-size:.9rem;font-weight:800;display:block;margin-bottom:.25rem">📖 Páginas del libro y sus actividades <span style="font-weight:600;color:#7c3aed">(muy recomendable)</span></label>
                 <div style="font-size:.78rem;color:#4b5563;margin-bottom:.45rem;line-height:1.45">Una línea por página (o grupo de páginas), en el orden del libro: <b>número – lo que se trabaja</b>. Así cada sesión de la SdA sale con su página y con lo que de verdad hacéis en clase. Si una página necesita más de un día, pon «(2 días)».</div>
-                <textarea id="pdfPaginas" rows="7" oninput="_pdfPaginasInput()" placeholder="Ejemplo:&#10;4-5 - Unit 1 opener: vocabulary (family members)&#10;6 - Song: This is my family&#10;7 - Grammar: have got (2 días)&#10;8 - Story: The big family&#10;9 - Review&#10;Producto final - Family poster" style="width:100%;font-size:.95rem;font-family:inherit;border:1.5px solid #d1d5db;border-radius:10px;padding:.6rem .7rem;line-height:1.5"></textarea>
+                <textarea id="pdfPaginas" rows="7" oninput="_pdfPaginasInput()" placeholder="Ejemplo:&#10;8-9 - ¿Cuidas tu salud? Lámina inicial y nube de palabras&#10;10-11 - ¿Qué es la salud? Actividades 1 a 4&#10;12-13 - Nuestros alimentos (2 días)&#10;4-5 - Unit 1 opener: vocabulary (family)&#10;Producto final - Cuestionario de salud" style="width:100%;font-size:.95rem;font-family:inherit;border:1.5px solid #d1d5db;border-radius:10px;padding:.6rem .7rem;line-height:1.5"></textarea>
                 <div id="pdfPaginasCont" style="font-size:.75rem;color:#6d28d9;margin-top:.3rem"></div>
+                <button type="button" class="px-btn-pdf" onclick="pxPaginasDesdePdf(true)">📥 Copiar las páginas que trae el PDF</button>
             </div>
             <div class="sant-info" style="background:rgba(99,102,241,0.06);border-color:rgba(99,102,241,0.2)">
-                💡 <strong>Cómo funciona:</strong> Sube el PDF de una SdA ya hecha (inglés, o el informe de Séneca de Educación Física). La app lee su contenido y genera una SdA nueva con <strong>los mismos apartados de la plantilla del inspector de Primaria</strong>, reutilizando sus criterios (LE.01…, EFI.1.1.1…), saberes, tarea final y secuenciación. Luego la exportas a Word.
+                💡 <strong>Cómo funciona:</strong> Sube el PDF de una SdA ya hecha (Inglés, Francés, Conocimiento del Medio o el informe de Séneca de Educación Física). La app lee su contenido y genera una SdA nueva con <strong>los mismos apartados de la plantilla del inspector de Primaria</strong>, reutilizando sus criterios (LE.01…, 2.1.b / CMN.2.A…, EFI.1.1.1…), saberes, tarea final y secuenciación. Luego la exportas a Word.
             </div>
         </div>
         <!-- ── FIN MODO DESDE PDF ── -->
@@ -15061,6 +15093,7 @@ DATOS:
 ${tabla}
 ${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':'IDIOMA: todo en español.'}
 ${esEF?_pdfBloqueEF(d,sesSen):''}
+${/conocimiento/i.test(area)?_pdfBloqueCMN(d):''}
 ${(!esEF&&_modoLibro())?_bloqueIndiceLibro():''}
 GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos: "1 — IDENTIFICACIÓN", etc.):
 1 — IDENTIFICACIÓN: tabla con curso, título, trimestre, fechas, nº de sesiones, tipo, metodología y planes del centro asociados.
@@ -15372,28 +15405,60 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 // ══ MODO EXPRÉS DESDE PDF: 3 pantallas (PDF · clase · generar) ══════
-const PX={p:1,dias:[],dur:0,acn:new Set(['Ninguna'])};
+const PX={p:1,dias:[],durDia:{},acn:new Set(['Ninguna']),areaFija:false,cursoFijo:false};
+const PX_DURS=[30,45,60,90];
 function abrirExpresPDF(){
     setModoTrabajo('pdf');
     const panel=document.getElementById('pdfPanel'); if(panel){ document.getElementById('pxSlot').appendChild(panel); panel.classList.add('show'); }
+    const pb=document.getElementById('pdfPagBox'); if(pb){ document.getElementById('pxLibroSlot').appendChild(pb); }
     document.getElementById('pxOverlay').classList.add('show'); document.body.style.overflow='hidden';
     pxIr(1);
 }
 function cerrarExpresPDF(){
     document.getElementById('pxOverlay').classList.remove('show'); document.body.style.overflow='';
+    const pb=document.getElementById('pdfPagBox'), ps=document.getElementById('pdfPlanifSlot'); if(pb&&ps){ ps.after(pb); pb.style.display=''; }
     try{ _actualizarModoUI(); }catch(e){}
+}
+function _pxEsEF(){ return /f[íi]sica/i.test(document.getElementById('pdfArea')?.value||''); }
+function _pxEsCMN(){ return /conocimiento/i.test(document.getElementById('pdfArea')?.value||''); }
+function _pxPintarP1(){
+    const a=document.getElementById('pdfArea')?.value||'', c=document.getElementById('pdfCurso')?.value||'';
+    document.querySelectorAll('#pxAreaBtns button').forEach(b=>b.classList.toggle('sel',PX.areaFija&&b.dataset.v===a));
+    document.querySelectorAll('#pxCursoBtns button').forEach(b=>b.classList.toggle('sel',!!c&&b.dataset.v===c));
+    const ay=document.getElementById('pxAyudaArea');
+    if(ay) ay.textContent=/f[íi]sica/i.test(a)?'Vale el informe de Séneca o la SdA en PDF con la plantilla del centro.':'Vale la SdA en PDF con la plantilla del centro. La app detecta el título.';
+}
+function pxElegirArea(v){
+    const s=document.getElementById('pdfArea'); if(s) s.value=v;
+    PX.areaFija=true; _pxPintarP1(); _pdfSyncCampos();
+}
+function pxElegirCurso(v){
+    const s=document.getElementById('pdfCurso'); if(s) s.value=v;
+    PX.cursoFijo=true; _pxPintarP1(); _pdfSyncCampos();
 }
 function _pxArea(){
     const a=document.getElementById('pdfArea')?.value||'';
     const n=s=>(s||'').toLowerCase().replace(/\(.*?\)/g,'').trim();
     return (typeof areasSeleccionadas!=='undefined' && areasSeleccionadas.find(x=>n(x).includes(n(a))||n(a).includes(n(x)))) || a;
 }
+// Fechas tipo «28 DE SEPTIEMBRE A 16 DE OCTUBRE» en la temporalización del PDF
+function _pxFechasDelTexto(txt){
+    const M='ENERO|FEBRERO|MARZO|ABRIL|MAYO|JUNIO|SEPTIEMBRE|OCTUBRE|NOVIEMBRE|DICIEMBRE';
+    const t=(txt||'').toUpperCase().replace(/\s+/g,' ');
+    const m=t.match(new RegExp('(\\d{1,2})\\s*(?:DE\\s+)?('+M+')\\s*(?:A|AL|-|–|HASTA(?: EL)?)\\s*(\\d{1,2})\\s*(?:DE\\s+)?('+M+')'));
+    if(!m||typeof _MES_FECHAS==='undefined') return null;
+    const f1=_MES_FECHAS[m[2]], f2=_MES_FECHAS[m[4]]; if(!f1||!f2) return null;
+    const pad=n=>String(n).padStart(2,'0');
+    return {ini:`${f1[0]}-${pad(f1[1])}-${pad(+m[1])}`, fin:`${f2[0]}-${pad(f2[1])}-${pad(+m[3])}`, txt:`${+m[1]} ${m[2].toLowerCase()} – ${+m[3]} ${m[4].toLowerCase()}`};
+}
 function _pxFechasAuto(){
     const ini=document.getElementById('pxIni'), fin=document.getElementById('pxFin');
     const txt=document.getElementById('pdfTextoOculto')?.value||pdfSdaTexto||'';
     const m=(txt.match(/TEMPORALIZACIÓN \(Séneca\): (\w+)/)||[])[1]||'';
-    document.getElementById('pxMesInfo').textContent=m?`(Séneca: ${m})`:'';
+    const fx=_pxFechasDelTexto(txt);
+    document.getElementById('pxMesInfo').textContent=m?`(Séneca: ${m})`:(fx?`(en el PDF: ${fx.txt})`:'');
     if(ini.value&&fin.value) return;
+    if(fx){ ini.value=fx.ini; fin.value=fx.fin; return; }
     const fi=document.getElementById('fechaInicio'), ff=document.getElementById('fechaFin');
     if(fi?.value&&ff?.value){ ini.value=fi.value; fin.value=ff.value; return; }
     const mes=(m||EX_MESES[new Date().getMonth()]).toUpperCase();
@@ -15402,12 +15467,18 @@ function _pxFechasAuto(){
     ini.value=`${y}-${pad(mm)}-01`; fin.value=`${y}-${pad(mm)}-${pad(new Date(y,mm,0).getDate())}`;
 }
 function _pxPintar(){
-    const L=['','L','M','X','J','V'];
+    const L=['','L','M','X','J','V'], N=['','Lunes','Martes','Miércoles','Jueves','Viernes'];
     const area=_pxArea();
-    document.getElementById('pxDiasT').textContent=`${(typeof AREA_ICONS!=='undefined'&&AREA_ICONS[area])||'📅'} ¿Qué días das ${area||'el área'}?`;
-    document.getElementById('pxDias').innerHTML=[1,2,3,4,5].map(n=>`<button type="button" class="ex-dia ${PX.dias.includes(n)?'sel':''}" onclick="pxDia(${n})">${L[n]}</button>`).join('');
-    if(!PX.dur) PX.dur=parseInt(document.getElementById('duracion')?.value)||45;
-    document.getElementById('pxDur').innerHTML=[30,45,60,90].map(v=>`<button type="button" class="ex-dia ${PX.dur===v?'sel':''}" onclick="PX.dur=${v};_pxPintar()">${v}'</button>`).join('');
+    const corto=/conocimiento/i.test(area)?'Conocimiento del Medio':area.replace(/\s*\(.*?\)/,'');
+    document.getElementById('pxDiasT').textContent=`${/conocimiento/i.test(area)?'🌿':((typeof AREA_ICONS!=='undefined'&&AREA_ICONS[area])||'📅')} ¿Qué días das ${corto||'el área'}?`;
+    const def=PX_DURS.includes(parseInt(document.getElementById('duracion')?.value))?parseInt(document.getElementById('duracion').value):45;
+    document.getElementById('pxDias').innerHTML=[1,2,3,4,5].map(n=>{
+        const on=PX.dias.includes(n);
+        if(on&&!PX.durDia[n]) PX.durDia[n]=def;
+        return `<div class="px-diarow ${on?'':'off'}"><button type="button" class="ex-dia ${on?'sel':''}" onclick="pxDia(${n})" aria-pressed="${on}">${L[n]}</button><span class="px-dl">${N[n]}</span>`+
+          (on?`<div class="px-durs" role="group" aria-label="Duración del ${N[n]}">${PX_DURS.map(v=>`<button type="button" class="${PX.durDia[n]===v?'sel':''}" onclick="pxDur(${n},${v})">${v===90?'1 h 30':v===60?'1 h':v+' min'}</button>`).join('')}</div>`:'<span style="color:#9ca3af;font-size:.88rem">sin clase</span>')+
+          `</div>`;
+    }).join('');
     const acn=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb')).map(c=>c.value);
     document.getElementById('pxAcn').innerHTML=acn.map(v=>`<button type="button" class="ex-chip ${PX.acn.has(v)?'sel':''}" data-v="${v}">${v}</button>`).join('');
     document.querySelectorAll('#pxAcn .ex-chip').forEach(b=>b.onclick=()=>{
@@ -15418,29 +15489,79 @@ function _pxPintar(){
     });
 }
 function pxDia(n){ const i=PX.dias.indexOf(n); if(i>=0) PX.dias.splice(i,1); else PX.dias.push(n); PX.dias.sort(); _pxPintar(); }
+function pxDur(n,v){ PX.durDia[n]=v; _pxPintar(); }
+function _pxDurTexto(){
+    const N=['','L','M','X','J','V'];
+    return PX.dias.map(n=>`${N[n]} ${PX.durDia[n]||45}'`).join(' · ');
+}
 function _pxAplicar(){
     const area=_pxArea();
     document.getElementById('fechaInicio').value=document.getElementById('pxIni').value;
     document.getElementById('fechaFin').value=document.getElementById('pxFin').value;
-    document.getElementById('duracion').value=PX.dur;
+    // Duración general = la más frecuente; los días distintos van a los campos «durDia» de la app
+    const cnt={}; PX.dias.forEach(n=>{ const v=PX.durDia[n]||45; cnt[v]=(cnt[v]||0)+1; });
+    const durGen=+Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]||b-a)[0]||45;
+    document.getElementById('duracion').value=durGen;
+    [1,2,3,4,5].forEach(n=>{ const el=document.getElementById('durDia'+n); if(!el) return; const v=PX.dias.includes(n)?(PX.durDia[n]||45):0; el.value=(v&&v!==durGen)?v:''; });
+    const dbx=document.getElementById('durDiasBox'); if(dbx && Object.keys(cnt).length>1) dbx.open=true;
     diasPorArea={}; diasPorArea[_areaKey(area)]={dias:[...PX.dias],rpDias:[]};
     const cbs=Array.from(document.querySelectorAll('#acneaeGroup .acneae-cb'));
     cbs.forEach(cb=>{ const q=PX.acn.has(cb.value); if(cb.value!=='Ninguna'&&cb.checked!==q){ cb.checked=q; _onAcneaeChange(cb); } });
     const nin=cbs.find(c=>c.value==='Ninguna'); if(nin&&PX.acn.has('Ninguna')&&!nin.checked){ nin.checked=true; _onAcneaeChange(nin); }
     try{ calcularSemanas(); }catch(e){}
     try{ renderDiaSelectors(); }catch(e){}
-    diasPorArea[_areaKey(area)]={dias:[...PX.dias],rpDias:[]};
+    diasPorArea={}; diasPorArea[_areaKey(area)]={dias:[...PX.dias],rpDias:[]};
     try{ generarTablaSesiones(); }catch(e){}
 }
+// Saca del PDF las páginas del libro que aparecen en la secuenciación: «Nuestros alimentos (págs. 12, 13)»
+function _pxPaginasDelPdf(){
+    let t=(document.getElementById('pdfTextoOculto')?.value||pdfSdaTexto||'');
+    const iv=t.search(/VALORACI[ÓO]N\s+DE\s+LO\s+APRENDIDO/i); if(iv>200) t=t.slice(0,iv);
+    const is=t.search(/SECUENCIACI[ÓO]N\s+DID[ÁA]CTICA/i); if(is>=0) t=t.slice(is);
+    t=t.replace(/\s+/g,' ');
+    const FASES=/\b(MOTIVACI[ÓO]N|ACTIVACI[ÓO]N|EXPLORACI[ÓO]N|ESTRUCTURACI[ÓO]N|APLICACI[ÓO]N|CONCLUSI[ÓO]N|FASES|ACTIVIDADES \/ EJERCICIOS)\b/g;
+    const out=[], vistos=new Set();
+    t=t.replace(/CEIP CAPITULACIONES\s*\.?\s*SITUACI[ÓO]N DE APRENDIZAJE/gi,' ');
+    const rx=/\(\s*p\s*[áa]\s*g\s*s?\s*\.?\s*(\d{1,3}(?:\s*(?:,|y|-|–)\s*\d{1,3})*)\s*\)/gi; let m, prev=0;
+    while((m=rx.exec(t))){
+        const nums=(m[1].match(/\d+/g)||[]).map(Number); if(!nums.length) continue;
+        const pag=nums.length>1?`${Math.min(...nums)}-${Math.max(...nums)}`:String(nums[0]);
+        if(vistos.has(pag)){ prev=rx.lastIndex; continue; }
+        let antes=t.slice(Math.max(prev,m.index-160),m.index).replace(FASES,' ');
+        // Quedarse con la última frase / título antes del paréntesis
+        antes=antes.replace(/[\s.,;:]+$/,'');
+        const corte=Math.max(antes.lastIndexOf('. '),antes.lastIndexOf('). '),antes.lastIndexOf(': '));
+        if(corte>=0) antes=antes.slice(corte+2);
+        antes=antes.replace(/\b(CMN|LE|EFI)\.[\w.]+/g,'').replace(/\b[A-ZÁÉÍÓÚÑ]{4,}(?:\s+[A-ZÁÉÍÓÚÑ]{2,})*\b/g,' ').replace(/\s+([,.;:?!)”»])/g,'$1').replace(/([(“«¿¡])\s+/g,'$1').replace(/\s+/g,' ').replace(/^[\s\-–.,;:)]+|[\s\-–.,;:(]+$/g,'').trim();
+        antes=antes.replace(/^(\d\s+)+/,'').trim();
+        const q=antes.match(/^[“"«]([^”"»]{3,60})[”"»]/); if(q) antes=q[1];
+        const w=antes.split(' ');
+        if(w.length>10){ const qq=t.slice(prev,m.index).match(/[“"«]([^”"»]{3,60})[”"»]/); antes=qq?qq[1].trim():'…'+w.slice(-10).join(' '); }
+        out.push(`${pag} - ${antes||'(qué se hace)'}`); vistos.add(pag); prev=rx.lastIndex;
+    }
+    return out;
+}
+function pxPaginasDesdePdf(avisar){
+    const ta=document.getElementById('pdfPaginas'); if(!ta) return;
+    const l=_pxPaginasDelPdf();
+    if(!l.length){ if(avisar) showToast('ℹ️ El PDF no trae páginas del libro. Escríbelas tú.'); return; }
+    if(ta.value.trim() && avisar && !confirm('¿Sustituir lo que has escrito por las páginas del PDF?')) return;
+    ta.value=l.join('\n'); _pdfPaginasInput();
+    if(avisar) showToast(`📥 ${l.length} líneas copiadas del PDF. Revísalas y añade las actividades.`);
+    _pxResumen();
+}
+function _pxLineasPaginas(){ return (document.getElementById('pdfPaginas')?.value||'').split('\n').map(x=>x.trim()).filter(Boolean); }
 function _pxResumen(){
     const d=s=>s?s.split('-').reverse().join('/'):'—';
-    const nom=['','L','M','X','J','V'];
     const tit=document.getElementById('pdfTitulo')?.value||'(sin título)';
     const acn=[...PX.acn].join(', ');
+    const ef=_pxEsEF(), nl=_pxLineasPaginas().length;
+    const area=_pxArea(), corto=/conocimiento/i.test(area)?'Conocimiento del Medio':area.replace(/\s*\(.*?\)/,'');
     document.getElementById('pxResumen').innerHTML=`<b>${tit.replace(/</g,'&lt;')}</b><br>
-      ${_pxArea()} · ${document.getElementById('pdfCurso')?.value||''} Primaria<br>
-      📅 ${d(document.getElementById('pxIni').value)} → ${d(document.getElementById('pxFin').value)} · días ${PX.dias.map(n=>nom[n]).join('-')} · ${PX.dur}'<br>
+      ${corto} · ${document.getElementById('pdfCurso')?.value||''} Primaria<br>
+      📅 ${d(document.getElementById('pxIni').value)} → ${d(document.getElementById('pxFin').value)} · ${_pxDurTexto()}<br>
       🗓️ <b>${sesionesData.length} sesiones</b> (sin festivos ni excursiones)<br>
+      ${ef?'🏃 Sesiones de EF: calentamiento, parte principal y vuelta a la calma.':nl?`📖 ${nl} línea${nl>1?'s':''} de páginas del libro.`:'📖 Sin páginas escritas: se usan las del PDF.'}<br>
       🧩 ACNEAE: ${acn} · la IA elige las pautas DUA.<br><br>
       Al pulsar, se copia el prompt y se abre la IA. Saldrá la SdA completa en la plantilla del inspector.`;
 }
@@ -15450,16 +15571,22 @@ function pxIr(p){
     document.querySelectorAll('#pxDots span').forEach(s=>{ const n=+s.dataset.p; s.className=n===p?'on':(n<p?'ok':''); });
     document.getElementById('pxAtras').style.visibility=p===1?'hidden':'visible';
     const sig=document.getElementById('pxSig'); sig.textContent=p===3?'🚀 Generar y abrir la IA':'Siguiente →'; sig.classList.toggle('fin',p===3);
+    if(p===1) _pxPintarP1();
     if(p===2){ _pxFechasAuto(); _pxPintar(); }
-    if(p===3) _pxResumen();
+    if(p===3){
+        const ef=_pxEsEF(); const pb=document.getElementById('pdfPagBox'); if(pb) pb.style.display=ef?'none':'block';
+        if(!ef && !_pxLineasPaginas().length) pxPaginasDesdePdf(false);
+        _pxResumen();
+    }
     document.getElementById('pxBox').scrollIntoView({block:'start'});
 }
 function pxMover(dir){
     if(dir<0) return pxIr(PX.p-1);
     if(PX.p===1){
         const pdf=getPdfData();
+        if(!PX.areaFija&&!(pdf&&pdf.texto)){ showToast('⚠️ Elige el área'); return; }
         if(!pdf||!pdf.texto){ showToast('⚠️ Sube el PDF (o pega su texto)'); return; }
-        if(!pdf.curso){ showToast('⚠️ Indica el curso'); return; }
+        if(!pdf.curso){ showToast('⚠️ Elige el curso'); return; }
         _pdfSyncCampos();
         return setTimeout(()=>pxIr(2),80);
     }
@@ -15472,6 +15599,7 @@ function pxMover(dir){
         return pxIr(3);
     }
     try{ setDuaModo('ia'); }catch(e){}
+    if(!_pxEsEF() && _modoSesiones!=='paginas'){ _modoSesiones='paginas'; try{ localStorage.setItem('sdaModoSesiones','paginas'); }catch(e){} }
     const pdf=getPdfData();
     const t=document.getElementById('titSda'); if(t&&pdf.titulo) t.value=pdf.titulo;
     const tm=document.getElementById('tematica'); if(tm&&pdf.titulo) tm.value=pdf.titulo;
@@ -15479,6 +15607,11 @@ function pxMover(dir){
     irAPaso(8);
     setTimeout(()=>generarYAbrir(),250);
 }
+document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('#pxAreaBtns button').forEach(b=>b.onclick=()=>pxElegirArea(b.dataset.v));
+    document.querySelectorAll('#pxCursoBtns button').forEach(b=>b.onclick=()=>pxElegirCurso(b.dataset.v));
+    document.getElementById('pdfPaginas')?.addEventListener('input',()=>{ if(PX.p===3) _pxResumen(); });
+});
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('pxOverlay')?.classList.contains('show')) cerrarExpresPDF(); });
 // ── APPS DEL CENTRO SEGÚN EL CURSO ───────────────────────────────────
 function _rangoApp(chip){
@@ -15622,7 +15755,7 @@ document.addEventListener('DOMContentLoaded',()=>setTimeout(_pdfPaginasCargar,50
 function _bloqueIndiceLibro(){
     if(_modoSesiones==='paginas'){
         const t=_lineasPaginas().join('\n');
-        const cuerpo=t?`"""\n${t}\n"""`:'⚠️ El tutor/a no ha escrito las páginas: deja «pág. ____» en blanco y reparte los saberes del libro.';
+        const cuerpo=t?`"""\n${t}\n"""`:(pdfActivo?'⚠️ El maestro/a no ha escrito las páginas: usa las páginas que aparecen en la secuenciación de la SdA fuente, en su orden; si no hay, deja «pág. ____».':'⚠️ El tutor/a no ha escrito las páginas: deja «pág. ____» en blanco y reparte los saberes del libro.');
         return `
 ═══════════════════════════════════════════════════════════
 📝 PÁGINAS DEL LIBRO Y LO QUE SE TRABAJA EN CADA UNA (lo escribe el tutor/a) — FUENTE PRINCIPAL DE LAS SESIONES
@@ -17380,6 +17513,25 @@ SECUENCIACIÓN DIDÁCTICA (tal como sale en Séneca; los bloques de ejercicios p
 ${p.secuencia}`;
 }
 
+function _pdfBloqueCMN(d){
+    return `
+🌿 SdA DE CONOCIMIENTO DEL MEDIO (plantilla del centro con libro de texto) — CÓMO PASARLA A LA PLANTILLA DEL INSPECTOR:
+• OJO: el texto del PDF viene de tablas a varias columnas y puede salir mezclado. Reconstruye cada fila uniendo actividad, evidencia, saber, criterio y competencia por sus códigos.
+• Correspondencia de la fuente: «1- IDENTIFICACIÓN» (título de la unidad, área, curso, temporalización) → 1 IDENTIFICACIÓN. «Justificación / vinculación con la vida real», «Contexto de aplicación», relación con los ODS y con otras áreas → 2 JUSTIFICACIÓN. «Tarea final» → 3 PRODUCTO FINAL (con productos parciales por fase). «2. Concreción curricular» (descriptores, competencias específicas, criterios y saberes) → 4 CONCRECIÓN CURRICULAR. «3. Secuenciación didáctica» → 5 SECUENCIA DIDÁCTICA. «4. Medidas DUA» → 6. «5. Metodología» → metodología del apartado 1. «6. Recursos» → recursos del apartado 5. «7. Valoración de lo aprendido» → 7 (con los 4 niveles del centro).
+• Códigos: copia EXACTAMENTE los de la fuente: criterios con su formato (p. ej. «2.1.b», «4.2.b»), saberes «CMN.2.A.1.4…», competencias específicas por su número y descriptores (CCL1, STEM2, CPSAA1…). No añadas criterios ni saberes que no estén en la fuente.
+• Fases de la fuente → fases de la plantilla: Motivación → Motivación · Activación → Activación · Exploración y Estructuración → Desarrollo y Consolidación · Aplicación (talleres) y Conclusión («Comprueba tu progreso» + producto final) → Finalizar y Aplicar.
+• Mantén las evidencias de la fuente (evaluación inicial, producciones del alumno, actividades orales, autoevaluación, cuestionario del producto final) como instrumentos de evaluación de cada criterio en el apartado 7.
+• Las actividades son las del LIBRO con sus páginas: NO inventes actividades ajenas al libro. Cada sesión indica «Libro: págs. X» y lo que se hace en ellas.
+• Estructura de CADA sesión:
+   | SABER BÁSICO | [código CMN de la fuente] — [concreción breve, máx. 6 palabras] |
+   | INICIO (…') | [enganche breve, sin página] |
+   | DESARROLLO (…') | **Libro: págs. X** — [actividades de esas páginas] |
+   | CIERRE (…') | [síntesis y evidencia] |
+   | TOTAL | los minutos deben sumar EXACTAMENTE ${_durSuma(d,d.duracion)} |
+• Redacción en español, frases cortas y en tablas.
+`;
+}
+
 function _pdfBloqueEF(d, sesSeneca){
     return `
 🏃 SdA DE EDUCACIÓN FÍSICA EXPORTADA DE SÉNECA — CÓMO ADAPTARLA A LA PLANTILLA:
@@ -17432,15 +17584,20 @@ async function onPdfFileSelected(input){
             const page=await pdf.getPage(p);
             const content=await page.getTextContent();
             // Reconstruir por líneas aproximadas usando la coordenada Y
-            let lastY=null, linea='';
+            // Solo se pone espacio entre trozos si hay hueco real (evita «M OTIVACIÓN», «pág s .»)
+            let lastY=null, lastX=null, linea='';
             const lineas=[];
             content.items.forEach(it=>{
-                const y=it.transform[5];
-                if(lastY===null||Math.abs(y-lastY)<3){ linea+=it.str+' '; }
-                else { lineas.push(linea.trim()); linea=it.str+' '; }
-                lastY=y;
+                const x=it.transform[4], y=it.transform[5], h=Math.abs(it.transform[3])||it.height||10;
+                if(lastY===null||Math.abs(y-lastY)<3){
+                    const gap=lastX===null?0:x-lastX;
+                    if(linea && (gap>h*0.2||gap<-h) && !/\s$/.test(linea) && !/^\s/.test(it.str)) linea+=' ';
+                    linea+=it.str;
+                }
+                else { lineas.push(linea.replace(/\s+/g,' ').trim()); linea=it.str; }
+                lastY=y; lastX=x+(it.width||0);
             });
-            if(linea.trim()) lineas.push(linea.trim());
+            if(linea.trim()) lineas.push(linea.replace(/\s+/g,' ').trim());
             texto += lineas.join('\n')+'\n\n';
         }
         procesarSdaPDFTexto(texto, file.name);
@@ -17464,8 +17621,16 @@ function procesarSdaPDFTexto(texto, origen){
     pdfSdaTexto = texto;
     // Autodetección de curso, área y título
     const meta=_pdfDetectarMeta(texto);
-    const curSel=document.getElementById('pdfCurso'); if(curSel && meta.curso) curSel.value=meta.curso;
-    const areaEl=document.getElementById('pdfArea'); if(areaEl && meta.area) areaEl.value=meta.area;
+    const _fij=(typeof PX!=='undefined')?PX:{};
+    const curSel=document.getElementById('pdfCurso'); if(curSel && meta.curso && !_fij.cursoFijo) curSel.value=meta.curso;
+    const areaEl=document.getElementById('pdfArea');
+    if(areaEl && meta.area && [...areaEl.options].some(o=>o.value===meta.area)){
+        if(!_fij.areaFija){ areaEl.value=meta.area; _fij.areaFija=true; }
+        else if(meta.seguro && meta.area!==areaEl.value) showToast('ℹ️ El PDF parece de otra área. Revisa el área elegida.');
+    }
+    if(typeof _pxPintarP1==='function') _pxPintarP1();
+    const pPag=document.getElementById('pdfPaginas'); if(pPag && pPag.value.trim()){ pPag.value=''; _pdfPaginasInput(); }
+    const pxI=document.getElementById('pxIni'), pxF=document.getElementById('pxFin'); if(pxI&&pxF){ pxI.value=''; pxF.value=''; }
     const titEl=document.getElementById('pdfTitulo'); if(titEl) titEl.value=meta.titulo||'';
     document.getElementById('pdfCharCount').textContent=texto.length;
     document.getElementById('pdfTextoOculto').value=texto;
@@ -17482,13 +17647,17 @@ function _pdfDetectarMeta(texto){
     let curso='';
     const mCurso=t.match(/([123456])\s*º?\s*(?:DE\s+)?PRIMARIA/i) || t.match(/([123456])\s*º\s*de\s+Educ\.?\s*Prim/i) || t.match(/PRIMARIA\s*([123456])\s*º?/i);
     if(mCurso) curso=mCurso[1]+'º';
-    let area='Inglés (1ª Lengua Extranjera)';
-    if(/\bFRANC[ÉE]S\b/i.test(t)) area='Francés (2ª Lengua Extranjera)';
-    if(_pdfEsEF(texto)) area='Educación Física';
+    else { const mP=t.match(/\b(PRIMER|PRIMERO|SEGUNDO|TERCER|TERCERO|CUARTO|QUINTO|SEXTO)\s+(?:CURSO\s+)?DE\s+(?:EDUCACI[ÓO]N\s+)?PRIMARIA/i);
+           if(mP){ const k=mP[1].toUpperCase(); curso=({PRIMER:'1º',PRIMERO:'1º',SEGUNDO:'2º',TERCER:'3º',TERCERO:'3º',CUARTO:'4º',QUINTO:'5º',SEXTO:'6º'})[k]||''; } }
+    let area='Inglés (1ª Lengua Extranjera)', seguro=false;
+    if(/\b(INGL[ÉE]S|ENGLISH|LE\.0\d)/i.test(t)) seguro=true;
+    if(/\bFRANC[ÉE]S\b|FRAN[ÇC]AIS/i.test(t)){ area='Francés (2ª Lengua Extranjera)'; seguro=true; }
+    if(/CONOCIMIENTO\s+DEL\s+MEDIO|\bCMN\.\d/i.test(t)){ area='Conocimiento del Medio Natural, Social y Cultural'; seguro=true; }
+    if(_pdfEsEF(texto)){ area='Educación Física'; seguro=true; }
     let titulo='';
-    const mTit=t.match(/T[ÍI]TULO\s*:?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ0-9'’!¡¿?&., ]{3,60}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
+    const mTit=t.match(/T[ÍI]TULO(?:\s+DE\s+LA)?(?:\s+(?:UNIDAD|SDA|SITUACI[ÓO]N\s+DE\s+APRENDIZAJE))?\s*:?\s*([A-Za-zÁÉÍÓÚÑáéíóúñü0-9'’!¡¿?&.,«»"“” ]{3,70}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
     if(mTit) titulo=mTit[1].trim().replace(/[.,;:]+$/,'');
-    return {curso, area, titulo};
+    return {curso, area, titulo, seguro};
 }
 
 function _pdfSyncCampos(){
@@ -17514,6 +17683,7 @@ function _pdfSyncCampos(){
             const n=_norm(nombre);
             const debe = area && (hayExacta ? (n===clave||n.includes(clave)) : nombre.toLowerCase().includes(area.toLowerCase().split(' ')[0].toLowerCase()));
             if(cb && debe && !cb.checked){ toggleArea(nombre,it); }
+            else if(cb && !debe && cb.checked && area){ toggleArea(nombre,it); }
         });
     },40);
     // Título/temática
@@ -19029,7 +19199,7 @@ else _cargar();
 <script>
 // ===== Novedades (salen una sola vez en cada dispositivo) =====
 (function(){
-  var ID='2026-10-13b', K='novedades-sdacapitulaciones', ITEMS=["📄 En el modo <b>Desde PDF</b> hay un recuadro nuevo: <b>«Qué se trabaja en cada página del libro»</b>. Escribe una línea por página (número – lo que se trabaja) y las sesiones saldrán con su página y con lo que de verdad hacéis en clase.", "⬇️ Al generar el prompt sale el botón <b>«Descargar el prompt (.txt)»</b>. Si al pegarlo en la IA se corta o no se pega, adjunta ese archivo con el clip 📎. En Mac se descarga solo.", "🍎 En Mac, las instrucciones dicen <b>Cmd ⌘ + V</b> en lugar de Ctrl + V.", "⏱️ En la duración de las sesiones hay una opción nueva: <b>«No todas mis sesiones duran lo mismo»</b>. Pones los minutos de cada día (por ejemplo, martes 30', jueves 60') y la SdA ajusta cada sesión a sus minutos."];
+  var ID='2026-10-15', K='novedades-sdacapitulaciones', ITEMS=["🌿 <b>Desde PDF</b> ahora sirve para <b>Inglés, Francés, Conocimiento del Medio y Educación Física</b>: eliges el área y el <b>curso</b> con botones grandes.", "⏱️ En <b>Desde PDF</b> marcas los días de clase y <b>cuánto dura la sesión cada día</b> (30 min, 45 min, 1 h o 1 h 30).", "📖 Al final del asistente escribes las <b>páginas del libro y sus actividades</b>, o pulsas «Copiar las páginas que trae el PDF»."];
   function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
     var d=document.createElement('div');
     d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
