@@ -2561,6 +2561,10 @@
             Modifica objetivos y criterios de evaluación. Se generará mención [ACI] en la SdA 
             y un <strong>Anexo ACI descargable</strong> por alumno/a.
         </p>
+        <div style="background:#fff7ed;border:1.5px solid #fdba74;border-radius:10px;padding:.7rem .9rem;margin:0 0 .8rem;font-size:.85rem;line-height:1.45;color:#7c2d12">
+            🔒 <strong>Protección de datos:</strong> no escribas el nombre ni las iniciales del alumno/a. Pon solo su <strong>número en la lista de clase</strong>.
+            En la SdA y en el anexo aparecerá como <strong>«Alumno15»</strong> (por ejemplo), con la nota de que <strong>el tutor/a conoce su identidad</strong>.
+        </div>
 
         <div id="aciAlumnos">
             <!-- Alumno 1 -->
@@ -2575,8 +2579,8 @@
                 <div id="aci1_campos" style="display:none">
                     <div class="row">
                         <div class="fg">
-                            <label for="aci1_iniciales">Iniciales (ej. A.G.M.)</label>
-                            <input type="text" id="aci1_iniciales" placeholder="Iniciales del alumno/a" maxlength="10">
+                            <label for="aci1_iniciales">N.º de lista del alumno/a</label>
+                            <input type="number" id="aci1_iniciales" placeholder="Ej.: 15 (nunca el nombre)" min="1" max="40" inputmode="numeric">
                         </div>
                         <div class="fg">
                             <label for="aci1_nee">Necesidad educativa específica</label>
@@ -2638,8 +2642,8 @@
                 <div id="aci2_campos" style="display:none">
                     <div class="row">
                         <div class="fg">
-                            <label for="aci2_iniciales">Iniciales</label>
-                            <input type="text" id="aci2_iniciales" placeholder="Iniciales del alumno/a" maxlength="10">
+                            <label for="aci2_iniciales">N.º de lista del alumno/a</label>
+                            <input type="number" id="aci2_iniciales" placeholder="Ej.: 15 (nunca el nombre)" min="1" max="40" inputmode="numeric">
                         </div>
                         <div class="fg">
                             <label for="aci2_nee">Necesidad educativa específica</label>
@@ -3736,7 +3740,7 @@ function recopilarACI(){
         if(!activo) continue;
         alumnos.push({
             num: n,
-            iniciales: document.getElementById(`aci${n}_iniciales`)?.value?.trim() || `Alumno/a ${n}`,
+            iniciales: (function(){ const v=(document.getElementById(`aci${n}_iniciales`)?.value||'').replace(/\D/g,''); return v ? 'Alumno'+parseInt(v,10) : 'Alumno/a ACI '+n; })(),
             nee: document.getElementById(`aci${n}_nee`)?.value || '',
             ncl: document.getElementById(`aci${n}_ncl`)?.value || '',
             fortalezas: document.getElementById(`aci${n}_fortalezas`)?.value?.trim() || '',
@@ -3757,7 +3761,9 @@ function construirSeccionACI(alumnos, d){
         '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━' + nl +
         'INSTRUCCIÓN OBLIGATORIA: Para cada alumno/a con ACI que aparece a continuación,' + nl +
         'en CADA actividad de la secuencia didáctica (secciones a-i) incluye un bloque' + nl +
-        'adicional marcado con [ACI - iniciales] que adapte esa actividad a su NCC y objetivos.' + nl +
+        'adicional marcado con [ACI - AlumnoN] que adapte esa actividad a su NCC y objetivos.' + nl +
+        'PROTECCIÓN DE DATOS: cada alumno/a se identifica SOLO por su número de lista (por ejemplo «Alumno15»).' + nl +
+        'Usa siempre esa etiqueta, no inventes nombres y añade en la SdA la nota: «La identidad del alumno/a la conoce el tutor/a».' + nl +
         'La adaptación debe ser CONCRETA y DIFERENTE en cada sesión — no copy-paste genérico.' + nl;
     
     alumnos.forEach(function(a){
@@ -3810,7 +3816,7 @@ function generarAnexoACI(){
 'Eres un experto en educación especial y orientación educativa en Andalucía (LOMLOE, Decreto 101/2023).\n' +
 'Genera una ACI SIGNIFICATIVA completa y oficial para:' + '\n\n' +
 'DATOS DEL ALUMNO/A ' + (idx+1) + ':' + '\n' +
-'• Iniciales: ' + a.iniciales + '\n' +
+'• Alumno/a: ' + a.iniciales + ' (número de lista; por protección de datos no se indica su nombre: la identidad la conoce el tutor/a)\n' +
 '• Necesidad educativa: ' + a.nee + '\n' +
 '• Nivel de Competencia Curricular (NCC): ' + a.ncl + '\n' +
 '• Curso del grupo-clase: ' + d.curso + '\n' +
@@ -3822,7 +3828,7 @@ function generarAnexoACI(){
 '• Apoyos y recursos: ' + (a.apoyos || 'No especificados') + '\n\n' +
 'Genera el ANEXO ACI con estas 8 secciones oficiales:\n\n' +
 '1. DATOS DE IDENTIFICACIÓN\n' +
-'   Alumno/a (iniciales), Centro, Curso, Área, Tutor/a, Orientador/a, Fecha de elaboración\n\n' +
+'   Alumno/a: ' + a.iniciales + ' (escribe exactamente esta etiqueta y añade la nota «La identidad del alumno/a la conoce el tutor/a»; no inventes nombres), Centro, Curso, Área, Tutor/a, Orientador/a, Fecha de elaboración\n\n' +
 '2. DATOS RELEVANTES DEL ALUMNO/A\n' +
 '   Diagnóstico y necesidades educativas específicas\n' +
 '   Nivel de competencia curricular por área\n' +
@@ -19375,7 +19381,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
 <script>
 // ===== Novedades (salen una sola vez en cada dispositivo) =====
 (function(){
-  var ID='2026-10-21-diseno', K='novedades-sdacapitulaciones', ITEMS=["🎨 <b>Nuevo diseño</b>: la app estrena aspecto, más limpio y profesional.","🧭 Cada paso es como una unidad del libro: tiene su <b>color</b>, su <b>portada</b> y su <b>pestaña</b> a la derecha (en el móvil, arriba).","⚡ Las herramientas están en la <b>barra lateral</b> y el <b>modo exprés</b> es el bloque grande de inicio.","✅ Todo funciona igual que antes: solo cambia la apariencia."];
+  var ID='2026-11-05-aci', K='novedades-sdacapitulaciones', ITEMS=["🔒 <b>ACI y protección de datos</b>: ya no se escriben iniciales. Pon el <b>número de lista</b> del alumno/a y en la SdA saldrá como «Alumno15», con la nota de que el tutor/a conoce su identidad."];
   function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
     var d=document.createElement('div');
     d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
