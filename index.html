@@ -1025,6 +1025,8 @@
       </div>
       <div class="ex-q">Mes y SdA del libro</div>
       <div class="ex-lista" id="exSda"><p class="ex-vacio">Elige antes la asignatura y el curso.</p></div>
+      <div class="ex-q">Nº de la SdA <small>(cámbialo si en tu programación lleva otro número)</small></div>
+      <input type="number" id="exSdaNum" class="ex-in" min="1" max="30" style="max-width:120px" oninput="EX.numManual=true">
     </div>
     <div class="ex-pant" id="exP2">
       <h2>🏫 Tu clase</h2>
@@ -1491,7 +1493,7 @@
         </div>
         <div class="fg">
             <label for="sdaNum">Nº SdA</label>
-            <input type="number" id="sdaNum" min="1" max="30" value="1">
+            <input type="number" id="sdaNum" min="1" max="30" value="1" oninput="this.dataset.manual='1'">
         </div>
         <div class="fg">
             <label for="semanas">Semanas <span class="badge badge-green">Auto</span></label>
@@ -14719,7 +14721,7 @@ function onSantSdaInfChange(){
     if(!curso||!trim||!sdaNum){document.getElementById('santCardPreviewInf').style.display='none';return;}
     _cargarTarjetaSantInfantil(curso, trim, sdaNum);
     const sdaNumEl=document.getElementById('sdaNum');
-    if(sdaNumEl) sdaNumEl.value = sdaNum.replace(/\D/g,'')||sdaNumEl.value;
+    if(sdaNumEl && !sdaNumEl.dataset.manual) sdaNumEl.value = _sdaSecuencial(INFANTIL_MAP, curso, trim, sdaNum) || sdaNumEl.value;
     // Colapsar el panel una vez elegida la SdA (evita scroll en los siguientes pasos)
     setTimeout(collapseSantPanel, 200);
 }
@@ -14888,6 +14890,17 @@ function onSantTrimestreChange(){
     if(trimEl){const tm={'1':'1er Trimestre','2':'2º Trimestre','3':'3er Trimestre'};trimEl.value=tm[trim]||trimEl.value;}
 }
 
+// Nº de SdA en el curso (1, 2, 3…) a partir del código interno del libro (1A, 1B, 2A…)
+function _sdaSecuencial(map, curso, trim, num){
+    const cur=map?.[curso]; if(!cur) return '';
+    let n=0;
+    for(const t of ['1','2','3']){
+        const l=cur[t]?.sda||[];
+        for(const s of l){ n++; if(t===String(trim) && String(s.num)===String(num)) return String(n); }
+    }
+    return '';
+}
+
 function onSantSdaNumChange(){
     const curso=document.getElementById('santCurso').value;
     const trim=document.getElementById('santTrimestre').value;
@@ -14897,7 +14910,7 @@ function onSantSdaNumChange(){
     // Cargar la tarjeta directamente con la modalidad ya elegida
     _cargarTarjetaSant(curso, trim, sdaNum, santModalidad||'ambas');
     const sdaNumEl=document.getElementById('sdaNum');
-    if(sdaNumEl) sdaNumEl.value=sdaNum.replace(/[ABC]/g,'');
+    if(sdaNumEl && !sdaNumEl.dataset.manual) sdaNumEl.value=_sdaSecuencial(SANTILLANA_MAP, curso, trim, sdaNum) || sdaNumEl.value;
     // Colapsar el panel una vez elegida la SdA (evita scroll en los siguientes pasos)
     setTimeout(collapseSantPanel, 200);
 }
@@ -15326,7 +15339,9 @@ function _exListaSda(){
         html+=`<button type="button" class="${on?'sel':''}" data-num="${s.num}" data-t="${t}"><b>${s.mes}</b> ${String(tit).replace(/</g,'&lt;')}</button>`;
     });
     box.innerHTML=html;
-    box.querySelectorAll('button').forEach(b=>b.onclick=()=>{ const t=b.dataset.t; EX.trim=t; EX.sda=(SANTILLANA_MAP[EX.curso][t].sda).find(s=>s.num===b.dataset.num); _exListaSda(); });
+    const ni=document.getElementById('exSdaNum');
+    if(ni && EX.sda && !EX.numManual) ni.value=_sdaSecuencial(SANTILLANA_MAP, EX.curso, EX.trim, EX.sda.num)||'';
+    box.querySelectorAll('button').forEach(b=>b.onclick=()=>{ const t=b.dataset.t; EX.trim=t; EX.sda=(SANTILLANA_MAP[EX.curso][t].sda).find(s=>s.num===b.dataset.num); EX.numManual=false; _exListaSda(); });
 }
 function _exPintarDias(){
     const box=document.getElementById('exDias'), L=['','L','M','X','J','V']; let h='';
@@ -15362,6 +15377,8 @@ function _exAplicarLibro(){
     const c=document.getElementById('santCurso'); c.value=EX.curso; onSantCursoChange();
     const t=document.getElementById('santTrimestre'); t.value=EX.trim; onSantTrimestreChange();
     const n=document.getElementById('santSdaNum'); n.value=EX.sda.num; onSantSdaNumChange();
+    const exN=document.getElementById('exSdaNum')?.value, sN=document.getElementById('sdaNum');
+    if(sN && exN){ sN.value=exN; sN.dataset.manual=EX.numManual?'1':''; }
     _autoFechasSda(EX.sda,true);
     const pr=document.getElementById('santProductoTexto'); document.getElementById('exProducto').value=pr?pr.value:'';
 }
@@ -15417,7 +15434,7 @@ function exGenerar(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('#exMod button').forEach(b=>b.onclick=()=>{ if(EX.mod!==b.dataset.v){ EX.mod=b.dataset.v; EX.dias={}; } _exSel('exMod',EX.mod); _exListaSda(); });
-    document.querySelectorAll('#exCurso button').forEach(b=>b.onclick=()=>{ if(EX.curso!==b.dataset.v){ EX.curso=b.dataset.v; EX.sda=null; } _exSel('exCurso',EX.curso); _exListaSda(); });
+    document.querySelectorAll('#exCurso button').forEach(b=>b.onclick=()=>{ if(EX.curso!==b.dataset.v){ EX.curso=b.dataset.v; EX.sda=null; EX.numManual=false; } _exSel('exCurso',EX.curso); _exListaSda(); });
     document.getElementById('exPaginas').addEventListener('input',()=>{ if(EX.p===3) _exResumen(); });
     document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElementById('exOverlay').classList.contains('show')) cerrarExpres(); });
 });
@@ -19381,7 +19398,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
 <script>
 // ===== Novedades (salen una sola vez en cada dispositivo) =====
 (function(){
-  var ID='2026-11-05-aci', K='novedades-sdacapitulaciones', ITEMS=["🔒 <b>ACI y protección de datos</b>: ya no se escriben iniciales. Pon el <b>número de lista</b> del alumno/a y en la SdA saldrá como «Alumno15», con la nota de que el tutor/a conoce su identidad."];
+  var ID='2026-11-12-numsda', K='novedades-sdacapitulaciones', ITEMS=["🔢 <b>Nº de la SdA</b>: ahora sale la numeración del curso (1, 2, 3…) y se respeta el número que escribas tú. En el Modo exprés tienes un recuadro para cambiarlo."];
   function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
     var d=document.createElement('div');
     d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
