@@ -1081,7 +1081,7 @@
         <button type="button" data-v="4º"><b>4.º</b></button><button type="button" data-v="5º"><b>5.º</b></button><button type="button" data-v="6º"><b>6.º</b></button>
       </div>
       <div class="ex-q">3. Sube el PDF de la SdA</div>
-      <p class="ex-ayuda" id="pxAyudaArea">Vale la SdA en PDF con la plantilla del centro o el informe de Séneca. La app detecta el título.</p>
+      <p class="ex-ayuda" id="pxAyudaArea">Vale la SdA en PDF o Word con la plantilla del centro o el informe de Séneca. La app detecta el título.</p>
       <div id="pxSlot"></div>
     </div>
     <div class="px-pant" id="pxP2">
@@ -1855,14 +1855,14 @@
         <!-- ── MODO DESDE PDF ── -->
         <div class="sant-panel" id="pdfPanel" style="background:rgba(238,242,255,0.9);border-color:rgba(99,102,241,0.25)">
             <div style="margin-bottom:1rem">
-                <label style="color:#3730a3;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. Sube el PDF de la SdA (Inglés, Francés, Conocimiento del Medio o Educación Física) *</label>
+                <label style="color:#3730a3;font-size:.82rem;font-weight:700;display:block;margin-bottom:.5rem">1. Sube el PDF o el Word (.docx) de la SdA (Inglés, Francés, Conocimiento del Medio o Educación Física) *</label>
                 <div id="pdfDropZone" onclick="document.getElementById('pdfFileInput').click()"
                      style="border:2px dashed rgba(99,102,241,0.4);border-radius:12px;padding:1.4rem 1rem;text-align:center;cursor:pointer;background:rgba(255,255,255,0.6);transition:all .2s">
                     <div style="font-size:1.8rem;margin-bottom:.3rem">📄⬆️</div>
-                    <div style="font-weight:700;color:#3730a3;font-size:.9rem">Pulsa para elegir un PDF</div>
+                    <div style="font-weight:700;color:#3730a3;font-size:.9rem">Pulsa para elegir un PDF o un Word</div>
                     <div style="font-size:.72rem;color:#6b7280;margin-top:.2rem">El archivo se lee en tu navegador — no se sube a ningún servidor</div>
                 </div>
-                <input type="file" id="pdfFileInput" accept="application/pdf,.pdf" style="display:none" onchange="onPdfFileSelected(this)">
+                <input type="file" id="pdfFileInput" accept="application/pdf,.pdf,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none" onchange="onPdfFileSelected(this)">
                 <div id="pdfStatus" style="margin-top:.6rem;font-size:.8rem;color:#4338ca;display:none"></div>
             </div>
 
@@ -15098,14 +15098,14 @@ function _construirPromptPDF(d){
     // Fuente recortada (quitar rúbricas del apartado 7 y autoevaluación docente: la plantilla los regenera)
     let fuente = (pdf && pdf.texto) ? pdf.texto : (pdfSdaTexto||'');
     let notaCorte='';
-    const cortes=[/\n\s*7[\.\-\s]+VALORACI[ÓO]N\s+DE\s+LO\s+APRENDIDO/i, /VALORACI[ÓO]N\s+DE\s+LO\s+APRENDIDO/i, /AUTOEVALUACI[ÓO]N\s+DE\s+LA\s+PR[ÁA]CTICA\s+DOCENTE/i];
+    const cortes=[/\n\s*7[\.\-\s]+VALORACI[ÓO]N\s+DE\s+LO\s+APRENDIDO/i, /VALORACI[ÓO]N\s+DE\s+LO\s+APRENDIDO/i, /AUTOEVALUACI[ÓO]N\s+DE\s+LA\s+PR[ÁA]CTICA\s+DOCENTE/i, /DIMENSI[ÓO]N\s+1\s*:\s*Programaci[óo]n\s+de\s+la\s+Ense[ñn]anza/i];
     let idxCorte=-1;
     cortes.forEach(rx=>{const m=fuente.search(rx); if(m>=0 && (idxCorte<0||m<idxCorte)) idxCorte=m;});
     if(idxCorte>200){ fuente=fuente.slice(0,idxCorte).trim(); notaCorte='\n[Se omiten aquí las rúbricas del apartado 7 y la autoevaluación docente del PDF; genéralas tú en el apartado 7.]'; }
     const esSen=/^\[PDF EXPORTADO DE SÉNECA/.test(fuente);
     const esEF=_pdfEsEF(fuente) || /f[íi]sica/i.test(pdf?.area||'');
     const sesSen=esSen?((fuente.match(/Sesiones previstas en Séneca: (\d+)/)||[])[1]||''):'';
-    const TOPE=esSen?15000:9000;
+    const TOPE=(esSen||/franc/i.test(pdf?.area||''))?15000:9000;
     if(fuente.length>TOPE){ fuente=fuente.slice(0,TOPE).trim()+'\n[…recortado por longitud…]'; }
 
     const area = pdf?.area || 'Inglés (1ª Lengua Extranjera)';
@@ -15122,9 +15122,10 @@ DATOS:
 • Fechas: ${d.fechaInicio||'—'} a ${d.fechaFin||'—'} (${d.semanas} semanas) · ${d.sesiones} sesiones ${d.durVaria?`de distinta duración (${d.durResumen})`:`de ${d.duracion} min`}
 • Tipo: ${(sdaTipos[d.sdaTipo]||sdaTipos.producto).nombre}
 ${tabla}
-${/ingl|franc|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':(/conocimiento/i.test(area)&&PX.idioma==='en')?'IDIOMA: SdA de Conocimiento del Medio BILINGÜE redactada TODA EN INGLÉS (títulos de apartados, tablas, actividades y rúbricas). Los códigos curriculares (2.1.b, CMN.2.A.1.4…) se copian tal cual; el texto oficial de criterios y saberes puede ir en español entre paréntesis.':(/conocimiento/i.test(area)&&PX.idioma==='bil')?'IDIOMA: SdA de Conocimiento del Medio BILINGÜE: la redacción de la SdA en español, pero en la secuencia didáctica el vocabulario clave, las rutinas, las preguntas al alumnado y los títulos de las actividades van en INGLÉS (con su traducción al español entre paréntesis la primera vez). Añade en el apartado 1 una fila «Vocabulario clave en inglés» con 8-12 palabras del tema.':'IDIOMA: todo en español.'}
+${/franc/i.test(area)?'IDIOMA: mantén en francés el vocabulario, canciones, consignas y títulos de actividades tal como vengan en la fuente (p. ej. «Écoute et lis la BD», «Notre défi»); el resto de la redacción, en español.':/ingl|extranjera/i.test(area)?'IDIOMA: mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan en la fuente; el resto de la redacción, en español.':(/conocimiento/i.test(area)&&PX.idioma==='en')?'IDIOMA: SdA de Conocimiento del Medio BILINGÜE redactada TODA EN INGLÉS (títulos de apartados, tablas, actividades y rúbricas). Los códigos curriculares (2.1.b, CMN.2.A.1.4…) se copian tal cual; el texto oficial de criterios y saberes puede ir en español entre paréntesis.':(/conocimiento/i.test(area)&&PX.idioma==='bil')?'IDIOMA: SdA de Conocimiento del Medio BILINGÜE: la redacción de la SdA en español, pero en la secuencia didáctica el vocabulario clave, las rutinas, las preguntas al alumnado y los títulos de las actividades van en INGLÉS (con su traducción al español entre paréntesis la primera vez). Añade en el apartado 1 una fila «Vocabulario clave en inglés» con 8-12 palabras del tema.':'IDIOMA: todo en español.'}
 ${esEF?_pdfBloqueEF(d,sesSen):''}
 ${/conocimiento/i.test(area)?_pdfBloqueCMN(d):''}
+${/franc/i.test(area)?_pdfBloqueFR(d):''}
 ${(!esEF&&_modoLibro())?_bloqueIndiceLibro():''}
 GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos: "1 — IDENTIFICACIÓN", etc.):
 1 — IDENTIFICACIÓN: tabla con curso, título, trimestre, fechas, nº de sesiones, tipo, metodología y planes del centro asociados.
@@ -15132,7 +15133,7 @@ GENERA ESTOS 7 APARTADOS (plantilla del inspector, con este formato de títulos:
 3 — DESCRIPCIÓN DEL PRODUCTO FINAL: el producto/tarea final de la fuente y sus productos parciales por fase.
 4 — CONCRECIÓN CURRICULAR: tabla de competencias específicas con sus descriptores operativos del Perfil de salida; tabla por sesión (fecha · criterio/s trabajados · "Evaluación: Sí—fecha" solo en la última sesión que cierra cada criterio); vinculación ODS; transversalidad; y efemérides oficiales de Andalucía que caigan ENTRE ${d.fechaInicio||'—'} y ${d.fechaFin||'—'} (si ninguna cae en ese rango, no incluyas ninguna).
 5 — SECUENCIA DIDÁCTICA: agrupa las ${d.sesiones} sesiones en actividades por fases (Motivación · Activación · Desarrollo y Consolidación · Finalizar y Aplicar). El producto final ocupa la última actividad.
-${(esEF&&!_modoNoIA())?`   🏃 Para CADA sesión usa la estructura de Educación Física indicada arriba (CALENTAMIENTO · PARTE PRINCIPAL · VUELTA A LA CALMA Y ASEO), sin páginas de libro.`:_modoLibro()?`   📖 MODO LIBRO: NO propongas actividades ajenas al libro. En cada actividad, solo esta tabla (una fila por sesión):
+${(esEF&&!_modoNoIA())?`   🏃 Para CADA sesión usa la estructura de Educación Física indicada arriba (CALENTAMIENTO · PARTE PRINCIPAL · VUELTA A LA CALMA Y ASEO), sin páginas de libro.`:(/franc/i.test(area)&&!_modoNoIA()&&!_modoLibro())?`   🇫🇷 Para CADA sesión usa la estructura de Francés indicada arriba (actividades del libro con su página).`:_modoLibro()?`   📖 MODO LIBRO: NO propongas actividades ajenas al libro. En cada actividad, solo esta tabla (una fila por sesión):
    | Sesión | Fecha | Páginas del libro | Apartado del libro | Saber básico (concreción breve y código) | ✔ |
    ${getModoSesiones()==='indice'?'Sigue el orden de los «Saberes relacionados» de la ficha; páginas siempre «pág. ____».':'Sigue el orden y las páginas EXACTAS de la lista del tutor/a.'}`:_modoNoIA()?`   ✍️ MODO BOLÍGRAFO: NO propongas actividades por sesión. En cada actividad, solo esta tabla (una fila por sesión):
    | Sesión | Fecha | Páginas del libro | [Saber 1: concreción breve (código)] | [Saber 2 …] |
@@ -15465,7 +15466,7 @@ function _pxPintarP1(){
     const ib=document.getElementById('pxIdiomaBox'); if(ib) ib.style.display=(PX.areaFija&&/conocimiento/i.test(a))?'block':'none';
     document.querySelectorAll('#pxIdiomaBtns button').forEach(b=>b.classList.toggle('sel',b.dataset.v===PX.idioma));
     const ay=document.getElementById('pxAyudaArea');
-    if(ay) ay.textContent=/f[íi]sica/i.test(a)?'Vale el informe de Séneca o la SdA en PDF con la plantilla del centro.':'Vale la SdA en PDF con la plantilla del centro. La app detecta el título.';
+    if(ay) ay.textContent=/f[íi]sica/i.test(a)?'Vale el informe de Séneca o la SdA en PDF con la plantilla del centro.':/franc/i.test(a)?'Vale el PDF o el Word de la SdA de la editorial (Nouveaux Défis). Si el archivo trae varias SdA, eliges cuál. La app detecta el título.':'Vale la SdA en PDF con la plantilla del centro. La app detecta el título.';
 }
 function pxElegirArea(v){
     const s=document.getElementById('pdfArea'); if(s) s.value=v;
@@ -15561,7 +15562,7 @@ function _pxPaginasDelPdf(){
     const FASES=/\b(MOTIVACI[ÓO]N|ACTIVACI[ÓO]N|EXPLORACI[ÓO]N|ESTRUCTURACI[ÓO]N|APLICACI[ÓO]N|CONCLUSI[ÓO]N|FASES|ACTIVIDADES \/ EJERCICIOS)\b/g;
     const out=[], vistos=new Set();
     t=t.replace(/CEIP CAPITULACIONES\s*\.?\s*SITUACI[ÓO]N DE APRENDIZAJE/gi,' ');
-    const rx=/\(\s*p\s*[áa]\s*g\s*s?\s*\.?\s*(\d{1,3}(?:\s*(?:,|y|-|–)\s*\d{1,3})*)\s*\)/gi; let m, prev=0;
+    const rx=/\(\s*p\s*(?:[áa]\s*g\s*s?)?\s*\.?\s*(\d{1,3}(?:\s*(?:,|y|-|–)\s*\d{1,3})*)\s*(?:[-–][^)]{0,60})?\)/gi; let m, prev=0;
     while((m=rx.exec(t))){
         const nums=(m[1].match(/\d+/g)||[]).map(Number); if(!nums.length) continue;
         const pag=nums.length>1?`${Math.min(...nums)}-${Math.max(...nums)}`:String(nums[0]);
@@ -15569,7 +15570,8 @@ function _pxPaginasDelPdf(){
         let antes=t.slice(Math.max(prev,m.index-160),m.index).replace(FASES,' ');
         // Quedarse con la última frase / título antes del paréntesis
         antes=antes.replace(/[\s.,;:]+$/,'');
-        const corte=Math.max(antes.lastIndexOf('. '),antes.lastIndexOf('). '),antes.lastIndexOf(': '));
+        const sep=Math.max(antes.lastIndexOf(' / '),antes.lastIndexOf(' | '));
+        const corte=sep>=0?sep+1:Math.max(antes.lastIndexOf('. '),antes.lastIndexOf('). '),antes.lastIndexOf(': '));
         if(corte>=0) antes=antes.slice(corte+2);
         antes=antes.replace(/\b(CMN|LE|EFI)\.[\w.]+/g,'').replace(/\b[A-ZÁÉÍÓÚÑ]{4,}(?:\s+[A-ZÁÉÍÓÚÑ]{2,})*\b/g,' ').replace(/\s+([,.;:?!)”»])/g,'$1').replace(/([(“«¿¡])\s+/g,'$1').replace(/\s+/g,' ').replace(/^[\s\-–.,;:)]+|[\s\-–.,;:(]+$/g,'').trim();
         antes=antes.replace(/^(\d\s+)+/,'').trim();
@@ -16261,7 +16263,7 @@ ${(()=>{
     // Tope de seguridad para no exceder límites de pegado
     const esSen=/^\[PDF EXPORTADO DE SÉNECA/.test(fuente);
     const esEF=_pdfEsEF(fuente) || /f[íi]sica/i.test(pdf.area||'');
-    const TOPE=esSen?15000:9000;
+    const TOPE=(esSen||/franc/i.test(pdf.area||''))?15000:9000;
     if(fuente.length>TOPE){ fuente = fuente.slice(0,TOPE).trim()+'\n[…texto fuente recortado por longitud…]'; }
     return `
 ⚠️ MODO DESDE PDF — SdA FUENTE (contenido real ya elaborado):
@@ -16273,7 +16275,7 @@ INSTRUCCIONES CLAVE — MODO DESDE PDF:
 1. NO inventes criterios ni saberes: usa EXACTAMENTE los que aparecen en la fuente (códigos LE.01.A.x, competencias específicas, descriptores…). Si un dato falta, complétalo coherente con la Orden 30/05/2023, sin contradecir la fuente.
 2. Respeta título, temática, tarea/producto final, temporalización y secuenciación de la fuente.
 3. Redáctalo siguiendo la plantilla de Primaria con TODOS los apartados que se detallan más abajo (1 a 7). Las rúbricas del apartado 7 y las tablas que la plantilla pide se generan según esas instrucciones, con los 4 niveles de logro del centro.
-4. ${/ingl|franc|extranjera/i.test(pdf.area)?`SdA de lengua extranjera (${pdf.area}): mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan; el resto en español.`:'Redacción en español.'}${esEF?_pdfBloqueEF(d,((fuente.match(/Sesiones previstas en Séneca: (\d+)/)||[])[1]||'')):''}
+4. ${/franc/i.test(pdf.area)?`SdA de Francés: mantén en francés el vocabulario, canciones, consignas y títulos de actividades tal como vengan; el resto en español.${_pdfBloqueFR(d)}`:/ingl|extranjera/i.test(pdf.area)?`SdA de lengua extranjera (${pdf.area}): mantén en inglés el vocabulario, chants, canciones y títulos de actividades tal como vengan; el resto en español.`:'Redacción en español.'}${esEF?_pdfBloqueEF(d,((fuente.match(/Sesiones previstas en Séneca: (\d+)/)||[])[1]||'')):''}
 5. Usa las fechas del apartado de planificación de la app (más abajo) para la temporalización.
 
 ═══════ TEXTO FUENTE DE LA SdA (PDF) ═══════
@@ -17573,6 +17575,23 @@ function _pdfBloqueCMN(d){
 `;
 }
 
+function _pdfBloqueFR(d){
+    return `
+🇫🇷 SdA DE FRANCÉS (programación de la editorial «Nouveaux Défis», en tablas) — CÓMO PASARLA A LA PLANTILLA DEL INSPECTOR:
+• OJO: la fuente viene de tablas; cada fila está en una línea con « | » entre columnas. En «3. SECUENCIACIÓN DIDÁCTICA» las actividades de una fase se escriben una sola vez y las filas siguientes solo traen otro criterio de esa fase: agrúpalas por fase sin repetir actividades.
+• Correspondencia de la fuente: «1- IDENTIFICACIÓN» (título de la unidad, área, curso, temporalización) → 1 IDENTIFICACIÓN. «JUSTIFICACIÓN» (vinculación con la vida real) y «CONTEXTO DE APLICACIÓN» → 2 JUSTIFICACIÓN. «TAREA FINAL» (pregunta en francés y reto «Notre défi») → 3 DESCRIPCIÓN DEL PRODUCTO FINAL. «2. CONCRECIÓN CURRICULAR» (descriptores · competencias específicas · criterios · saberes) → 4 CONCRECIÓN CURRICULAR. «3. SECUENCIACIÓN DIDÁCTICA» → 5 SECUENCIA DIDÁCTICA. «4. MEDIDAS DE ATENCIÓN A LA DIVERSIDAD (DUA)», «5. METODOLOGÍA» y «6. RECURSOS» → 6 MEDIDAS DE ATENCIÓN A LA DIVERSIDAD (incluye la metodología y los recursos de la fuente). La rúbrica de la fuente (5 niveles: Insuficiente…Sobresaliente) NO se copia: el apartado 7 se hace con los 4 niveles del centro, usando las evidencias de la fuente como instrumentos.
+• Códigos: copia EXACTAMENTE los de la fuente: criterios con su letra («1.1.a», «2.1.a», «6.2.a»), saberes «LE.03.A.5», «LE.03.B.2», «LE.03.C.6»…, competencias específicas por su número y descriptores (CCL2, CP1, STEM1, CPSAA5, CCEC2…). Corrige solo erratas de formato evidentes (p. ej. «LE.03.A10.» → «LE.03.A.10»). Los textos de competencias y criterios pueden venir abreviados con «…»: escríbelos completos con el texto oficial de la Orden 30/05/2023. En la secuenciación los criterios vienen solo con su código. No añadas criterios ni saberes que no estén en la fuente.
+• Fases de la fuente → fases de la plantilla: Motivación → Motivación · Activación → Activación · Exploración y Estructuración → Desarrollo y Consolidación · Aplicación (La petite fabrique, Notre défi, L'Andalousie en français) y Conclusión (Vers le Delf Prim, Mes compétences, test de cultura andaluza) → Finalizar y Aplicar.
+• Las actividades son las del LIBRO con sus páginas («p.12-13») y las del Suplemento de cultura andaluza («p.62 - L'Andalousie, c'est…»): NO inventes actividades ajenas al libro. Reparte esas actividades entre las sesiones en el orden de la fuente.
+• Estructura de CADA sesión:
+   | SABER BÁSICO | [código LE de la fuente] — [concreción breve, máx. 6 palabras] |
+   | INICIO (…') | [rutina breve en francés: saludo, fecha, canción… sin página] |
+   | DESARROLLO (…') | **Libro: p. X** — [actividades de esas páginas, con su título en francés] |
+   | CIERRE (…') | [síntesis y evidencia de la fuente] |
+   | TOTAL | los minutos deben sumar EXACTAMENTE ${_durSuma(d,d.duracion)} |
+`;
+}
+
 function _pdfBloqueEF(d, sesSeneca){
     return `
 🏃 SdA DE EDUCACIÓN FÍSICA EXPORTADA DE SÉNECA — CÓMO ADAPTARLA A LA PLANTILLA:
@@ -17611,6 +17630,12 @@ async function onPdfFileSelected(input){
     const status=document.getElementById('pdfStatus');
     status.style.display='block';
     status.textContent='⏳ Leyendo el PDF…';
+    if(/\.docx$/i.test(file.name)){
+        status.textContent='⏳ Leyendo el Word…';
+        try{ procesarSdaPDFTexto(await _sdaTextoDocx(file), file.name); }
+        catch(err){ console.error(err); status.innerHTML='⚠️ No se pudo leer este Word. Guárdalo como PDF y súbelo, o usa la opción de <strong>pegar el texto</strong> más abajo.'; }
+        return;
+    }
     try{
         if(typeof pdfjsLib==='undefined'){
             status.innerHTML='⚠️ No se pudo cargar el lector de PDF. Usa la opción de <strong>pegar el texto</strong> más abajo.';
@@ -17648,9 +17673,81 @@ async function onPdfFileSelected(input){
     }
 }
 
-function procesarSdaPDFTexto(texto, origen){
+// Word (.docx) → texto: cada fila de tabla en una línea con « | » entre celdas
+async function _sdaTextoDocx(file){
+    await _loadJSZip();
+    const zip=await JSZip.loadAsync(await file.arrayBuffer());
+    const xml=await zip.file('word/document.xml').async('string');
+    const doc=new DOMParser().parseFromString(xml,'application/xml');
+    const W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+    const txtP=p=>[...p.getElementsByTagNameNS(W,'*')].map(n=>n.localName==='t'?n.textContent:(n.localName==='tab'?' ':(n.localName==='br'?' / ':''))).join('').trim();
+    const lineas=[];
+    const recorrer=nodo=>{
+        [...nodo.childNodes].forEach(n=>{
+            if(n.localName==='p'){ const t=txtP(n); if(t) lineas.push(t); }
+            else if(n.localName==='tbl'){
+                [...n.childNodes].filter(r=>r.localName==='tr').forEach(r=>{
+                    const celdas=[...r.childNodes].filter(c=>c.localName==='tc').map(c=>[...c.getElementsByTagNameNS(W,'p')].map(txtP).filter(Boolean).join(' / '));
+                    const fila=celdas.join(' | ').replace(/(\s*\|\s*)+$/,'').trim();
+                    if(fila.replace(/[|\s]/g,'')) lineas.push(fila);
+                });
+                lineas.push('');
+            }
+            else if(n.localName==='sdt'||n.localName==='sdtContent'||n.localName==='body') recorrer(n);
+        });
+    };
+    recorrer(doc.getElementsByTagNameNS(W,'body')[0]);
+    return _sdaCompactarTablas(lineas).join('\n');
+}
+// Acorta el texto de las tablas para que quepa en el prompt sin perder datos:
+// en la secuenciación, el criterio va solo con su código (el texto completo ya está en la concreción curricular);
+// en la concreción, la competencia específica repetida en filas seguidas se indica con «(la misma)».
+function _sdaCompactarTablas(lineas){
+    let zona='', prevCE='';
+    return lineas.map(l=>{
+        if(/CONCRECI[ÓO]N\s+CURRICULAR/i.test(l)) zona='conc';
+        else if(/SECUENCIACI[ÓO]N\s+DID[ÁA]CTICA/i.test(l)) zona='sec';
+        else if(/ATENCI[ÓO]N\s+A\s+LA\s+DIVERSIDAD|VALORACI[ÓO]N\s+DE\s+LO|Situaci[óo]n de aprendizaje\s+\d/i.test(l)) zona='';
+        if(!zona || l.indexOf(' | ')<0) { prevCE=''; return l; }
+        const c=l.split(' | ');
+        if(zona==='sec') return c.map(x=>{ const m=x.match(/^(\d+\.\d+\.[a-z])\.?\s+\S/); return m?m[1]:x; }).join(' | ');
+        const corta=(x,n)=>x.length>n?x.slice(0,n).replace(/\s+\S*$/,'')+'…':x;
+        if(c.length>=3 && /^\d+\.\s+\S/.test(c[1])){
+            const ce=c[1]; c[1]=ce===prevCE?(ce.match(/^\d+\./)||[''])[0]+' (la misma)':corta(ce,110); prevCE=ce;
+        }
+        return c.map(x=>/^\d+\.\d+\.[a-z]\.?\s/.test(x)?corta(x,170):x).join(' | ');
+    });
+}
+
+// Si un archivo trae varias SdA («Situación de aprendizaje 1, 2, 3…»), se elige cuál usar
+let _sdaPartes=[];
+function _sdaDividir(texto){
+    const rx=/^\s*Situaci[óo]n de aprendizaje\s+(\d+)\s*$/gim; const pos=[]; let m;
+    while((m=rx.exec(texto))) pos.push({i:m.index,n:m[1]});
+    if(pos.length<2) return [];
+    const cab=texto.slice(0,pos[0].i);
+    return pos.map((p,k)=>{ const t=cab+texto.slice(p.i,k+1<pos.length?pos[k+1].i:texto.length);
+        const tit=(t.match(/T[ÍI]TULO(?:\s+UNIDAD)?\s*\|\s*([^|\n]{2,80})/i)||[])[1]||'';
+        return {n:p.n,titulo:tit.trim(),texto:t}; });
+}
+function sdaElegirParte(k, origen){
+    const p=_sdaPartes[k]; if(!p) return;
+    procesarSdaPDFTexto(p.texto, `${origen} · SdA ${p.n}`, true);
+}
+
+function procesarSdaPDFTexto(texto, origen, yaElegida){
     texto=(texto||'').trim();
     const status=document.getElementById('pdfStatus');
+    if(!yaElegida){
+        const partes=_sdaDividir(texto);
+        if(partes.length>1){
+            _sdaPartes=partes;
+            const o=String(origen||'').replace(/'/g,"\\'").replace(/</g,'&lt;');
+            if(status){ status.style.display='block'; status.innerHTML=`📚 Este archivo trae <b>${partes.length} situaciones de aprendizaje</b>. ¿Cuál quieres usar?<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem">`+
+                partes.map((p,k)=>`<button type="button" onclick="sdaElegirParte(${k},'${o}')" style="border:2px solid #6366f1;background:#fff;color:#3730a3;border-radius:10px;padding:.5rem .7rem;font-weight:700;cursor:pointer;font-size:.82rem">SdA ${p.n}${p.titulo?' · '+p.titulo.replace(/</g,'&lt;'):''}</button>`).join('')+'</div>'; }
+            return;
+        }
+    }
     if(texto.length<80){
         if(status){ status.style.display='block'; status.textContent='⚠️ El texto es demasiado corto. Revisa el PDF o pega el texto completo.'; }
         return;
@@ -17696,7 +17793,7 @@ function _pdfDetectarMeta(texto){
     if(/CONOCIMIENTO\s+DEL\s+MEDIO|\bCMN\.\d/i.test(t)){ area='Conocimiento del Medio Natural, Social y Cultural'; seguro=true; }
     if(_pdfEsEF(texto)){ area='Educación Física'; seguro=true; }
     let titulo='';
-    const mTit=t.match(/T[ÍI]TULO(?:\s+DE\s+LA)?(?:\s+(?:UNIDAD|SDA|SITUACI[ÓO]N\s+DE\s+APRENDIZAJE))?\s*:?\s*([A-Za-zÁÉÍÓÚÑáéíóúñü0-9'’!¡¿?&.,«»"“” ]{3,70}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
+    const mTit=t.match(/T[ÍI]TULO(?:\s+DE\s+LA)?(?:\s+(?:UNIDAD|SDA|SITUACI[ÓO]N\s+DE\s+APRENDIZAJE))?\s*[:|]?\s*([A-Za-zÁÉÍÓÚÑáéíóúñü0-9'’!¡¿?&.,«»"“” ]{3,70}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
     if(mTit) titulo=mTit[1].trim().replace(/[.,;:]+$/,'');
     return {curso, area, titulo, seguro};
 }
@@ -19398,7 +19495,7 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
 <script>
 // ===== Novedades (salen una sola vez en cada dispositivo) =====
 (function(){
-  var ID='2026-11-12-numsda', K='novedades-sdacapitulaciones', ITEMS=["🔢 <b>Nº de la SdA</b>: ahora sale la numeración del curso (1, 2, 3…) y se respeta el número que escribas tú. En el Modo exprés tienes un recuadro para cambiarlo."];
+  var ID='2026-11-16-frances', K='novedades-sdacapitulaciones', ITEMS=["🇫🇷 <b>Francés</b>: en «Desde PDF» ya puedes subir la SdA de la editorial (Nouveaux Défis) en <b>PDF o Word</b>. Si el archivo trae varias SdA, eliges cuál, y la app la pasa a la plantilla del inspector con las actividades y páginas del libro."];
   function ver(){ try{ if(localStorage.getItem(K)===ID) return; }catch(e){ return; }
     var d=document.createElement('div');
     d.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:99999;padding:18px;font-family:inherit';
