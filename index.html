@@ -17793,7 +17793,7 @@ function _pdfDetectarMeta(texto){
     if(/CONOCIMIENTO\s+DEL\s+MEDIO|\bCMN\.\d/i.test(t)){ area='Conocimiento del Medio Natural, Social y Cultural'; seguro=true; }
     if(_pdfEsEF(texto)){ area='Educación Física'; seguro=true; }
     let titulo='';
-    const mTit=t.match(/T[ÍI]TULO(?:\s+DE\s+LA)?(?:\s+(?:UNIDAD|SDA|SITUACI[ÓO]N\s+DE\s+APRENDIZAJE))?\s*[:|]?\s*([A-Za-zÁÉÍÓÚÑáéíóúñü0-9'’!¡¿?&.,«»"“” ]{3,70}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
+    const mTit=t.match(/T[ÍI]TULO(?:\s+DE\s+LA)?(?:\s+(?:UNIDAD|SDA|SITUACI[ÓO]N\s+DE\s+APRENDIZAJE))?\s*[:|]?\s*([A-Za-zÀ-ÖØ-öø-ÿŒœ0-9'’!¡¿?&.,«»"“” ]{3,70}?)\s*(?:ÁREA|AREA|CURSO|\d+\s*º|$)/i);
     if(mTit) titulo=mTit[1].trim().replace(/[.,;:]+$/,'');
     return {curso, area, titulo, seguro};
 }
